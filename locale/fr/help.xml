@@ -50,7 +50,7 @@
     champs disponibles dépendent de la configuration du carnet d'adresses qu'a
     fait votre administrateur
     </para>
-    
+
 </entry>
 
 <entry id="menu-import" md5="3c6c40f2a6213e9fc1f9a77827bfb5d4" state="uptodate">
@@ -94,7 +94,7 @@
     <tip>
 	    Certains entrées complexes, ou certaines entrées avec des champs ne correspondant pas à ceux du carnet d'adresses, peuvent ne pas être importées correctement. Vous devriez vérifier les données importées après l'importation.
     </tip>
-    
+
 
 </entry>
 
@@ -111,7 +111,7 @@
     <tip>
     Vous pouvez trier une liste d'entrées du carnet d'adresse par chacun des champs affichés en cliquant sur l'en-tête de la colonne appropriée. Pour changer l'ordre (croissant-décroissant), cliquez sur la flèche située juste à côté du nom du champ.
     </tip>
-    
+
 </entry>
 
 </help>
