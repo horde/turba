@@ -25,7 +25,7 @@
  * @link     http://pear.horde.org/index.php?package=Turba
  * @package  Turba
  */
-class Turba_Injector_Factory_Driver
+class Turba_Factory_Driver
 {
     /**
      * Instances.
