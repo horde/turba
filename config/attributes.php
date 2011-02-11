@@ -3,8 +3,11 @@
  * Turba Attributes File.
  *
  * This file contains examples of attributes that Turba understands, and their
- * types. It may be safely edited by hand. Use attributes.php.dist as a
- * reference.
+ * types.
+ *
+ * IMPORTANT: Local overrides should be placed in attributes.local.php, or
+ * attributes-servername.php if the 'vhosts' setting has been enabled in
+ * Horde's configuration.
  *
  * The syntax of this array is as follows:
  * <pre>
@@ -37,8 +40,6 @@
  *          field. For a documentation of available field
  *          parameters see: http://wiki.horde.org/Doc/Dev/FormTypes.
  * </pre>
- *
- * $Id$
  */
 
 /* Personal stuff. */
@@ -572,3 +573,8 @@ $attributes['homeLongitude'] = array(
     'type' => 'number',
     'required' => false,
 );
+
+/* Local overrides. */
+if (file_exists(dirname(__FILE__) . '/attributes.local.php')) {
+    include dirname(__FILE__) . '/attributes.local.php';
+}
