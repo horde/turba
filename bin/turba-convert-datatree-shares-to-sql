@@ -7,8 +7,14 @@
  * executing this script.
  */
 
-/* Set up the CLI environment */
-require_once dirname(__FILE__) . '/../../lib/Application.php';
+if (file_exists(dirname(__FILE__) . '/../../turba/lib/Application.php')) {
+    $baseDir = dirname(__FILE__) . '/../';
+} else {
+    require_once 'PEAR/Config.php';
+    $baseDir = PEAR_Config::singleton()
+        ->get('horde_dir', null, 'pear.horde.org') . '/turba/';
+}
+require_once $baseDir . 'lib/Application.php';
 Horde_Registry::appInit('turba', array('cli' => true));
 
 /* Grab what we need to steal the DB config */

@@ -13,8 +13,14 @@
  * @author Jan Schneider <jan@horde.org>
  */
 
-// Do CLI checks and environment setup first.
-require_once dirname(__FILE__) . '/../lib/Application.php';
+if (file_exists(dirname(__FILE__) . '/../../turba/lib/Application.php')) {
+    $baseDir = dirname(__FILE__) . '/../';
+} else {
+    require_once 'PEAR/Config.php';
+    $baseDir = PEAR_Config::singleton()
+        ->get('horde_dir', null, 'pear.horde.org') . '/turba/';
+}
+require_once $baseDir . 'lib/Application.php';
 Horde_Registry::appInit('turba', array('cli' => true));
 
 // Read command line parameters.
@@ -41,7 +47,7 @@ $cli->message('Imported successfully ' . count($result) . ' contacts', 'cli.succ
 
 function usage()
 {
-    $GLOBALS['cli']->writeln('Usage: import_vcards.php source user');
+    $GLOBALS['cli']->writeln('Usage: turba-import-vcards source user');
     exit;
 }
 
