@@ -861,7 +861,7 @@ $cfgSources['favourites'] = array(
  * In the params array, accepted values for auth_method are 'cram_md5',
  * 'imtest', and 'plaintext' - these must match a IMSP_Auth_ driver. If you
  * are using the imtest driver for Cyrus, please read the
- * framework/Net_IMSP/Auth/imtest.php file for more configuration information.
+ * Horde/Imsp/Auth/Imtest.php file for more configuration information.
  *
  * Groups in other IMSP-aware applications are just entries with multiple
  * email addresses in the email field and a 'group' field set to flag the
