@@ -7,7 +7,6 @@
  * @author   Michael Slusarz <slusarz@horde.org>
  * @category Horde
  * @license  http://www.horde.org/licenses/apl.html APL
- * @link     http://pear.horde.org/index.php?package=Turba
  * @package  Turba
  */
 
@@ -22,7 +21,6 @@
  * @author   Michael Slusarz <slusarz@horde.org>
  * @category Horde
  * @license  http://www.horde.org/licenses/apl.html APL
- * @link     http://pear.horde.org/index.php?package=Turba
  * @package  Turba
  */
 class Turba_Factory_Driver extends Horde_Core_Factory_Base
