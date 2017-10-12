@@ -8,7 +8,6 @@
  * @package  Kolab_Test
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/apache ASL
- * @link     http://pear.horde.org/index.php?package=Kolab_Storage
  */
 
 
@@ -24,7 +23,6 @@
  * @package  Kolab_Test
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/apache ASL
- * @link     http://pear.horde.org/index.php?package=Kolab_Storage
  */
 class Turba_KolabTestBase extends Turba_TestCase
 {
