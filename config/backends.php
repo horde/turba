@@ -525,7 +525,7 @@ $cfgSources['localldap'] = array(
  * A personal LDAP address book. This assumes that the login is
  * <username>@domain.com and that the users are stored on the same LDAP
  * server. Thus it is possible to bind with the username and password from the
- * user. For more info; please refer to the docs/LDAP file in the Turba
+ * user. For more info; please refer to the doc/LDAP file in the Turba
  * distribution.
  *
  * To store distribution lists in the LDAP directory, you'll need to include

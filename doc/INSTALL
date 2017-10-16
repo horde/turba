@@ -29,7 +29,7 @@ To function properly, Turba **requires** the following:
                   earlier versions of Horde will **not** work.
 
    .. Important:: Be sure to have completed all of the steps in the
-                  `horde/docs/INSTALL`_ file for the Horde Framework before
+                  `horde/doc/INSTALL`_ file for the Horde Framework before
                   installing Turba. Many of Turba's prerequisites are also
                   Horde prerequisites. Additionally, many of Turba's optional
                   features are configured via the Horde install.
@@ -56,7 +56,7 @@ latest not yet released fixes, you can install Turba from Git.
 Installing with PEAR
 ~~~~~~~~~~~~~~~~~~~~
 
-First follow the instructions in `horde/docs/INSTALL`_ to prepare a PEAR
+First follow the instructions in `horde/doc/INSTALL`_ to prepare a PEAR
 environment for Horde and install the Horde Framework.
 
 When installing Turba through PEAR now, the installer will automatically
@@ -125,7 +125,7 @@ Configuring Turba
 3. Securing Turba
 
    Before you can secure Turba, you need a secure Horde installation.  Please
-   read the file in `horde/docs/SECURITY`_ for Horde security information
+   read the file in `horde/doc/SECURITY`_ for Horde security information
    before proceeding.
 
    Some of Turba's configuration files might contain passwords which local
@@ -183,7 +183,7 @@ The Horde team
 
 .. _README: README
 .. _INSTALL:
-.. _`horde/docs/INSTALL`: ../../horde/docs/INSTALL
-.. _`horde/docs/PERFORMANCE`: ../../horde/docs/PERFORMANCE
-.. _`horde/docs/SECURITY`: ../../horde/docs/SECURITY
-.. _`horde/docs/TRANSLATIONS`: ../../horde/docs/TRANSLATIONS
+.. _`horde/doc/INSTALL`: ../../horde/doc/INSTALL
+.. _`horde/doc/PERFORMANCE`: ../../horde/doc/PERFORMANCE
+.. _`horde/doc/SECURITY`: ../../horde/doc/SECURITY
+.. _`horde/doc/TRANSLATIONS`: ../../horde/doc/TRANSLATIONS

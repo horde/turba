@@ -28,7 +28,7 @@
   <email>chuck@horde.org</email>
   <active>no</active>
  </lead>
- <date>2017-06-06</date>
+ <date>2017-10-16</date>
  <version>
   <release>5.0.0</release>
   <api>5.0.0</api>
@@ -95,7 +95,7 @@
     <file name="mime_drivers.php" role="horde" />
     <file name="prefs.php" role="horde" />
    </dir> <!-- /config -->
-   <dir name="docs">
+   <dir name="doc">
     <dir name="vcf">
      <file name="brad.vcf" role="doc" />
      <file name="dimitris.vcf" role="doc" />
@@ -107,14 +107,14 @@
      <file name="README" role="doc" />
      <file name="sfg.vcf" role="doc" />
      <file name="test.vcf" role="doc" />
-    </dir> <!-- /docs/vcf -->
+    </dir> <!-- /doc/vcf -->
     <file name="CHANGES" role="doc" />
     <file name="CREDITS" role="doc" />
     <file name="INSTALL" role="doc" />
     <file name="LDAP" role="doc" />
     <file name="RELEASE_NOTES" role="doc" />
     <file name="UPGRADING" role="doc" />
-   </dir> <!-- /docs -->
+   </dir> <!-- /doc -->
    <dir name="js">
     <file name="browse.js" role="horde" />
     <file name="columnprefs.js" role="horde" />
@@ -485,11 +485,11 @@
    </dir> <!-- /migration -->
    <dir name="scripts">
     <dir name="ldap">
-     <file name="addou" role="data" />
-     <file name="addou.pl" role="data" />
+     <file name="addou" role="horde" />
+     <file name="addou.pl" role="horde" />
     </dir> <!-- /scripts/ldap -->
-    <file name=".htaccess" role="data" />
-    <file name="Turba.reg" role="data" />
+    <file name=".htaccess" role="horde" />
+    <file name="Turba.reg" role="horde" />
    </dir> <!-- /scripts -->
    <dir name="templates">
     <dir name="block">
@@ -629,7 +629,7 @@
      </dir> <!-- /themes/default/smartmobile -->
      <file name="screen.css" role="horde" />
     </dir> <!-- /themes/default -->
-    </dir> <!-- /themes -->
+   </dir> <!-- /themes -->
    <file name="add.php" role="horde" />
    <file name="browse.php" role="horde" />
    <file name="contact.php" role="horde" />
@@ -894,6 +894,21 @@
  </usesrole>
  <phprelease>
   <filelist>
+   <install as="turba/add.php" name="add.php" />
+   <install as="turba/browse.php" name="browse.php" />
+   <install as="turba/contact.php" name="contact.php" />
+   <install as="turba/data.php" name="data.php" />
+   <install as="turba/delete.php" name="delete.php" />
+   <install as="turba/deletefile.php" name="deletefile.php" />
+   <install as="turba/edit.php" name="edit.php" />
+   <install as="turba/index.php" name="index.php" />
+   <install as="LICENSE" name="LICENSE" />
+   <install as="turba/merge.php" name="merge.php" />
+   <install as="README" name="README" />
+   <install as="turba/search.php" name="search.php" />
+   <install as="turba/smartmobile.php" name="smartmobile.php" />
+   <install as="turba/vcard.php" name="vcard.php" />
+   <install as="turba/view.php" name="view.php" />
    <install as="turba/addressbooks/create.php" name="addressbooks/create.php" />
    <install as="turba/addressbooks/delete.php" name="addressbooks/delete.php" />
    <install as="turba/addressbooks/edit.php" name="addressbooks/edit.php" />
@@ -914,22 +929,22 @@
    <install as="turba/config/menu.php.dist" name="config/menu.php.dist" />
    <install as="turba/config/mime_drivers.php" name="config/mime_drivers.php" />
    <install as="turba/config/prefs.php" name="config/prefs.php" />
-   <install as="CHANGES" name="docs/CHANGES" />
-   <install as="CREDITS" name="docs/CREDITS" />
-   <install as="INSTALL" name="docs/INSTALL" />
-   <install as="LDAP" name="docs/LDAP" />
-   <install as="RELEASE_NOTES" name="docs/RELEASE_NOTES" />
-   <install as="UPGRADING" name="docs/UPGRADING" />
-   <install as="vcf/brad.vcf" name="docs/vcf/brad.vcf" />
-   <install as="vcf/dimitris.vcf" name="docs/vcf/dimitris.vcf" />
-   <install as="vcf/dwalt.vcf" name="docs/vcf/dwalt.vcf" />
-   <install as="vcf/foo.vcf" name="docs/vcf/foo.vcf" />
-   <install as="vcf/larry.vcf" name="docs/vcf/larry.vcf" />
-   <install as="vcf/multiple.vcf" name="docs/vcf/multiple.vcf" />
-   <install as="vcf/palm.vcf" name="docs/vcf/palm.vcf" />
-   <install as="vcf/README" name="docs/vcf/README" />
-   <install as="vcf/sfg.vcf" name="docs/vcf/sfg.vcf" />
-   <install as="vcf/test.vcf" name="docs/vcf/test.vcf" />
+   <install as="CHANGES" name="doc/CHANGES" />
+   <install as="CREDITS" name="doc/CREDITS" />
+   <install as="INSTALL" name="doc/INSTALL" />
+   <install as="LDAP" name="doc/LDAP" />
+   <install as="RELEASE_NOTES" name="doc/RELEASE_NOTES" />
+   <install as="UPGRADING" name="doc/UPGRADING" />
+   <install as="vcf/brad.vcf" name="doc/vcf/brad.vcf" />
+   <install as="vcf/dimitris.vcf" name="doc/vcf/dimitris.vcf" />
+   <install as="vcf/dwalt.vcf" name="doc/vcf/dwalt.vcf" />
+   <install as="vcf/foo.vcf" name="doc/vcf/foo.vcf" />
+   <install as="vcf/larry.vcf" name="doc/vcf/larry.vcf" />
+   <install as="vcf/multiple.vcf" name="doc/vcf/multiple.vcf" />
+   <install as="vcf/palm.vcf" name="doc/vcf/palm.vcf" />
+   <install as="vcf/README" name="doc/vcf/README" />
+   <install as="vcf/sfg.vcf" name="doc/vcf/sfg.vcf" />
+   <install as="vcf/test.vcf" name="doc/vcf/test.vcf" />
    <install as="turba/js/browse.js" name="js/browse.js" />
    <install as="turba/js/columnprefs.js" name="js/columnprefs.js" />
    <install as="turba/js/contact_tabs.js" name="js/contact_tabs.js" />
@@ -1094,10 +1109,10 @@
    <install as="turba/migration/10_turba_upgrade_categoriestotags.php" name="migration/10_turba_upgrade_categoriestotags.php" />
    <install as="turba/migration/11_turba_upgrade_parents.php" name="migration/11_turba_upgrade_parents.php" />
    <install as="turba/migration/12_turba_upgrade_originalphotos.php" name="migration/12_turba_upgrade_originalphotos.php" />
-   <install as="scripts/.htaccess" name="scripts/.htaccess" />
-   <install as="scripts/Turba.reg" name="scripts/Turba.reg" />
-   <install as="scripts/ldap/addou" name="scripts/ldap/addou" />
-   <install as="scripts/ldap/addou.pl" name="scripts/ldap/addou.pl" />
+   <install as="turba/scripts/.htaccess" name="scripts/.htaccess" />
+   <install as="turba/scripts/Turba.reg" name="scripts/Turba.reg" />
+   <install as="turba/scripts/ldap/addou" name="scripts/ldap/addou" />
+   <install as="turba/scripts/ldap/addou.pl" name="scripts/ldap/addou.pl" />
    <install as="turba/templates/.htaccess" name="templates/.htaccess" />
    <install as="turba/templates/block/minisearch.inc" name="templates/block/minisearch.inc" />
    <install as="turba/templates/browse/actions.inc" name="templates/browse/actions.inc" />
@@ -1178,21 +1193,6 @@
    <install as="turba/themes/default/graphics/menu/browse.png" name="themes/default/graphics/menu/browse.png" />
    <install as="turba/themes/default/graphics/menu/new.png" name="themes/default/graphics/menu/new.png" />
    <install as="turba/themes/default/graphics/mime/vcard.png" name="themes/default/graphics/mime/vcard.png" />
-   <install as="turba/add.php" name="add.php" />
-   <install as="turba/browse.php" name="browse.php" />
-   <install as="turba/contact.php" name="contact.php" />
-   <install as="turba/data.php" name="data.php" />
-   <install as="turba/delete.php" name="delete.php" />
-   <install as="turba/deletefile.php" name="deletefile.php" />
-   <install as="turba/edit.php" name="edit.php" />
-   <install as="turba/index.php" name="index.php" />
-   <install as="LICENSE" name="LICENSE" />
-   <install as="turba/merge.php" name="merge.php" />
-   <install as="README" name="README" />
-   <install as="turba/search.php" name="search.php" />
-   <install as="turba/smartmobile.php" name="smartmobile.php" />
-   <install as="turba/vcard.php" name="vcard.php" />
-   <install as="turba/view.php" name="view.php" />
    <install as="turba/themes/default/smartmobile/screen.css" name="themes/default/smartmobile/screen.css" />
   </filelist>
  </phprelease>
@@ -2217,7 +2217,7 @@
    </notes>
   </release>
   <release>
-   <date>2017-06-06</date>
+   <date>2017-10-16</date>
    <version>
     <release>5.0.0</release>
     <api>5.0.0</api>
