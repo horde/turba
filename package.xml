@@ -640,7 +640,7 @@
    <file name="index.php" role="horde" />
    <file name="LICENSE" role="doc" />
    <file name="merge.php" role="horde" />
-   <file name="README" role="doc" />
+   <file name="README.rst" role="doc" />
    <file name="search.php" role="horde" />
    <file name="smartmobile.php" role="horde" />
    <file name="vcard.php" role="horde" />
@@ -904,7 +904,7 @@
    <install as="turba/index.php" name="index.php" />
    <install as="LICENSE" name="LICENSE" />
    <install as="turba/merge.php" name="merge.php" />
-   <install as="README" name="README" />
+   <install as="README.rst" name="README.rst" />
    <install as="turba/search.php" name="search.php" />
    <install as="turba/smartmobile.php" name="smartmobile.php" />
    <install as="turba/vcard.php" name="vcard.php" />
