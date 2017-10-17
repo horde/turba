@@ -81,8 +81,8 @@ The Turba team
 .. _README: README.rst
 .. _LICENSE: http://www.horde.org/licenses/apache
 .. _doc/CHANGES: doc/CHANGES
-.. _doc/CREDITS: doc/CREDITS
+.. _doc/CREDITS: doc/CREDITS.rst
 .. _INSTALL:
-.. _doc/INSTALL: doc/INSTALL
+.. _doc/INSTALL: doc/INSTALL.rst
 .. _doc/LDAP: LDAP
-.. _doc/UPGRADING: doc/UPGRADING
+.. _doc/UPGRADING: doc/UPGRADING.rst
