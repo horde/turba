@@ -28,7 +28,7 @@
   <email>chuck@horde.org</email>
   <active>no</active>
  </lead>
- <date>2017-10-17</date>
+ <date>2017-10-20</date>
  <version>
   <release>5.0.0</release>
   <api>5.0.0</api>
@@ -83,7 +83,9 @@
     <file name="turba-public-to-horde-share" role="script">
      <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
     </file>
-    <file name="turba-validate-email" role="script" />
+    <file name="turba-validate-email" role="script">
+     <tasks:replace from="/usr/bin/env php" to="php_bin" type="pear-config" />
+    </file>
    </dir> <!-- /bin -->
    <dir name="config">
     <file name=".htaccess" role="horde" />
@@ -593,7 +595,6 @@
      <file name="AllTests.php" role="test" />
      <file name="Autoload.php" role="test" />
      <file name="bootstrap.php" role="test" />
-     <file name="phpunit.xml" role="test" />
      <file name="TestCase.php" role="test" />
     </dir> <!-- /test/Turba -->
    </dir> <!-- /test -->
@@ -895,20 +896,6 @@
  <phprelease>
   <filelist>
    <install as="turba/add.php" name="add.php" />
-   <install as="turba/browse.php" name="browse.php" />
-   <install as="turba/contact.php" name="contact.php" />
-   <install as="turba/data.php" name="data.php" />
-   <install as="turba/delete.php" name="delete.php" />
-   <install as="turba/deletefile.php" name="deletefile.php" />
-   <install as="turba/edit.php" name="edit.php" />
-   <install as="turba/index.php" name="index.php" />
-   <install as="LICENSE" name="LICENSE" />
-   <install as="turba/merge.php" name="merge.php" />
-   <install as="README.rst" name="README.rst" />
-   <install as="turba/search.php" name="search.php" />
-   <install as="turba/smartmobile.php" name="smartmobile.php" />
-   <install as="turba/vcard.php" name="vcard.php" />
-   <install as="turba/view.php" name="view.php" />
    <install as="turba/addressbooks/create.php" name="addressbooks/create.php" />
    <install as="turba/addressbooks/delete.php" name="addressbooks/delete.php" />
    <install as="turba/addressbooks/edit.php" name="addressbooks/edit.php" />
@@ -921,6 +908,7 @@
    <install as="turba-import-vcards" name="bin/turba-import-vcards" />
    <install as="turba-public-to-horde-share" name="bin/turba-public-to-horde-share" />
    <install as="turba-validate-email" name="bin/turba-validate-email" />
+   <install as="turba/browse.php" name="browse.php" />
    <install as="turba/config/.htaccess" name="config/.htaccess" />
    <install as="turba/config/attributes.php" name="config/attributes.php" />
    <install as="turba/config/backends.php" name="config/backends.php" />
@@ -929,6 +917,10 @@
    <install as="turba/config/menu.php.dist" name="config/menu.php.dist" />
    <install as="turba/config/mime_drivers.php" name="config/mime_drivers.php" />
    <install as="turba/config/prefs.php" name="config/prefs.php" />
+   <install as="turba/contact.php" name="contact.php" />
+   <install as="turba/data.php" name="data.php" />
+   <install as="turba/delete.php" name="delete.php" />
+   <install as="turba/deletefile.php" name="deletefile.php" />
    <install as="CHANGES" name="doc/CHANGES" />
    <install as="CREDITS.rst" name="doc/CREDITS.rst" />
    <install as="INSTALL.rst" name="doc/INSTALL.rst" />
@@ -945,6 +937,8 @@
    <install as="vcf/README" name="doc/vcf/README" />
    <install as="vcf/sfg.vcf" name="doc/vcf/sfg.vcf" />
    <install as="vcf/test.vcf" name="doc/vcf/test.vcf" />
+   <install as="turba/edit.php" name="edit.php" />
+   <install as="turba/index.php" name="index.php" />
    <install as="turba/js/browse.js" name="js/browse.js" />
    <install as="turba/js/columnprefs.js" name="js/columnprefs.js" />
    <install as="turba/js/contact_tabs.js" name="js/contact_tabs.js" />
@@ -952,23 +946,16 @@
    <install as="turba/js/search.js" name="js/search.js" />
    <install as="turba/js/smartmobile.js" name="js/smartmobile.js" />
    <install as="turba/lib/.htaccess" name="lib/.htaccess" />
-   <install as="turba/lib/Api.php" name="lib/Api.php" />
-   <install as="turba/lib/Application.php" name="lib/Application.php" />
-   <install as="turba/lib/Driver.php" name="lib/Driver.php" />
-   <install as="turba/lib/Exception.php" name="lib/Exception.php" />
-   <install as="turba/lib/List.php" name="lib/List.php" />
-   <install as="turba/lib/Object.php" name="lib/Object.php" />
-   <install as="turba/lib/Smartmobile.php" name="lib/Smartmobile.php" />
-   <install as="turba/lib/Tagger.php" name="lib/Tagger.php" />
-   <install as="turba/lib/Test.php" name="lib/Test.php" />
-   <install as="turba/lib/Turba.php" name="lib/Turba.php" />
    <install as="turba/lib/Ajax/Application.php" name="lib/Ajax/Application.php" />
    <install as="turba/lib/Ajax/Application/Handler/Minisearch.php" name="lib/Ajax/Application/Handler/Minisearch.php" />
    <install as="turba/lib/Ajax/Application/Handler/Smartmobile.php" name="lib/Ajax/Application/Handler/Smartmobile.php" />
    <install as="turba/lib/Ajax/Imple/TagAutoCompleter.php" name="lib/Ajax/Imple/TagAutoCompleter.php" />
+   <install as="turba/lib/Api.php" name="lib/Api.php" />
+   <install as="turba/lib/Application.php" name="lib/Application.php" />
    <install as="turba/lib/Backup/Contacts.php" name="lib/Backup/Contacts.php" />
    <install as="turba/lib/Block/Minisearch.php" name="lib/Block/Minisearch.php" />
    <install as="turba/lib/Data/Ldif.php" name="lib/Data/Ldif.php" />
+   <install as="turba/lib/Driver.php" name="lib/Driver.php" />
    <install as="turba/lib/Driver/Favourites.php" name="lib/Driver/Favourites.php" />
    <install as="turba/lib/Driver/Group.php" name="lib/Driver/Group.php" />
    <install as="turba/lib/Driver/Imsp.php" name="lib/Driver/Imsp.php" />
@@ -978,6 +965,7 @@
    <install as="turba/lib/Driver/Share.php" name="lib/Driver/Share.php" />
    <install as="turba/lib/Driver/Sql.php" name="lib/Driver/Sql.php" />
    <install as="turba/lib/Driver/Vbook.php" name="lib/Driver/Vbook.php" />
+   <install as="turba/lib/Exception.php" name="lib/Exception.php" />
    <install as="turba/lib/Exception/NotSupported.php" name="lib/Exception/NotSupported.php" />
    <install as="turba/lib/Exception/ObjectExists.php" name="lib/Exception/ObjectExists.php" />
    <install as="turba/lib/Factory/Driver.php" name="lib/Factory/Driver.php" />
@@ -992,9 +980,15 @@
    <install as="turba/lib/Form/EditContact.php" name="lib/Form/EditContact.php" />
    <install as="turba/lib/Form/EditContactGroup.php" name="lib/Form/EditContactGroup.php" />
    <install as="turba/lib/Form/Type/TurbaTags.php" name="lib/Form/Type/TurbaTags.php" />
+   <install as="turba/lib/List.php" name="lib/List.php" />
    <install as="turba/lib/LoginTasks/SystemTask/Upgrade.php" name="lib/LoginTasks/SystemTask/Upgrade.php" />
+   <install as="turba/lib/Object.php" name="lib/Object.php" />
    <install as="turba/lib/Object/Group.php" name="lib/Object/Group.php" />
    <install as="turba/lib/Prefs/Special/Columnselect.php" name="lib/Prefs/Special/Columnselect.php" />
+   <install as="turba/lib/Smartmobile.php" name="lib/Smartmobile.php" />
+   <install as="turba/lib/Tagger.php" name="lib/Tagger.php" />
+   <install as="turba/lib/Test.php" name="lib/Test.php" />
+   <install as="turba/lib/Turba.php" name="lib/Turba.php" />
    <install as="turba/lib/Ui/VarRenderer/Turba.php" name="lib/Ui/VarRenderer/Turba.php" />
    <install as="turba/lib/View/Browse.php" name="lib/View/Browse.php" />
    <install as="turba/lib/View/Contact.php" name="lib/View/Contact.php" />
@@ -1004,8 +998,8 @@
    <install as="turba/lib/View/List.php" name="lib/View/List.php" />
    <install as="turba/lib/View/List/AlphaFilter.php" name="lib/View/List/AlphaFilter.php" />
    <install as="turba/lib/View/List/PageFilter.php" name="lib/View/List/PageFilter.php" />
+   <install as="LICENSE" name="LICENSE" />
    <install as="turba/locale/.htaccess" name="locale/.htaccess" />
-   <install as="turba/locale/turba.pot" name="locale/turba.pot" />
    <install as="turba/locale/ar/LC_MESSAGES/turba.mo" name="locale/ar/LC_MESSAGES/turba.mo" />
    <install as="turba/locale/ar/LC_MESSAGES/turba.po" name="locale/ar/LC_MESSAGES/turba.po" />
    <install as="turba/locale/bg/LC_MESSAGES/turba.mo" name="locale/bg/LC_MESSAGES/turba.mo" />
@@ -1091,12 +1085,14 @@
    <install as="turba/locale/tr/help.xml" name="locale/tr/help.xml" />
    <install as="turba/locale/tr/LC_MESSAGES/turba.mo" name="locale/tr/LC_MESSAGES/turba.mo" />
    <install as="turba/locale/tr/LC_MESSAGES/turba.po" name="locale/tr/LC_MESSAGES/turba.po" />
+   <install as="turba/locale/turba.pot" name="locale/turba.pot" />
    <install as="turba/locale/uk/LC_MESSAGES/turba.mo" name="locale/uk/LC_MESSAGES/turba.mo" />
    <install as="turba/locale/uk/LC_MESSAGES/turba.po" name="locale/uk/LC_MESSAGES/turba.po" />
    <install as="turba/locale/zh_CN/LC_MESSAGES/turba.mo" name="locale/zh_CN/LC_MESSAGES/turba.mo" />
    <install as="turba/locale/zh_CN/LC_MESSAGES/turba.po" name="locale/zh_CN/LC_MESSAGES/turba.po" />
    <install as="turba/locale/zh_TW/LC_MESSAGES/turba.mo" name="locale/zh_TW/LC_MESSAGES/turba.mo" />
    <install as="turba/locale/zh_TW/LC_MESSAGES/turba.po" name="locale/zh_TW/LC_MESSAGES/turba.po" />
+   <install as="turba/merge.php" name="merge.php" />
    <install as="turba/migration/1_turba_base_tables.php" name="migration/1_turba_base_tables.php" />
    <install as="turba/migration/2_turba_upgrade_autoincrement.php" name="migration/2_turba_upgrade_autoincrement.php" />
    <install as="turba/migration/3_turba_upgrade_sqlng.php" name="migration/3_turba_upgrade_sqlng.php" />
@@ -1109,10 +1105,13 @@
    <install as="turba/migration/10_turba_upgrade_categoriestotags.php" name="migration/10_turba_upgrade_categoriestotags.php" />
    <install as="turba/migration/11_turba_upgrade_parents.php" name="migration/11_turba_upgrade_parents.php" />
    <install as="turba/migration/12_turba_upgrade_originalphotos.php" name="migration/12_turba_upgrade_originalphotos.php" />
+   <install as="README.rst" name="README.rst" />
    <install as="turba/scripts/.htaccess" name="scripts/.htaccess" />
-   <install as="turba/scripts/Turba.reg" name="scripts/Turba.reg" />
    <install as="turba/scripts/ldap/addou" name="scripts/ldap/addou" />
    <install as="turba/scripts/ldap/addou.pl" name="scripts/ldap/addou.pl" />
+   <install as="turba/scripts/Turba.reg" name="scripts/Turba.reg" />
+   <install as="turba/search.php" name="search.php" />
+   <install as="turba/smartmobile.php" name="smartmobile.php" />
    <install as="turba/templates/.htaccess" name="templates/.htaccess" />
    <install as="turba/templates/block/minisearch.inc" name="templates/block/minisearch.inc" />
    <install as="turba/templates/browse/actions.inc" name="templates/browse/actions.inc" />
@@ -1128,22 +1127,20 @@
    <install as="turba/templates/search/advanced.html.php" name="templates/search/advanced.html.php" />
    <install as="turba/templates/search/basic.html.php" name="templates/search/basic.html.php" />
    <install as="turba/templates/search/duplicate.html.php" name="templates/search/duplicate.html.php" />
-   <install as="turba/templates/search/footer.html.php" name="templates/search/footer.html.php" />
-   <install as="turba/templates/search/header.html.php" name="templates/search/header.html.php" />
-   <install as="turba/templates/search/vbook.html.php" name="templates/search/vbook.html.php" />
    <install as="turba/templates/search/duplicate/contact_footer.html.php" name="templates/search/duplicate/contact_footer.html.php" />
    <install as="turba/templates/search/duplicate/contact_header.html.php" name="templates/search/duplicate/contact_header.html.php" />
    <install as="turba/templates/search/duplicate/footer.html.php" name="templates/search/duplicate/footer.html.php" />
    <install as="turba/templates/search/duplicate/header.html.php" name="templates/search/duplicate/header.html.php" />
    <install as="turba/templates/search/duplicate/list.html.php" name="templates/search/duplicate/list.html.php" />
+   <install as="turba/templates/search/footer.html.php" name="templates/search/footer.html.php" />
+   <install as="turba/templates/search/header.html.php" name="templates/search/header.html.php" />
+   <install as="turba/templates/search/vbook.html.php" name="templates/search/vbook.html.php" />
    <install as="turba/templates/smartmobile/browse.html.php" name="templates/smartmobile/browse.html.php" />
    <install as="turba/templates/smartmobile/entry.html.php" name="templates/smartmobile/entry.html.php" />
    <install as="turba/templates/test/ldapserver.inc" name="templates/test/ldapserver.inc" />
    <install as="Turba/AllTests.php" name="test/Turba/AllTests.php" />
    <install as="Turba/Autoload.php" name="test/Turba/Autoload.php" />
    <install as="Turba/bootstrap.php" name="test/Turba/bootstrap.php" />
-   <install as="Turba/phpunit.xml" name="test/Turba/phpunit.xml" />
-   <install as="Turba/TestCase.php" name="test/Turba/TestCase.php" />
    <install as="Turba/fixtures/az.png" name="test/Turba/fixtures/az.png" />
    <install as="Turba/fixtures/bug_6518.ldif" name="test/Turba/fixtures/bug_6518.ldif" />
    <install as="Turba/fixtures/bug_9207.vcf" name="test/Turba/fixtures/bug_9207.vcf" />
@@ -1153,6 +1150,7 @@
    <install as="Turba/fixtures/import.ldif" name="test/Turba/fixtures/import.ldif" />
    <install as="Turba/fixtures/importCRLF.ldif" name="test/Turba/fixtures/importCRLF.ldif" />
    <install as="Turba/Stub/Hooks.php" name="test/Turba/Stub/Hooks.php" />
+   <install as="Turba/TestCase.php" name="test/Turba/TestCase.php" />
    <install as="Turba/ToDo/ApiTest.php" name="test/Turba/ToDo/ApiTest.php" />
    <install as="Turba/ToDo/BrowsePageTest.php" name="test/Turba/ToDo/BrowsePageTest.php" />
    <install as="Turba/ToDo/DriverTest.php" name="test/Turba/ToDo/DriverTest.php" />
@@ -1164,18 +1162,17 @@
    <install as="Turba/ToDo/TestBase.php" name="test/Turba/ToDo/TestBase.php" />
    <install as="Turba/ToDo/ViewBrowseTest.php" name="test/Turba/ToDo/ViewBrowseTest.php" />
    <install as="Turba/ToDo/ViewListTest.php" name="test/Turba/ToDo/ViewListTest.php" />
-   <install as="Turba/Unit/ExportTest.php" name="test/Turba/Unit/ExportTest.php" />
-   <install as="Turba/Unit/ImportTest.php" name="test/Turba/Unit/ImportTest.php" />
-   <install as="Turba/Unit/LdifTest.php" name="test/Turba/Unit/LdifTest.php" />
    <install as="Turba/Unit/Driver/Base.php" name="test/Turba/Unit/Driver/Base.php" />
    <install as="Turba/Unit/Driver/KolabTest.php" name="test/Turba/Unit/Driver/KolabTest.php" />
    <install as="Turba/Unit/Driver/Sql/Base.php" name="test/Turba/Unit/Driver/Sql/Base.php" />
    <install as="Turba/Unit/Driver/Sql/Pdo/SqliteTest.php" name="test/Turba/Unit/Driver/Sql/Pdo/SqliteTest.php" />
+   <install as="Turba/Unit/ExportTest.php" name="test/Turba/Unit/ExportTest.php" />
+   <install as="Turba/Unit/ImportTest.php" name="test/Turba/Unit/ImportTest.php" />
+   <install as="Turba/Unit/LdifTest.php" name="test/Turba/Unit/LdifTest.php" />
    <install as="Turba/Unit/Turba/Base.php" name="test/Turba/Unit/Turba/Base.php" />
    <install as="Turba/Unit/Turba/KolabTest.php" name="test/Turba/Unit/Turba/KolabTest.php" />
    <install as="Turba/Unit/Turba/Sql/Base.php" name="test/Turba/Unit/Turba/Sql/Base.php" />
    <install as="Turba/Unit/Turba/Sql/Pdo/SqliteTest.php" name="test/Turba/Unit/Turba/Sql/Pdo/SqliteTest.php" />
-   <install as="turba/themes/default/screen.css" name="themes/default/screen.css" />
    <install as="turba/themes/default/block/screen.css" name="themes/default/block/screen.css" />
    <install as="turba/themes/default/graphics/az.png" name="themes/default/graphics/az.png" />
    <install as="turba/themes/default/graphics/az_secondary.png" name="themes/default/graphics/az_secondary.png" />
@@ -1185,15 +1182,18 @@
    <install as="turba/themes/default/graphics/favicon.ico" name="themes/default/graphics/favicon.ico" />
    <install as="turba/themes/default/graphics/group.png" name="themes/default/graphics/group.png" />
    <install as="turba/themes/default/graphics/loading.gif" name="themes/default/graphics/loading.gif" />
+   <install as="turba/themes/default/graphics/menu/browse.png" name="themes/default/graphics/menu/browse.png" />
+   <install as="turba/themes/default/graphics/menu/new.png" name="themes/default/graphics/menu/new.png" />
+   <install as="turba/themes/default/graphics/mime/vcard.png" name="themes/default/graphics/mime/vcard.png" />
    <install as="turba/themes/default/graphics/new.png" name="themes/default/graphics/new.png" />
    <install as="turba/themes/default/graphics/search.png" name="themes/default/graphics/search.png" />
    <install as="turba/themes/default/graphics/turba.png" name="themes/default/graphics/turba.png" />
    <install as="turba/themes/default/graphics/za.png" name="themes/default/graphics/za.png" />
    <install as="turba/themes/default/graphics/za_secondary.png" name="themes/default/graphics/za_secondary.png" />
-   <install as="turba/themes/default/graphics/menu/browse.png" name="themes/default/graphics/menu/browse.png" />
-   <install as="turba/themes/default/graphics/menu/new.png" name="themes/default/graphics/menu/new.png" />
-   <install as="turba/themes/default/graphics/mime/vcard.png" name="themes/default/graphics/mime/vcard.png" />
+   <install as="turba/themes/default/screen.css" name="themes/default/screen.css" />
    <install as="turba/themes/default/smartmobile/screen.css" name="themes/default/smartmobile/screen.css" />
+   <install as="turba/vcard.php" name="vcard.php" />
+   <install as="turba/view.php" name="view.php" />
   </filelist>
  </phprelease>
  <changelog>
@@ -2217,7 +2217,7 @@
    </notes>
   </release>
   <release>
-   <date>2017-10-17</date>
+   <date>2017-10-20</date>
    <version>
     <release>5.0.0</release>
     <api>5.0.0</api>
