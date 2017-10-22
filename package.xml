@@ -39,7 +39,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
-* 
+* [mjr] Ensure new contacts from EAS clients are given a name attribute.
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -2221,7 +2221,7 @@
    <date>2017-09-19</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* 
+* [mjr] Ensure new contacts from EAS clients are given a name attribute.
    </notes>
   </release>
  </changelog>
