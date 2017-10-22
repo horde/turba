@@ -2635,26 +2635,7 @@ class Turba_Driver implements Countable
         }
 
         /* Ensure we have a valid name field. */
-        if (empty($hash['name'])) {
-            /* If name is a composite field, it won't be present in the
-             * $this->fields array, so check for that as well. */
-            if (isset($this->map['name']) &&
-                is_array($this->map['name']) &&
-                !empty($this->map['name']['attribute'])) {
-                $fieldarray = array();
-                foreach ($this->map['name']['fields'] as $mapfields) {
-                    $fieldarray[] = isset($hash[$mapfields]) ?
-                        $hash[$mapfields] : '';
-                }
-                $hash['name'] = Turba::formatCompositeField($this->map['name']['format'], $fieldarray);
-            } else {
-                $hash['name'] = isset($hash['firstname']) ? $hash['firstname'] : '';
-                if (!empty($hash['lastname'])) {
-                    $hash['name'] .= ' ' . $hash['lastname'];
-                }
-                $hash['name'] = trim($hash['name']);
-            }
-        }
+        $hash = $this->_parseName($hash);
 
         return $hash;
     }
@@ -2875,6 +2856,9 @@ class Turba_Driver implements Countable
             }
         }
 
+        // Try our best to get a name attribute;
+        $hash = $this->_parseName($hash);
+
         /* Requires special handling */
 
         try {
@@ -2986,6 +2970,41 @@ class Turba_Driver implements Countable
             }
         } elseif (!$message->isGhosted('othercountry')) {
             $hash['otherCountry'] = '';
+        }
+
+        return $hash;
+    }
+
+    /**
+     * Checks $hash for the presence of a 'name' attribute. If not found,
+     * attempt to build one from other available values.
+     *
+     * @param  array $hash  A hash of turba attributes.
+     *
+     * @return array  Hash of Turba attributes, with the 'name' attribute
+     *                populated.
+     */
+    protected function _parseName(array $hash)
+    {
+        if (empty($hash['name'])) {
+            /* If name is a composite field, it won't be present in the
+             * $this->fields array, so check for that as well. */
+            if (isset($this->map['name']) &&
+                is_array($this->map['name']) &&
+                !empty($this->map['name']['attribute'])) {
+                $fieldarray = array();
+                foreach ($this->map['name']['fields'] as $mapfields) {
+                    $fieldarray[] = isset($hash[$mapfields]) ?
+                        $hash[$mapfields] : '';
+                }
+                $hash['name'] = Turba::formatCompositeField($this->map['name']['format'], $fieldarray);
+            } else {
+                $hash['name'] = isset($hash['firstname']) ? $hash['firstname'] : '';
+                if (!empty($hash['lastname'])) {
+                    $hash['name'] .= ' ' . $hash['lastname'];
+                }
+                $hash['name'] = trim($hash['name']);
+            }
         }
 
         return $hash;
