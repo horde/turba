@@ -27,7 +27,7 @@
         }
     ],
     "version": "5.0.0",
-    "time": "2016-12-14",
+    "time": "2017-10-20",
     "repositories": [
         {
             "type": "pear",
@@ -35,11 +35,11 @@
         }
     ],
     "require": {
-        "php": "^5.3",
+        "php": "^5.3 || ^7",
         "pear-pear.horde.org/content": "^2.0.5",
         "pear-pear.horde.org/horde": "^5",
         "pear-pear.horde.org/Horde_Auth": "^2",
-        "pear-pear.horde.org/Horde_Core": "^2.12",
+        "pear-pear.horde.org/Horde_Core": "^2.31",
         "pear-pear.horde.org/Horde_Data": "^2",
         "pear-pear.horde.org/Horde_Date": "^2",
         "pear-pear.horde.org/Horde_Dav": "^1",
@@ -66,11 +66,21 @@
     },
     "suggest": {
         "pear-pear.horde.org/Horde_ActiveSync": "^2.4",
+        "pear-pear.horde.org/Horde_Backup": "^1",
         "pear-pear.horde.org/Horde_Db": "^2.0.3",
         "pear-pear.horde.org/Horde_Imsp": "^2",
         "pear-pear.horde.org/Horde_Kolab_Format": "^2.0.5",
         "pear-pear.horde.org/Horde_Kolab_Storage": "^2.1",
         "pear-pear.horde.org/Horde_Ldap": "^2.1",
         "pear-pear.horde.org/Horde_OpenXchange": "^1"
+    },
+    "replace": {
+        "pear-pear.horde.org/turba": "5.*",
+        "pear-horde/turba": "5.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Turba": "lib/"
+        }
     }
 }
