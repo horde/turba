@@ -1217,6 +1217,12 @@
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
 * First alpha release for Horde 4.
+* [jan] Provide default configuration files instead of .dist versions.
+* [jan] Create a default address book if the user doesn&apos;t own any yet.
+* [jan] Rename sources.php to backends.php.
+* [mjr] If default addressbook is not browsable, try one from the addressbook pref (Request: 6536).
+* [jan] Add duplicate search and merging.
+* [mjr] The listTimeObjects API now returns categories for each source individually instead of returning only the categories available (Request #8504).
    </notes>
   </release>
   <release>
@@ -1231,8 +1237,8 @@
    <date>2011-03-16</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* Fix the listTimeObjects API for shared sources (Bug #9649).
-* Fix importing contacts with SyncML (Simon Bühler, Bug #9641).
+* [mjr] Fix the listTimeObjects API for shared sources (Bug #9649).
+* [jan] Fix importing contacts with SyncML (Simon Bühler, Bug #9641).
    </notes>
   </release>
   <release>
@@ -1470,7 +1476,7 @@
 * [jan] Fix SyncML compatibility with work/home phone numbers and newer Funambol clients (Bug #10912).
 * [mjr] Implement more flexible ActiveSync synchronization of names and addresses.
 * [jan] Fix address book sorting in preferences (Bug #10897).
-* [mms] Improved navigation when editing group entries.
+* [mms] Improve navigation when editing group entries.
    </notes>
   </release>
   <release>
