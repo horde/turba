@@ -1160,7 +1160,8 @@ class Turba_Api extends Horde_Registry_Api
      *                  DEFAULT: false
      *   - matchBegin: (boolean) Match word boundaries only?
      *                 DEFAULT: false
-     *   - returnFields: Only return these fields.
+     *   - returnFields: Only return these fields. Note that the __key field
+     *                   will always be returned.
      *                   DEFAULT: Return all fields.
      *   - rfc822Return: Return a Horde_Mail_Rfc822_List object.
      *                   DEFAULT: Returns an array of search results.
@@ -1349,7 +1350,10 @@ class Turba_Api extends Horde_Registry_Api
                         );
 
                         foreach (array_keys($ob->driver->getCriteria()) as $key) {
-                            $att[$key] = $ob->getValue($key);
+                            if (empty($opts['returnFields']) ||
+                                (!empty($opts['returnFields']) && in_array($key, $opts['returnFields']))) {
+                                $att[$key] = $ob->getValue($key);
+                            }
                         }
 
                         $email = new Horde_Mail_Rfc822_List();
@@ -1360,6 +1364,12 @@ class Turba_Api extends Horde_Registry_Api
                         unset($tdisplay_name);
                         $email_fields = array();
                         foreach (array_keys($att) as $key) {
+                            // Only concerned about keys that we want returned.
+                            if (!empty($opts['returnFields']) &&
+                                !in_array($key, $opts['returnFields'])) {
+                                continue;
+                            }
+
                             if ($ob->getValue($key) &&
                                 isset($attributes[$key]) &&
                                 ($attributes[$key]['type'] == 'email')) {
@@ -1423,13 +1433,37 @@ class Turba_Api extends Horde_Registry_Api
 
                         if (empty($opts['rfc822Return'])) {
                             foreach ($emails as $val) {
-                                $out[] = array_merge($att, array(
+                                $atts = array(
                                     '__type' => 'Object',
-                                    'email' => $val,
                                     'id' => $att['__key'],
-                                    'name' => $display_name,
                                     'source' => $source
-                                ));
+                                );
+                                if (empty($opts['returnFields'])) {
+                                    $atts = array(
+                                        '__type' => 'Object',
+                                        'id' => $att['__key'],
+                                        'source' => $source,
+                                        'email' => $val,
+                                        'name' => $display_name
+                                    );
+                                } else {
+                                    $atts = array();
+                                    $fields = array(
+                                        '__type' => 'Object',
+                                        'id' => $att['__key'],
+                                        'source' => $source,
+                                        'email' => $val,
+                                        'name' => $display_name
+                                    );
+                                    foreach($fields as $field => $value) {
+                                        if (in_array($field, $opts['returnFields'])) {
+                                            var_dump($field);
+                                            $atts[$field] = $value;
+                                        }
+                                    }
+                                }
+
+                                $out[] = array_merge($att, $atts);
                             }
                         }
                     }
