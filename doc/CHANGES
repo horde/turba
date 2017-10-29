@@ -22,12 +22,13 @@ v5.0.0-git
       #11889).
 
 
------------
-v4.2.22-git
------------
+-------
+v4.2.22
+-------
 
 [mjr] Fix filtering Turba_Api::search() results by requested fields (Bug
       #14719).
+[mjr] Ensure new contacts from EAS clients are given a name attribute.
 
 
 -------
