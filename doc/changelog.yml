@@ -27,6 +27,7 @@
   state:
     release: stable
     api: stable
+  date: 2017-09-19
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
@@ -38,7 +39,7 @@
   state:
     release: stable
     api: stable
-  date: 2017-08-01
+  date: 2017-09-19
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
