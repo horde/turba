@@ -39,6 +39,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
+* [mjr] Fix filtering Turba_Api::search() results by requested fields (Bug #14719).
 * [mjr] Ensure new contacts from EAS clients are given a name attribute.
  </notes>
  <contents>
@@ -2227,6 +2228,7 @@
    <date>2017-09-19</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
+* [mjr] Fix filtering Turba_Api::search() results by requested fields (Bug #14719).
 * [mjr] Ensure new contacts from EAS clients are given a name attribute.
    </notes>
   </release>

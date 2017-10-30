@@ -32,6 +32,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    [mjr] Fix filtering Turba_Api::search() results by requested fields (Bug #14719).
     [mjr] Ensure new contacts from EAS clients are given a name attribute.
 4.2.21:
   api: 4.0.0
