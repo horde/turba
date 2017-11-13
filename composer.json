@@ -1,8 +1,8 @@
 {
     "name": "horde/turba",
-    "description": "A web based address book",
-    "type": "library",
-    "homepage": "https://pear.horde.org",
+    "description": "Address book application",
+    "type": "project",
+    "homepage": "https://www.horde.org/apps/turba",
     "license": "ASL",
     "authors": [
         {
@@ -16,18 +16,18 @@
             "role": "lead"
         },
         {
-            "name": "Chuck Hagenbuch",
-            "email": "chuck@horde.org",
-            "role": "lead"
-        },
-        {
             "name": "Michael Slusarz",
             "email": "slusarz@horde.org",
             "role": "developer"
+        },
+        {
+            "name": "Chuck Hagenbuch",
+            "email": "chuck@horde.org",
+            "role": "lead"
         }
     ],
     "version": "5.0.0",
-    "time": "2017-10-20",
+    "time": "2017-11-11",
     "repositories": [
         {
             "type": "pear",
