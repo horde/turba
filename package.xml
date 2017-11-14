@@ -581,7 +581,6 @@
      <file name="AllTests.php" role="test" />
      <file name="Autoload.php" role="test" />
      <file name="bootstrap.php" role="test" />
-     <file name="phpunit.xml" role="test" />
      <file name="TestCase.php" role="test" />
     </dir> <!-- /test/Turba -->
    </dir> <!-- /test -->
@@ -1120,7 +1119,6 @@
    <install as="Turba/AllTests.php" name="test/Turba/AllTests.php" />
    <install as="Turba/Autoload.php" name="test/Turba/Autoload.php" />
    <install as="Turba/bootstrap.php" name="test/Turba/bootstrap.php" />
-   <install as="Turba/phpunit.xml" name="test/Turba/phpunit.xml" />
    <install as="Turba/TestCase.php" name="test/Turba/TestCase.php" />
    <install as="Turba/fixtures/az.png" name="test/Turba/fixtures/az.png" />
    <install as="Turba/fixtures/bug_6518.ldif" name="test/Turba/fixtures/bug_6518.ldif" />
