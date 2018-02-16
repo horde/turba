@@ -229,9 +229,11 @@ class Turba_Driver_Ldap extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Horde_Exception_NotFound
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
+    protected function _read(
+        $key, $ids, $owner, array $fields,
+        array $blobFields = array(),
+        array $dateFields = array()
+    )
     {
         /* Only DN. */
         if ($key != 'dn') {
@@ -241,7 +243,7 @@ class Turba_Driver_Ldap extends Turba_Driver
         $this->_connect();
 
         if (empty($this->_params['objectclass'])) {
-            $filter = null;
+            $filter = 'objectclass=*';
         } else {
             $filter = (string)Horde_Ldap_Filter::build(array('objectclass' => $this->_params['objectclass']), 'or');
         }
@@ -382,7 +384,7 @@ class Turba_Driver_Ldap extends Turba_Driver
          * values. These are needed so that we can delete any
          * attributes that have been removed by using ldap_mod_del. */
         if (empty($this->_params['objectclass'])) {
-            $filter = null;
+            $filter = 'objectclass=*';
         } else {
             $filter = (string)Horde_Ldap_Filter::build(array('objectclass' => $this->_params['objectclass']), 'or');
         }
