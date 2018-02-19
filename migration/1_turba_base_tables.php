@@ -124,6 +124,16 @@ class TurbaBaseTables extends Horde_Db_Migration_Base
             $this->addIndex('turba_shares_users', array('user_uid'));
             $this->addIndex('turba_shares_users', array('perm'));
         }
+
+	if (!in_array('turba_oauth', $tableList)) {
+            $t = $this->createTable('turba_oauth', array('autoincrementKey' => false));
+            $t->column('owner_id', 'string', array('limit' => 255, 'null' => false));
+            /* Token column should not have a max length, as described by the API */
+            $t->column('oauth_access', 'string', array('null' => false));
+            $t->column('oauth_sync', 'string', array('null' => false));
+            $t->primaryKey(array('owner_id'));
+            $t->end();
+        }
     }
 
     /**
