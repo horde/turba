@@ -206,6 +206,11 @@ class Turba_Application extends Horde_Registry_Application
         if ($GLOBALS['conf']['menu']['import_export']) {
             $menu->add(Horde::url('data.php'), _("_Import/Export"), 'horde-data');
         }
+
+	/* Google Contacts Sync  */
+        if ($GLOBALS['conf']['menu']['google_contacts']) {
+            $menu->add(Horde::url('oauth.php'), _("_Google Sync"));
+        }
     }
 
     /**

@@ -766,4 +766,62 @@ class Turba_Driver_Sql extends Turba_Driver
         return $this->_toTurbaObjects($this->_internalSearch($criteria, $fields, array(), $where));
     }
 
+    /**
+     * Get access/sync tokens for OAuth.
+     *
+     * @param string $tokenType Determines whether access or sync is retrieved.
+     *
+     * @return array The requested token, if access was successful.
+     */
+    public function getToken($tokenType)
+    {
+        if (!$GLOBALS['registry']->getAuth()) {
+            throw new Turba_Exception('Permission denied');
+        }
+
+        $table = 'turba_oauth';
+        $owner_id = $GLOBALS['registry']->getAuth();
+
+        $query = sprintf('SELECT %s FROM %s WHERE owner_id = ?', $tokenType,
+                                                                 $table);
+
+        try {
+            return $this->_db->selectValues($query, array($owner_id));
+        } catch (Horde_Db_Exception $e) {
+            throw new Turba_Exception(_("Server error when performing OAuth search."));
+        }
+    }
+
+    /**
+     * Set access/sync tokens for OAuth.
+     *
+     * @param string $token The token to be stored.
+     * @param string $tokenType Determines whether access or sync is set.
+     */
+    public function setToken($token, $tokenType)
+    {
+        if (!$GLOBALS['registry']->getAuth()) {
+            throw new Turba_Exception('Permission denied');
+        }
+
+        $table = 'turba_oauth';
+        $owner_id = $GLOBALS['registry']->getAuth();
+
+        $checkExists = sprintf('SELECT * FROM %s WHERE owner_id = ?', $table);
+
+        $update = sprintf('UPDATE %s SET %s = ? WHERE owner_id = ?' , $table,
+                                                                     $tokenType);
+
+        $insert = sprintf('INSERT INTO %s (owner_id, %s) VALUES (?,?)' , $table, $tokenType);
+
+        try {
+            if (!empty($this->_db->selectValues($checkExists, array($owner_id)))) {
+                $this->_db->insert($update, array($token,$owner_id));
+            } else {
+                $this->_db->insert($insert, array($owner_id,$token));
+            }
+        } catch (Horde_Db_Exception $e) {
+            throw new Turba_Exception(_("Server error when performing OAuth insertion."));
+        }
+    }
 }

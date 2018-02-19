@@ -5,6 +5,8 @@
   <configheader>Menu Settings</configheader>
   <configboolean name="import_export" desc="Should we display an Import/Export
   link in Turba's menu?">true</configboolean>
+  <configboolean name="google_contacts" desc="Should syncing Google Contacts
+  with Oauth2 be allowed? Requires SQL backend">true</configboolean>
  </configsection>
 
  <configsection name="client">

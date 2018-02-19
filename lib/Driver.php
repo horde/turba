@@ -3204,4 +3204,57 @@ class Turba_Driver implements Countable
         }
     }
 
+    /**
+     * Get access/sync tokens for OAuth.
+     *
+     * @param Turba_Driver $driver Contains the system storage driver
+     * @param string $tokenType Determines whether access or sync is retrieved.
+     *
+     * @return array The requested token, if access was successful.
+     */
+    public function getToken($driver, $tokenType)
+    {
+        /**
+         * functionality added here for future implementation in other drivers
+         *   but the user should be notified if they try to use something other than SQL at the moment.
+         */
+        if (get_class($driver->_driver) != 'Turba_Driver_Sql') {
+            throw new Turba_Exception('OAuth only supported by the SQL storage backend');
+        }
+
+        // This shouldn't happen - if it does something is broken.
+        if ($tokenType == '') {
+            throw new Turba_Exception('No OAuth token type specified.');
+        }
+
+        return $driver->_driver->getToken($tokenType);
+    }
+
+    /**
+     * Set access/sync tokens for OAuth.
+     *
+     * @param Turba_Driver $driver Contains the system storage driver
+     * @param string $token The token to be stored.
+     * @param string $tokenType Determines whether access or sync is set.
+     */
+    public function setToken($driver, $token, $tokenType)
+    {
+        /**
+         * functionality added here for future implementation in other drivers
+         *   but the user should be notified if they try to use something other than SQL at the moment.
+         */
+        if (get_class($driver->_driver) != 'Turba_Driver_Sql') {
+            throw new Turba_Exception('OAuth only supported by the SQL storage backend');
+        }
+
+        // This shouldn't happen - if it does something is broken.
+        if ($tokenType == '') {
+            throw new Turba_Exception('No OAuth token type specified.');
+        }
+        if ($token == '') {
+            throw new Turba_Exception('No OAuth token specified.');
+        }
+
+        return $driver->_driver->setToken($token, $tokenType);
+    }
 }

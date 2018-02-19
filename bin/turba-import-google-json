@@ -1,0 +1,72 @@
+#!/usr/bin/env php
+<?php
+/**
+ * This script imports JSON data into turba address books.
+ * The address book, user name, and JSON data are
+ * passed as parameters.
+ *
+ * -- TODO -- Copyright 2005-2018 Horde LLC (http://www.horde.org/)
+ *
+ * See the enclosed file LICENSE for license information (ASL).  If you
+ * did not receive this file, see http://www.horde.org/licenses/apache.
+ *
+ * @author Matthew Sharinghousen <matthew.sharinghousen@uni.kn>
+ */
+
+/**
+ *
+ * This file is still in the early stages... Included for completeness... 
+ */
+
+if (file_exists(__DIR__ . '/../../turba/lib/Application.php')) {
+    $baseDir = __DIR__ . '/../';
+} else {
+    require_once 'PEAR/Config.php';
+    $baseDir = PEAR_Config::singleton()
+        ->get('horde_dir', null, 'pear.horde.org') . '/turba/';
+}
+require_once $baseDir . 'lib/Application.php';
+Horde_Registry::appInit('turba', array('cli' => true));
+
+// Read command line parameters.
+if (count($argv) != 3) {
+    $cli->message('Too many or too few parameters.', 'cli.error');
+    usage();
+}
+$user = $argv[1];
+$data = $argv[2];
+
+$registry->setAuth($user, array());
+
+// Check the if the data is valid json
+json_decode(data);
+if (json_last_error() == JSON_ERROR_NONE) {
+    $cli->message('Data is not valid JSON.', 'cli.error');
+    usage();
+}
+
+$vars = Horde_Variables::getDefaultVariables();
+//$vars->set('a', 'Google Contacts');
+
+// Create address book, if not exists
+$addressbook = '';
+//$addressbook = $injector->getInstance('Turba_Shares')->getShare($vars->get('a'));
+if (!$addressbuch) {
+    //$vars = Horde_Variables::getDefaultVariables();
+    $vars->set('name', 'Google Contacts');
+    $vars->set('description', '');
+    $form = new Turba_Form_CreateAddressBook($vars);
+
+    try {
+        $form->execute();
+    } catch (Turba_Exception $e) {
+        $notification->push($e);
+    }
+}
+
+function usage()
+{
+    $GLOBALS['cli']->writeln('Usage: turba-import-google-json user json');
+    exit;
+}
+
