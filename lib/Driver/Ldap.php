@@ -83,7 +83,7 @@ class Turba_Driver_Ldap extends Turba_Driver
         }
 
         /* Set the LDAP referrals. */
-        if (!empty($this->_params['referrals'])) {
+        if (array_key_exists('referrals', $this->_params)) {
             @ldap_set_option($this->_ds, LDAP_OPT_REFERRALS, $this->_params['referrals']);
         }
 
