@@ -32,6 +32,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    [jan] Allow to use table prefixes in SQL column map.
     [jan] Fix reading LDAP contacts if 'objectclass' parameter is empty.
     [mjr] Fix filtering Turba_Api::search() results by requested fields (Bug #14719).
     [mjr] Ensure new contacts from EAS clients are given a name attribute.
