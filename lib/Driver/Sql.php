@@ -648,6 +648,30 @@ class Turba_Driver_Sql extends Turba_Driver
     }
 
     /**
+     * Translates a hash from being keyed on driver-specific fields to being
+     * keyed on the generalized Turba attributes. The translation is based on
+     * the contents of $this->map.
+     *
+     * @param array $entry  A hash using driver-specific keys.
+     *
+     * @return array  Translated version of $entry.
+     */
+    public function toTurbaKeys(array $entry)
+    {
+        $new_entry = array();
+        foreach ($this->map as $key => $val) {
+            $key = preg_replace('/.*\.(.*)/', '$1', $key);
+            if (!is_array($val)) {
+                $new_entry[$key] = (isset($entry[$val]) && (!empty($entry[$val]) || (is_string($entry[$val]) && strlen($entry[$val]))))
+                    ? trim($entry[$val])
+                    : null;
+            }
+        }
+
+        return $new_entry;
+    }
+
+    /**
      * Converts a value from the driver's charset to the default charset.
      *
      * @param mixed $value  A value to convert.
