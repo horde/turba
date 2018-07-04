@@ -1,7 +1,9 @@
------------
-v4.2.22-git
------------
+-------
+v4.2.22
+-------
 
+[jan] Allow to use table prefixes in SQL column map.
+[jan] Fix reading LDAP contacts if 'objectclass' parameter is empty.
 [mjr] Fix filtering Turba_Api::search() results by requested fields (Bug
       #14719).
 [mjr] Ensure new contacts from EAS clients are given a name attribute.
@@ -780,9 +782,9 @@ v2.3.1
 [mms] Upgrade prototype.js to v1.6.0.3.
 
 
-----
-v2.3
-----
+------
+v2.3.0
+------
 
 [jan] Change group field in shares table to work with LDAP groups (Bug #6883).
 [jan] Fix exporting address books with country fields as vCards (Bug #7372).
@@ -791,9 +793,9 @@ v2.3
 [mjr] Correctly calculate the age of time objects (Bug #7330).
 
 
---------
-v2.3-RC1
---------
+---------
+v2.3.0RC1
+---------
 
 [jan] Improve vCard EMAIL field parsing (Bug #7281).
 [jan] Correctly import and export address extensions (Bug #7279).
@@ -846,9 +848,9 @@ v2.2.1
       script that was causing fatal errors.
 
 
-----
-v2.2
-----
+------
+v2.2.0
+------
 
 [mjr] Fix importing email addresses from CSV files to be consistent with what
       we allow to be entered via the UI. (Bug #6725)
@@ -856,9 +858,9 @@ v2.2
       #6740).
 
 
---------
-v2.2-RC4
---------
+---------
+v2.2.0RC4
+---------
 
 [cjh] Fix editing contacts that were accessed by UID (Bug #6672).
 [cjh] Apply fix for http://dev.rubyonrails.org/ticket/11473 to prototype.js
@@ -896,18 +898,18 @@ v2.2-RC4
 [mjr] Prevent overwriting contact entries with the upgrade script (Bug #6308).
 
 
---------
-v2.2-RC3
---------
+---------
+v2.2.0RC3
+---------
 
 [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug
       #6208) (CVE-2008-0807).
 [jan] Add configuration to more flexibly parse full names into the name parts.
 
 
---------
-v2.2-RC2
---------
+---------
+v2.2.0RC2
+---------
 
 [jan] SECURITY: Fix privilege escalation in Horde API.
 [mjr] Degrade gracefully when no VFS is configured.
@@ -927,9 +929,9 @@ v2.2-RC2
 [mjr] Added anniversary support to the listTimeObjects API.
 
 
---------
-v2.2-RC1
---------
+---------
+v2.2.0RC1
+---------
 
 [jan] Fix birthday calculation on years before 1970 with DST (Bug #5791).
 [jan] Implement WebDAV DELETE.
@@ -951,9 +953,9 @@ v2.2-RC1
       missing part of the contact list name, and other oddities.
 
 
-----------
-v2.2-ALPHA
-----------
+-----------
+v2.2.0alpha
+-----------
 
 [cjh] Add support for approximate searches, if the underlying backend and Horde
       code support them (Request #2901).
@@ -1091,16 +1093,16 @@ v2.1.1
 [jan] Fix configuration example for birthday fields.
 
 
-----
-v2.1
-----
+------
+v2.1.0
+------
 
 [ben] Better support for MS-SQL
 
 
---------
-v2.1-RC1
---------
+---------
+v2.1.0RC1
+---------
 
 [mjr] Default to showing the 'A' page when browsing address books that contain
       more than the 'perpage' number of entries.
@@ -1196,9 +1198,9 @@ v2.0.3
       <oahmet@metu.edu.tr>).
 
 
-----------
-v2.0.3-RC1
-----------
+---------
+v2.0.3RC1
+---------
 
 [jan] Don't show "Add" icon if no writeable address books exist.
 [jan] Don't show "Browse" icon and list if no browseable address books exist.
@@ -1249,9 +1251,9 @@ v2.0.1
       <mike@theupstairsroom.com>, Bug #1256).
 
 
-----------
-v2.0.1-RC1
-----------
+---------
+v2.0.1RC1
+---------
 
 [jan] Create compose links for all email addresses at once in contact listings
       (requires IMP 4.0.2).
@@ -1262,9 +1264,9 @@ v2.0.1-RC1
 [cjh] Support TLS connections to LDAP servers (Bug #1149).
 
 
-----
-v2.0
-----
+------
+v2.0.0
+------
 
 [cjh] UIDs need to be stored in the History system with a turba: prefix and
       with the contact owner so as not to confuse different instances of the
@@ -1274,9 +1276,9 @@ v2.0
 [cjh] Improve error and permission checking.
 
 
---------
-v2.0-RC3
---------
+---------
+v2.0.0RC3
+---------
 
 [cjh] Prevent copying/moving of groups (Bug #935).
 [cjh] Fix IMSP groups (Michael Rubinsky <mike@theupstairsroom.com>)
@@ -1287,9 +1289,9 @@ v2.0-RC3
 [jan] Fix some javascript errors with IE 5.0.
 
 
---------
-v2.0-RC2
---------
+---------
+v2.0.0RC2
+---------
 
 [cjh] Don't overwrite form data with object defaults when editing if validation
       fails (Bug #883).
@@ -1298,9 +1300,9 @@ v2.0-RC2
 [cjh] Ignore any __-prefixed attribute in building search criteria (Bug #877).
 
 
---------
-v2.0-RC1
---------
+---------
+v2.0.0RC1
+---------
 
 [mms] Fixed the delete API to not exit with error if the item to be deleted is
       not found in the first source provided.
@@ -1308,9 +1310,9 @@ v2.0-RC1
       close button.
 
 
----------
-v2.0-BETA
----------
+----------
+v2.0.0beta
+----------
 
 [jan] Allow to group fields into tabs.
 [mms] Link email address in object view.
@@ -1333,9 +1335,9 @@ v2.0-BETA
 [cjh] The alphabetic pager now has an "All" option.
 
 
-----------
-v2.0-ALPHA
-----------
+-----------
+v2.0.0alpha
+-----------
 
 [cjh] Show an alphabetic pager for browsing address books (Mike Bydalek
       <mbydalek@zivix.com>).
@@ -1427,9 +1429,9 @@ v1.2.1
 [cjh] Remove dependency on class not in Horde 2.x.
 
 
-----
-v1.2
-----
+------
+v1.2.0
+------
 
 [cjh] Use the 'objectclass' entry from LDAP sources instead of defaulting to
       'objectclass=*'.
@@ -1471,9 +1473,9 @@ v1.2
       <liamr@umich.edu>).
 
 
-----
-v1.1
-----
+------
+v1.1.0
+------
 
 [jan] Add Hungarian translation (Laszlo L. Tornoci <torlasz@xenia.sote.hu>).
 [jan] Add Norwegian Nynorsk translation (Per-Stian Vatne <psv@orsta.org>).
@@ -1518,9 +1520,9 @@ v1.1
 [jan] Fix bug "This person is already in your addressbook.".
 
 
-----
-v1.0
-----
+------
+v1.0.0
+------
 
 [jan] Add Norwegian Bookmal translation (Oystein Steimler <oystein@rexta.net>).
 [avsm] Add .htaccess files to deny access to data directories.
@@ -1528,9 +1530,9 @@ v1.0
 [cjh] Avoid adding duplicate entries through the add API method.
 
 
---------
-v1.0-RC4
---------
+---------
+v1.0.0RC4
+---------
 
 [rich] Include rewritten and reorganized documentation.
 [rich] License under Horde APL.
