@@ -1393,7 +1393,6 @@ class Turba_Api extends Horde_Registry_Api
                                     );
                                     foreach($fields as $field => $value) {
                                         if (in_array($field, $opts['returnFields'])) {
-                                            var_dump($field);
                                             $atts[$field] = $value;
                                         }
                                     }
