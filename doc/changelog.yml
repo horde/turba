@@ -22,6 +22,17 @@
     [mjr] Add ability to add special characters to the alpha pager.
     [jan] Return ETags with browse() API method.
     [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+4.2.23:
+  api: 4.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2018-07-04
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+     [mjr] Remove debug output that was breaking EAS searches (Bug: 14843).
 4.2.22:
   api: 4.0.0
   state:
@@ -973,13 +984,13 @@
     [cjh] Add a PostgreSQL-specific upgrade script for 2.2.1 to 2.3 (michael.menge@zdv.uni-tuebingen.de, Bug #7462).
     [jan] Don't overwrite empty address books preference when creating new shares (Bug #7399).
     [mms] Upgrade prototype.js to v1.6.0.3.
-2.3:
+2.3.0:
   notes: |
     [jan] Change group field in shares table to work with LDAP groups (Bug #6883).
     [jan] Fix exporting address books with country fields as vCards (Bug #7372).
     [mjr] Make sure we use all address books when searching via the api and the user's addressbooks pref is empty (Bug #7357).
     [mjr] Correctly calculate the age of time objects (Bug #7330).
-2.3-RC1:
+2.3.0RC1:
   notes: |
     [jan] Improve vCard EMAIL field parsing (Bug #7281).
     [jan] Correctly import and export address extensions (Bug #7279).
@@ -1013,11 +1024,11 @@
     [cjh] SECURITY: Escape contact names in the contact display view.
     [jan] Fix importing of certain phone numbers from vCard (Bug #6744).
     [mjr] Correct a function declaration in the 2.1_to_2.2_sql_schema.php upgrade script that was causing fatal errors.
-2.2:
+2.2.0:
   notes: |
     [mjr] Fix importing email addresses from CSV files to be consistent with what we allow to be entered via the UI. (Bug #6725)
     [cjh] Improve resource usage in datatree_to_sql share migration script (Bug #6740).
-2.2-RC4:
+2.2.0RC4:
   notes: |
     [cjh] Fix editing contacts that were accessed by UID (Bug #6672).
     [cjh] Apply fix for http://dev.rubyonrails.org/ticket/11473 to prototype.js (Request #6590).
@@ -1046,11 +1057,11 @@
     [jan] Store categories as strings.
     [cjh] Show who created or made the last change to a contact along with the date (Request #6305).
     [mjr] Prevent overwriting contact entries with the upgrade script (Bug #6308).
-2.2-RC3:
+2.2.0RC3:
   notes: |
     [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug #6208) (CVE-2008-0807).
     [jan] Add configuration to more flexibly parse full names into the name parts.
-2.2-RC2:
+2.2.0RC2:
   notes: |
     [jan] SECURITY: Fix privilege escalation in Horde API.
     [mjr] Degrade gracefully when no VFS is configured.
@@ -1064,7 +1075,7 @@
     [mjr] Fix issue that caused listTimeObjects API to miss returning objects when the date range crosses over into the next year.
     [jan] Improved portability of the upgrade script (Bug #5949).
     [mjr] Added anniversary support to the listTimeObjects API.
-2.2-RC1:
+2.2.0RC1:
   notes: |
     [jan] Fix birthday calculation on years before 1970 with DST (Bug #5791).
     [jan] Implement WebDAV DELETE.
@@ -1079,7 +1090,7 @@
     [cjh] Catch searches that seem non-empty but really aren't (Bug #5612).
     [mjr] Fix fatal errors when no share enabled sources are present.
     [mjr] Fix issue with naming new contact lists that was causing database errors, missing part of the contact list name, and other oddities.
-2.2-ALPHA:
+2.2.0alpha:
   notes: |
     [cjh] Add support for approximate searches, if the underlying backend and Horde code support them (Request #2901).
     [cjh] Add a print link for contacts (Request #2800).
@@ -1156,10 +1167,10 @@
     [cjh] Show the copy/move dropdown any time there is an editable address book that's not the current one (Bug #3588).
     [jan] Don't show warning after dealing with contacts from a non-browseable address book (Bug #3587).
     [jan] Fix configuration example for birthday fields.
-2.1:
+2.1.0:
   notes: |
     [ben] Better support for MS-SQL
-2.1-RC1:
+2.1.0RC1:
   notes: |
     [mjr] Default to showing the 'A' page when browsing address books that contain more than the 'perpage' number of entries.
     [jan] Add Icelandic translation (Bjorn Davidsson <bjossi@snerpa.is>).
@@ -1211,7 +1222,7 @@
 2.0.3:
   notes: |
     [jan] Add Turkish translation (Servet Güney <sguney@metu.edu.tr>, Ahmet Öztürk <oahmet@metu.edu.tr>).
-2.0.3-RC1:
+2.0.3RC1:
   notes: |
     [jan] Don't show "Add" icon if no writeable address books exist.
     [jan] Don't show "Browse" icon and list if no browseable address books exist.
@@ -1239,18 +1250,18 @@
     [cjh] Quote LDAP DN entries according to RFC 1485 (Bug #1146).
     [cjh] When importing vCard 3.0 ADR fields, try to build a composite entry for workAddress or homeAddress, and keep the street address in workStreet or homeStreet (Bug #1109).
     [jan] Implement OR searches in IMSP driver (Michael Rubinsky <mike@theupstairsroom.com>, Bug #1256).
-2.0.1-RC1:
+2.0.1RC1:
   notes: |
     [jan] Create compose links for all email addresses at once in contact listings (requires IMP 4.0.2).
     [jan] Open compose windows from the portal's minisearch block in the correct frame (Bug #1293).
     [jan] Several performance optimizations.
     [jan] Don't return empty result sets in search API (Bug #1210).
     [cjh] Support TLS connections to LDAP servers (Bug #1149).
-2.0:
+2.0.0:
   notes: |
     [cjh] UIDs need to be stored in the History system with a turba: prefix and with the contact owner so as not to confuse different instances of the same contact (if two users both have a contact in their seperate addressbooks in a private source, they should have unique histories for those contacts).
     [cjh] Improve error and permission checking.
-2.0-RC3:
+2.0.0RC3:
   notes: |
     [cjh] Prevent copying/moving of groups (Bug #935).
     [cjh] Fix IMSP groups (Michael Rubinsky <mike@theupstairsroom.com>)
@@ -1258,16 +1269,16 @@
     [jan] Fix SOAP namespace for API method signatures.
     [cjh] Change to Turba::getMenu(), fixes the menu on the Options screen (Bug #898).
     [jan] Fix some javascript errors with IE 5.0.
-2.0-RC2:
+2.0.0RC2:
   notes: |
     [cjh] Don't overwrite form data with object defaults when editing if validation fails (Bug #883).
     [cjh] Use source permissions if they are present, and if not, fall back to the old source admin array (Bug #853).
     [cjh] Ignore any __-prefixed attribute in building search criteria (Bug #877).
-2.0-RC1:
+2.0.0RC1:
   notes: |
     [mms] Fixed the delete API to not exit with error if the item to be deleted is not found in the first source provided.
     [cjh] Removed miniwindow.php; it simply provided a frame around Turba with a close button.
-2.0-BETA:
+2.0.0beta:
   notes: |
     [jan] Allow to group fields into tabs.
     [mms] Link email address in object view.
@@ -1281,7 +1292,7 @@
     [jan] Add access keys.
     [cjh] Add Kolab drivers (Stuart Bing� <s.binge@codefusion.co.za>).
     [cjh] The alphabetic pager now has an "All" option.
-2.0-ALPHA:
+2.0.0alpha:
   notes: |
     [cjh] Show an alphabetic pager for browsing address books (Mike Bydalek <mbydalek@zivix.com>).
     [cjh] Rename LDAP objects when their DN changes (Tarjei Huse <tarjei+a_lists.phpgw@nu.no>).
@@ -1331,7 +1342,7 @@
     [jan] Add Macedonian translation (Stojan Pesov <ssp@eureka.com.mk>).
     [jan] Add Romanian translation (Eugen Hoanca <eugenh@urban-grafx.ro>, Marius Dragulescu <mariusd@urban-grafx.ro>).
     [cjh] Remove dependency on class not in Horde 2.x.
-1.2:
+1.2.0:
   notes: |
     [cjh] Use the 'objectclass' entry from LDAP sources instead of defaulting to 'objectclass=*'.
     [jan] Add Catalan translation (Angels Guimer� <angels.Guimera@uab.es>).
@@ -1358,7 +1369,7 @@
     [jan] Replace <?= with <?php echo to remove the short_open_tags requirement (cjh).
     [jan] Fix preference for default view.
     [jan] Add import/export filter for TSV, Mulberry and Pine (Liam Hoekenga <liamr@umich.edu>).
-1.1:
+1.1.0:
   notes: |
     [jan] Add Hungarian translation (Laszlo L. Tornoci <torlasz@xenia.sote.hu>).
     [jan] Add Norwegian Nynorsk translation (Per-Stian Vatne <psv@orsta.org>).
@@ -1393,13 +1404,13 @@
     [jan] Add Ukrainian translation (Andriy Kopystyansky <anri@polynet.lviv.ua>).
     [jan] Add Danish translation (Martin List-Petersen <martin@list-petersen.dk>).
     [jan] Fix bug "This person is already in your addressbook.".
-1.0:
+1.0.0:
   notes: |
     [jan] Add Norwegian Bookmal translation (Oystein Steimler <oystein@rexta.net>).
     [avsm] Add .htaccess files to deny access to data directories.
     [jan] Add Finnish translation (Leena Heino <liinu@uta.fi>).
     [cjh] Avoid adding duplicate entries through the add API method.
-1.0-RC4:
+1.0.0RC4:
   notes: |
     [rich] Include rewritten and reorganized documentation.
     [rich] License under Horde APL.
