@@ -31,8 +31,8 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
+  notes: |
+     [mjr] Remove debug output that was breaking EAS searches (Bug: 14843).
 4.2.22:
   api: 4.0.0
   state:
