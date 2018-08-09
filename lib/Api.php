@@ -1274,7 +1274,9 @@ class Turba_Api extends Horde_Registry_Api
                                 'email' => implode(', ', $emails),
                                 'id' => $listatt['__key'],
                                 'name' => $listName,
-                                'source' => $source
+                                'source' => $source,
+                                '__key' => $listatt['__key'],
+                                '__type' => $listatt['__type']
                             );
                         } else {
                             $results->add(new Horde_Mail_Rfc822_Group($listName, $emails));
