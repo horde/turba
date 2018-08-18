@@ -2,8 +2,7 @@
 v4.2.23
 -------
 
-[mjr] Remove debug output that was breaking EAS searches (Bug #14843).
-
+[mjr] Remove debug output that was breaking EAS searches (Bug: 14843).
 
 
 -------
