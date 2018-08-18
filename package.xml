@@ -28,7 +28,7 @@
   <email>chuck@horde.org</email>
   <active>no</active>
  </lead>
- <date>2018-07-04</date>
+ <date>2018-08-18</date>
  <version>
   <release>4.2.23</release>
   <api>4.0.0</api>
@@ -3525,7 +3525,7 @@
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2018-07-04</date>
+   <date>2018-08-18</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
 * [mjr] Remove debug output that was breaking EAS searches (Bug: 14843).
