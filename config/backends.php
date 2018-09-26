@@ -432,10 +432,10 @@ $cfgSources['localldap'] = array(
         // For Active Directory:
         // 'sizelimit' => 0,
         'dn' => array('cn'),
-        'objectclass' => array('top',
-                               'person',
+        'objectclass' => array('person',
                                'organizationalPerson',
                                'inetOrgPerson'),
+                               // The filter is "or" (any of the listed classes is a match)
                                // Add 'turbaContact' to this array if using
                                // 'turbaType' attribute below, and 'calEntry'
                                // if using 'freebusyUrl'.
@@ -544,12 +544,13 @@ $cfgSources['personal_ldap'] = array(
         'bind_dn' => 'uid=' . $_ldap_uid . ',ou=People,' . $_ldap_basedn,
         'bind_password' => $GLOBALS['registry']->getAuthCredential('password'),
         'dn' => array('uid'),
-        'objectclass' => array('top',
-                               'person',
+        'objectclass' => array('person',
                                // 'turbaContact',
                                'inetOrgPerson',
                                // 'calEntry',
                                'organizationalPerson'),
+                               // The filter is "or" (any of the listed classes is a match)
+
         'scope' => 'one',
         'charset' => 'utf-8',
         'version' => 3
