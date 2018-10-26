@@ -2,7 +2,9 @@
 v4.2.24
 -------
 
-
+[jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang
+      <lang@b1-systems.de>, PR 3).
+|+
 
 
 -------
@@ -125,8 +127,7 @@ v4.2.11
 -------
 
 [mjr] Fix regression in removing all contacts from a single address book in the
-      Sql driver (Bug #14145, Guenter Bartsch
-      <guenter.bartsch@vista-rasch.com>).
+      Sql driver (Bug #14145, Guenter Bartsch <guenter.bartsch@vista-rasch.com>).
 
 
 -------
@@ -318,8 +319,8 @@ v4.1.2
 [jan] Fix fatal errors if DAV support is disabled (Bug #12481).
 [mjr] Fix deleting multiple contacts via the API (Bug #12554).
 [mjr] Fix issue generating contact hashes from EAS contacts that could prevent
-      duplicate contact detection from working when certain properties have
-      empty values (Bug #12506).
+      duplicate contact detection from working when certain properties have empty
+      values (Bug #12506).
 
 
 ------
@@ -840,8 +841,8 @@ v2.3.0RC1
 [jan] Fix searching of client address books that have been disabled in the
       preferences (Bug #6961).
 [mjr] Fix issue with removeUserData api that caused the deleted user's address
-      books to not be deleted as well as remove an erroneous error notification
-      (Bug #6969).
+      books to not be deleted as well as remove an erroneous error notification (Bug
+      #6969).
 [cjh] Fix the column selector/sorter in IE (Bug #6912).
 
 
@@ -975,8 +976,8 @@ v2.2.0alpha
       code support them (Request #2901).
 [cjh] Add a print link for contacts (Request #2800).
 [cjh] Shared Address Books are now stored in a flat namespace so that they do
-      not rely on the hierarchical (i.e. DataTree) properties of the
-      Horde_Share API (Bug #4960).
+      not rely on the hierarchical (i.e. DataTree) properties of the Horde_Share API
+      (Bug #4960).
 [cjh] If names are displayed "Lastname, Firstname", sort composite name fields
       by lastname (Request #3909).
 [cjh] Show an overlay while running a search (Request #3154).
@@ -1139,12 +1140,12 @@ v2.1.0RC1
       (m.zdila@episoftware.com, Bug #2405).
 [cjh] Charset-aware handling of LDAP DNs (Bug #2395).
 [cjh] Get rid of cached search results entirely, and move more display code
-      into Turba_ListView, simplifying a number of different codepaths and
-      avoiding servercide when using Advanced Search.
+      into Turba_ListView, simplifying a number of different codepaths and avoiding
+      servercide when using Advanced Search.
 [mjr] Turba_Object and Turba_Driver objects are now responsible for checking
-      permissions for the sources they represent.  This allows concrete
-      Turba_Driver objects to override Horde Perms and perform their own
-      permission checking (by checking ACLs for example).
+      permissions for the sources they represent.  This allows concrete Turba_Driver
+      objects to override Horde Perms and perform their own permission checking (by
+      checking ACLs for example).
 [cjh] "readonly" and "admin" source hash entries are deprecated. Permissons are
       set through the Horde Perms UI now.
 [cjh] Avoid adding exact duplicates during import (kevin_myer@iu13.org, Bug
@@ -1169,16 +1170,15 @@ v2.1.0RC1
       either by attributes.php or by the LDAP schema itself (Edward Rudd
       <eddie@omegaware.com>, Request #2).
 [mjr] Search terms on composite fields are now taken as a space delimited list
-      of strings that are each OR'd against each field making up the composite
-      field  and then cumulatively AND'd together.
+      of strings that are each OR'd against each field making up the composite field 
+      and then cumulatively AND'd together.
 [jan] Show warnings from CSV imports.
 [jan] Add "Add" and "Search" entries to sidebar menu.
 [jan] Return to original browse view after finishing group editing.
 [jan] Add submenu with address books to sidebar.
 [jan] Allow to specify charset of imported CSV files.
 [cjh] Pass the Turba_AbstractObject to attribute hooks to allow access to other
-      attribute values (for example, to build a field's value out of other
-      fields).
+      attribute values (for example, to build a field's value out of other fields).
 [jan] Show list of edited contacts below edit form when editing several
       contacts at once.
 [jan] Add VFS support to attach files to contacts.
@@ -1223,8 +1223,8 @@ v2.0.3RC1
       backends that want to use uid in the DN) (Bug #2027).
 [mjr] Fix bug where search results are not displayed when no browseable
       addressbooks exist and bug where the browse attribute is ignored for
-      addressbooks that are set as default, allowing a non-browseable
-      addressbook to be browsed (Bug #1959).
+      addressbooks that are set as default, allowing a non-browseable addressbook to
+      be browsed (Bug #1959).
 [jan] Import and export of birthdays with vCards (thomas@gelf.net, Bug #1269).
 [jan] Fix mini search portal block with non-ascii search strings (Bug #1605).
 [cjh] Add a generic SQL upgrade script, replacing the MySQL-specific version
@@ -1283,10 +1283,9 @@ v2.0.0
 ------
 
 [cjh] UIDs need to be stored in the History system with a turba: prefix and
-      with the contact owner so as not to confuse different instances of the
-      same contact (if two users both have a contact in their seperate
-      addressbooks in a private source, they should have unique histories for
-      those contacts).
+      with the contact owner so as not to confuse different instances of the same
+      contact (if two users both have a contact in their seperate addressbooks in a
+      private source, they should have unique histories for those contacts).
 [cjh] Improve error and permission checking.
 
 
@@ -1624,15 +1623,15 @@ v0.0.2
 [cjh] Add and Delete now work for the LDAP driver.
 [cjh] Fix wap contacts searching.
 [cjh] Turba now uses Horde authentication instead of its own. This means that
-      whatever auth method you are using for Horde will be used to authenticate
-      to Turba, and in return you get single sign-on with any other apps using
-      Horde authentication.
+      whatever auth method you are using for Horde will be used to authenticate to
+      Turba, and in return you get single sign-on with any other apps using Horde
+      authentication.
 [cjh] Working addObject() and removeObject() SQL driver methods.
 [cjh] Move Turba_Source::getMyObject() to Turba_Source::getObject(); nothing
       was using the old getObject() call anymore.
 [cjh] If you set $params['bind_dn'] and $params['bind_password'] for an LDAP
-      source, Turba will bind as the specified dn to the LDAP server, letting
-      you add/edit entries.
+      source, Turba will bind as the specified dn to the LDAP server, letting you
+      add/edit entries.
 [cjh] Update capatilization to match Horde/PEAR standards.
 [cjh] register_globals = Off fixes.
 [cmc] Add a display object page, fix a ldap bug with the dn, add a read
@@ -1647,17 +1646,17 @@ v0.0.2
 [cjh] Moved the filter() functionality (and supporting functions) into
       Turba_List, where it really belongs.
 [cjh] We now actually use Turba_List, Turba_AbstractObject, Turba_ListView, and
-      many other pieces of the class hierarchy that were previously only
-      referenced in the object model.
+      many other pieces of the class hierarchy that were previously only referenced
+      in the object model.
 [cjh] Clean up the sql Driver implementation a bit. Now, if the source is
-      private, the __owner criteria must match the current user, instead of
-      using __key. __key should uniquely identify each object, and shouldn't be
-      what user that object belongs to.
+      private, the __owner criteria must match the current user, instead of using
+      __key. __key should uniquely identify each object, and shouldn't be what user
+      that object belongs to.
 [cjh] Reorganize the class hierarchy a bit - use Object instead of Contact, and
       a few other naming changes.
 [cjh] Merged WAP functionality into search.php. If a WAP browser is detected, a
-      slimmed-down wml interface will be used that only displays names and
-      (callable) phone numbers.
+      slimmed-down wml interface will be used that only displays names and (callable)
+      phone numbers.
 
 
 ------

@@ -39,7 +39,8 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
-* 
+* [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang &lt;lang@b1-systems.de&gt;, PR 3).
+* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -1200,7 +1201,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Fix bug where searches with no results would tack on an empty row.
 * [cjh] Conversion to CSS.
@@ -1227,7 +1228,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Add some more error checking to the searching and LDAP driver.
 * [cjh] Add config/attributes.php to provide nice labels for directory attributes.
@@ -1275,7 +1276,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Add an optional &apos;strict&apos; configuration array definining fields which must always be matched exactly.
 * [jan] Add API function to get info about the fields.
@@ -1308,7 +1309,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [rich] Include rewritten and reorganized documentation.
 * [rich] License under Horde APL.
@@ -1333,7 +1334,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Add Norwegian Bookmal translation (Oystein Steimler &lt;oystein@rexta.net&gt;).
 * [avsm] Add .htaccess files to deny access to data directories.
@@ -1351,7 +1352,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Add Hungarian translation (Laszlo L. Tornoci &lt;torlasz@xenia.sote.hu&gt;).
 * [jan] Add Norwegian Nynorsk translation (Per-Stian Vatne &lt;psv@orsta.org&gt;).
@@ -1398,7 +1399,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Use the &apos;objectclass&apos; entry from LDAP sources instead of defaulting to &apos;objectclass=*&apos;.
 * [jan] Add Catalan translation (Angels Guimer� &lt;angels.Guimera@uab.es&gt;).
@@ -1437,7 +1438,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fix importing of vCard 2.1 data that contains commas (needs Horde 2.2.4).
 * [jan] Make sorting order dependent of the name format (Sergey Zhukov &lt;sergey@intellij.net&gt;).
@@ -1457,7 +1458,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Add Galician translation (Rafael Varela Pet &lt;srrafa@usc.es&gt;, Guillermo Mendez &lt;guille@usc.es&gt;).
    </notes>
@@ -1472,7 +1473,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Check permission when adding and deleting objects (Bug #671).
 * [jan] Fix bug in LDAP driver with dn values not being UTF8 encoded (Bug #378).
@@ -1491,7 +1492,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fix distribution lists.
    </notes>
@@ -1506,7 +1507,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Close XSS when setting the parent frame&apos;s page title by javascript (cjh).
 * [jan] Fix warning with LDAP backends.
@@ -1522,7 +1523,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Show an alphabetic pager for browsing address books (Mike Bydalek &lt;mbydalek@zivix.com&gt;).
 * [cjh] Rename LDAP objects when their DN changes (Tarjei Huse &lt;tarjei+a_lists.phpgw@nu.no&gt;).
@@ -1559,7 +1560,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Allow to group fields into tabs.
 * [mms] Link email address in object view.
@@ -1585,7 +1586,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mms] Fixed the delete API to not exit with error if the item to be deleted is not found in the first source provided.
 * [cjh] Removed miniwindow.php; it simply provided a frame around Turba with a close button.
@@ -1601,7 +1602,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Don&apos;t overwrite form data with object defaults when editing if validation fails (Bug #883).
 * [cjh] Use source permissions if they are present, and if not, fall back to the old source admin array (Bug #853).
@@ -1618,7 +1619,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Prevent copying/moving of groups (Bug #935).
 * [cjh] Fix IMSP groups (Michael Rubinsky &lt;mike@theupstairsroom.com&gt;)
@@ -1638,7 +1639,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] UIDs need to be stored in the History system with a turba: prefix and with the contact owner so as not to confuse different instances of the same contact (if two users both have a contact in their seperate addressbooks in a private source, they should have unique histories for those contacts).
 * [cjh] Improve error and permission checking.
@@ -1654,7 +1655,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Create compose links for all email addresses at once in contact listings (requires IMP 4.0.2).
 * [jan] Open compose windows from the portal&apos;s minisearch block in the correct frame (Bug #1293).
@@ -1673,7 +1674,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fixed some javascript errors when clicking on the column headers to resort contact listings (Bug #1313).
 * [cjh] Quote LDAP DN entries according to RFC 1485 (Bug #1146).
@@ -1691,7 +1692,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fixed warning in browse view (Bug #1363).
    </notes>
@@ -1706,7 +1707,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Don&apos;t show "Add" icon if no writeable address books exist.
 * [jan] Don&apos;t show "Browse" icon and list if no browseable address books exist.
@@ -1737,7 +1738,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Add Turkish translation (Servet Güney &lt;sguney@metu.edu.tr&gt;, Ahmet Öztürk &lt;oahmet@metu.edu.tr&gt;).
    </notes>
@@ -1752,7 +1753,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fix source selection in some API methods (tevans@tachometry.com, Bug #2623).
 * [jan] Fix warnings in columns preference screen.
@@ -1770,7 +1771,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Close several XSS vulnerabilities with address book and contact data.
    </notes>
@@ -1785,7 +1786,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mjr] Default to showing the &apos;A&apos; page when browsing address books that contain more than the &apos;perpage&apos; number of entries.
 * [jan] Add Icelandic translation (Bjorn Davidsson &lt;bjossi@snerpa.is&gt;).
@@ -1837,7 +1838,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [ben] Better support for MS-SQL
    </notes>
@@ -1852,7 +1853,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Be consistent in working with lowercase attribute names for the LDAP driver (Bug #2440).
 * [mjr] Fix create_default_histories.php and public_to_horde_share.php scripts to prevent creation of bogus shares.
@@ -1876,7 +1877,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mjr] Fix addressbook.php script - don&apos;t attempt to submit the form with invalid addressbook selections.
 * [cjh] Add documentation for the filter parameter in sources.php.dist and an example for retrieving data from two different tables (Manilal K M &lt;manilal.krishnapillai@ejyothi.com&gt;).
@@ -1895,7 +1896,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Support departments in vCard&apos;s ORG properties (martin@matuska.org, Request #4285).
 * [cjh] Fix LDAP driver check for whether objects need to be renamed (Bug #4468).
@@ -1915,7 +1916,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fix character set encoding of exported vCards.
 * [mjr] Fix fatal error when exporting to vCard.
@@ -1936,7 +1937,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mjr] Fix some fatal errors caused by the IMSP driver when deleting certain contacts and while adding contacts to lists in certain cases.
 * [mjr] Fix adding contacts to a new contact list in a source other than the source the contacts being added are from.
@@ -1954,7 +1955,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] SECURITY: Fix privilege escalation in Horde API.
    </notes>
@@ -1969,7 +1970,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug #6208) (CVE-2008-0807).
    </notes>
@@ -1984,7 +1985,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Add support for approximate searches, if the underlying backend and Horde code support them (Request #2901).
 * [cjh] Add a print link for contacts (Request #2800).
@@ -2025,7 +2026,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fix birthday calculation on years before 1970 with DST (Bug #5791).
 * [jan] Implement WebDAV DELETE.
@@ -2052,7 +2053,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] SECURITY: Fix privilege escalation in Horde API.
 * [mjr] Degrade gracefully when no VFS is configured.
@@ -2078,7 +2079,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug #6208) (CVE-2008-0807).
 * [jan] Add configuration to more flexibly parse full names into the name parts.
@@ -2094,7 +2095,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] Fix editing contacts that were accessed by UID (Bug #6672).
 * [cjh] Apply fix for http://dev.rubyonrails.org/ticket/11473 to prototype.js (Request #6590).
@@ -2135,7 +2136,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mjr] Fix importing email addresses from CSV files to be consistent with what we allow to be entered via the UI. (Bug #6725)
 * [cjh] Improve resource usage in datatree_to_sql share migration script (Bug #6740).
@@ -2151,7 +2152,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [cjh] SECURITY: Escape contact names in the contact display view.
 * [jan] Fix importing of certain phone numbers from vCard (Bug #6744).
@@ -2168,7 +2169,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] SECURITY: Escape output in test.php.
    </notes>
@@ -2183,7 +2184,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Improve vCard EMAIL field parsing (Bug #7281).
 * [jan] Correctly import and export address extensions (Bug #7279).
@@ -2221,7 +2222,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Change group field in shares table to work with LDAP groups (Bug #6883).
 * [jan] Fix exporting address books with country fields as vCards (Bug #7372).
@@ -2239,7 +2240,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] SECURITY: Escape output in test.php.
 * [jan] Add script to import contacts from SquirrelMail database.
@@ -2262,7 +2263,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mms] Upgrade prototype.js to v1.6.1.
 * [jan] Fix synchronization with output compression enabled (Bug #7769).
@@ -2283,7 +2284,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Fix syntax of MSSQL scripts (Bug #8664).
 * [jan] Add preference for the name format to use for sorting (Request #6721).
@@ -2308,7 +2309,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Remove deleted contacts from distribution lists in the same address book.
 * [mjr] Allow creation of default, personal address book when other read-only sources are present.
@@ -2328,7 +2329,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [jan] Correctly export FN vCard property if &apos;alternative_name&apos; is set, but not &apos;name&apos; (Bug #9207).
 * [jan] Fix import of addresses from LDIF (Axel Jurak, Bug #9215).
@@ -2345,7 +2346,7 @@
     <api/>
    </stability>
    <date/>
-   <license uri=""></license>
+   <license uri="" />
    <notes>
 * [mjr] Fix issue that caused erroneous file listings for objects in sources without a __uid value.
 * [jan] Allow to export photo/logo fields to vCard without MIME type.
@@ -3543,7 +3544,8 @@
    <date>2018-08-18</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* 
+* [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang &lt;lang@b1-systems.de&gt;, PR 3).
+* |+
    </notes>
   </release>
   <release>
