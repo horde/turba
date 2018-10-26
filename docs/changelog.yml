@@ -31,8 +31,9 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
+  notes: |
+    [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang <lang@b1-systems.de>, PR 3).
+    |+
 4.2.23:
   api: 4.0.0
   state:
