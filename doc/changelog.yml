@@ -32,6 +32,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    [mjr] SECURITY: Fix XSS vulnerability in display of contact tags.
     [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang <lang@b1-systems.de>, PR 3).
 4.2.23:
   api: 4.0.0
