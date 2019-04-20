@@ -26,8 +26,8 @@
             "role": "lead"
         }
     ],
-    "version": "4.2.23",
-    "time": "2018-08-18",
+    "version": "4.2.24",
+    "time": "2019-04-20",
     "repositories": [
         {
             "type": "pear",

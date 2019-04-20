@@ -27,14 +27,13 @@
   state:
     release: stable
     api: stable
-  date: 2018-08-18
+  date: 2019-04-20
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
     [mjr] SECURITY: Fix XSS vulnerability in display of contact tags.
     [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang <lang@b1-systems.de>, PR 3).
-    |+
 4.2.23:
   api: 4.0.0
   state:
