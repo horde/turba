@@ -25,7 +25,7 @@ class Horde_Core_Ui_VarRenderer_Turba extends Horde_Core_Ui_VarRenderer_Html
     protected function _renderVarInput_TurbaTags($form, $var, $vars)
     {
         $varname = htmlspecialchars($var->getVarName());
-        $value = $var->getValue($vars);
+        $value = htmlspecialchars($var->getValue($vars));
 
         $html = sprintf('<input id="%s" type="text" name="%s" value="%s" />', $varname, $varname, $value);
         $html .= sprintf('<span id="%s_loading_img" style="display:none;">%s</span>',
