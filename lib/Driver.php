@@ -2899,7 +2899,10 @@ class Turba_Driver implements Countable
         $hash['emails'] = implode(',', $hash['emails']);
 
         /* Categories */
-        if (is_array($message->categories) && count($message->categories)) {
+        if (!$message->isGhosted('categores') && empty($message->categories)) {
+            $hash['__tags'] = array();
+        } elseif (is_array($message->categories) &&
+                  count($message->categories)) {
             $hash['__tags'] = $message->categories;
         }
 
