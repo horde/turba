@@ -2,7 +2,9 @@
 v4.2.25
 -------
 
-
+[mjr] Fix typo that could cause tags to be lost during EAS sync, if the
+      categories property is ghosted.
+|+
 
 
 -------

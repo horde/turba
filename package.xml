@@ -40,7 +40,8 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
-* 
+* [mjr] Fix typo that could cause tags to be lost during EAS sync, if the categories property is ghosted.
+* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -3560,7 +3561,8 @@
    <date>2019-04-20</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* 
+* [mjr] Fix typo that could cause tags to be lost during EAS sync, if the categories property is ghosted.
+* |+
    </notes>
   </release>
   <release>
