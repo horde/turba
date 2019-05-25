@@ -27,13 +27,12 @@
   state:
     release: stable
     api: stable
-  date: 2019-04-20
+  date: 2019-05-25
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
     [mjr] Fix typo that could cause tags to be lost during EAS sync, if the categories property is ghosted.
-    |+
 4.2.24:
   api: 4.0.0
   state:

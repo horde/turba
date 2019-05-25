@@ -1,11 +1,11 @@
 <?php
 /* Security release? */
-$notes['security'] = true;
+$notes['security'] = false;
 
 /* Mailing list release notes. */
 $notes['changes'] = <<<ML
 The Horde Team is pleased to announce the final release of the Turba Contact
-Manager version H5 (4.2.24).
+Manager version H5 (4.2.25).
 
 Turba is the Horde contact management application. Leveraging the Horde
 framework to provide seamless integration with IMP and other Horde
@@ -19,9 +19,10 @@ http://www.horde.org/apps/turba/docs/UPGRADING
 For detailed installation and configuration instructions, please see
 http://www.horde.org/apps/turba/docs/INSTALL
 
-The major changes compared to the Turba version H5 (4.2.23) are:
-    * SECURITY: Fix XSS vulnerability in display of contact tags.
-    * Clarify objectClass filter examples for LDAP backends
+The major changes compared to the Turba version H5 (4.2.24) are:
+    * Fix typo that could cause tags to be lost during EAS sync, if the
+      categories property is ghosted.
+
 ML;
 
 $notes['name'] = 'Turba';
