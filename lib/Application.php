@@ -832,11 +832,14 @@ class Turba_Application extends Horde_Registry_Application
                 exit;
 
             case 'ldif':
-                $ldif = new Turba_Data_Ldif(array(
-                    'browser' => $injector->getInstance('Horde_Browser'),
-                    'vars' => Horde_Variables::getDefaultVariables(),
-                    'cleanup' => array($this, 'cleanupData')
-                ));
+                $ldif = new Turba_Data_Ldif(
+                    $injector->getInstance('Horde_Core_Data_Storage'),
+                    array(
+                        'browser' => $injector->getInstance('Horde_Browser'),
+                        'vars' => Horde_Variables::getDefaultVariables(),
+                        'cleanup' => array($this, 'cleanupData')
+                    )
+                );
                 $ldif->exportFile(_("contacts.ldif"), $data, true);
                 exit;
             }
