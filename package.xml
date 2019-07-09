@@ -39,7 +39,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
-* 
+* [jan] Fix exporting contacts to LDIF (Bug #14934).
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -3574,7 +3574,7 @@
    <date>2019-05-25</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* 
+* [jan] Fix exporting contacts to LDIF (Bug #14934).
    </notes>
   </release>
   <release>
