@@ -9,6 +9,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    [jan] Make image type column fit any valid media type name.
     [jan] Try harder to import attributes that don't match exactly the address book configuration (Bug #14673).
     [jan] Add API to backup and restore user data.
     [jan] Show photos when displaying contacts in calendars.
@@ -66,7 +67,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
-     [mjr] Remove debug output that was breaking EAS searches (Bug: 14843).
+    [mjr] Remove debug output that was breaking EAS searches (Bug: 14843).
 4.2.22:
   api: 4.0.0
   state:
