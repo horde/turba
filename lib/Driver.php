@@ -2721,25 +2721,25 @@ class Turba_Driver implements Countable
             case 'homeCountry':
                 $message->homecountry = !empty($hash['homeCountryFree'])
                     ? $hash['homeCountryFree']
-                    : !empty($hash['homeCountry'])
+                    : (!empty($hash['homeCountry'])
                         ? Horde_Nls::getCountryISO($hash['homeCountry'])
-                        : null;
+                        : null);
                 break;
 
             case 'otherCountry':
                 $message->othercountry = !empty($hash['otherCountryFree'])
                     ? $hash['otherCountryFree']
-                    : !empty($hash['otherCountry'])
+                    : (!empty($hash['otherCountry'])
                         ? Horde_Nls::getCountryISO($hash['otherCountry'])
-                        : null;
+                        : null);
                 break;
 
             case 'workCountry':
                 $message->businesscountry = !empty($hash['workCountryFree'])
                     ? $hash['workCountryFree']
-                    : !empty($hash['workCountry'])
+                    : (!empty($hash['workCountry'])
                         ? Horde_Nls::getCountryISO($hash['workCountry'])
-                        : null;
+                        : null);
                 break;
 
             case 'email':
