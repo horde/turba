@@ -33,6 +33,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    [mjr] Fix setting LDAP_OPT_REFERRALS to 0.
     [jan] Fix exporting contacts to LDIF (Bug #14934).
 4.2.25:
   api: 4.0.0
