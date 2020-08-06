@@ -100,7 +100,10 @@ class Turba_List implements Countable
      */
     public function next()
     {
-        return next($this->objects);
+        $current = current($this->objects);
+        next($this->objects);
+
+        return $current;
     }
 
     /**
