@@ -79,7 +79,8 @@ class Turba_List implements Countable
      */
     public function next()
     {
-        list(,$tmp) = each($this->objects);
+        $tmp = current($this->objects);
+        next($this->objects);
         return $tmp;
     }
 
