@@ -54,6 +54,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    [jan] Fix deprecation warnings about each() with PHP 7.2+.
     [mjr] Fix setting LDAP_OPT_REFERRALS to 0.
     [jan] Fix exporting contacts to LDIF (Bug #14934).
 4.2.25:

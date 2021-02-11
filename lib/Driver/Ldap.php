@@ -377,7 +377,9 @@ class Turba_Driver_Ldap extends Turba_Driver
     {
         $this->_connect();
 
-        list($object_key, $object_id) = each($this->toDriverKeys(array('__key' => $object->getValue('__key'))));
+        $object_keys = $this->toDriverKeys(array('__key' => $object->getValue('__key')));
+        $object_id = reset($object_keys);
+        $object_key = key($object_keys);
         $attributes = $this->toDriverKeys($object->getAttributes());
 
         /* Get the old entry so that we can access the old
