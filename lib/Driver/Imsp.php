@@ -354,7 +354,9 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     protected function _save($object)
     {
-        list($object_key, $object_id) = each($this->toDriverKeys(array('__key' => $object->getValue('__key'))));
+        $object_keys = $this->toDriverKeys(array('__key' => $object->getValue('__key')));
+        $object_id = reset($object_keys);
+        $object_key = key($object_keys);
         $attributes = $this->toDriverKeys($object->getAttributes());
 
         /* Check if the key changed, because IMSP will just write out

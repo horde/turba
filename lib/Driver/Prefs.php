@@ -107,7 +107,8 @@ class Turba_Driver_Prefs extends Turba_Driver
      */
     function _save($object)
     {
-        list(,$object_id) = each($this->toDriverKeys(array('__key' => $object->getValue('__key'))));
+        $object_keys = $this->toDriverKeys(array('__key' => $object->getValue('__key')));
+        $object_id = reset($object_keys);
         $attributes = $this->toDriverKeys($object->getAttributes());
 
         $book = $this->_getAddressBook();
