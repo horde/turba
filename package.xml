@@ -30,7 +30,7 @@
  </lead>
  <date>2021-02-24</date>
  <version>
-  <release>5.0.0alpha1</release>
+  <release>5.0.0alpha2</release>
   <api>5.0.0alpha1</api>
  </version>
  <stability>
@@ -39,20 +39,7 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
-* [jan] Make image type column fit any valid media type name.
-* [jan] Try harder to import attributes that don&apos;t match exactly the address book configuration (Bug #14673).
-* [jan] Add API to backup and restore user data.
-* [jan] Show photos when displaying contacts in calendars.
-* [jan] Add CLI script to search for invalid email addresses.
-* [mjr] Remove Facebook driver.
-* [jan] Add second home and business phone fields to Kolab backend (Thomas Jarosch &lt;thomas.jarosch@intra2net.com&gt;, Request #12776).
-* [jan] Change sort direction of birthday/anniversary year picker (Request #11837).
-* [mjr] Add ability to store original versions of contact photos when resizing them for display.
-* [mjr] Add tag search to advanced search (Request #13693).
-* [mms] Added the addGroup API method.
-* [mjr] Add ability to add special characters to the alpha pager.
-* [jan] Return ETags with browse() API method.
-* [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+* 
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -981,6 +968,127 @@
   </filelist>
  </phprelease>
  <changelog>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   <release>
    <version>
     <release>0.0.1</release>
@@ -3375,10 +3483,10 @@
     <api>5.0.0alpha1</api>
    </version>
    <stability>
-    <release>alpha</release>
-    <api>alpha</api>
+    <release>beta</release>
+    <api>beta</api>
    </stability>
-   <date>2017-10-20</date>
+   <date>2021-02-24</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
 * [jan] Make image type column fit any valid media type name.
@@ -3395,6 +3503,21 @@
 * [mjr] Add ability to add special characters to the alpha pager.
 * [jan] Return ETags with browse() API method.
 * [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>5.0.0alpha2</release>
+    <api>5.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2021-02-24</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* 
    </notes>
   </release>
  </changelog>
