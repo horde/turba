@@ -1,6 +1,6 @@
 ---
-5.0.0:
-  api: 5.0.0
+5.0.0alpha1:
+  api: 5.0.0alpha1
   state:
     release: beta
     api: beta
