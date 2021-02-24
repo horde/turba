@@ -1,7 +1,8 @@
-------
-v5.0.0
-------
+------------
+v5.0.0alpha1
+------------
 
+[jan] Make image type column fit any valid media type name.
 [jan] Try harder to import attributes that don't match exactly the address book
       configuration (Bug #14673).
 [jan] Add API to backup and restore user data.
@@ -23,9 +24,26 @@ v5.0.0
 
 
 -------
+v4.2.26
+-------
+
+[mjr] Fix setting LDAP_OPT_REFERRALS to 0.
+[jan] Fix exporting contacts to LDIF (Bug #14934).
+
+
+-------
+v4.2.25
+-------
+
+[mjr] Fix typo that could cause tags to be lost during EAS sync, if the
+      categories property is ghosted.
+
+
+-------
 v4.2.24
 -------
 
+[mjr] SECURITY: Fix XSS vulnerability in display of contact tags.
 [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang
       <lang@b1-systems.de>, PR 3).
 
