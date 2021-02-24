@@ -78,9 +78,6 @@
     "autoload": {
         "psr-0": {
             "Turba": "lib/"
-        },
-        "psr-4": {
-            "Horde\\Turba\\": "src/"
         }
     },
     "bin": [
