@@ -36,7 +36,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 5.0.0alpha2
+  release: 5.0.0alpha3
   api: 5.0.0alpha1
 state:
   release: alpha
