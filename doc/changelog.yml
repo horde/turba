@@ -9,7 +9,6 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |+
-    
 5.0.0alpha1:
   api: 5.0.0alpha1
   state:
