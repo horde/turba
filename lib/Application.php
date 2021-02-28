@@ -957,7 +957,7 @@ class Turba_Application extends Horde_Registry_Application
                 'principaluri' => 'principals/' . $user,
                 '{DAV:}displayname' => $book['title'],
                 '{' . CardDAV\Plugin::NS_CARDDAV . '}supported-address-data'
-                    => new CardDAV\Property\SupportedAddressData(
+                    => new CardDAV\Xml\Property\SupportedAddressData(
                         array(
                             array(
                                 'contentType' => 'text/directory',
