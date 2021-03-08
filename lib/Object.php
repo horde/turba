@@ -327,6 +327,14 @@ class Turba_Object
         if (!is_null($time)) {
             return $time;
         }
+        $native = $this->getValue('__nativemodified');
+        if ($native) {
+            // Normalize before storing
+            $dt = new \Horde_Date($native);
+            $ts = $dt->timestamp();
+            $this->setValue('__modified', $ts);
+            return $ts;
+        }
         if (!$this->getValue('__uid')) {
             $this->setValue('__modified', 0);
             return 0;
