@@ -2332,7 +2332,12 @@ class Turba_Driver implements Countable
                         $hash[$prefix . 'Address'] .= ' ' . $hash[$prefix . 'PostalCode'];
                     }
                     if (!empty($address[Horde_Icalendar_Vcard::ADR_COUNTRY])) {
-                        include 'Horde/Nls/Countries.php';
+                        /* Countries */
+                        if (class_exists(\Horde_Nls_Loader::class)) {
+                            $countries = \Horde_Nls_Loader::loadCountries();
+                        } else {
+                            include 'Horde/Nls/Countries.php';
+                        }
                         $country = array_search($address[Horde_Icalendar_Vcard::ADR_COUNTRY], $countries);
                         if ($country === false) {
                             $country = $address[Horde_Icalendar_Vcard::ADR_COUNTRY];
@@ -2932,7 +2937,11 @@ class Turba_Driver implements Countable
         }
 
         /* Countries */
-        include 'Horde/Nls/Countries.php';
+        if (class_exists(\Horde_Nls_Loader::class)) {
+            $countries = \Horde_Nls_Loader::loadCountries();
+        } else {
+            include 'Horde/Nls/Countries.php';
+        }
         if (!empty($message->homecountry)) {
             if (!empty($this->map['homeCountryFree'])) {
                 $hash['homeCountryFree'] = $message->homecountry;
