@@ -2,8 +2,7 @@
 v5.0.0alpha3
 ------------
 
-
-
+|+
 
 ------------
 v5.0.0alpha2
@@ -40,6 +39,7 @@ v5.0.0alpha1
 v4.2.26
 -------
 
+[jan] Fix deprecation warnings about each() with PHP 7.2+.
 [mjr] Fix setting LDAP_OPT_REFERRALS to 0.
 [jan] Fix exporting contacts to LDIF (Bug #14934).
 
