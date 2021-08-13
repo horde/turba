@@ -1016,8 +1016,14 @@ class Turba_Application extends Horde_Registry_Application
     }
 
     /**
+     * Get an iCalendar vCard out of Turba
+     *
+     * @param string|mixed $collection the external collection id
+     * @param string $object The Object ID in caldav
+     *
+     * @return array iCalendar
      */
-    public function davGetObject($collection, $object)
+    public function davGetObject($collection, string $object)
     {
         $dav = $GLOBALS['injector']
             ->getInstance('Horde_Dav_Storage');
@@ -1056,8 +1062,25 @@ class Turba_Application extends Horde_Registry_Application
     }
 
     /**
+     * Put a carddav contact into a Turba addressbook
+     *
+     * Flow:
+     *  - Check if addressbook exists and user may access
+     *  - Load data into Horde_Icalendar
+     *  - Find the vCard component(s)
+     *  - Turn each vCard to a turba driver-independent hash
+     *  - Check if the contact already exists in backend
+     *  - Break if the existing contact is newer than the update
+     *  - Update existing contact with all fields from update
+     *  - Create new contact and mapping from update
+     *
+     * @param string|mixed $collection the external collection id
+     * @param string $object The Object ID in caldav
+     * @param string $data The icalendar data to put
+     *
+     * @return string|null
      */
-    public function davPutObject($collection, $object, $data)
+    public function davPutObject($collection, string $object, string $data): ?string
     {
         $dav = $GLOBALS['injector']
             ->getInstance('Horde_Dav_Storage');
@@ -1112,10 +1135,17 @@ class Turba_Application extends Horde_Registry_Application
                 $id = $driver->add($contact);
                 $dav->addObjectMap($id, $object, $internal);
             }
+            return null;
         }
     }
 
     /**
+     * Delete an object from an addressbook
+     *
+     * @param string $object The Object ID in caldav
+     * @param string $data The icalendar data to put
+     *
+     * @return bool true if a record was deleted [not implemented]
      */
     public function davDeleteObject($collection, $object)
     {
