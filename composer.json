@@ -1,5 +1,4 @@
 {
-    "minimum-stability": "dev",
     "name": "horde/turba",
     "description": "Address book application",
     "type": "horde-application",
@@ -27,7 +26,7 @@
             "role": "lead"
         }
     ],
-    "time": "2021-03-13",
+    "time": "2021-11-30",
     "repositories": [
         {
             "type": "composer",
@@ -35,7 +34,7 @@
         }
     ],
     "require": {
-        "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0",
+        "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || *",
         "php": "^7",
         "horde/content": "^3 || dev-FRAMEWORK_6_0",
         "horde/horde": "^6 || dev-FRAMEWORK_6_0",
@@ -65,6 +64,7 @@
         "ext-hash": "*",
         "ext-json": "*"
     },
+    "require-dev": {},
     "suggest": {
         "horde/activeSync": "^3 || dev-FRAMEWORK_6_0",
         "horde/backup": "^2 || dev-FRAMEWORK_6_0",
@@ -80,14 +80,19 @@
             "Turba": "lib/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Horde\\Turba\\Test\\": "test/"
+        }
+    },
     "bin": [
-        "bin/turba-convert-datatree-shares-to-sql",
-        "bin/turba-convert-sql-shares-to-sqlng",
         "bin/turba-import-openxchange",
         "bin/turba-import-squirrelmail-file-abook",
+        "bin/turba-convert-datatree-shares-to-sql",
+        "bin/turba-convert-sql-shares-to-sqlng",
         "bin/turba-import-squirrelmail-sql-abook",
-        "bin/turba-import-vcards",
         "bin/turba-public-to-horde-share",
-        "bin/turba-validate-email"
+        "bin/turba-validate-email",
+        "bin/turba-import-vcards"
     ]
 }
