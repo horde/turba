@@ -46,7 +46,7 @@ license:
   uri: http://www.horde.org/licenses/apache
 dependencies:
   required:
-    php: ^7
+    php: ^7.4 || ^8
     composer:
       horde/content: ^3
       horde/horde: ^6
@@ -86,3 +86,6 @@ dependencies:
       horde/kolab_storage: ^3
       horde/ldap: ^3
       horde/openxchange: ^2
+  dev:
+    composer:
+      horde/test: ^3

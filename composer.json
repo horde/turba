@@ -35,8 +35,8 @@
         }
     ],
     "require": {
-        "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || *",
-        "php": "^7",
+        "horde/horde-installer-plugin": "^2 || dev-FRAMEWORK_6_0",
+        "php": "^7.4 || ^8",
         "horde/content": "^3 || dev-FRAMEWORK_6_0",
         "horde/horde": "^6 || dev-FRAMEWORK_6_0",
         "horde/auth": "^3 || dev-FRAMEWORK_6_0",
@@ -65,7 +65,9 @@
         "ext-hash": "*",
         "ext-json": "*"
     },
-    "require-dev": {},
+    "require-dev": {
+        "horde/test": "^3 || dev-FRAMEWORK_6_0"
+    },
     "suggest": {
         "horde/activeSync": "^3 || dev-FRAMEWORK_6_0",
         "horde/backup": "^2 || dev-FRAMEWORK_6_0",
