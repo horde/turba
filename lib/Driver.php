@@ -1622,9 +1622,8 @@ class Turba_Driver implements Countable
                 break;
 
             case 'imaddress':
-                if ($fields && !isset($fields['IMPP'])) {
-                    break;
-                }
+            case 'imaddress2':
+            case 'imaddress3':
                 $vcard->setAttribute('IMPP', $val);
                 break;
 
@@ -2221,6 +2220,7 @@ class Turba_Driver implements Countable
     {
         $hash = array();
         $attr = $vcard->getAllAttributes();
+        $imaddress = 1;
 
         foreach ($attr as $item) {
             switch ($item['name']) {
@@ -2613,7 +2613,12 @@ class Turba_Driver implements Countable
                 break;
 
             case 'IMPP':
-                $hash['imaddress'] = $item['value'];
+                switch($imaddress) {
+                    case 1: $hash['imaddress'] = $item['value']; break;
+                    case 2: $hash['imaddress2'] = $item['value']; break;
+                    case 3: $hash['imaddress3'] = $item['value']; break;
+                }
+                $imaddress++;
                 break;
 
             case 'X-ANNIVERSARY':
@@ -2636,6 +2641,12 @@ class Turba_Driver implements Countable
 
         /* Ensure we have a valid name field. */
         $hash = $this->_parseName($hash);
+
+        switch($imaddress) {
+            case 1: $hash['imaddress'] = null;
+            case 2: $hash['imaddress2'] = null;
+            case 3: $hash['imaddress3'] = null;
+        }
 
         return $hash;
     }
