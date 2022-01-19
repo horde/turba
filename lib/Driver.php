@@ -1622,10 +1622,10 @@ class Turba_Driver implements Countable
                 break;
 
             case 'imaddress':
-                if ($fields && !isset($fields['X-WV-ID'])) {
+                if ($fields && !isset($fields['IMPP'])) {
                     break;
                 }
-                $vcard->setAttribute('X-WV-ID', $val);
+                $vcard->setAttribute('IMPP', $val);
                 break;
 
             case 'fax':
@@ -2612,7 +2612,7 @@ class Turba_Driver implements Countable
                 }
                 break;
 
-            case 'X-WV-ID':
+            case 'IMPP':
                 $hash['imaddress'] = $item['value'];
                 break;
 
