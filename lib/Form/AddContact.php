@@ -48,7 +48,7 @@ class Turba_Form_AddContact extends Turba_Form_ContactBase
         }
     }
 
-    public function validate()
+    public function validate($vars = null, $canAutoFill = false)
     {
         if (!$this->_vars->get('source')) {
             return false;
