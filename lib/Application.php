@@ -361,7 +361,7 @@ class Turba_Application extends Horde_Registry_Application
                 try {
                     $driver = $GLOBALS['injector']
                         ->getInstance('Turba_Factory_Driver')
-                        ->create($source, $sourceId);
+                        ->createTrusted($source, $sourceId);
                 } catch (Turba_Exception $e) {
                     Horde::log($e, 'ERR');
                     continue;
@@ -401,7 +401,7 @@ class Turba_Application extends Horde_Registry_Application
             try {
                 $driver = $GLOBALS['injector']
                     ->getInstance('Turba_Factory_Driver')
-                    ->create($config, $share->getName(), $sources);
+                    ->createTrusted($config, $share->getName(), $sources);
             } catch (Turba_Exception $e) {
                 continue;
             }
@@ -547,7 +547,7 @@ class Turba_Application extends Horde_Registry_Application
             }
 
             foreach ($cfgSources as $sourceId => $source) {
-                $driver = $factory->create($source, $sourceId, $cfgSources);
+                $driver = $factory->createTrusted($source, $sourceId, $cfgSources);
                 if ($driver->getContactOwner() == $registry->getAuth()) {
                     $driver->setContactOwner($user);
                 }
@@ -644,7 +644,7 @@ class Turba_Application extends Horde_Registry_Application
     {
         global $injector, $registry;
 
-        $driver = $injector->getInstance('Turba_Factory_Driver')->create(
+        $driver = $injector->getInstance('Turba_Factory_Driver')->createTrusted(
             $cfgSources[$contact['addressbook']],
             $contact['addressbook'],
             $cfgSources

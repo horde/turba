@@ -456,7 +456,7 @@ class Turba_Api extends Horde_Registry_Api
 
         foreach ($this->_getSources($sources) as $source) {
             try {
-                $results = $driver->create($source)->search(array());
+                $results = $driver->createTrusted($source)->search(array());
             } catch (Turba_Exception $e) {
                 throw new Turba_Exception(sprintf(_("Error searching the address book: %s"), $e->getMessage()));
             }
@@ -511,7 +511,7 @@ class Turba_Api extends Horde_Registry_Api
         }
 
         foreach ($this->_getSources($sources) as $source) {
-            $sdriver = $driver->create($source);
+            $sdriver = $driver->createTrusted($source);
             if (!$isModSeq) {
                 $histories = $history->getByTimestamp(
                     '>', $timestamp, $filter,
@@ -613,11 +613,11 @@ class Turba_Api extends Horde_Registry_Api
         foreach ($this->_getSources($sources) as $source) {
             if (!$modSeq) {
                 $ts = $history->getActionTimestamp(
-                    'turba:' . $driver->create($source)->getName() . ':' . $uid,
+                    'turba:' . $driver->createTrusted($source)->getName() . ':' . $uid,
                     $action);
             } else {
                 $ts = $history->getActionModSeq(
-                    'turba:' . $driver->create($source)->getName() . ':' . $uid,
+                    'turba:' . $driver->createTrusted($source)->getName() . ':' . $uid,
                     $action);
             }
             if (!empty($ts) && $ts > $last) {
@@ -1032,7 +1032,7 @@ class Turba_Api extends Horde_Registry_Api
         $driver = $GLOBALS['injector']->getInstance('Turba_Factory_Driver');
 
         foreach ($this->_getSources($sources) as $source) {
-            $sdriver = $driver->create($source);
+            $sdriver = $driver->createTrusted($source);
 
             if (!$GLOBALS['registry']->isAdmin() &&
                 !$sdriver->hasPermission(Horde_Perms::DELETE)) {
@@ -1263,7 +1263,7 @@ class Turba_Api extends Horde_Registry_Api
                 );
             }
 
-            $sdriver = $driver->create($source);
+            $sdriver = $driver->createTrusted($source);
             foreach ($names as $name) {
                 $trimname = trim($name);
                 $out = $criteria = array();
@@ -2435,7 +2435,7 @@ class Turba_Api extends Horde_Registry_Api
             try {
                 $driver = $injector->getInstance('Turba_Factory_Driver');
                 foreach ($this->_getSources($sources) as $source) {
-                    $sdriver = $driver->create($source);
+                    $sdriver = $driver->createTrusted($source);
                     if (!$sdriver->hasPermission(Horde_Perms::READ)) {
                         continue;
                     }

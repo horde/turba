@@ -32,6 +32,15 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
      */
     private $_instances = array();
 
+    public function create($name)
+    {
+        if (is_array($name)) {
+            error_log("Disallowed for CVE-2022-30287: " . json_encode(debug_backtrace()));
+            die("not allowed");
+        }
+        return $this->createTrusted($name);
+    }
+
     /**
      * Return the Turba_Driver:: instance.
      *
@@ -48,7 +57,7 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
      * @return Turba_Driver  The singleton instance.
      * @throws Turba_Exception
      */
-    public function create($name, $name2 = '', $cfgSources = array())
+    public function createTrusted($name, $name2 = '', $cfgSources = array())
     {
         if (empty($cfgSources)) {
             $cfgSources = $GLOBALS['cfgSources'];

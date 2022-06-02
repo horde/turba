@@ -55,7 +55,7 @@ class Turba_Driver_Vbook extends Turba_Driver
         /* Load the underlying driver. */
         $this->_driver = $GLOBALS['injector']
             ->getInstance('Turba_Factory_Driver')
-            ->create($this->_params['source']);
+            ->createTrusted($this->_params['source']);
 
         $this->searchCriteria = empty($this->_params['criteria'])
             ? array()
