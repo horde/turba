@@ -357,7 +357,7 @@ class Turba_Application extends Horde_Registry_Application
                 try {
                     $driver = $GLOBALS['injector']
                         ->getInstance('Turba_Factory_Driver')
-                        ->create($source, $sourceId);
+                        ->createFromSource($source, $sourceId);
                 } catch (Turba_Exception $e) {
                     Horde::log($e, 'ERR');
                     continue;
@@ -397,7 +397,7 @@ class Turba_Application extends Horde_Registry_Application
             try {
                 $driver = $GLOBALS['injector']
                     ->getInstance('Turba_Factory_Driver')
-                    ->create($config, $share->getName(), $sources);
+                    ->createFromConfig($config, $share->getName(), $sources);
             } catch (Turba_Exception $e) {
                 continue;
             }
