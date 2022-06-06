@@ -3547,6 +3547,55 @@
   </release>
   <release>
    <version>
+    <release>4.2.24</release>
+    <api>4.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2019-04-20</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* [mjr] SECURITY: Fix XSS vulnerability in display of contact tags.
+* [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang &lt;lang@b1-systems.de&gt;, PR 3).
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>4.2.25</release>
+    <api>4.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2019-05-25</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* [mjr] Fix typo that could cause tags to be lost during EAS sync, if the categories property is ghosted.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>4.2.26</release>
+    <api>4.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2019-05-25</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* [jan] SECURITY: Fix remote code execution by an unserialization attack (CVE-2022-30287).
+* [jan] Fix deprecation warnings about each() with PHP 7.2+.
+* [mjr] Fix setting LDAP_OPT_REFERRALS to 0.
+* [jan] Fix exporting contacts to LDIF (Bug #14934).
+   </notes>
+  </release>
+  <release>
+   <version>
     <release>5.0.0</release>
     <api>5.0.0</api>
    </version>

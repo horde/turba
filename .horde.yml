@@ -7,7 +7,7 @@ description: >-
   framework to provide seamless integration with IMP and other Horde
   applications, it supports storing contacts in SQL, LDAP, Kolab, and IMSP
   address books.
-list:
+list: ~
 type: application
 homepage: https://www.horde.org/apps/turba
 authors:
