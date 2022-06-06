@@ -28,7 +28,7 @@
   <email>chuck@horde.org</email>
   <active>no</active>
  </lead>
- <date>2019-05-25</date>
+ <date>2022-06-06</date>
  <version>
   <release>4.2.26</release>
   <api>4.0.0</api>
@@ -39,6 +39,9 @@
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
+* [jan] SECURITY: Fix remote code execution by an unserialization attack (CVE-2022-30287).
+* [jan] Fix deprecation warnings about each() with PHP 7.2+.
+* [mjr] Fix setting LDAP_OPT_REFERRALS to 0.
 * [jan] Fix exporting contacts to LDIF (Bug #14934).
  </notes>
  <contents>
@@ -3574,6 +3577,9 @@
    <date>2019-05-25</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
+* [jan] SECURITY: Fix remote code execution by an unserialization attack (CVE-2022-30287).
+* [jan] Fix deprecation warnings about each() with PHP 7.2+.
+* [mjr] Fix setting LDAP_OPT_REFERRALS to 0.
 * [jan] Fix exporting contacts to LDIF (Bug #14934).
    </notes>
   </release>
