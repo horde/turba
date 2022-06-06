@@ -465,7 +465,7 @@ class Turba
                 continue;
             }
             try {
-                $driver = $factory->create($source, $sourceId);
+                $driver = $factory->createFromConfig($source, $sourceId);
                 if ($driver->hasPermission($permission) &&
                     (empty($options['require_add']) || $driver->canAdd())) {
                     $out[$sourceId] = $source;

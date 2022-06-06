@@ -35,11 +35,8 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
     /**
      * Return the Turba_Driver:: instance.
      *
-     * @param mixed $name        Either a string containing the internal name of
-     *                           this source, or a config array describing the
-     *                           source.
-     * @param string $name2      The internal name of this source if $name is an
-     *                           array.
+     * @param array $config      A config array describing the source.
+     * @param string $srcName    The internal name of this source.
      * @param array $cfgSources  Override the global cfgSources configuration
      *                           with this array. Used when an admin needs
      *                           access to another user's sources like e.g.,
@@ -48,33 +45,70 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
      * @return Turba_Driver  The singleton instance.
      * @throws Turba_Exception
      */
-    public function create($name, $name2 = '', $cfgSources = array())
+    public function createFromConfig($config, $srcName = '', $cfgSources = array())
     {
         if (empty($cfgSources)) {
             $cfgSources = $GLOBALS['cfgSources'];
         }
 
-        if (is_array($name)) {
-            ksort($name);
-            $key = md5(serialize($name));
-            $srcName = $name2;
-            $srcConfig = $name;
-        } else {
-            $key = $name;
-            $srcName = $name;
-            if (empty($cfgSources[$name])) {
-                throw new Turba_Exception(sprintf(_("The address book \"%s\" does not exist."), $name));
-            }
-            $srcConfig = $cfgSources[$name];
+        if (!is_array($config)) {
+            throw new InvalidArgumentException('$config must be an array');
         }
+        ksort($config);
+        $key = md5(serialize($config));
 
+        return $this->_create(
+            $key,
+            $config,
+            $srcName,
+            $cfgSources[$config['params']['source']]
+        );
+    }
+
+    /**
+     * Return the Turba_Driver:: instance.
+     *
+     * @param string $name       A string containing the internal name of
+     *                           this source.
+     *
+     * @return Turba_Driver  The singleton instance.
+     * @throws Turba_Exception
+     */
+    public function create($name)
+    {
+        global $cfgSources;
+
+        if (!is_string($name)) {
+            throw new InvalidArgumentException('$name must be a string');
+        }
+        if (empty($cfgSources[$name])) {
+            throw new Turba_Exception(sprintf(_("The address book \"%s\" does not exist."), $name));
+        }
+        $srcConfig = $cfgSources[$name];
+
+        return $this->_create(
+            $name,
+            $srcConfig,
+            $name,
+            $cfgSources[$srcConfig['params']['source']]
+        );
+    }
+
+    private function _create($key, $srcConfig, $srcName, $cfgSources)
+    {
         if (!isset($this->_instances[$key])) {
             if (!isset($srcConfig['type'])) {
-                throw new Turba_Exception(sprintf(_("The address book \"%s\" does not exist."), $srcName));
+                throw new Turba_Exception(
+                    sprintf(
+                        _("The address book \"%s\" does not exist."), $srcName
+                    )
+                );
             }
             $class = 'Turba_Driver_' . ucfirst(basename($srcConfig['type']));
             if (!class_exists($class)) {
-                throw new Turba_Exception(sprintf(_("Unable to load the definition of %s."), $class));
+                throw new Turba_Exception(
+                    sprintf(_("Unable to load the definition of %s."), $class)
+                );
             }
 
             if (empty($srcConfig['params'])) {
@@ -84,19 +118,26 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
             switch ($class) {
             case 'Turba_Driver_Sql':
                 try {
-                    $srcConfig['params']['db'] = empty($srcConfig['params']['sql'])
-                        ? $this->_injector->getInstance('Horde_Db_Adapter')
-                        : $this->_injector->getInstance('Horde_Core_Factory_Db')->create('turba', $srcConfig['params']['sql']);
-                    $srcConfig['params']['charset'] = isset($srcConfig['params']['sql']['charset'])
-                        ? $srcConfig['params']['sql']['charset']
-                        : 'UTF-8';
+                    $srcConfig['params']['db'] =
+                        empty($srcConfig['params']['sql'])
+                            ? $this->_injector->getInstance('Horde_Db_Adapter')
+                            : $this->_injector->getInstance(
+                            'Horde_Core_Factory_Db'
+                        )->create('turba', $srcConfig['params']['sql']);
+                    $srcConfig['params']['charset'] =
+                        isset($srcConfig['params']['sql']['charset'])
+                            ? $srcConfig['params']['sql']['charset']
+                            : 'UTF-8';
                 } catch (Horde_Db_Exception $e) {
-                    throw new Turba_Exception(_("Server error when initializing database connection."));
+                    throw new Turba_Exception(
+                        _("Server error when initializing database connection.")
+                    );
                 }
                 break;
 
             case 'Turba_Driver_Kolab':
-                $srcConfig['params']['storage'] = $this->_injector->getInstance('Horde_Kolab_Storage');
+                $srcConfig['params']['storage'] =
+                    $this->_injector->getInstance('Horde_Kolab_Storage');
                 break;
 
             case 'Turba_Driver_Vbook':
@@ -145,5 +186,4 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
 
         return $this->_instances[$key];
     }
-
 }

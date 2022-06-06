@@ -2271,7 +2271,7 @@ class Turba_Api extends Horde_Registry_Api
 
         $cfgSources = Turba::availableSources();
         $driver = $injector->getInstance('Turba_Factory_Driver')
-            ->create($cfgSources[$conf['shares']['source']]);
+            ->createFromConfig($cfgSources[$conf['shares']['source']]);
         $share = $driver->createShare(
             strval(new Horde_Support_Randomid()),
             array(

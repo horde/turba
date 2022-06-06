@@ -141,7 +141,7 @@ while ($row = fgetcsv($fp, 0, ' ')) {
             $cli->message('Address book "' . $abook['label'] . '" not found, creating...');
             $driver = $injector
                 ->getInstance('Turba_Factory_Driver')
-                ->create($sources[$conf['shares']['source']]);
+                ->createFromConfig($sources[$conf['shares']['source']]);
             $params = array(
                 'params' => array('source' => $conf['shares']['source']),
                 'name' => $abook['label'],
