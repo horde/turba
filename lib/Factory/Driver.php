@@ -90,7 +90,7 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
             $name,
             $srcConfig,
             $name,
-            $cfgSources[$srcConfig['params']['source']]
+            null
         );
     }
 
