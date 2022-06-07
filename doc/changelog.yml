@@ -32,8 +32,8 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
+  notes: |
+    [jan] Fix method call when removing user data.
 4.2.26:
   api: 4.0.0
   state:
