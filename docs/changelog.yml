@@ -22,6 +22,17 @@
     [mjr] Add ability to add special characters to the alpha pager.
     [jan] Return ETags with browse() API method.
     [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+4.2.28:
+  api: 4.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2022-06-07
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |+
+    
 4.2.27:
   api: 4.0.0
   state:
