@@ -4,12 +4,11 @@
   state:
     release: alpha
     api: alpha
-  date: 2021-03-13
+  date: 2022-06-07
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |+
-    
 5.0.0alpha4:
   api: 5.0.0alpha1
   state:
