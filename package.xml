@@ -3606,7 +3606,7 @@
    <date>2022-06-06</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* 
+* [jan] Fix method call when removing user data.
    </notes>
   </release>
   <release>

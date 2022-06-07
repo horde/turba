@@ -25,7 +25,7 @@ v5.0.0
 v4.2.27
 -------
 
-
+[jan] Fix method call when removing user data.
 
 
 -------
