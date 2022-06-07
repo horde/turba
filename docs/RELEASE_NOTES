@@ -1,11 +1,11 @@
 <?php
 /* Security release? */
-$notes['security'] = true;
+$notes['security'] = false;
 
 /* Mailing list release notes. */
 $notes['changes'] = <<<ML
 The Horde Team is pleased to announce the final release of the Turba Contact
-Manager version H5 (4.2.26).
+Manager version H5 (4.2.27).
 
 Turba is the Horde contact management application. Leveraging the Horde
 framework to provide seamless integration with IMP and other Horde
@@ -13,19 +13,14 @@ applications, it supports contacts in SQL, LDAP, Kolab, IMSP, and Facebook
 address books, and works as a CardDAV server. For more information on Turba,
 visit http://www.horde.org/apps/turba.
 
-A remote code execution vulnerability has been reported by Simon Scannell
-from SonarSource. You can find the full report at
-https://blog.sonarsource.com/horde-webmail-rce-via-email/
-
 For upgrading instructions, please see
 http://www.horde.org/apps/turba/docs/UPGRADING
 
 For detailed installation and configuration instructions, please see
 http://www.horde.org/apps/turba/docs/INSTALL
 
-The major changes compared to the Turba version H5 (4.2.25) are:
-    * Fixed RCE vulnerability (CVE-2022-30287).
-    * Small bug fixes.
+The major changes compared to the Turba version H5 (4.2.26) are:
+    * Fixed regression when removing user data.
 ML;
 
 $notes['name'] = 'Turba';
