@@ -37,7 +37,7 @@ class Turba_Form_CreateAddressBook extends Horde_Form
         $cfgSources = Turba::availableSources();
         $driver = $GLOBALS['injector']
             ->getInstance('Turba_Factory_Driver')
-            ->create($cfgSources[$GLOBALS['conf']['shares']['source']]);
+            ->createFromConfig($cfgSources[$GLOBALS['conf']['shares']['source']]);
         $params = array(
             'params' => array('source' => $GLOBALS['conf']['shares']['source']),
             'name' => $this->_vars->get('name'),
