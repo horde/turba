@@ -27,12 +27,10 @@ run-tests.log
 /test/*/*/*/*.log
 /test/*/*/*/*.out
 
-# Ignore locally defined config
-/config/*.d/*.php
-/config/*.old
-/config/conf.bak.php
-/config/hooks.php
-/config/menu.php
-/config/*.local.php
-/config/*-*.php
-
+/vendor
+/composer.lock
+/web
+/var
+/.phpunit.cache
+.phpunit.results.cache
+.php-cs-fixer.cache
