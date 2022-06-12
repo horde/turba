@@ -1,0 +1,2456 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"provision",
+				"provision-post"
+			],
+			[
+				"json_d",
+				"json_encode"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"html",
+				"htmlspecialchars"
+			],
+			[
+				"is_nu",
+				"is_numeric"
+			],
+			[
+				"_get",
+				"_GetCodeFromLatLng"
+			],
+			[
+				"loca",
+				"locationSearch"
+			],
+			[
+				"want_ht",
+				"want_html_as_plain"
+			],
+			[
+				"want_Plain",
+				"want_plain_text"
+			],
+			[
+				"want_html",
+				"want_html_text"
+			],
+			[
+				"_getHtmlPart",
+				"_getHtmlPart2Plain"
+			],
+			[
+				"_getPlainP",
+				"_getPlainPart2Html"
+			],
+			[
+				"Horde_IMap",
+				"Horde_Imap_Client_Fetch_Query"
+			],
+			[
+				"_pla",
+				"_plain2Html"
+			],
+			[
+				"BODYPRE",
+				"BODYPREF_TYPE_MIME"
+			],
+			[
+				"BODYTYPE_",
+				"BODYPREF_TYPE_PLAIN"
+			],
+			[
+				"want_p",
+				"want_plain_as_html"
+			],
+			[
+				"UTF",
+				"UTF-8"
+			],
+			[
+				"U",
+				"UNITS_STANDARD"
+			],
+			[
+				"Horde",
+				"Horde_Compress_Zip"
+			],
+			[
+				"_lo",
+				"_logDebug"
+			],
+			[
+				"_lg",
+				"_logErr"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"base",
+				"base64_encode"
+			],
+			[
+				"_out",
+				"_outMBUInt"
+			],
+			[
+				"availa",
+				"availability_request"
+			],
+			[
+				"strrep",
+				"str_replace"
+			],
+			[
+				"_handl",
+				"_handleError"
+			],
+			[
+				"ST",
+				"STATUS_PROTERROR"
+			],
+			[
+				"SEARCH_ST",
+				"SEARCH_STATUS_ERROR"
+			],
+			[
+				"STORE_STATUS_",
+				"STORE_STATUS_NOTFOUND"
+			],
+			[
+				"htl",
+				"htmlspecialchars"
+			],
+			[
+				"htm",
+				"htmlspecialchars"
+			],
+			[
+				"homePosta",
+				"homePostalCode"
+			],
+			[
+				"esca",
+				"escapeHTML"
+			],
+			[
+				"horde",
+				"hordeInfo"
+			],
+			[
+				"DTS",
+				"DTSTART"
+			],
+			[
+				"_",
+				"_removeDateStamp"
+			],
+			[
+				"EN_",
+				"EN_TYPE_ENDTAG"
+			],
+			[
+				"end",
+				"end_date"
+			],
+			[
+				"OOF_STATE_",
+				"OOF_STATE_DISABLED"
+			],
+			[
+				"arra",
+				"array_merge"
+			],
+			[
+				"es",
+				"escapeshellcmd"
+			],
+			[
+				"git",
+				"gitignore"
+			],
+			[
+				"COmpon",
+				"Components_Dependencies_Injector"
+			],
+			[
+				"date_parse",
+				"date_parse_from_format"
+			],
+			[
+				"pacakg",
+				"package_xml_dir"
+			],
+			[
+				"sip",
+				"skipped"
+			],
+			[
+				"Horde_Ac",
+				"Horde_ActiveSync_Device"
+			],
+			[
+				"sig",
+				"signature"
+			],
+			[
+				"preg",
+				"preg_match"
+			],
+			[
+				"exp",
+				"explode"
+			],
+			[
+				"PKC",
+				"PKCS7"
+			],
+			[
+				"qu",
+				"queue"
+			],
+			[
+				"compon",
+				"component"
+			],
+			[
+				"Horde_",
+				"Horde_Argv_Parser"
+			],
+			[
+				"max",
+				"max_length"
+			],
+			[
+				"modu",
+				"modular"
+			],
+			[
+				"arrayp",
+				"array_pop"
+			],
+			[
+				"Horde_Pear_",
+				"Horde_Pear_Contents_List"
+			],
+			[
+				"_g",
+				"_callGit"
+			],
+			[
+				"defaul",
+				"default_notepad"
+			],
+			[
+				"default",
+				"default_calendar"
+			],
+			[
+				"ac",
+				"activesync"
+			],
+			[
+				"Horde_ActiveSync_Log_Lo",
+				"Horde_ActiveSync_Log_Logger_Deprecated"
+			],
+			[
+				"_log",
+				"_logQueries"
+			],
+			[
+				"binary",
+				"binary_values"
+			],
+			[
+				"se",
+				"sequenceName"
+			],
+			[
+				"exe",
+				"execute"
+			],
+			[
+				"_gt",
+				"_getVfsStream"
+			],
+			[
+				"imagecolorallo",
+				"imagecolorallocate"
+			],
+			[
+				"imagecopyresam",
+				"imagecopyresampled"
+			],
+			[
+				"rad",
+				"radius"
+			],
+			[
+				"Imag",
+				"ImagickException"
+			],
+			[
+				"edi",
+				"editGallery"
+			],
+			[
+				"anselGall",
+				"anselGalleryViewMode"
+			],
+			[
+				"editGa",
+				"editGalleryCallback"
+			],
+			[
+				"TO_JS",
+				"TO_JSON_IMAGES"
+			],
+			[
+				"ret",
+				"retrieve"
+			],
+			[
+				"getmy",
+				"getmypid"
+			],
+			[
+				"_po",
+				"_setHeaderProperties"
+			],
+			[
+				"Invl",
+				"InvalidArgumentException"
+			],
+			[
+				"debug_",
+				"debug_print_backtrace"
+			],
+			[
+				"Jon",
+				"Jonah_Exception"
+			],
+			[
+				"e",
+				"e"
+			],
+			[
+				"Horde_E",
+				"Horde_Db_Exception"
+			],
+			[
+				"Horde_Db",
+				"Horde_Db_Exception"
+			],
+			[
+				"getst",
+				"getStoryLink"
+			],
+			[
+				"globa",
+				"global"
+			],
+			[
+				"DEFAUL",
+				"DEFAULT_SPAM_MBOX"
+			],
+			[
+				"test_",
+				"test_spam_mailbox"
+			],
+			[
+				"Horde_Active",
+				"Horde_ActiveSync_Folder_Base"
+			],
+			[
+				"Horde_A",
+				"Horde_ActiveSync_Imap_Adapter"
+			],
+			[
+				"UID",
+				"UIDNEXT"
+			],
+			[
+				"Horde_ActiveSync_Driver",
+				"Horde_Core_ActiveSync_Driver"
+			],
+			[
+				"fget",
+				"fgetcsv"
+			],
+			[
+				"kronolithCalendarImpo",
+				"kronolithCalendarinternalImportButton"
+			],
+			[
+				"kronolithCalendarin",
+				"kronolithCalendarinternalImportButton"
+			],
+			[
+				"Horde_S",
+				"Horde_Service_Weather"
+			],
+			[
+				"str_rep",
+				"str_replace"
+			],
+			[
+				"HOrde_ACtive",
+				"Horde_ActiveSync_Exception"
+			],
+			[
+				"current",
+				"current_modseq"
+			],
+			[
+				"eventD",
+				"findEventDays"
+			],
+			[
+				"dele",
+				"deleteCache"
+			],
+			[
+				"cal",
+				"calendar"
+			],
+			[
+				"view",
+				"view"
+			],
+			[
+				"deleteEv",
+				"deleteEventCallback"
+			],
+			[
+				"cac",
+				"cacheEnd"
+			],
+			[
+				"Kronoli",
+				"KronolithMobile"
+			],
+			[
+				"Krono",
+				"KronolithMobile"
+			],
+			[
+				"cach",
+				"cacheStart"
+			],
+			[
+				"Kron",
+				"KronolithMobile"
+			],
+			[
+				"ensure",
+				"ensureUtf8"
+			],
+			[
+				"_ap",
+				"_appCapabilities"
+			],
+			[
+				"create",
+				"create_missing"
+			],
+			[
+				"_de",
+				"_atcDelete"
+			],
+			[
+				"_draft",
+				"_draftMessage"
+			],
+			[
+				"_dra",
+				"_draftUid"
+			],
+			[
+				"exis",
+				"existing_atc"
+			],
+			[
+				"airsyncbase",
+				"airsyncbaseattachments"
+			],
+			[
+				"Horde_ActiveSync_Air",
+				"Horde_ActiveSync_Message_AirSyncBaseAttachment"
+			],
+			[
+				"EN",
+				"EN_TYPE_ENDTAG"
+			],
+			[
+				"KEY",
+				"KEY_VALUES"
+			],
+			[
+				"AIR",
+				"AIRSYNCBASE_ADD"
+			],
+			[
+				"AirSy",
+				"AirSyncBaseAttachments"
+			],
+			[
+				"VERSION",
+				"VERSION_SIXTEEN"
+			],
+			[
+				"CLA",
+				"CLASS_EMAIL"
+			],
+			[
+				"SPECIAL",
+				"SPECIAL_DRAFTS"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "horde_debug.sublime-project",
+			"settings":
+			{
+				"buffer_size": 171,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/usr/local/horde/horde/imp/lib/Mailbox/List.php",
+			"settings":
+			{
+				"buffer_size": 22872,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/usr/local/horde/horde/imp/lib/Mailbox/List/Virtual.php",
+			"settings":
+			{
+				"buffer_size": 4217,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/usr/local/horde/horde/imp/lib/Ajax/Application/ListMessages.php",
+			"settings":
+			{
+				"buffer_size": 19021,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "<?php\n/**\n * Turba index page.\n *\n * Copyright 2000-2017 Horde LLC (http://www.horde.org/)\n *\n * See the enclosed file LICENSE for license information (ASL).  If you did\n * did not receive this file, see http://www.horde.org/licenses/apache.\n *\n * @author Chuck Hagenbuch <chuck@horde.org>\n */\n\nrequire_once __DIR__ . '/lib/Application.php';\nHorde:_Registry::appInit('turba');\n\nswitch ($registry->getView()) {\ncase $registry::VIEW_SMARTMOBILE:\n    Horde::url('smartmobile.php')->redirect();\n    break;\n\ndefault:\n    require TURBA_BASE . '/' . ($browse_source_count\n        ? basename($prefs->getValue('initial_page'))\n        : 'search.php');\n    break;\n}\n",
+			"file": "/usr/local/horde/horde/turba/index.php",
+			"file_size": 655,
+			"file_write_time": 131885997095720187,
+			"settings":
+			{
+				"buffer_size": 656,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Context",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Watch",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix",
+				"name": "Xdebug Stack",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"contents": "=> /usr/local/horde/horde/turba/index.php\n    |+| 14\n",
+			"settings":
+			{
+				"buffer_size": 53,
+				"line_ending": "Unix",
+				"name": "Xdebug Breakpoint",
+				"read_only": true,
+				"scratch": true
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"packageinst",
+				"Package Control: Install Package"
+			],
+			[
+				"packre",
+				"Package Control: Remove Package"
+			],
+			[
+				"pack",
+				"Package Control: Remove Package"
+			],
+			[
+				"xd",
+				"Xdebug: Session - Evaluate"
+			],
+			[
+				"pac",
+				"Package Control: Install Package"
+			],
+			[
+				"ter",
+				"Terminus: Open Default Shell in View"
+			],
+			[
+				"tre",
+				"Terminus: Toggle Panel"
+			],
+			[
+				"term",
+				"Terminus: Open Default Shell in Panel"
+			],
+			[
+				"preferter",
+				"Preferences: Terminus Key Bindings"
+			],
+			[
+				"terminus:",
+				"Terminus: Open Default Shell in View"
+			],
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"git log",
+				"Git: Log Current File"
+			],
+			[
+				"git history",
+				"Git: Commit history"
+			],
+			[
+				"git ihs",
+				"Git: Commit history"
+			],
+			[
+				"git blame",
+				"Git: Blame"
+			],
+			[
+				"git",
+				"Git: Status"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"remov",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"packag",
+				"Package Control: Remove Package"
+			],
+			[
+				"alignment",
+				"Preferences: Alignment File Settings – User"
+			],
+			[
+				"diff",
+				"FileDiffs: Menu"
+			],
+			[
+				"disable",
+				"Package Control: Disable Package"
+			],
+			[
+				"enable",
+				"Package Control: Enable Package"
+			],
+			[
+				"disab",
+				"Package Control: Disable Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"stringenc",
+				"StringEncode: HTML Entitize"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"html",
+				"HTML: Encode Special Characters"
+			],
+			[
+				"pyuml",
+				"Preferences: yUML Settings – User"
+			],
+			[
+				"pyum",
+				"Preferences: yUML Settings – Default"
+			],
+			[
+				"insatll",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"prefs",
+				"Preferences: Alignment File Settings – Syntax Specific – User"
+			],
+			[
+				"pref",
+				"Preferences: Alignment Key Bindings – Default"
+			],
+			[
+				"plu",
+				"SublimeCodeIntel: Disable Plugin"
+			],
+			[
+				"clip",
+				"Clipboard History"
+			],
+			[
+				"pacakge",
+				"Package Control: Install Package"
+			],
+			[
+				"dispa",
+				"Package Control: Disable Package"
+			],
+			[
+				"disp",
+				"Package Control: Disable Package"
+			],
+			[
+				"disa",
+				"Package Control: Disable Package"
+			],
+			[
+				"dis",
+				"Package Control: Disable Package"
+			],
+			[
+				"disap",
+				"Package Control: Disable Package"
+			],
+			[
+				"ena",
+				"Package Control: Enable Package"
+			],
+			[
+				"pres",
+				"Preferences: Alignment File Settings – Default"
+			],
+			[
+				"git st",
+				"Git: Status"
+			],
+			[
+				"git add",
+				"Git: Add Current File"
+			],
+			[
+				"gitst",
+				"Git: Status"
+			],
+			[
+				"gitcom",
+				"Git: Custom Command"
+			],
+			[
+				"linter",
+				"SublimeLinter: Reset"
+			],
+			[
+				"lint",
+				"SublimeLinter: Lint Current File"
+			],
+			[
+				"sublime",
+				"SublimeLinter: Enable Background Linting"
+			],
+			[
+				"lin",
+				"SublimeLinter: Lint Current File"
+			],
+			[
+				"packae",
+				"Package Control: Install Package"
+			],
+			[
+				"git: log",
+				"Git: Log Current File"
+			],
+			[
+				"pacin",
+				"Package Control: Install Package"
+			],
+			[
+				"g",
+				"Git: Status"
+			]
+		],
+		"width": 540.0
+	},
+	"console":
+	{
+		"height": 248.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": true,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/usr/local/horde/horde/base/lib/Block/Weather.php",
+		"/usr/local/horde/horde_fw5/turba/docs/horde_debug.sublime-project",
+		"/usr/local/horde/horde/turba/index.php",
+		"/Users/mrubinsk/Library/Application Support/Sublime Text 3/Packages/User/Xdebug.sublime-settings",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/hordedirectory.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/horde.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/provision-post.sh",
+		"/private/var/www/html/horde/turba/index.php",
+		"/Users/mrubinsk/Library/Application Support/Sublime Text 3/Packages/Xdebug Client/Xdebug.sublime-settings",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-FW52/dev_config.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-FW52/horde.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/README.md",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/conf/base/conf.php",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-FW52/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2-php56-oracle/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/horde/src/Core/lib/Horde/Registry.php",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/nginx/nginx.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/dev_config.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/webroot.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2-php54/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2-php56/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2-php56-cyrus/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2-php56-mariadb/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/horde-git-tools.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/conf/base/registry.local.php",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/horde/src/base/config/registry.local.php",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/config.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/hordedirectory.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/webroot.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2-php7/Vagrantfile",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/pear-horde-5.2/pre-config.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/php/php73-fpm.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/setup/git-tools-master/.gitignore",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/php/php7-fpm.sh",
+		"/Users/mrubinsk/horde-dev-vagrant/shared/bootstrap.sh",
+		"/usr/local/horde/horde/imp/lib/Ajax/Application/Viewport.php",
+		"/usr/local/horde/horde/imp/lib/Ajax/Application/ListMessages.php",
+		"/usr/local/horde/horde/imp/lib/Factory/Mailbox.php",
+		"/usr/local/horde/horde/imp/lib/Search.php",
+		"/usr/local/horde/horde/imp/lib/Ajax/Application.php",
+		"/usr/local/horde/horde/Injector/lib/Horde/Injector.php",
+		"/usr/local/horde/horde/imp/lib/Search/Query.php",
+		"/usr/local/horde/horde/imp/lib/Factory/MailboxList.php",
+		"/usr/local/horde/horde/imp/lib/Mailbox.php",
+		"/usr/local/horde/horde/imp/lib/Mailbox/List.php",
+		"/usr/local/horde/horde/Injector/lib/Horde/Injector/TopLevel.php",
+		"/usr/local/horde/horde/Injector/lib/Horde/Injector/Binder/AnnotatedSetters.php",
+		"/usr/local/horde/horde/Injector/lib/Horde/Injector/Binder/Implementation.php",
+		"/usr/local/horde/horde/Cache/lib/Horde/Cache/Storage/File.php",
+		"/usr/local/horde/horde/base/services/portal/index.php",
+		"/usr/local/horde/horde/Vfs/lib/Horde/Vfs/File.php",
+		"/usr/local/horde/horde/Autoloader_Cache/lib/Horde/Autoloader/Cache.php",
+		"/opt/local/lib/php70/pear/Net/DNS2/Cache/File.php",
+		"/usr/local/horde/horde_fw5/turba/docs/changelog.yml",
+		"/usr/local/horde/horde/turba/search.php",
+		"/usr/local/horde/horde/turba/doc/changelog.yml",
+		"/usr/local/horde/horde_fw5/turba/docs/CHANGES",
+		"/usr/local/horde/horde_fw5/turba/package.xml",
+		"/usr/local/horde/horde_fw5/turba/docs/RELEASE_NOTES",
+		"/usr/local/horde/horde/base/lib/Block/Cloud.php",
+		"/usr/local/horde/horde/kronolith/index.php",
+		"/usr/local/horde/horde/turba/lib/Driver.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Ajax/Application/Handler/Dynamic.php",
+		"/usr/local/horde/horde_fw5/turba/lib/Driver.php",
+		"/usr/local/horde/horde/turba/lib/Api.php",
+		"/usr/local/horde/horde/turba/lib/Object.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Message/Ui.php",
+		"/usr/local/horde/horde/SessionHandler/lib/Horde/SessionHandler.php",
+		"/usr/local/horde/horde_fw5/base/docs/INSTALL",
+		"/usr/local/horde/horde/base/admin/sessions.php",
+		"/usr/local/horde/horde_fw5/base/admin/sessions.php",
+		"/usr/local/horde/horde/kronolith/lib/Kronolith.php",
+		"/usr/local/horde/horde/kronolith/lib/FreeBusy.php",
+		"/usr/local/horde/horde/kronolith/config/hooks.php",
+		"/usr/local/horde/horde/kronolith/config/prefs.php",
+		"/usr/local/horde/horde/base/config/hooks.php.dist",
+		"/usr/local/horde/horde/kronolith/doc/UPGRADING.rst",
+		"/usr/local/horde/horde/base/config/conf.php",
+		"/usr/local/horde/horde/kronolith/config/conf.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Application.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Search/Query.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Ajax/Application/Viewport.php",
+		"/usr/local/horde/horde/kronolith/config/conf.bak.php",
+		"/usr/local/horde/horde/kronolith/config/horde.local.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Factory/Search.php",
+		"/usr/local/horde/horde_fw5/imp/lib/Search.php",
+		"/usr/local/horde/horde/ansel/doc/changelog.yml",
+		"/usr/local/horde/horde_fw5/ansel/package.xml",
+		"/usr/local/horde/horde_fw5/ansel/docs/changelog.yml",
+		"/usr/local/horde/horde/ansel/doc/CHANGES",
+		"/usr/local/horde/horde_fw5/ansel/docs/CHANGES",
+		"/usr/local/horde/horde_fw5/ansel/docs/RELEASE_NOTES",
+		"/usr/local/horde/horde/Perms/lib/Horde/Perms/Permission.php",
+		"/usr/local/horde/horde_fw5/Perms/doc/Horde/Perms/changelog.yml",
+		"/usr/local/horde/horde_fw5/Perms/package.xml",
+		"/usr/local/horde/horde_fw5/ansel/docs/CREDITS",
+		"/usr/local/horde/horde_fw5/ActiveSync/doc/Horde/ActiveSync/changelog.yml",
+		"/usr/local/horde/horde_fw5/Core/lib/Horde/Core/Tagger.php",
+		"/usr/local/horde/horde/content/lib/Objects/Manager.php",
+		"/usr/local/horde/horde/ActiveSync/doc/Horde/ActiveSync/changelog.yml",
+		"/usr/local/horde/horde_fw5/content/lib/Tagger.php",
+		"/usr/local/horde/horde_fw5/turba/lib/Object.php",
+		"/usr/local/horde/horde_fw5/turba/lib/Api.php",
+		"/usr/local/horde/horde_fw5/ActiveSync/lib/Horde/ActiveSync/Request/Sync.php",
+		"/usr/local/horde/horde/ActiveSync/lib/Horde/ActiveSync.php",
+		"/usr/local/horde/horde/ActiveSync/lib/Horde/ActiveSync/Request/Sync.php",
+		"/usr/local/horde/horde/ActiveSync/lib/Horde/ActiveSync/Connector/Exporter/Base.php",
+		"/usr/local/horde/horde_fw5/ActiveSync/lib/Horde/ActiveSync/Connector/Importer.php",
+		"/usr/local/horde/horde/kronolith/fb.php",
+		"/usr/local/horde/horde/imp/doc/changelog.yml",
+		"/usr/local/horde/horde_fw5/Icalendar/lib/Horde/Icalendar.php",
+		"/usr/local/horde/horde_fw5/Icalendar/lib/Horde/Icalendar/Vfreebusy.php",
+		"/usr/local/horde/horde/imp/lib/Ajax/Application/Handler/Dynamic.php",
+		"/usr/local/horde/horde/imp/lib/Indices.php",
+		"/usr/local/horde/horde_fw5/Mime/lib/Horde/Mime/Mdn.php",
+		"/usr/local/horde/horde_fw5/Mime/lib/Horde/Mime/Part.php",
+		"/usr/local/horde/horde/imp/lib/Contents/Message.php",
+		"/usr/local/horde/horde_fw5/ActiveSync/package.xml",
+		"/usr/local/horde/horde_fw5/ActiveSync/doc/Horde/ActiveSync/CHANGES",
+		"/usr/local/horde/horde/ActiveSync/lib/Horde/ActiveSync/Driver/Base.php",
+		"/usr/local/horde/horde_fw5/groupware/docs/INSTALL",
+		"/usr/local/horde/horde_fw5/Core/lib/Horde/Core/ActiveSync/Driver.php",
+		"/usr/local/horde/horde/ActiveSync/lib/Horde/ActiveSync/Connector/Exporter/Sync.php",
+		"/usr/local/horde/horde/Core/lib/Horde/Core/Tagger.php",
+		"/usr/local/horde/horde/turba/lib/Ui/VarRenderer/Turba.php",
+		"/usr/local/horde/horde/content/lib/Tagger.php"
+	],
+	"find":
+	{
+		"height": 24.0
+	},
+	"find_in_files":
+	{
+		"height": 101.0,
+		"where_history":
+		[
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/turba",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/base",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde_fw5/imp",
+			"/usr/local/horde/horde_fw5/",
+			"/usr/local/horde/horde_fw5/imp",
+			"/usr/local/horde/horde_fw5/Mail",
+			"/usr/local/horde/horde_fw5/Mime",
+			"/usr/local/horde/horde_fw5/",
+			"/usr/local/horde/horde_fw5/Mail",
+			"/usr/local/horde/horde_fw5/Mime",
+			"/usr/local/horde/horde_fw5/imp/lib/Ajax",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/content",
+			"/usr/local/horde/horde/nag",
+			"/usr/local/horde/nag",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/Rdo",
+			"/usr/local/horde/horde/kronolith/migration",
+			"/usr/local/horde/horde/kronolith/migratino",
+			"/usr/local/horde/horde/Rdo",
+			"/usr/local/horde/horde/Db",
+			"/usr/local/horde/horde/Rdo",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/Imap_Client",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde_fw5",
+			"/usr/local/horde/horde_fw5/Compress",
+			"/usr/local/horde/horde_fw5/",
+			"/usr/local/horde/horde_fw5/Mapi",
+			"/usr/local/horde/horde_fw5/",
+			"/usr/local/horde/horde_fw5/base/admin",
+			"/usr/local/horde/horde/Ansel",
+			"/usr/local/horde/horde_fw5/Image",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/Image",
+			"/usr/local/horde/horde/Horde_Image",
+			"/usr/local/horde/horde/Imap_Client",
+			"/usr/local/horde/horde/Activesync",
+			"/usr/local/horde/horde/Core",
+			"/usr/local/horde/horde/ActiveSync",
+			"/Users/mrubinsk/src/z-push",
+			"/usr/local/horde/horde/Turba",
+			"/usr/local/horde/horde/ActiveSync",
+			"/Users/mrubinsk/src/z-push",
+			"/usr/local/horde/horde/ActiveSync",
+			"/Users/mrubinsk/src/z-push",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/ansel",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/ingo",
+			"/usr/local/horde/horde/Text_Flowed",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/Text_Filter",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/Dav/bundle/vendor/sabre",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/ActiveSync",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/Mapi",
+			"/usr/local/horde/Mapi",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/Compress",
+			"/usr/local/horde/horde/Kronolith",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/ActiveSync",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/Core",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/ActiveSync",
+			"/usr/local/horde/Core",
+			"/usr/local/horde/ActiveSync",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/mime",
+			"/usr/local/horde/horde/Image",
+			"/usr/local/horde/Image",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/mime",
+			"/usr/local/horde/horde/components/",
+			"/usr/local/horde/horde/components/lib/",
+			"/usr/local/horde/horde/components/lib/Components/Qc/Task",
+			"/usr/local/horde/horde/components",
+			"/usr/local/horde/horde/Image",
+			"/usr/local/horde/horde",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/Core",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/turba",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/ansel",
+			"/usr/local/horde/horde/components",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/Db",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/components/lib/Components",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/Core",
+			"/usr/local/horde/horde/activesync",
+			"/usr/local/horde/horde/Imap_Client",
+			"/usr/local/horde/horde/",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/imp",
+			"/usr/local/horde/horde/ActiveSync",
+			"/usr/local/horde/horde/kronolith",
+			"/usr/local/horde/horde/imp/lib/"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"port",
+			"status",
+			"inactive",
+			"active",
+			"port",
+			"Content_Exception",
+			"content_exception",
+			"('Turba_Tagger')",
+			"->store()",
+			"driver->save",
+			"->save",
+			"failed to destroy session",
+			"prefs->get",
+			"search_fields",
+			"search_sources",
+			"['conf']['storage']",
+			"['conf]['storage']",
+			"storage",
+			"viewport",
+			"qsearch",
+			"search",
+			"string contains non",
+			"continue",
+			"BUSY",
+			"freebusy",
+			"error when communicating with the server",
+			"error communicating with the server",
+			"Error communicat",
+			"finally {",
+			"SendMdn",
+			"send_mdn",
+			"mdn",
+			"send read",
+			"read reci",
+			"importfail",
+			" = 9",
+			"sync_status",
+			"importfailures",
+			"importchange",
+			"importedchang",
+			"importedfailures",
+			"parsesyncfolders",
+			"parsesynccommands",
+			"importedfailures",
+			"_ensureObject(",
+			"args['objectId",
+			"->ensureObjects",
+			"buildGalleryList",
+			"view.php",
+			"'onclick",
+			"categ",
+			"geonames",
+			"geocoders",
+			"geocode",
+			"geocoder",
+			"DoAction",
+			"api",
+			"Horde_Core_HordeMap",
+			"Horde_Cord_HordeMap",
+			"HordeMap",
+			"Horde_Core_HordeMap::init",
+			"Horde_Core_HordeMap::initMap",
+			"Horde_Core_HordeMap::init",
+			"WeatherLocationAUtoCompleter",
+			"i.code.replace",
+			"replace",
+			"::debug",
+			"_makeRe",
+			"Horde::debug",
+			"->_parseStation",
+			"_searchLo",
+			"->_searchLOcations",
+			"parseSearc",
+			"Horde::dbu",
+			"API_URL",
+			"_searchLocations",
+			"Horde::debug",
+			"city",
+			"location",
+			"_searchLocation",
+			"_makeRe",
+			"searchLocations",
+			"_searchLocations",
+			"geoname",
+			")\n",
+			"['exif']['params'",
+			"maps']['geocoder']",
+			"HordeMap.initialize",
+			"HordeMap = ",
+			"map",
+			"_getProviderUrl",
+			"conf",
+			"getlayers",
+			"open",
+			"mtmatri",
+			"update",
+			"timestamps",
+			"->timest",
+			"created_at",
+			"->timestamp",
+			"updated_at",
+			"authusername",
+			"postauthent",
+			"lower",
+			"cache",
+			"_parseAut",
+			"_key",
+			"HordeMap",
+			"Horde_Map$",
+			"Horde_Map",
+			"geonames",
+			"scrip",
+			"Owm",
+			"id",
+			"_getHtmlPart",
+			"parsesearchloca",
+			"Horde::debug",
+			"_getHtmlPart(",
+			"_getPlain",
+			"_getPlainPart",
+			"TYPE_MIME",
+			"native",
+			"nativebodytype",
+			"_gethtmlpart",
+			"_getPlainPart",
+			"text2html",
+			"_getHtmlPart",
+			"getmessagebodydataObject("
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"",
+			"PoomContacts::",
+			"SYNC_APPLICATIONDATA",
+			"SYNC_COLLECTIONS",
+			"SYNC_COLLECTIONID",
+			"SYNC_COLLECTIONCLASS",
+			"SYNC_COLLECTION",
+			"SYNC_DELETE",
+			"SYNC_CHANGE",
+			"SYNC_RESPONSES",
+			"",
+			"RC",
+			"beta",
+			"alpha",
+			"ALPHA",
+			"RC",
+			"../",
+			"Horde_String::",
+			"",
+			"protected",
+			"https://www.horde.org/licenses/bsd BSD",
+			"@license  https://www.horde.org/licenses/bsd BSD",
+			"@license  http://www.horde.org/licenses/bsd BSD",
+			"self::$_repositories",
+			"$pkg_list",
+			"$this->_lifetime",
+			"Cli::$cli->",
+			"$this->_cli->message(",
+			"$this->_cli->",
+			"$this->_params['debug']",
+			"$params['action']",
+			"$this->_debug",
+			"$hrode_git",
+			"$web_dir",
+			"$this->_linkApp(",
+			"$this->_params['static_group']",
+			"$this->_params['static_mode']",
+			"self::MODE",
+			"$this->_debug",
+			"mixed  $idValue",
+			"mixed  $idValue  ",
+			"->_logger->meta",
+			"$indent",
+			"->_logger->client",
+			"->_logger->c",
+			"->_logger->s",
+			"$conf",
+			"$registry",
+			"ansel",
+			"$this->_easMessage",
+			"$this->_imapMessage",
+			"$this->_mbd",
+			"$this->_airsyncBody",
+			"$this->_options",
+			"'channels'",
+			"$this->_folder",
+			"$fields",
+			"$this->_draftMessage->",
+			"$this->_draftMessage",
+			"$this->_headers",
+			"$draft",
+			"->_notes",
+			"$this->_baseurl",
+			"$output",
+			"Mnemo",
+			"$prefs",
+			"$this->date_format",
+			"$this->time_format",
+			"$location",
+			"$view->other",
+			"$view->remarks",
+			"Horde_Service_Weather::convertSpeed",
+			"'",
+			"[self::UNIT_KEY_",
+			"'",
+			"$this->_conditions",
+			"$this->_clouds",
+			"$metarCode",
+			"Horde",
+			"Horde_Service_Weather::convertTemperature",
+			"'",
+			"Horde_Service_Weather::convertDistance(",
+			"'",
+			"Horde_Service_Weather::convertSpeed(",
+			"'",
+			"->_convertPressure",
+			"->_convertTemperature",
+			"->_convertDistance",
+			"->_convertSpeed",
+			"$this->",
+			"'",
+			"$this->_metarCode",
+			"$this->_remarks",
+			"$this->",
+			"$this->_sensors",
+			"$this->_cloudTypes",
+			"$this->_clouds",
+			"$this->_conditions",
+			"'",
+			"$this->_compass",
+			"$date",
+			"$originalStart",
+			"$originalEnd",
+			"$actualEnd",
+			"$actualStart",
+			"$degrees",
+			"->increment()",
+			"",
+			"list($type, $size) = $this->_lookupType($type);",
+			"#kronolithEventFileList",
+			"vfsInit",
+			"->_vfsInit",
+			"ansel",
+			"Ansel",
+			"&",
+			"=>",
+			"\"$0\"",
+			"hordeBlockWeather\"",
+			"'",
+			"example",
+			"f",
+			"m",
+			"example.",
+			"m",
+			"Office",
+			"m@example.com",
+			"\\r",
+			"->_part->"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "horde_debug.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 171,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161,
+								161
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/usr/local/horde/horde/imp/lib/Mailbox/List.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 22872,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5922,
+								5935
+							]
+						],
+						"settings":
+						{
+							"SL.16.region_keys":
+							[
+							],
+							"SL.62.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3440.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/usr/local/horde/horde/imp/lib/Mailbox/List/Virtual.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4217,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2848,
+								2848
+							]
+						],
+						"settings":
+						{
+							"SL.63.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/usr/local/horde/horde/imp/lib/Ajax/Application/ListMessages.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 19021,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10240,
+								10240
+							]
+						],
+						"settings":
+						{
+							"SL.108.region_keys":
+							[
+							],
+							"SL.18.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/usr/local/horde/horde/turba/index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 656,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								241,
+								409
+							]
+						],
+						"settings":
+						{
+							"SL.131.region_keys":
+							[
+							],
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 7,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 53,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53,
+								53
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Xdebug Client/Xdebug.tmLanguage",
+							"word_wrap": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 37.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				2,
+				1
+			],
+			[
+				0,
+				1,
+				1,
+				2
+			],
+			[
+				1,
+				1,
+				2,
+				2
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.5,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			0.7,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 102.0
+	},
+	"output.Terminus":
+	{
+		"height": 226.0
+	},
+	"output.Terminus 2":
+	{
+		"height": 238.0
+	},
+	"output.Terminus 3":
+	{
+		"height": 108.0
+	},
+	"output.Terminus 4":
+	{
+		"height": 366.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 25.0
+	},
+	"output.xdebug":
+	{
+		"height": 28.0
+	},
+	"pinned_build_system": "Packages/Ruby/Ruby.sublime-build",
+	"project": "horde_debug.sublime-project",
+	"replace":
+	{
+		"height": 44.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"impmailboxlist",
+				"imp/lib/Mailbox/List.php"
+			],
+			[
+				"turbaindex.php",
+				"turba/index.php"
+			],
+			[
+				"turbaindex",
+				"horde/turba/index.php"
+			],
+			[
+				"baseweather.ph",
+				"horde/base/lib/Block/Weather.php"
+			],
+			[
+				"weather",
+				"base/lib/Block/Weather.php"
+			],
+			[
+				"impviewport",
+				"imp/lib/Ajax/Application/Viewport.php"
+			],
+			[
+				"blockweather",
+				"base/lib/Block/Weather.php"
+			],
+			[
+				"turbasear",
+				"turba/search.php"
+			],
+			[
+				"hordeservicesportal.php",
+				"horde/base/services/portal/index.php"
+			],
+			[
+				"turbachangelog",
+				"horde_fw5/turba/docs/changelog.yml"
+			],
+			[
+				"turbchangelog",
+				"horde/turba/doc/changelog.yml"
+			],
+			[
+				"turbdocchangel",
+				"horde/turba/doc/changelog.yml"
+			],
+			[
+				"hordefwturbachanges",
+				"horde_fw5/turba/docs/CHANGES"
+			],
+			[
+				"libmessageui.php",
+				"horde_fw5/imp/lib/Message/Ui.php"
+			],
+			[
+				"turbalibdriver.php",
+				"horde/turba/lib/Driver.php"
+			],
+			[
+				"kronlithindex.php",
+				"horde/kronolith/index.php"
+			],
+			[
+				"hordeINSTALL",
+				"horde_fw5/base/docs/INSTALL"
+			],
+			[
+				"libblockcloud",
+				"horde/base/lib/Block/Cloud.php"
+			],
+			[
+				"horde_fw5baseadminsess",
+				"horde_fw5/base/admin/sessions.php"
+			],
+			[
+				"hordebaseadminsession",
+				"horde/base/admin/sessions.php"
+			],
+			[
+				"basehook",
+				"horde/base/config/hooks.php.dist"
+			],
+			[
+				"kronoconf.php",
+				"horde/kronolith/config/conf.php"
+			],
+			[
+				"baseconf.php",
+				"horde/base/config/conf.php"
+			],
+			[
+				"hordepermspermission",
+				"horde/Perms/lib/Horde/Perms/Permission.php"
+			],
+			[
+				"hordeicalendar.ph",
+				"horde_fw5/Icalendar/lib/Horde/Icalendar.php"
+			],
+			[
+				"impdocchange",
+				"horde/imp/doc/changelog.yml"
+			],
+			[
+				"handlerdynam",
+				"horde/imp/lib/Ajax/Application/Handler/Dynamic.php"
+			],
+			[
+				"hordeinstall",
+				"horde_fw5/groupware/docs/INSTALL"
+			],
+			[
+				"hordemimemdn.php",
+				"horde_fw5/Mime/lib/Horde/Mime/Mdn.php"
+			],
+			[
+				"impmessageui",
+				"horde_fw5/imp/lib/Message/Ui.php"
+			],
+			[
+				"impdynamic.php",
+				"horde/imp/lib/Ajax/Application/Handler/Dynamic.php"
+			],
+			[
+				"hordemimemdn",
+				"horde_fw5/Mime/lib/Horde/Mime/Mdn.php"
+			],
+			[
+				"fb.php",
+				"horde/kronolith/fb.php"
+			],
+			[
+				"kronolithfb.php",
+				"horde/kronolith/fb.php"
+			],
+			[
+				"hordeactivesync.php",
+				"horde/ActiveSync/lib/Horde/ActiveSync.php"
+			],
+			[
+				"activesyncsync.php",
+				"horde_fw5/ActiveSync/lib/Horde/ActiveSync/Request/Sync.php"
+			],
+			[
+				"activesyncchangelog",
+				"horde/ActiveSync/doc/Horde/ActiveSync/changelog.yml"
+			],
+			[
+				"contentobjectmanager",
+				"horde/content/lib/Objects/Manager.php"
+			],
+			[
+				"contenttagger",
+				"horde_fw5/content/lib/Tagger.php"
+			],
+			[
+				"anselsmartjavasc",
+				"horde/ansel/templates/smartmobile/javascript_defs.php"
+			],
+			[
+				"javascript_defs",
+				"horde/kronolith/templates/javascript_defs.php"
+			],
+			[
+				"anserjavascrip",
+				"horde_fw5/ansel/templates/smartmobile/javascript_defs.php"
+			],
+			[
+				"basechangelog",
+				"horde/base/doc/changelog.yml"
+			],
+			[
+				"turbachanges",
+				"horde_fw5/turba/docs/CHANGES"
+			],
+			[
+				"nagpackage",
+				"horde/nag/package.xml"
+			],
+			[
+				"nagchangel",
+				"horde/nag/doc/changelog.yml"
+			],
+			[
+				"anselcloud",
+				"horde/ansel/lib/Block/Cloud.php"
+			],
+			[
+				"cloudsearc",
+				"horde/base/services/portal/cloud_search.php"
+			],
+			[
+				"coreuitagclou",
+				"horde/Core/lib/Horde/Core/Ui/TagCloud.php"
+			],
+			[
+				"activesynccontact",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Message/Contact.php"
+			],
+			[
+				"conf.php",
+				"horde/base/config/conf.php"
+			],
+			[
+				"baseconf.xml",
+				"horde/base/config/conf.xml"
+			],
+			[
+				"map.js",
+				"horde/Core/js/map/map.js"
+			],
+			[
+				"hordecore.js",
+				"horde/Core/js/hordecore.js"
+			],
+			[
+				"httpclient",
+				"horde/Http/lib/Horde/Http/Client.php"
+			],
+			[
+				"weatherautocom",
+				"horde/Core/lib/Horde/Core/Ajax/Imple/WeatherLocationAutoCompleter.php"
+			],
+			[
+				"weathercompleterbse",
+				"horde/Core/lib/Horde/Core/Ajax/Imple/WeatherLocationAutoCompleter/Base.php"
+			],
+			[
+				"autocompweater",
+				"horde/Core/lib/Horde/Core/Ajax/Imple/WeatherLocationAutoCompleter/Weather.php"
+			],
+			[
+				"google.js",
+				"horde/Core/js/map/google.js"
+			],
+			[
+				"weather.js",
+				"horde/base/js/weatherblockmap.js"
+			],
+			[
+				"hordeconf.php",
+				"horde/base/config/conf.php"
+			],
+			[
+				"weatherlocationaubase",
+				"horde_fw5/Core/lib/Horde/Core/Ajax/Imple/WeatherLocationAutoCompleter/Base.php"
+			],
+			[
+				"hordeconfigconf.php",
+				"horde/base/config/conf.php"
+			],
+			[
+				"serviceweatherstation",
+				"horde/Service_Weather/lib/Horde/Service/Weather/Station.php"
+			],
+			[
+				"hordemap.php",
+				"horde/Core/lib/Horde/Core/HordeMap.php"
+			],
+			[
+				"owm.js",
+				"horde/Core/js/map/owm.js"
+			],
+			[
+				"implelocation",
+				"horde/Core/lib/Horde/Core/Ajax/Imple/WeatherLocationAutoCompleter.php"
+			],
+			[
+				"serviceweatherbase.ph",
+				"horde/Service_Weather/lib/Horde/Service/Weather/Base.php"
+			],
+			[
+				"weatherlocationaut",
+				"horde/Core/lib/Horde/Core/Ajax/Imple/WeatherLocationAutoCompleter.php"
+			],
+			[
+				"weatherblockmap.",
+				"horde/base/js/weatherblockmap.js"
+			],
+			[
+				"templateweather",
+				"horde/base/templates/block/weather.html.php"
+			],
+			[
+				"templateblockweather",
+				"horde/base/templates/block/weather_content.html.php"
+			],
+			[
+				"hordeblockweaher",
+				"horde/base/lib/Block/Weather.php"
+			],
+			[
+				"rdomapper.php",
+				"horde/Rdo/lib/Horde/Rdo/Mapper.php"
+			],
+			[
+				"turbapplica",
+				"horde/turba/lib/Application.php"
+			],
+			[
+				"turbabackend",
+				"horde/turba/config/backends.php"
+			],
+			[
+				"hook",
+				"horde/base/config/hooks.php"
+			],
+			[
+				"impbackends.loca",
+				"horde/imp/config/backends.local.php"
+			],
+			[
+				"impbackends.php",
+				"horde/imp/config/backends.php"
+			],
+			[
+				"weatherjs",
+				"horde/base/js/weatherblockmap.js"
+			],
+			[
+				"hordeblockweather",
+				"horde/base/lib/Block/Weather.php"
+			],
+			[
+				"activesync.php",
+				"horde/ActiveSync/lib/Horde/ActiveSync.php"
+			],
+			[
+				"imapclientsocket.php",
+				"horde/Imap_Client/lib/Horde/Imap/Client/Socket.php"
+			],
+			[
+				"imapclientbase.php",
+				"horde/Imap_Client/lib/Horde/Imap/Client/Base.php"
+			],
+			[
+				"mailrfc",
+				"horde/Mail/lib/Horde/Mail/Rfc822.php"
+			],
+			[
+				"libblockmetar",
+				"horde_fw5/base/lib/Block/Metar.php"
+			],
+			[
+				"metar.php",
+				"horde/base/lib/Block/Metar.php"
+			],
+			[
+				"hordelibapplication.",
+				"horde/base/lib/Application.php"
+			],
+			[
+				"coreblockcollection.php",
+				"horde/Core/lib/Horde/Core/Block/Collection.php"
+			],
+			[
+				"hordecoreblock",
+				"horde/Core/lib/Horde/Core/Factory/BlockCollection.php"
+			],
+			[
+				"hordecoreblockcoll\t",
+				"horde/Core/lib/Horde/Core/Factory/BlockCollection.php"
+			],
+			[
+				"hordeconfig.php",
+				"horde/Core/lib/Horde/Registry/Hordeconfig.php"
+			],
+			[
+				"adminconfigconfig",
+				"horde/base/admin/config/config.php"
+			],
+			[
+				"imapclientdatasync",
+				"horde_fw5/Imap_Client/lib/Horde/Imap/Client/Data/Sync.php"
+			],
+			[
+				"hordeimapclientbase",
+				"horde/Imap_Client/lib/Horde/Imap/Client/Base.php"
+			],
+			[
+				"imapsocket",
+				"horde/Imap_Client/lib/Horde/Imap/Client/Socket.php"
+			],
+			[
+				"horde-translan",
+				"horde/base/bin/horde-translation"
+			],
+			[
+				"hordeimplibmailbox",
+				"horde/imp/lib/Mailbox.php"
+			],
+			[
+				"impbackends",
+				"horde_fw5/imp/config/backends.php"
+			],
+			[
+				"imphooks",
+				"horde/imp/config/hooks.php.dist"
+			],
+			[
+				"hordecoreconnect",
+				"horde/Core/lib/Horde/Core/ActiveSync/Connector.php"
+			],
+			[
+				"ansellibaction",
+				"horde/ansel/lib/ActionHandler.php"
+			],
+			[
+				"factoryimage",
+				"horde/Core/lib/Horde/Core/Factory/Image.php"
+			],
+			[
+				"hordeimagebase",
+				"horde/Image/lib/Horde/Image/Base.php"
+			],
+			[
+				"imageim.php",
+				"horde/Image/lib/Horde/Image/Im.php"
+			],
+			[
+				"imagebase",
+				"horde/Image/lib/Horde/Image/Base.php"
+			],
+			[
+				"implibpdf",
+				"horde/imp/lib/Mime/Viewer/Pdf.php"
+			],
+			[
+				"imapclientbase",
+				"horde/Imap_Client/lib/Horde/Imap/Client/Base.php"
+			],
+			[
+				"impbackend",
+				"horde/imp/config/backends.php"
+			],
+			[
+				"impconfigback",
+				"horde/imp/config/backends.local.php"
+			],
+			[
+				"sync.php",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Request/Sync.php"
+			],
+			[
+				"horderesolverecip",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Request/ResolveRecipients.php"
+			],
+			[
+				"browser",
+				"horde/Browser/lib/Horde/Browser.php"
+			],
+			[
+				"impconfig/",
+				"horde/imp/config/backends.local.php"
+			],
+			[
+				"hordeactisynstatus",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Status.php"
+			],
+			[
+				"requestsearch",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Request/Search.php"
+			],
+			[
+				"wbxmlencode",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Wbxml/Encoder.php"
+			],
+			[
+				"resolverecipientspic",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Message/ResolveRecipientsPicture.php"
+			],
+			[
+				"resolverecip",
+				"horde/ActiveSync/lib/Horde/ActiveSync/Message/ResolveRecipientsPicture.php"
+			],
+			[
+				"coreactivesyncauth",
+				"horde/Core/lib/Horde/Core/ActiveSync/Auth.php"
+			],
+			[
+				"basehooks",
+				"horde/base/config/hooks.php.dist"
+			],
+			[
+				"rpcactivesyn",
+				"horde/Rpc/lib/Horde/Rpc/ActiveSync.php"
+			],
+			[
+				"hordegittoolsconf.php",
+				"horde-git-tools/config/conf.php"
+			],
+			[
+				"hordeimagedocchanges",
+				"horde/Image/doc/Horde/Image/CHANGES"
+			],
+			[
+				"kronolithcompos",
+				"horde/kronolith/composer.json"
+			],
+			[
+				"imagechanges",
+				"horde/Image/doc/Horde/Image/CHANGES"
+			],
+			[
+				"imphook",
+				"horde/imp/config/hooks.php.dist"
+			],
+			[
+				"imagepackage",
+				"horde/Image/package.xml"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 27.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"importmessageDeletion",
+				"importMessageDeletion"
+			],
+			[
+				"importmessage",
+				"importMessageDeletion"
+			],
+			[
+				"loadstate",
+				"loadState"
+			],
+			[
+				"getchil",
+				"getChildren"
+			],
+			[
+				"getchildren",
+				"getChildren"
+			],
+			[
+				"login",
+				"Horde_LoginTasks_Stub_Once"
+			],
+			[
+				"loadchildren",
+				"loadChildren"
+			]
+		],
+		"width": 1272.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+		"xdebug":
+		{
+			"hide_conflict": false,
+			"restore_index":
+			{
+				"108":
+				{
+					"group": 0,
+					"index": 3
+				},
+				"109":
+				{
+					"group": 0,
+					"index": 0
+				},
+				"131":
+				{
+					"group": 0,
+					"index": 4
+				},
+				"62":
+				{
+					"group": 0,
+					"index": 1
+				},
+				"63":
+				{
+					"group": 0,
+					"index": 2
+				}
+			},
+			"restore_layout":
+			{
+				"cells":
+				[
+					[
+						0,
+						0,
+						1,
+						1
+					],
+					[
+						1,
+						0,
+						2,
+						1
+					]
+				],
+				"cols":
+				[
+					0.0,
+					0.5,
+					1.0
+				],
+				"rows":
+				[
+					0.0,
+					1.0
+				]
+			}
+		}
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 275.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

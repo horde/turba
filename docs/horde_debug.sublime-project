@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+
+		{
+			"follow_synlinks": true,
+			"path": "/usr/local/horde/horde"
+		}
+	],
+	"settings":
+	{
+		"xdebug":
+		{
+			"url": "http://localhost/horde",
+		}
+	}
+}
