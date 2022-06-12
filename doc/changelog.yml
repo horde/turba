@@ -32,8 +32,9 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
+  notes: |
+    [mjr] Fix regressions in configuring address book sources.
+    |+
 4.2.27:
   api: 4.0.0
   state:
