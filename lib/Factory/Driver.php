@@ -57,11 +57,15 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
         ksort($config);
         $key = md5(serialize($config));
 
+        $source = !empty($config['params']['source'])
+            ? $cfgSources[$config['params']['source']]
+            : null;
+
         return $this->_create(
             $key,
             $config,
             $srcName,
-            $cfgSources[$config['params']['source']]
+            $source
         );
     }
 
