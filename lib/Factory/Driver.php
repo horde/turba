@@ -90,11 +90,14 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
         }
         $srcConfig = $cfgSources[$name];
 
+        $source = !empty($srcConfig['params']['source'])
+            ? $cfgSources[$srcConfig['params']['source']]
+            : null;
         return $this->_create(
             $name,
             $srcConfig,
             $name,
-            null
+            $source
         );
     }
 
