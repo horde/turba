@@ -31,8 +31,9 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
+  notes: |
+    [mjr] Fix regression in accessing virtual address books.
+    |+
 4.2.28:
   api: 4.0.0
   state:
