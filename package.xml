@@ -28,33 +28,30 @@
   <email>chuck@horde.org</email>
   <active>no</active>
  </lead>
- <date>2017-11-11</date>
+ <date>2022-10-08</date>
  <version>
-  <release>5.0.0</release>
-  <api>5.0.0</api>
+  <release>5.0.0alpha6</release>
+  <api>5.0.0alpha1</api>
  </version>
  <stability>
-  <release>beta</release>
-  <api>beta</api>
+  <release>alpha</release>
+  <api>alpha</api>
  </stability>
  <license uri="http://www.horde.org/licenses/apache">ASL</license>
  <notes>
-* [jan] Try harder to import attributes that don&apos;t match exactly the address book configuration (Bug #14673).
-* [jan] Add API to backup and restore user data.
-* [jan] Show photos when displaying contacts in calendars.
-* [jan] Add CLI script to search for invalid email addresses.
-* [mjr] Remove Facebook driver.
-* [jan] Add second home and business phone fields to Kolab backend (Thomas Jarosch &lt;thomas.jarosch@intra2net.com&gt;, Request #12776).
-* [jan] Change sort direction of birthday/anniversary year picker (Request #11837).
-* [mjr] Add ability to store original versions of contact photos when resizing them for display.
-* [mjr] Add tag search to advanced search (Request #13693).
-* [mms] Added the addGroup API method.
-* [mjr] Add ability to add special characters to the alpha pager.
-* [jan] Return ETags with browse() API method.
-* [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+* [rla] Applied formal fixes and tentative return types.
+* |+
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
+   <dir name=".github">
+    <dir name="workflows">
+     <file name="ci.yml" role="horde" />
+     <file name="phpdoc.yml" role="horde" />
+     <file name="release.yml" role="horde" />
+     <file name="update-satis.yml" role="horde" />
+    </dir> <!-- /.github/workflows -->
+   </dir> <!-- /.github -->
    <dir name="addressbooks">
     <file name="create.php" role="horde" />
     <file name="delete.php" role="horde" />
@@ -484,6 +481,7 @@
     <file name="10_turba_upgrade_categoriestotags.php" role="horde" />
     <file name="11_turba_upgrade_parents.php" role="horde" />
     <file name="12_turba_upgrade_originalphotos.php" role="horde" />
+    <file name="13_turba_upgrade_phototypes.php" role="horde" />
    </dir> <!-- /migration -->
    <dir name="scripts">
     <dir name="ldap">
@@ -651,181 +649,13 @@
  <dependencies>
   <required>
    <php>
-    <min>5.3.0</min>
-    <max>8.0.0alpha1</max>
-    <exclude>8.0.0alpha1</exclude>
+    <min>7.4.0</min>
+    <max>9.0.0alpha1</max>
+    <exclude>9.0.0alpha1</exclude>
    </php>
    <pearinstaller>
     <min>1.7.0</min>
    </pearinstaller>
-   <package>
-    <name>content</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.5</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>horde</name>
-    <channel>pear.horde.org</channel>
-    <min>5.0.0</min>
-    <max>6.0.0alpha1</max>
-    <exclude>6.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Auth</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Core</name>
-    <channel>pear.horde.org</channel>
-    <min>2.31.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Data</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Date</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Dav</name>
-    <channel>pear.horde.org</channel>
-    <min>1.0.0</min>
-    <max>2.0.0alpha1</max>
-    <exclude>2.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Exception</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Form</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Group</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_History</name>
-    <channel>pear.horde.org</channel>
-    <min>2.1.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Icalendar</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Mail</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Mime</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Nls</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Perms</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Prefs</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Serialize</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Share</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Support</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Url</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Util</name>
-    <channel>pear.horde.org</channel>
-    <min>2.5.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Vfs</name>
-    <channel>pear.horde.org</channel>
-    <min>2.1.3</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_View</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
    <extension>
     <name>gettext</name>
    </extension>
@@ -836,64 +666,6 @@
     <name>json</name>
    </extension>
   </required>
-  <optional>
-   <package>
-    <name>Horde_ActiveSync</name>
-    <channel>pear.horde.org</channel>
-    <min>2.4.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Backup</name>
-    <channel>pear.horde.org</channel>
-    <min>1.0.0</min>
-    <max>2.0.0alpha1</max>
-    <exclude>2.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Db</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.3</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Imsp</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Kolab_Format</name>
-    <channel>pear.horde.org</channel>
-    <min>2.0.5</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Kolab_Storage</name>
-    <channel>pear.horde.org</channel>
-    <min>2.1.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_Ldap</name>
-    <channel>pear.horde.org</channel>
-    <min>2.1.0</min>
-    <max>3.0.0alpha1</max>
-    <exclude>3.0.0alpha1</exclude>
-   </package>
-   <package>
-    <name>Horde_OpenXchange</name>
-    <channel>pear.horde.org</channel>
-    <min>1.0.0</min>
-    <max>2.0.0alpha1</max>
-    <exclude>2.0.0alpha1</exclude>
-   </package>
-  </optional>
  </dependencies>
  <usesrole>
   <role>horde</role>
@@ -902,6 +674,10 @@
  </usesrole>
  <phprelease>
   <filelist>
+   <install as="turba/.github/workflows/ci.yml" name=".github/workflows/ci.yml" />
+   <install as="turba/.github/workflows/phpdoc.yml" name=".github/workflows/phpdoc.yml" />
+   <install as="turba/.github/workflows/release.yml" name=".github/workflows/release.yml" />
+   <install as="turba/.github/workflows/update-satis.yml" name=".github/workflows/update-satis.yml" />
    <install as="turba/add.php" name="add.php" />
    <install as="turba/addressbooks/create.php" name="addressbooks/create.php" />
    <install as="turba/addressbooks/delete.php" name="addressbooks/delete.php" />
@@ -1112,6 +888,7 @@
    <install as="turba/migration/10_turba_upgrade_categoriestotags.php" name="migration/10_turba_upgrade_categoriestotags.php" />
    <install as="turba/migration/11_turba_upgrade_parents.php" name="migration/11_turba_upgrade_parents.php" />
    <install as="turba/migration/12_turba_upgrade_originalphotos.php" name="migration/12_turba_upgrade_originalphotos.php" />
+   <install as="turba/migration/13_turba_upgrade_phototypes.php" name="migration/13_turba_upgrade_phototypes.php" />
    <install as="README.rst" name="README.rst" />
    <install as="turba/scripts/.htaccess" name="scripts/.htaccess" />
    <install as="turba/scripts/ldap/addou" name="scripts/ldap/addou" />
@@ -3554,7 +3331,7 @@
     <release>stable</release>
     <api>stable</api>
    </stability>
-   <date>2019-04-20</date>
+   <date>2018-08-18</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
 * [mjr] SECURITY: Fix XSS vulnerability in display of contact tags.
@@ -3621,12 +3398,27 @@
    <date>2022-06-07</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* 
+* [mjr] Fix regressions in configuring address book sources.
    </notes>
   </release>
   <release>
    <version>
-    <release>5.0.0</release>
+    <release>4.2.29</release>
+    <api>4.0.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2022-06-12</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* [mjr] Fix regression in accessing virtual address books.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>5.0.0alpha1</release>
     <api>5.0.0</api>
    </version>
    <stability>
@@ -3636,6 +3428,7 @@
    <date>2017-10-20</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
+* [jan] Make image type column fit any valid media type name.
 * [jan] Try harder to import attributes that don&apos;t match exactly the address book configuration (Bug #14673).
 * [jan] Add API to backup and restore user data.
 * [jan] Show photos when displaying contacts in calendars.
@@ -3653,15 +3446,78 @@
   </release>
   <release>
    <version>
-    <release>4.2.24</release>
-    <api>4.0.0</api></version>
+    <release>5.0.0alpha2</release>
+    <api>5.0.0alpha1</api>
+   </version>
    <stability>
-    <release>stable</release>
-    <api>stable</api></stability>
-   <date>2018-08-18</date>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2021-02-24</date>
    <license uri="http://www.horde.org/licenses/apache">ASL</license>
    <notes>
-* [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang &lt;lang@b1-systems.de&gt;, PR 3).
+* |+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>5.0.0alpha3</release>
+    <api>5.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2021-03-13</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* |+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>5.0.0alpha4</release>
+    <api>5.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2021-03-13</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* |+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>5.0.0alpha5</release>
+    <api>5.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2022-06-07</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* |+
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>5.0.0alpha6</release>
+    <api>5.0.0alpha1</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
+   <date>2022-06-07</date>
+   <license uri="http://www.horde.org/licenses/apache">ASL</license>
+   <notes>
+* [rla] Applied formal fixes and tentative return types.
+* |+
    </notes>
   </release>
  </changelog>
