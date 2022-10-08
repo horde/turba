@@ -89,3 +89,11 @@ dependencies:
   dev:
     composer:
       horde/test: ^3
+      horde/activeSync: ^3
+      horde/backup: ^2
+      horde/db: ^3
+      horde/imsp: ^3
+      horde/kolab_format: ^3
+      horde/kolab_storage: ^3
+      horde/ldap: ^3
+      horde/openxchange: ^2
