@@ -3274,7 +3274,7 @@ class Turba_Driver implements Countable
      * @return integer  The number of contacts that the user owns.
      * @throws Turba_Exception
      */
-    public function count()
+    public function count(): int
     {
         if (is_null($this->_count)) {
             $this->_count = count(
