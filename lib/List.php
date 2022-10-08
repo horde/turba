@@ -26,7 +26,7 @@ class Turba_List implements Countable
     /**
      * The field to compare objects by.
      *
-     * @var string
+     * @var iterable
      */
     protected $_usortCriteria;
 
@@ -254,7 +254,7 @@ class Turba_List implements Countable
 
     /* Countable methods. */
 
-    public function count()
+    public function count(): int
     {
         return count($this->objects);
     }

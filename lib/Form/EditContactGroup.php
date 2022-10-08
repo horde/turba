@@ -36,9 +36,16 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
         }
     }
 
-    public function renderActive($renderer, $vars, $action, $method)
+    public function renderActive(
+        $renderer = null,
+        $vars = null,
+        $action = '',
+        $method = 'get',
+        $enctype = null,
+        $focus = true
+    )
     {
-        parent::renderActive($renderer, $vars, $action, $method);
+        parent::renderActive($renderer, $vars, $action, $method, $enctype, $focus);
 
         $results = new Turba_List($vars->get('objectkeys'));
 

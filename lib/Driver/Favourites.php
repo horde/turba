@@ -122,6 +122,7 @@ class Turba_Driver_Favourites extends Turba_Driver
             return empty($val['test']) ||
                 stristr($contact[$val['field']], $val['test']) !== false;
         }
+        return false;
     }
 
     /**

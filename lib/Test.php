@@ -96,7 +96,7 @@ class Turba_Test extends Horde_Test
      */
     protected function _doConnectionTest($params)
     {
-        $ret .= 'server="' . htmlspecialchars($params['server']) . '" ' .
+        $ret = 'server="' . htmlspecialchars($params['server']) . '" ' .
             'basedn="' . htmlspecialchars($params['basedn']) . '" ' .
             'filter="' . htmlspecialchars($params['filter']) . '"<br />';
 

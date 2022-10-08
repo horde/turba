@@ -15,6 +15,8 @@
  */
 class Turba_Driver_Group extends Turba_Driver
 {
+
+    protected $_gid;
     /**
      * Constructor function.
      *
