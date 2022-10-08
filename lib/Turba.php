@@ -91,6 +91,16 @@ class Turba
      */
     public static function getDefaultAddressbook()
     {
+        // Actually try reading from prefs first
+        global $prefs;
+        $originalScope = $prefs->getScope();
+        $prefs->changeScope('turba');
+        $prefs->retrieve('turba');
+        $defaultAddressbook = $prefs->getValue('default_dir');
+        $prefs->changeScope($originalScope);
+        if (!empty($defaultAddressbook)) {
+            return $defaultAddressbook;
+        }
         /* In case of shares select first user owned address book as default */
         if (!empty($_SESSION['turba']['has_share'])) {
             try {
