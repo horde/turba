@@ -1137,7 +1137,6 @@ class Turba_Application extends Horde_Registry_Application
                 $id = $driver->add($contact);
                 $dav->addObjectMap($id, $object, $internal);
             }
-            return null;
         }
         return null;
     }
