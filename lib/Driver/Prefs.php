@@ -104,6 +104,8 @@ class Turba_Driver_Prefs extends Turba_Driver
      * Saves the specified object in the preferences.
      *
      * @param Turba_Object $object TODO
+     * 
+     * @return string object id
      */
     function _save($object)
     {
@@ -114,6 +116,7 @@ class Turba_Driver_Prefs extends Turba_Driver
         $book = $this->_getAddressBook();
         $book[$object_id] = $attributes;
         $this->_setAddressBook($book);
+        return (string) $object_id;
     }
 
     /**
@@ -139,9 +142,8 @@ class Turba_Driver_Prefs extends Turba_Driver
      *
      * @param $addressbook TODO
      *
-     * @return TODO
      */
-    protected function _setAddressBook($addressbook)
+    protected function _setAddressBook($addressbook): void
     {
         global $prefs;
 

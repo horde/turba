@@ -342,6 +342,7 @@ class Turba_Application extends Horde_Registry_Application
             $addressbooks[''] = _("None");
             return $addressbooks;
         }
+        return [];
     }
 
     /**
@@ -846,6 +847,7 @@ class Turba_Application extends Horde_Registry_Application
 
             break;
         }
+        return [];
     }
 
     /**
@@ -1135,8 +1137,8 @@ class Turba_Application extends Horde_Registry_Application
                 $id = $driver->add($contact);
                 $dav->addObjectMap($id, $object, $internal);
             }
-            return null;
         }
+        return null;
     }
 
     /**
@@ -1170,6 +1172,7 @@ class Turba_Application extends Horde_Registry_Application
             $dav->deleteExternalObjectId($object, $internal);
         } catch (Horde_Dav_Exception $e) {
         }
+        return true;
     }
 
     /**

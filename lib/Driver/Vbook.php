@@ -35,6 +35,8 @@ class Turba_Driver_Vbook extends Turba_Driver
      */
     protected $_driver;
 
+    protected $_share;
+
     /**
      * Constructs a new Turba_Driver object.
      *

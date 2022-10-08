@@ -94,14 +94,14 @@ class Contacts implements Iterator
 
     /**
      */
-    public function next()
+    public function next(): void
     {
         $this->_list->next();
     }
 
     /**
      */
-    public function rewind()
+    public function rewind(): void
     {
         if (!isset($this->_driver->map['__owner'])) {
             $this->_list = new EmptyIterator();
@@ -115,7 +115,7 @@ class Contacts implements Iterator
 
     /**
      */
-    public function valid()
+    public function valid(): bool
     {
         return $this->_list->valid();
     }

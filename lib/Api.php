@@ -1814,6 +1814,7 @@ class Turba_Api extends Horde_Registry_Api
             throw new Turba_Exception(_("Permission denied"));
         }
 
+        $res = [];
         try {
             $res = $driver->search(array('email' => trim($address)), null, 'AND');
         } catch (Turba_Exception $e) {
@@ -2419,6 +2420,7 @@ class Turba_Api extends Horde_Registry_Api
                                $resource_type = '', $user = null, $raw = false)
     {
         global $injector, $registry;
+        $sources = [];
 
         $results = $injector
             ->getInstance('Turba_Tagger')
@@ -2443,7 +2445,7 @@ class Turba_Api extends Horde_Registry_Api
                     if (count($result) == 0) {
                         continue;
                     } elseif (count($result) > 1) {
-                        throw new Turba_Exception(sprintf("Internal Horde Error: multiple Turba objects with same objectId %s.", $uid));
+                        throw new Turba_Exception(sprintf("Internal Horde Error: multiple Turba objects with same objectId %s.", $contact_uid));
                     }
                     foreach ($result->objects as $obj) {
                         $return[] = array(
@@ -2550,7 +2552,7 @@ class Turba_Api extends Horde_Registry_Api
                     $out[$attr] = $hooks->callHook(
                         'encode_attribute',
                         'turba',
-                        array($attr, $value, null, null)
+                        array($attr, $val, null, null)
                     );
                 } catch (Turba_Exception $e) {}
             }

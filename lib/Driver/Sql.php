@@ -65,7 +65,7 @@ class Turba_Driver_Sql extends Turba_Driver
      *
      * @return integer  The number of contacts that the user owns.
      */
-    public function count()
+    public function count(): int
     {
         $test = $this->getContactOwner();
         if (!isset($this->_countCache[$test])) {
