@@ -1,7 +1,40 @@
-------
-v5.0.0
-------
+------------
+v5.0.0alpha6
+------------
 
+[rla] Applied formal fixes and tentative return types.
+|+
+
+
+------------
+v5.0.0alpha5
+------------
+
+|+
+
+------------
+v5.0.0alpha4
+------------
+
+|+
+
+------------
+v5.0.0alpha3
+------------
+
+|+
+
+------------
+v5.0.0alpha2
+------------
+
+|+
+
+------------
+v5.0.0alpha1
+------------
+
+[jan] Make image type column fit any valid media type name.
 [jan] Try harder to import attributes that don't match exactly the address book
       configuration (Bug #14673).
 [jan] Add API to backup and restore user data.
@@ -21,11 +54,19 @@ v5.0.0
 [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request
       #11889).
 
+
+-------
+v4.2.29
+-------
+
+[mjr] Fix regression in accessing virtual address books.
+
+
 -------
 v4.2.28
 -------
 
-
+[mjr] Fix regressions in configuring address book sources.
 
 
 -------
@@ -58,6 +99,7 @@ v4.2.25
 v4.2.24
 -------
 
+[mjr] SECURITY: Fix XSS vulnerability in display of contact tags.
 [jan] Clarify objectClass filter examples for LDAP backends (Ralf Lang
       <lang@b1-systems.de>, PR 3).
 
