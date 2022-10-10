@@ -78,7 +78,7 @@ dependencies:
       json: '*'
   optional:
     composer:
-      horde/activeSync: ^3
+      horde/activesync: ^3
       horde/backup: ^2
       horde/db: ^3
       horde/imsp: ^3
@@ -89,7 +89,7 @@ dependencies:
   dev:
     composer:
       horde/test: ^3
-      horde/activeSync: ^3
+      horde/activesync: ^3
       horde/backup: ^2
       horde/db: ^3
       horde/imsp: ^3

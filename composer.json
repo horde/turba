@@ -67,7 +67,7 @@
     },
     "require-dev": {
         "horde/test": "^3 || dev-FRAMEWORK_6_0",
-        "horde/activeSync": "^3 || dev-FRAMEWORK_6_0",
+        "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
         "horde/backup": "^2 || dev-FRAMEWORK_6_0",
         "horde/db": "^3 || dev-FRAMEWORK_6_0",
         "horde/imsp": "^3 || dev-FRAMEWORK_6_0",
@@ -77,7 +77,7 @@
         "horde/openxchange": "^2 || dev-FRAMEWORK_6_0"
     },
     "suggest": {
-        "horde/activeSync": "^3 || dev-FRAMEWORK_6_0",
+        "horde/activesync": "^3 || dev-FRAMEWORK_6_0",
         "horde/backup": "^2 || dev-FRAMEWORK_6_0",
         "horde/db": "^3 || dev-FRAMEWORK_6_0",
         "horde/imsp": "^3 || dev-FRAMEWORK_6_0",
