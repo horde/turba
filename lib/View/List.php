@@ -511,7 +511,7 @@ class Turba_View_List implements Countable
      *
      * @return integer  The number of objects in the list.
      */
-    public function count()
+    public function count(): int
     {
         return $this->list->count();
     }
