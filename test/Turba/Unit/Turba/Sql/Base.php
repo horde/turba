@@ -34,7 +34,7 @@ require_once __DIR__ . '/../Base.php';
  */
 class Turba_Unit_Turba_Sql_Base extends Turba_Unit_Turba_Base
 {
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::createSqlShares(self::$setup);

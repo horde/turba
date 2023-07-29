@@ -29,7 +29,7 @@ require __DIR__ . '/Stub/Hooks.php';
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
-class Turba_TestCase extends PHPUnit_Framework_TestCase
+class Turba_TestCase extends Horde_Test_Case
 {
     protected function getInjector()
     {

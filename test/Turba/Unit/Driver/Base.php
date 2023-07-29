@@ -51,14 +51,14 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
      */
     private $_added = array();
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$setup = new Horde_Test_Setup();
         self::createBasicTurbaSetup(self::$setup);
         parent::setUpBeforeClass();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::$driver = null;
         self::tearDownBasicTurbaSetup();
@@ -66,7 +66,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
         parent::tearDownAfterClass();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $error = self::$setup->getError();
         if (!empty($error)) {
@@ -75,7 +75,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
         $GLOBALS['injector']->setInstance('Turba_Tagger', new Turba_Tagger());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         foreach ($this->_added as $added) {
@@ -113,7 +113,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
         if (!class_exists('Horde_ActiveSync')){
             $this->markTestSkipped('ActiveSync not installed.');
         }
-        $state = $this->getMock('Horde_ActiveSync_State_Base', array(), array(), '', false);
+        $state = $this->getMockBuilder('Horde_ActiveSync_State_Base')->disableOriginalConstructor()->getMock();
         $fixture = array(
             'userAgent' => 'Apple-iPad3C6/1202.435',
             'properties' => array(Horde_ActiveSync_Device::OS => 'iOS 8.1.1')

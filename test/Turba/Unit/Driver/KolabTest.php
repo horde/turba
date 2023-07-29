@@ -36,14 +36,14 @@ class Turba_Unit_Driver_KolabTest extends Turba_Unit_Driver_Base
 {
     protected $backupGlobals = false;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         return;
         parent::setUpBeforeClass();
         self::$driver = self::createKolabDriverWithShares(self::$setup);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete("No query of type 'Share' registered!");
     }

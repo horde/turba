@@ -36,7 +36,7 @@ class Turba_Unit_Driver_Sql_Base extends Turba_Unit_Driver_Base
 {
     static $callback;
 
-    static public function setUpBeforeClass()
+    static public function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::getDb();

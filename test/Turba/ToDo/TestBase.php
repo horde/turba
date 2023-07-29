@@ -6,7 +6,7 @@
  * @package Turba
  * @subpackage UnitTests
  */
-class Turba_TestBase extends PHPUnit_Framework_TestCase {
+class Turba_TestBase extends Horde_Test_Case {
 
     var $_driver;
     var $_driverConfig = array(
@@ -158,7 +158,7 @@ class Turba_TestBase extends PHPUnit_Framework_TestCase {
         return true;
     }
 
-    function setUp()
+    function setUp(): void
     {
         @define('TURBA_BASE', __DIR__ . '/../..');
         @define('TURBA_TEMPLATES', $GLOBALS['registry']->get('templates', 'turba'));

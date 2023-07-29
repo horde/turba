@@ -36,7 +36,7 @@ class Turba_Unit_Driver_Sql_Pdo_SqliteTest extends Turba_Unit_Driver_Sql_Base
 {
     protected $backupGlobals = false;
 
-    static public function setUpBeforeClass()
+    static public function setUpBeforeClass(): void
     {
         self::$callback = array(__CLASS__, 'getDb');
         parent::setUpBeforeClass();

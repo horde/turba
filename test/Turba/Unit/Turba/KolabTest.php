@@ -43,14 +43,14 @@ class Turba_Unit_Turba_KolabTest extends Turba_Unit_Turba_Base
      */
     protected $default_name = 'Contacts';
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::$setup = new Horde_Test_Setup();
         parent::setUpBeforeClass();
         self::createKolabShares(self::$setup);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete("No query of type 'Share' registered!");
     }

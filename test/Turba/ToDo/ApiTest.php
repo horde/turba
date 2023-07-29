@@ -31,7 +31,7 @@
  */
 class Turba_ToDo_ApiTest extends Turba_TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete('Convert to use Horde_Test.');
     }

@@ -14,7 +14,7 @@ class Turba_ToDo_KolabTest extends Turba_KolabTestBase {
      *
      * @return NULL
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete('Convert to use Horde_Test.');
         $this->prepareTurba();

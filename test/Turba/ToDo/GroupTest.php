@@ -11,7 +11,7 @@ class Turba_ToDo_GroupTest extends Turba_TestBase {
 
     var $group;
 
-    function setUp()
+    function setUp(): void
     {
         $this->markTestIncomplete('Convert to use Horde_Test.');
         parent::setUp();

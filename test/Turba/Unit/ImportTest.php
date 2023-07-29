@@ -22,14 +22,14 @@ class Turba_Unit_ImportTest extends Turba_TestCase
         'workEmail' => 'object_workemail'
     );
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::createBasicTurbaSetup(new Horde_Test_Setup());
         parent::setUpBeforeClass();
         setlocale(LC_MESSAGES, 'C');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::tearDownBasicTurbaSetup();
         parent::tearDownAfterClass();

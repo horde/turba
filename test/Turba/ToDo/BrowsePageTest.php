@@ -8,7 +8,7 @@ require_once __DIR__ . '/TestBase.php';
  */
 class Turba_Todo_BrowsePageTest extends Turba_TestBase {
 
-    function setUp()
+    function setUp(): void
     {
         $this->markTestIncomplete('Convert to use Horde_Test.');
         parent::setUp();

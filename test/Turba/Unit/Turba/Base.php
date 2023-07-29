@@ -48,20 +48,20 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
      */
     protected $default_name = 'Address book of test@example.com';
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::createBasicTurbaSetup(self::$setup);
         parent::setUpBeforeClass();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::tearDownBasicTurbaSetup();
         self::tearDownShares();
         parent::tearDownAfterClass();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $error = self::$setup->getError();
         if (!empty($error)) {
@@ -69,7 +69,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         foreach ($turba_shares->listShares('test@example.com') as $share) {
