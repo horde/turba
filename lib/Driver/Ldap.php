@@ -698,7 +698,7 @@ class Turba_Driver_Ldap extends Turba_Driver
 
         /* Syntaxes we want to allow, i.e. no integers.
          * Syntaxes have the form:
-         * 1.3.6.1.4.1.1466.115.121.1.$n{$y}
+         * 1.3.6.1.4.1.1466.115.121.1.$n[$y]
          * ... where $n is the integer used below and $y is a sizelimit. */
         $okSyntax = array(
             44 => 1, /* Printable string. */

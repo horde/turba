@@ -71,7 +71,7 @@ class Turba_ToDo_ViewListTest extends Turba_TestBase {
         $this->callView_List('getAlpha', $numDisplayed, 'j');
         $count = 0;
         foreach ($this->_sortedByLastname as $name) {
-            if (Horde_String::lower($name{0}) == 'j') {
+            if (Horde_String::lower($name[0]) == 'j') {
                 $this->assertWantedPattern('/' . preg_quote($name, '/') . '/',
                                            $this->_output);
                 $count++;
