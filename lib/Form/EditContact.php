@@ -110,9 +110,9 @@ class Turba_Form_EditContact extends Turba_Form_ContactBase
 
     /**
      */
-    public function renderActive($renderer, $vars, $action, $method)
+    public function renderActive($renderer = null, $vars = null, $action = '', $method = 'get', $enctype = null, $focus = true)
     {
-        parent::renderActive($renderer, $vars, $action, $method);
+        parent::renderActive($renderer, $vars, $action, $method, $enctype, $focus);
 
         if ($this->_contact->isGroup()) {
             $edit_url = Horde::url('browse.php')->add(array(
