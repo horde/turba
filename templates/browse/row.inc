@@ -72,11 +72,11 @@ for ($c = 1; $c <= count($this->columns); $c++) {
         if ($type == 'email') {
             $this->variables[$this->columns[$c - 1]] =
                 new Horde_Form_Variable('', $this->columns[$c - 1],
-                                        Horde_Form::getType('html'), false);
+                                        (new Horde_Form(0))->getType('html'), false);
         } else {
             $this->variables[$this->columns[$c - 1]] =
                 new Horde_Form_Variable('', $this->columns[$c - 1],
-                                        Horde_Form::getType($type, $params),
+                                        (new Horde_Form(0))->getType($type, $params),
                                         false);
         }
     }
