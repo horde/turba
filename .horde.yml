@@ -42,7 +42,7 @@ state:
   release: alpha
   api: alpha
 license:
-  identifier: ASL
+  identifier: Apache-1.1
   uri: http://www.horde.org/licenses/apache
 dependencies:
   required:

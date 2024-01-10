@@ -3,7 +3,7 @@
     "description": "Address book application",
     "type": "horde-application",
     "homepage": "https://www.horde.org/apps/turba",
-    "license": "ASL",
+    "license": "Apache-1.1",
     "authors": [
         {
             "name": "Michael J Rubinsky",
