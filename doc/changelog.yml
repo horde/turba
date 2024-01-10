@@ -8,8 +8,9 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
+  notes: |
+    [rla] Update license identifier ASL to SPDX format - Apache-1.1
+    |+
 5.0.0alpha7:
   api: 5.0.0alpha1
   state:
