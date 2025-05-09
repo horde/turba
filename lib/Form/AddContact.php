@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Turba
  */
@@ -10,7 +11,7 @@ class Turba_Form_AddContact extends Turba_Form_ContactBase
      */
     protected $_contact = null;
 
-    public function __construct($vars, Turba_Object $contact = null)
+    public function __construct($vars, ?Turba_Object $contact = null)
     {
         // @TODO: $addSources should be injected
         global $addSources, $notification;
@@ -25,11 +26,11 @@ class Turba_Form_AddContact extends Turba_Form_ContactBase
         /* Check if a source selection box is required. */
         if (count($addSources) > 1) {
             /* Multiple sources, show a selection box. */
-            $options = array();
+            $options = [];
             foreach ($addSources as $key => $config) {
                 $options[$key] = $config['title'];
             }
-            $v = $this->addVariable(_("Choose an address book"), 'source', 'enum', true, false, null, array($options, true));
+            $v = $this->addVariable(_("Choose an address book"), 'source', 'enum', true, false, null, [$options, true]);
             $action = Horde_Form_Action::factory('submit');
             $v->setAction($action);
             $v->setOption('trackchange', true);

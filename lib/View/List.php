@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_View_List:: class provides an interface for objects that
  * visualize Turba_List objects.
@@ -84,7 +85,7 @@ class Turba_View_List implements Countable
      *
      * @var array
      */
-    public $variables = array();
+    public $variables = [];
 
     /**
      * A dummy form object.
@@ -109,22 +110,24 @@ class Turba_View_List implements Countable
      *
      * @return Turba_View_List
      */
-    public function __construct($list, array $controls = null,
-                                array $columns = null)
-    {
+    public function __construct(
+        $list,
+        ?array $controls = null,
+        ?array $columns = null
+    ) {
         if (is_null($controls)) {
-            $controls = array(
+            $controls = [
                 'Mark' => true,
                 'Edit' => true,
                 'Vcard' => true,
                 'Group' => true,
-                'Sort' => true
-            );
+                'Sort' => true,
+            ];
         }
         $this->columns = $columns;
         $this->list = $list;
         $this->setControls($controls);
-        $this->renderer = Horde_Core_Ui_VarRenderer::factory(array('turba', 'turba'));
+        $this->renderer = Horde_Core_Ui_VarRenderer::factory(['turba', 'turba']);
         $this->vars = new Horde_Variables();
     }
 
@@ -137,7 +140,7 @@ class Turba_View_List implements Countable
     {
         foreach ($controls as $control => $show) {
             $key = 'show' . $control;
-            $this->$key = (bool)$show;
+            $this->$key = (bool) $show;
         }
     }
 
@@ -176,7 +179,7 @@ class Turba_View_List implements Countable
         $hasExport = ($GLOBALS['conf']['menu']['import_export'] && !empty($GLOBALS['cfgSources'][Turba::$source]['export']));
         $vars = Horde_Variables::getDefaultVariables();
 
-        list($addToList, $addToListSources) = $this->getAddSources();
+        [$addToList, $addToListSources] = $this->getAddSources();
 
         if ($this->type == 'search') {
             $page = $vars->get('page', 0);
@@ -192,7 +195,7 @@ class Turba_View_List implements Countable
             $start = ($page * $perpage) + 1;
             $end = min($numitem, $start + $perpage - 1);
             $listHtml = $this->getPage($numDisplayed, $min, $max, $vars->get('page'));
-            $crit = array();
+            $crit = [];
             if ($session->get('turba', 'search_mode') == 'advanced') {
                 $map = $driver->getCriteria();
                 foreach (array_keys($map) as $key) {
@@ -201,24 +204,24 @@ class Turba_View_List implements Countable
                     }
                 }
             }
-            $params = array_merge($crit, array(
+            $params = array_merge($crit, [
                 'criteria' => $vars->criteria,
                 'val' => $vars->val,
-                'source' => $vars->get('source', Turba::$source)
-            ));
+                'source' => $vars->get('source', Turba::$source),
+            ]);
             $viewurl = Horde::url('search.php')->add($params);
-            $pager = new Horde_Core_Ui_Pager('page', $vars, array(
+            $pager = new Horde_Core_Ui_Pager('page', $vars, [
                 'num' => $numitem,
                 'url' => $viewurl,
                 'page_limit' => $maxpage,
-                'perpage' => $perpage
-            ));
+                'perpage' => $perpage,
+            ]);
             $pager->preserve('search', $vars->get('search'));
             $pagerHeader = 'numPager.inc';
         } else {
             if (count($this) > $prefs->getValue('perpage')) {
                 $page = $vars->get('page', 'A');
-                $pattern = array('A-Z', 'a-z', '*');
+                $pattern = ['A-Z', 'a-z', '*'];
                 foreach ($GLOBALS['conf']['pager']['special'] as $chr) {
                     $pattern[] = preg_quote($chr, '/');
                 }
@@ -234,9 +237,9 @@ class Turba_View_List implements Countable
             $listHtml = $this->getAlpha($numDisplayed, $page);
             $pagerHeader = 'alphaPager.inc';
 
-            $viewurl = Horde::url('browse.php')->add(array(
-                'show' => $vars->get('show', 'all')
-            ));
+            $viewurl = Horde::url('browse.php')->add([
+                'show' => $vars->get('show', 'all'),
+            ]);
             if (isset($vars->key)) {
                 $viewurl->add('key', $vars->key);
             }
@@ -275,9 +278,11 @@ class Turba_View_List implements Countable
         if (is_null($max)) {
             $max = count($this);
         }
-        return $this->_get($numDisplayed,
-                           new Turba_View_List_PageFilter($min, $max),
-                           $page);
+        return $this->_get(
+            $numDisplayed,
+            new Turba_View_List_PageFilter($min, $max),
+            $page
+        );
     }
 
     /**
@@ -291,9 +296,11 @@ class Turba_View_List implements Countable
      */
     public function getAlpha(&$numDisplayed, $alpha)
     {
-        return $this->_get($numDisplayed,
-                           new Turba_View_List_AlphaFilter($alpha),
-                           $alpha);
+        return $this->_get(
+            $numDisplayed,
+            new Turba_View_List_AlphaFilter($alpha),
+            $alpha
+        );
     }
 
     /**
@@ -318,7 +325,7 @@ class Turba_View_List implements Countable
         $i = 0;
         foreach ($sortorder as $sortfield) {
             if ($column_name == $sortfield['field']) {
-                return array_merge($sortfield, array('rank' => $i));
+                return array_merge($sortfield, ['rank' => $i]);
             }
             $i++;
         }
@@ -338,14 +345,14 @@ class Turba_View_List implements Countable
         }
         $sortdir = $this->getColumnSortDirection($i);
         if ($this->isPrimarySortColumn($i)) {
-            return Horde_Themes_Image::tag($sortdir ? 'za.png' : 'az.png', array(
-                'alt' => $title
-            ));
+            return Horde_Themes_Image::tag($sortdir ? 'za.png' : 'az.png', [
+                'alt' => $title,
+            ]);
         }
 
-        return Horde_Themes_Image::tag($sortdir ? 'za_secondary.png' : 'az_secondary.png', array(
-            'alt' => _("Sort Direction")
-        ));
+        return Horde_Themes_Image::tag($sortdir ? 'za_secondary.png' : 'az_secondary.png', [
+            'alt' => _("Sort Direction"),
+        ]);
     }
 
     /**
@@ -355,7 +362,7 @@ class Turba_View_List implements Countable
      */
     public function getSortOrderDescription()
     {
-        $description = array();
+        $description = [];
         $sortorder = Turba::getPreferredSortOrder();
         foreach ($sortorder as $elt) {
             $field = $elt['field'];
@@ -423,7 +430,7 @@ class Turba_View_List implements Countable
         $width = floor(90 / (count($this->columns) + 1));
         $own = $GLOBALS['prefs']->getValue('own_contact');
         if (strpos($own, ';')) {
-            list($own_source, $own_id) = explode(';', $own);
+            [$own_source, $own_id] = explode(';', $own);
         } else {
             $own_source = $own_id = null;
         }
@@ -454,37 +461,37 @@ class Turba_View_List implements Countable
         global $addSources;
 
         // Create list of lists for Add to.
-        $addToList = array();
-        $addToListSources = array();
+        $addToList = [];
+        $addToListSources = [];
         foreach ($addSources as $src => $srcConfig) {
             if (!empty($srcConfig['map']['__type'])) {
-                $addToListSources[] = array('key' => '',
-                                            'name' => '&nbsp;&nbsp;' . htmlspecialchars($srcConfig['title']),
-                                            'source' => htmlspecialchars($src));
+                $addToListSources[] = ['key' => '',
+                    'name' => '&nbsp;&nbsp;' . htmlspecialchars($srcConfig['title']),
+                    'source' => htmlspecialchars($src)];
 
                 $srcDriver = $GLOBALS['injector']->getInstance('Turba_Factory_Driver')->create($src);
                 try {
                     $listList = $srcDriver->search(
-                        array('__type' => 'Group'),
-                        array(
-                            array(
+                        ['__type' => 'Group'],
+                        [
+                            [
                                 'field' => 'name',
-                                'ascending' => true
-                            )
-                        ),
+                                'ascending' => true,
+                            ],
+                        ],
                         'AND',
-                        array('name')
+                        ['name']
                     );
 
                     $listList->reset();
                     $currentList = Horde_Util::getFormData('key');
                     while ($listObject = $listList->next()) {
                         if ($listObject->getValue('__key') != $currentList) {
-                            $addToList[] = array(
+                            $addToList[] = [
                                 'name' => htmlspecialchars($listObject->getValue('name')),
                                 'source' => htmlspecialchars($src),
-                                'key' => htmlspecialchars($listObject->getValue('__key'))
-                            );
+                                'key' => htmlspecialchars($listObject->getValue('__key')),
+                            ];
                         }
                     }
                 } catch (Turba_Exception $e) {
@@ -496,11 +503,11 @@ class Turba_View_List implements Countable
             if ($addToList) {
                 array_unshift($addToList, '- - - - - - - - -');
             }
-            $addToList = array_merge(array(_("Create a new Contact List in:")), $addToListSources, $addToList);
+            $addToList = array_merge([_("Create a new Contact List in:")], $addToListSources, $addToList);
             $addToListSources = null;
         }
 
-        return array($addToList, $addToListSources);
+        return [$addToList, $addToListSources];
     }
 
     /* Countable methods. */

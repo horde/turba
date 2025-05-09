@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -26,7 +27,7 @@ class Turba
     /**
      * The virtual path to use for VFS data.
      */
-    const VFS_PATH = '.horde/turba/documents';
+    public const VFS_PATH = '.horde/turba/documents';
 
     /**
      * The current source.
@@ -40,7 +41,7 @@ class Turba
      *
      * @var array
      */
-    protected static $_cache = array();
+    protected static $_cache = [];
 
     /**
      * Returns the source entries from config/backends.php that have been
@@ -55,7 +56,7 @@ class Turba
 
         $s = $registry->loadConfigFile('backends.php', 'cfgSources', 'turba')->config['cfgSources'];
 
-        $sources = array();
+        $sources = [];
         foreach ($s as $key => $source) {
             if (empty($source['disabled'])) {
                 $sources[$key] = $source;
@@ -74,9 +75,10 @@ class Turba
      *
      * @return array  The filtered, ordered $cfgSources entries.
      */
-    public static function getAddressBooks($permission = Horde_Perms::READ,
-                                           array $options = array())
-    {
+    public static function getAddressBooks(
+        $permission = Horde_Perms::READ,
+        array $options = []
+    ) {
         return self::permissionsFilter(
             $GLOBALS['cfgSources'],
             $permission,
@@ -108,7 +110,8 @@ class Turba
                 if (count($owned_shares)) {
                     return key($owned_shares);
                 }
-            } catch (Exception $e) {}
+            } catch (Exception $e) {
+            }
         }
 
         reset($GLOBALS['cfgSources']);
@@ -131,17 +134,17 @@ class Turba
      * @param Horde_Variables $vars  Variables object.
      * @param string $source         Source.
      */
-    public static function setPreferredSortOrder(Horde_Variables $vars,
-                                                 $source)
-    {
+    public static function setPreferredSortOrder(
+        Horde_Variables $vars,
+        $source
+    ) {
         if (!strlen($sortby = $vars->get('sortby'))) {
             return;
         }
 
         $sources = self::getColumns();
-        $columns = isset($sources[$source])
-            ? $sources[$source]
-            : array();
+        $columns = $sources[$source]
+            ?? [];
         $column_name = self::getColumnName($sortby, $columns);
 
         $append = true;
@@ -156,14 +159,14 @@ class Turba
                 }
             }
         } else {
-            $sortorder = array();
+            $sortorder = [];
         }
 
         if ($append) {
-            $sortorder[] = array(
+            $sortorder[] = [
                 'ascending' => $ascending,
-                'field' => $column_name
-            );
+                'field' => $column_name,
+            ];
         }
 
         $GLOBALS['prefs']->setValue('sortorder', serialize($sortorder));
@@ -189,7 +192,7 @@ class Turba
      */
     public static function getColumns()
     {
-        $columns = array();
+        $columns = [];
         $lines = explode("\n", $GLOBALS['prefs']->getValue('columns'));
 
         foreach ($lines as $line) {
@@ -198,7 +201,7 @@ class Turba
                 $cols = explode("\t", $line);
                 if (count($cols) > 1) {
                     $source = array_splice($cols, 0, 1);
-                    $columns[$source[0]] = array();
+                    $columns[$source[0]] = [];
                     foreach ($cols as $col) {
                         if ($col == '__tags' ||
                             isset($GLOBALS['cfgSources'][$source[0]]['map'][$col])) {
@@ -286,7 +289,7 @@ class Turba
         }
 
         /* If no formatting, return original name. */
-        if (!in_array($name_format, array('first_last', 'last_first'))) {
+        if (!in_array($name_format, ['first_last', 'last_first'])) {
             return $ob->getValue('name');
         }
 
@@ -331,11 +334,11 @@ class Turba
             self::$_cache['useRegistry'] = $GLOBALS['registry']->hasMethod('mail/batchCompose');
         }
 
-        $out = array();
+        $out = [];
         $rfc822 = $GLOBALS['injector']->getInstance('Horde_Mail_Rfc822');
 
         if (!is_array($data)) {
-            $data = array($data);
+            $data = [$data];
         }
 
         foreach ($data as $email_vals) {
@@ -345,7 +348,7 @@ class Turba
 
                 if (self::$_cache['useRegistry']) {
                     try {
-                        $tmp = $GLOBALS['registry']->call('mail/batchCompose', array(array($addr)));
+                        $tmp = $GLOBALS['registry']->call('mail/batchCompose', [[$addr]]);
                     } catch (Horde_Exception $e) {
                         self::$_cache['useRegistry'] = false;
                     }
@@ -372,7 +375,7 @@ class Turba
     public static function getUserName($uid)
     {
         if (!isset(self::$_cache['names'])) {
-            self::$_cache['names'] = array();
+            self::$_cache['names'] = [];
         }
 
         if (!isset(self::$_cache['names'][$uid])) {
@@ -397,9 +400,10 @@ class Turba
      * @return mixed  The requested extended permissions value, or true if it
      *                doesn't exist.
      */
-    public static function getExtendedPermission(Turba_Driver $addressBook,
-                                                 $permission)
-    {
+    public static function getExtendedPermission(
+        Turba_Driver $addressBook,
+        $permission
+    ) {
         // We want to check the base source as extended permissions
         // are enforced per backend, not per share.
         $key = $addressBook->getName() . ':' . $permission;
@@ -412,9 +416,9 @@ class Turba
         $allowed = $perms->getPermissions('turba:sources:' . $key, $GLOBALS['registry']->getAuth());
         if (is_array($allowed)) {
             switch ($permission) {
-            case 'max_contacts':
-                $allowed = max($allowed);
-                break;
+                case 'max_contacts':
+                    $allowed = max($allowed);
+                    break;
             }
         }
         return $allowed;
@@ -463,12 +467,13 @@ class Turba
      *
      * @return array  The filtered data.
      */
-    public static function permissionsFilter(array $in,
-                                             $permission = Horde_Perms::READ,
-                                             array $options = array())
-    {
+    public static function permissionsFilter(
+        array $in,
+        $permission = Horde_Perms::READ,
+        array $options = []
+    ) {
         $factory = $GLOBALS['injector']->getInstance('Turba_Factory_Driver');
-        $out = array();
+        $out = [];
 
         foreach ($in as $sourceId => $source) {
             if (!isset($source['type'])) {
@@ -506,7 +511,7 @@ class Turba
      *
      * @return array  The $cfgSources array.
      */
-    public static function getConfigFromShares(array $sources, $owner = false, $options = array())
+    public static function getConfigFromShares(array $sources, $owner = false, $options = [])
     {
         global $notification, $registry, $conf, $injector, $prefs;
 
@@ -539,7 +544,7 @@ class Turba
             $auth_user = $options['auth_user'];
         }
 
-        $sortedSources = $vbooks = array();
+        $sortedSources = $vbooks = [];
         $personal = false;
 
         foreach ($shares as $name => &$share) {
@@ -585,7 +590,7 @@ class Turba
         }
 
         // Check for the user's default share and built new source list.
-        $newSources = array();
+        $newSources = [];
         foreach (array_keys($sources) as $source) {
             if (empty($sources[$source]['use_shares'])) {
                 $newSources[$source] = $sources[$source];
@@ -613,13 +618,13 @@ class Turba
                 try {
                     $share = $driver->createShare(
                         $sourceKey,
-                        array(
-                            'params' => array(
+                        [
+                            'params' => [
                                 'source' => $source,
                                 'default' => true,
-                                'name' => $auth_user
-                            )
-                        )
+                                'name' => $auth_user,
+                            ],
+                        ]
                     );
 
                     $source_config = $sources[$source];
@@ -636,7 +641,7 @@ class Turba
         // Add vbooks now that all available address books are loaded.
         foreach ($vbooks as $name => $params) {
             if (isset($newSources[$params['source']])) {
-                $newSources[$name] = array(
+                $newSources[$name] = [
                     'title' => $shares[$name]->get('name'),
                     'type' => 'vbook',
                     'params' => $params,
@@ -646,11 +651,14 @@ class Turba
                     'search' => $newSources[$params['source']]['search'],
                     'strict' => $newSources[$params['source']]['strict'],
                     'use_shares' => false,
-                );
+                ];
             } else {
-                $notification->push(sprintf(
-                    _("Removing the virtual address book \"%s\" because the parent source has disappeared."),
-                    $shares[$name]->get('name')), 'horde.message'
+                $notification->push(
+                    sprintf(
+                        _("Removing the virtual address book \"%s\" because the parent source has disappeared."),
+                        $shares[$name]->get('name')
+                    ),
+                    'horde.message'
                 );
                 try {
                     $injector->getInstance('Turba_Shares')->removeShare($shares[$name]);
@@ -696,25 +704,26 @@ class Turba
      *
      * @return array  Shares the user has the requested permissions to.
      */
-    public static function listShares($owneronly = false,
-                                      $permission = Horde_Perms::READ)
-    {
+    public static function listShares(
+        $owneronly = false,
+        $permission = Horde_Perms::READ
+    ) {
         if (!$GLOBALS['session']->get('turba', 'has_share') ||
             ($owneronly && !$GLOBALS['registry']->getAuth())) {
-            return array();
+            return [];
         }
 
         try {
             return $GLOBALS['injector']->getInstance('Turba_Shares')->listShares(
                 $GLOBALS['registry']->getAuth(),
-                array(
+                [
                     'attributes' => $owneronly ? $GLOBALS['registry']->getAuth() : null,
-                    'perm' => $permission
-                )
+                    'perm' => $permission,
+                ]
             );
         } catch (Horde_Share_Exception $e) {
             Horde::log($e, 'ERR');
-            return array();
+            return [];
         }
     }
 
@@ -768,14 +777,14 @@ class Turba
         global $page_output;
 
         $page_output->addScriptFile('browse.js');
-        $page_output->addInlineJsVars(array(
+        $page_output->addInlineJsVars([
             'TurbaBrowse.confirmdelete' => _("Are you sure that you want to delete %s?"),
             'TurbaBrowse.contact1' => _("You must select at least one contact first."),
             'TurbaBrowse.contact2' => _("You must select a target contact list."),
             'TurbaBrowse.contact3' => _("Please name the new contact list:"),
             'TurbaBrowse.copymove' => _("You must select a target address book."),
-            'TurbaBrowse.submit' => _("Are you sure that you want to delete the selected contacts?")
-        ));
+            'TurbaBrowse.submit' => _("Are you sure that you want to delete the selected contacts?"),
+        ]);
     }
 
     /**
@@ -799,14 +808,15 @@ class Turba
                 ->create($source);
         }
 
-        $emailFields = array();
+        $emailFields = [];
         foreach ($attributes as $field => $data) {
             if ($data['type'] == 'email') {
                 if (empty($source) || (!empty($source) &&
                     in_array($field, array_keys($driver->map)) &&
-                    (!$searchable || ($searchable && in_array($field, $cfgSources[$source]['search'])))))
+                    (!$searchable || ($searchable && in_array($field, $cfgSources[$source]['search']))))) {
 
                     $emailFields[] = $field;
+                }
             }
         }
 

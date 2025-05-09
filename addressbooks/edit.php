@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba addressbooks - edit.
  *
@@ -53,10 +54,10 @@ if ($owner && $form->validate($vars)) {
 $vars->set('name', $addressbook->get('name'));
 $vars->set('description', $addressbook->get('desc'));
 
-$page_output->header(array(
-    'title' => $form->getTitle()
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => $form->getTitle(),
+]);
+$notification->notify(['listeners' => 'status']);
 if ($owner) {
     echo $form->renderActive($form->getRenderer(), $vars, Horde::url('addressbooks/edit.php'), 'post');
 } else {

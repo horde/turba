@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba contact.php.
  *
@@ -32,12 +33,13 @@ $contact = null;
 $uid = $vars->get('uid');
 if (!empty($uid)) {
     try {
-        $search = $driver->search(array('__uid' => $uid));
+        $search = $driver->search(['__uid' => $uid]);
         if (count($search)) {
             $contact = $search->next();
             $vars->set('key', $contact->getValue('__key'));
         }
-    } catch (Turba_Exception $e) {}
+    } catch (Turba_Exception $e) {
+    }
 }
 if (!$contact) {
     try {
@@ -57,52 +59,61 @@ if ($vars->get('action') == 'mark_own') {
 // Get view.
 $viewName = Horde_Util::getFormData('view', 'Contact');
 switch ($viewName) {
-case 'Contact':
-    $view = new Turba_View_Contact($contact);
-    if (!$vars->get('url')) {
-        $vars->set('url', $contact->url(null, true));
-    }
-    break;
+    case 'Contact':
+        $view = new Turba_View_Contact($contact);
+        if (!$vars->get('url')) {
+            $vars->set('url', $contact->url(null, true));
+        }
+        break;
 
-case 'EditContact':
-    $view = new Turba_View_EditContact($contact);
-    break;
+    case 'EditContact':
+        $view = new Turba_View_EditContact($contact);
+        break;
 
-case 'DeleteContact':
-    $view = new Turba_View_DeleteContact($contact);
-    break;
+    case 'DeleteContact':
+        $view = new Turba_View_DeleteContact($contact);
+        break;
 }
 
 // Get tabs.
 $url = $contact->url();
 $tabs = new Horde_Core_Ui_Tabs('view', $vars);
-$tabs->addTab(_("_View"), $url,
-              array('tabname' => 'Contact',
-                    'id' => 'tabContact',
-                    'class' => 'horde-icon',
-                    'onclick' => 'return TurbaTabs.showTab(\'Contact\');'));
+$tabs->addTab(
+    _("_View"),
+    $url,
+    ['tabname' => 'Contact',
+        'id' => 'tabContact',
+        'class' => 'horde-icon',
+        'onclick' => 'return TurbaTabs.showTab(\'Contact\');']
+);
 if ($contact->hasPermission(Horde_Perms::EDIT)) {
-    $tabs->addTab(_("_Edit"), $url,
-                  array('tabname' => 'EditContact',
-                        'id' => 'tabEditContact',
-                        'class' => 'horde-icon',
-                        'onclick' => 'return TurbaTabs.showTab(\'EditContact\');'));
+    $tabs->addTab(
+        _("_Edit"),
+        $url,
+        ['tabname' => 'EditContact',
+            'id' => 'tabEditContact',
+            'class' => 'horde-icon',
+            'onclick' => 'return TurbaTabs.showTab(\'EditContact\');']
+    );
 }
 if ($contact->hasPermission(Horde_Perms::DELETE)) {
-    $tabs->addTab(_("De_lete"), $url,
-                  array('tabname' => 'DeleteContact',
-                        'id' => 'tabDeleteContact',
-                        'class' => 'horde-icon',
-                        'onclick' => 'return TurbaTabs.showTab(\'DeleteContact\');'));
+    $tabs->addTab(
+        _("De_lete"),
+        $url,
+        ['tabname' => 'DeleteContact',
+            'id' => 'tabDeleteContact',
+            'class' => 'horde-icon',
+            'onclick' => 'return TurbaTabs.showTab(\'DeleteContact\');']
+    );
 }
 
 $owner = explode(';', $prefs->getValue('own_contact'));
 if (count($owner) == 2 &&
     $owner[0] == $source && $owner[1] == $contact->getValue('__key')) {
-    $own_icon = ' ' . Horde_Themes_Image::tag('user.png', array(
-       'alt' =>  _("Your own contact"),
-       'attr' => array('title' => _("Your own contact"))
-   ));
+    $own_icon = ' ' . Horde_Themes_Image::tag('user.png', [
+        'alt' =>  _("Your own contact"),
+        'attr' => ['title' => _("Your own contact")],
+    ]);
     $own_link = '';
 } else {
     $own_icon = '';
@@ -112,10 +123,10 @@ if (count($owner) == 2 &&
 }
 
 $page_output->addScriptFile('contact_tabs.js');
-$page_output->header(array(
-    'title' => $view->getTitle()
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => $view->getTitle(),
+]);
+$notification->notify(['listeners' => 'status']);
 echo '<div id="page">';
 echo $tabs->render($viewName, 'horde-buttonbar');
 echo '<h1 class="header">' . $own_link

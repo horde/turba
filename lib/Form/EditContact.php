@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -115,10 +116,10 @@ class Turba_Form_EditContact extends Turba_Form_ContactBase
         parent::renderActive($renderer, $vars, $action, $method, $enctype, $focus);
 
         if ($this->_contact->isGroup()) {
-            $edit_url = Horde::url('browse.php')->add(array(
+            $edit_url = Horde::url('browse.php')->add([
                 'key' => $this->_contact->getValue('__key'),
-                'source' => $this->_contact->getSource()
-            ));
+                'source' => $this->_contact->getSource(),
+            ]);
 
             echo '<div class="editGroupMembers">' .
                 Horde::link($edit_url) . '<span class="iconImg groupImg"></span>' . _("Edit/View Contact List Members") . '</a>' .

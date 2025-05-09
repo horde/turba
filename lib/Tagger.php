@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
  *
@@ -29,7 +30,7 @@ class Turba_Tagger extends Horde_Core_Tagger
 
     /**
      */
-    protected $_types = array('contact');
+    protected $_types = ['contact'];
 
     /**
      * Searches for resources that are tagged with all of the requested tags.
@@ -44,11 +45,11 @@ class Turba_Tagger extends Horde_Core_Tagger
      *
      * @return array  A hash of results.
      */
-    public function search($tags, $filter = array())
+    public function search($tags, $filter = [])
     {
         global $injector;
 
-        $args = array();
+        $args = [];
         $tagger = $injector->getInstance('Content_Tagger');
 
         // These filters are mutually exclusive
@@ -58,7 +59,7 @@ class Turba_Tagger extends Horde_Core_Tagger
         } elseif (!empty($filter['list'])) {
             // Only events located in specific address book(s)
             if (!is_array($filter['list'])) {
-                $filter['list'] = array($filter['list']);
+                $filter['list'] = [$filter['list']];
             }
             $args['listId'] = $filter['list'];
         }

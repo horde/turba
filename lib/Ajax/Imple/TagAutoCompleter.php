@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
  *
@@ -25,9 +26,9 @@ class Turba_Ajax_Imple_TagAutoCompleter extends Horde_Core_Ajax_Imple_AutoComple
      */
     protected function _getAutoCompleter()
     {
-        $opts = array();
+        $opts = [];
 
-        foreach (array('box', 'triggerContainer') as $val) {
+        foreach (['box', 'triggerContainer'] as $val) {
             if (isset($this->_params[$val])) {
                 $opts[$val] = $this->_params[$val];
             }

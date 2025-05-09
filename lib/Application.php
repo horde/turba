@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
  *
@@ -51,10 +52,10 @@ class Turba_Application extends Horde_Registry_Application
 {
     /**
      */
-    public $features = array(
+    public $features = [
         'smartmobileView' => true,
         'modseq' => true,
-    );
+    ];
 
     /**
      */
@@ -65,10 +66,10 @@ class Turba_Application extends Horde_Registry_Application
     protected function _bootstrap()
     {
         /* Add Turba-specific factories. */
-        $factories = array(
+        $factories = [
             'Turba_Shares' => 'Turba_Factory_Shares',
-            'Turba_Tagger' => 'Turba_Factory_Tagger'
-        );
+            'Turba_Tagger' => 'Turba_Factory_Tagger',
+        ];
 
         foreach ($factories as $key => $val) {
             $GLOBALS['injector']->bindFactory($key, $val, 'create');
@@ -94,7 +95,8 @@ class Turba_Application extends Horde_Registry_Application
              * least the fileroot entry. */
             $injector->getInstance('Horde_Autoloader')
                 ->addClassPathMapper(
-                    new Horde_Autoloader_ClassPathMapper_Prefix('/^Content_/', $registry->get('fileroot', 'content') . '/lib/'));
+                    new Horde_Autoloader_ClassPathMapper_Prefix('/^Content_/', $registry->get('fileroot', 'content') . '/lib/')
+                );
 
             if (!class_exists('Content_Tagger')) {
                 throw new Horde_Exception(_("The Content_Tagger class could not be found. Make sure the Content application is installed."));
@@ -146,7 +148,7 @@ class Turba_Application extends Horde_Registry_Application
         }
         $session->set('turba', 'source', Turba::$source);
 
-        $GLOBALS['addSources'] = Turba::getAddressBooks(Horde_Perms::EDIT, array('require_add' => true));
+        $GLOBALS['addSources'] = Turba::getAddressBooks(Horde_Perms::EDIT, ['require_add' => true]);
         $GLOBALS['copymoveSources'] = $GLOBALS['addSources'];
         unset($GLOBALS['copymoveSources'][Turba::$source]);
     }
@@ -157,21 +159,21 @@ class Turba_Application extends Horde_Registry_Application
     {
         $cfgSources = Turba::availableSources();
 
-        $perms = array(
-            'sources' => array(
-                'title' => _("Sources")
-            )
-        );
+        $perms = [
+            'sources' => [
+                'title' => _("Sources"),
+            ],
+        ];
 
         // Run through every contact source.
         foreach ($cfgSources as $source => $curSource) {
-            $perms['sources:' . $source] = array(
-                'title' => $curSource['title']
-            );
-            $perms['sources:' . $source . ':max_contacts'] = array(
+            $perms['sources:' . $source] = [
+                'title' => $curSource['title'],
+            ];
+            $perms['sources:' . $source . ':max_contacts'] = [
                 'title' => _("Maximum Number of Contacts"),
-                'type' => 'int'
-            );
+                'type' => 'int',
+            ];
         }
 
         return $perms;
@@ -184,12 +186,12 @@ class Turba_Application extends Horde_Registry_Application
         global $registry;
 
         switch ($registry->getView()) {
-        case $registry::VIEW_SMARTMOBILE:
-            return strval(Horde::url('smartmobile.php')->setRaw(true));
-            break;
+            case $registry::VIEW_SMARTMOBILE:
+                return strval(Horde::url('smartmobile.php')->setRaw(true));
+                break;
 
-        default:
-            return null;
+            default:
+                return null;
         }
     }
 
@@ -227,32 +229,32 @@ class Turba_Application extends Horde_Registry_Application
         $edit = Horde::url('addressbooks/edit.php');
         $url = Horde::url('');
 
-        $sidebar->containers['my'] = array(
-            'header' => array(
+        $sidebar->containers['my'] = [
+            'header' => [
                 'id' => 'turba-toggle-my',
                 'label' => _("My Address Books"),
                 'collapsed' => false,
-            ),
-        );
+            ],
+        ];
         if ($GLOBALS['registry']->getAuth() &&
             $GLOBALS['session']->get('turba', 'has_share') &&
             !empty($conf['shares']['source'])) {
             $create = true;
-            $sidebar->containers['my']['header']['add'] = array(
+            $sidebar->containers['my']['header']['add'] = [
                 'url' => Horde::url('addressbooks/create.php'),
                 'label' => _("Create a new Address Book"),
-            );
+            ];
         }
-        $shares = array();
-        $shared = array();
+        $shares = [];
+        $shared = [];
         foreach (Turba::listShares(false, Horde_Perms::SHOW) as $id => $abook) {
-            $row = array(
+            $row = [
                 'selected' => $id == Turba::$source,
                 'url' => $url->copy()->add('source', $id),
                 'label' => $abook->get('name'),
                 'edit' => $edit->copy()->add('a', $abook->getName()),
                 'type' => 'radiobox',
-            );
+            ];
             if ($abook->get('owner') && $abook->get('owner') == $user) {
                 $sidebar->addRow($row, 'my');
                 if ($row['selected']) {
@@ -268,13 +270,13 @@ class Turba_Application extends Horde_Registry_Application
         }
 
         if (!empty($create) || count($shared)) {
-            $sidebar->containers['shared'] = array(
-                'header' => array(
+            $sidebar->containers['shared'] = [
+                'header' => [
                     'id' => 'turba-toggle-shared',
                     'label' => _("Shared Address Books"),
                     'collapsed' => true,
-                ),
-            );
+                ],
+            ];
             foreach ($shared as $row) {
                 $sidebar->addRow($row, 'shared');
                 if ($row['selected']) {
@@ -283,23 +285,23 @@ class Turba_Application extends Horde_Registry_Application
             }
         }
 
-        $sidebar->containers['other'] = array(
-            'header' => array(
+        $sidebar->containers['other'] = [
+            'header' => [
                 'id' => 'turba-toggle-other',
                 'label' => _("Other Address Books"),
                 'collapsed' => true,
-            ),
-        );
+            ],
+        ];
         foreach (Turba::getAddressBooks(Horde_Perms::SHOW) as $id => $abook) {
             if (isset($shares[$id])) {
                 continue;
             }
-            $row = array(
+            $row = [
                 'selected' => $id == Turba::$source,
                 'url' => $url->copy()->add('source', $id),
                 'label' => $abook['title'],
                 'type' => 'radiobox',
-            );
+            ];
             $sidebar->addRow($row, 'other');
             if ($row['selected']) {
                 $sidebar->containers['other']['header']['collapsed'] = false;
@@ -317,30 +319,30 @@ class Turba_Application extends Horde_Registry_Application
     public function configSpecialValues($what)
     {
         switch ($what) {
-        case 'client-fields':
-            try {
-                $fields = $GLOBALS['registry']->call('clients/clientFields');
-            } catch (Horde_Exception $e) {
-                return array();
-            }
-            $f = array();
-            foreach ($fields as $field) {
-                $f[$field['name']] = $field['label'];
-            }
-            return $f;
+            case 'client-fields':
+                try {
+                    $fields = $GLOBALS['registry']->call('clients/clientFields');
+                } catch (Horde_Exception $e) {
+                    return [];
+                }
+                $f = [];
+                foreach ($fields as $field) {
+                    $f[$field['name']] = $field['label'];
+                }
+                return $f;
 
-        case 'sources':
-            try {
-                $addressbooks = Turba::getAddressBooks(Horde_Perms::READ);
-            } catch (Horde_Exception $e) {
-                return array();
-            }
-            foreach ($addressbooks as &$addressbook) {
-                $addressbook = $addressbook['title'];
-            }
+            case 'sources':
+                try {
+                    $addressbooks = Turba::getAddressBooks(Horde_Perms::READ);
+                } catch (Horde_Exception $e) {
+                    return [];
+                }
+                foreach ($addressbooks as &$addressbook) {
+                    $addressbook = $addressbook['title'];
+                }
 
-            $addressbooks[''] = _("None");
-            return $addressbooks;
+                $addressbooks[''] = _("None");
+                return $addressbooks;
         }
         return [];
     }
@@ -387,14 +389,14 @@ class Turba_Application extends Horde_Registry_Application
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         $shares = $turba_shares->listShares(
             $user,
-            array('attributes' => $user)
+            ['attributes' => $user]
         );
 
         // Look for the deleted user's shares and remove them
         $sources = Turba::getConfigFromShares(
             $cfgSources,
             true,
-            array('shares' => $shares, 'auth_user' => $user)
+            ['shares' => $shares, 'auth_user' => $user]
         );
 
         foreach ($shares as $share) {
@@ -434,71 +436,73 @@ class Turba_Application extends Horde_Registry_Application
 
     /**
      */
-    public function topbarCreate(Horde_Tree_Renderer_Base $tree, $parent = null,
-                                 array $params = array())
-    {
+    public function topbarCreate(
+        Horde_Tree_Renderer_Base $tree,
+        $parent = null,
+        array $params = []
+    ) {
         $add = Horde::url('add.php');
         $browse = Horde::url('browse.php');
 
         if ($GLOBALS['addSources']) {
             $newimg = Horde_Themes::img('menu/new.png');
 
-            $tree->addNode(array(
+            $tree->addNode([
                 'id' => $parent . '__new',
                 'parent' => $parent,
                 'label' => _("New Contact"),
-                'params' => array(
+                'params' => [
                     'icon' => $newimg,
-                    'url' => $add
-                )
-            ));
+                    'url' => $add,
+                ],
+            ]);
 
             foreach ($GLOBALS['addSources'] as $addressbook => $config) {
-                $tree->addNode(array(
+                $tree->addNode([
                     'id' => $parent . $addressbook . '__new',
                     'parent' => $parent . '__new',
                     'label' => sprintf(_("in %s"), $config['title']),
                     'expanded' => false,
-                    'params' => array(
+                    'params' => [
                         'icon' => $newimg,
-                        'url' => $add->copy()->add('source', $addressbook)
-                    )
-                ));
+                        'url' => $add->copy()->add('source', $addressbook),
+                    ],
+                ]);
             }
         }
 
         foreach (Turba::getAddressBooks() as $addressbook => $config) {
             if (!empty($config['browse'])) {
-                $tree->addNode(array(
+                $tree->addNode([
                     'id' => $parent . $addressbook,
                     'parent' => $parent,
                     'label' => $config['title'],
                     'expanded' => false,
-                    'params' => array(
+                    'params' => [
                         'icon' => Horde_Themes::img('menu/browse.png'),
-                        'url' => $browse->copy()->add('source', $addressbook)
-                    )
-                ));
+                        'url' => $browse->copy()->add('source', $addressbook),
+                    ],
+                ]);
             }
         }
 
-        $tree->addNode(array(
+        $tree->addNode([
             'id' => $parent . '__search',
             'parent' => $parent,
             'label' => _("Search"),
             'expanded' => false,
-            'params' => array(
+            'params' => [
                 'icon' => Horde_Themes::img('search.png'),
-                'url' => Horde::url('search.php')
-            )
-        ));
+                'url' => Horde::url('search.php'),
+            ],
+        ]);
     }
 
     /* Backup/restore */
 
     /**
      */
-    public function backup(array $users = array())
+    public function backup(array $users = [])
     {
         global $injector, $session;
 
@@ -512,8 +516,7 @@ class Turba_Application extends Horde_Registry_Application
             $users = array_keys($users);
         }
 
-        $getUser = function($user) use ($factory, $cfgSources)
-        {
+        $getUser = function ($user) use ($factory, $cfgSources) {
             global $injector, $registry, $session;
 
             $backup = new Backup\User($user);
@@ -522,21 +525,22 @@ class Turba_Application extends Horde_Registry_Application
             // Need to pushApp() here because this method is called delayed,
             // but we need Turba's $conf.
             $pushed = $registry->pushApp(
-                'turba', array('check_perms' => false)
+                'turba',
+                ['check_perms' => false]
             );
 
             if ($session->get('turba', 'has_share')) {
                 $turba_shares = $injector->getInstance('Turba_Shares');
                 $shares = $turba_shares->listShares(
                     $user,
-                    array('attributes' => $user)
+                    ['attributes' => $user]
                 );
                 $cfgSources = Turba::getConfigFromShares(
                     $cfgSources,
                     true,
-                    array('shares' => $shares, 'auth_user' => $user)
+                    ['shares' => $shares, 'auth_user' => $user]
                 );
-                $addressbooks = array();
+                $addressbooks = [];
                 foreach ($shares as $share) {
                     $addressbooks[$share->getId()] = $share->toHash();
                 }
@@ -579,53 +583,56 @@ class Turba_Application extends Horde_Registry_Application
 
         $count = 0;
         switch ($data->getType()) {
-        case 'preferences':
+            case 'preferences':
                 $count = $this->_restorePrefs($data, 'turba');
                 break;
 
-        case 'addressbooks':
-            $turba_shares = $injector->getInstance('Turba_Shares');
-            foreach ($data as $addressbook) {
-                $addressbook['owner'] = $user;
-                $addressbook['attributes'] = array_intersect_key(
-                    $addressbook['attributes'],
-                    array(
-                        'name'    => true,
-                        'desc'    => true,
-                        'params'  => true)
-                );
-                $turba_shares->fromHash($addressbook);
-                $count++;
-            }
-            break;
-
-        case 'contacts':
-            $cfgSources = Turba::availableSources();
-            if ($session->get('turba', 'has_share')) {
+            case 'addressbooks':
                 $turba_shares = $injector->getInstance('Turba_Shares');
-                $shares = $turba_shares->listShares(
-                    $user,
-                    array('attributes' => $user)
-                );
-                $cfgSources = Turba::getConfigFromShares(
-                    $cfgSources,
-                    true,
-                    array('shares' => $shares, 'auth_user' => $user)
-                );
-            }
-            $map = array();
-            foreach (array('Object', 'Group') as $type) {
-                foreach ($data as $contact) {
-                    if ($contact['contact']['__type'] != $type) {
-                        continue;
-                    }
-                    $map = $this->_restoreContact(
-                        $contact, $user, $cfgSources, $map
+                foreach ($data as $addressbook) {
+                    $addressbook['owner'] = $user;
+                    $addressbook['attributes'] = array_intersect_key(
+                        $addressbook['attributes'],
+                        [
+                            'name'    => true,
+                            'desc'    => true,
+                            'params'  => true]
                     );
+                    $turba_shares->fromHash($addressbook);
                     $count++;
                 }
-            }
-            break;
+                break;
+
+            case 'contacts':
+                $cfgSources = Turba::availableSources();
+                if ($session->get('turba', 'has_share')) {
+                    $turba_shares = $injector->getInstance('Turba_Shares');
+                    $shares = $turba_shares->listShares(
+                        $user,
+                        ['attributes' => $user]
+                    );
+                    $cfgSources = Turba::getConfigFromShares(
+                        $cfgSources,
+                        true,
+                        ['shares' => $shares, 'auth_user' => $user]
+                    );
+                }
+                $map = [];
+                foreach (['Object', 'Group'] as $type) {
+                    foreach ($data as $contact) {
+                        if ($contact['contact']['__type'] != $type) {
+                            continue;
+                        }
+                        $map = $this->_restoreContact(
+                            $contact,
+                            $user,
+                            $cfgSources,
+                            $map
+                        );
+                        $count++;
+                    }
+                }
+                break;
         }
 
         return $count;
@@ -662,7 +669,7 @@ class Turba_Application extends Horde_Registry_Application
             }
         }
         if ($contact['contact']['__type'] == 'Group') {
-            $members = array();
+            $members = [];
             foreach (unserialize($contact['contact']['__members']) as $member) {
                 if (isset($map[$member])) {
                     $members[] = $map[$member];
@@ -681,7 +688,7 @@ class Turba_Application extends Horde_Registry_Application
      */
     public function restoreDependencies()
     {
-        return array('contacts' => array('addressbooks'));
+        return ['contacts' => ['addressbooks']];
     }
 
     /* Download data. */
@@ -695,157 +702,157 @@ class Turba_Application extends Horde_Registry_Application
         global $attributes, $cfgSources, $injector;
 
         switch ($vars->actionID) {
-        case 'download_file':
-            /* Get the object. */
-            if (!isset($cfgSources[$vars->source])) {
-                throw new Turba_Exception(_("The contact you requested does not exist."));
-            }
-
-            $object = $injector->getInstance('Turba_Factory_Driver')->create($vars->source)->getObject($vars->key);
-
-            /* Check permissions. */
-            if (!$object->hasPermission(Horde_Perms::READ)) {
-                throw new Turba_Exception(_("You do not have permission to view this contact."));
-            }
-
-            try {
-                return array(
-                    'data' => $object->vfsInit()->read(Turba::VFS_PATH . '/' . $object->getValue('__uid'), $vars->file),
-                    'name' => $vars->file
-                );
-            } catch (Horde_Vfs_Exception $e) {
-                Horde::log($e, 'ERR');
-                throw new Turba_Exception(sprintf(_("Access denied to %s"), $vars->file));
-            }
-
-        case 'export':
-            $sources = array();
-            if ($vars->objectkeys) {
-                foreach ($vars->objectkeys as $objectkey) {
-                    list($source, $key) = explode(':', $objectkey, 2);
-                    if (!isset($sources[$source])) {
-                        $sources[$source] = array();
-                    }
-                    $sources[$source][] = $key;
+            case 'download_file':
+                /* Get the object. */
+                if (!isset($cfgSources[$vars->source])) {
+                    throw new Turba_Exception(_("The contact you requested does not exist."));
                 }
-            } else {
-                if (!isset($vars->source) && !empty($cfgSources)) {
-                    reset($cfgSources);
-                    $vars->source = key($cfgSources);
+
+                $object = $injector->getInstance('Turba_Factory_Driver')->create($vars->source)->getObject($vars->key);
+
+                /* Check permissions. */
+                if (!$object->hasPermission(Horde_Perms::READ)) {
+                    throw new Turba_Exception(_("You do not have permission to view this contact."));
                 }
-                $sources[$vars->source] = array();
-            }
 
-            if ($vcard = in_array($vars->exportID, array(Horde_Data::EXPORT_VCARD, 'vcard30'))) {
-                $version = ($vars->exportID == 'vcard30') ? '3.0' : '2.1';
-            }
-
-            $all_fields = $data = array();
-            $tfd = $injector->getInstance('Turba_Factory_Driver');
-
-            foreach ($sources as $source => $objectkeys) {
-                /* Create a Turba storage instance. */
-                $driver = $tfd->create($source);
-                $blobs = $driver->getBlobs();
-
-                /* Get the full, sorted contact list. */
                 try {
-                    $results = count($objectkeys)
-                        ? $driver->getObjects($objectkeys)
-                        : $driver->search(array())->objects;
-                } catch (Turba_Exception $e) {
-                    throw new Turba_Exception(sprintf(_("Failed to search the directory: %s"), $e->getMessage()));
+                    return [
+                        'data' => $object->vfsInit()->read(Turba::VFS_PATH . '/' . $object->getValue('__uid'), $vars->file),
+                        'name' => $vars->file,
+                    ];
+                } catch (Horde_Vfs_Exception $e) {
+                    Horde::log($e, 'ERR');
+                    throw new Turba_Exception(sprintf(_("Access denied to %s"), $vars->file));
                 }
 
-                $fields = array_keys($driver->map);
-                $all_fields = array_merge($all_fields, $fields);
+            case 'export':
+                $sources = [];
+                if ($vars->objectkeys) {
+                    foreach ($vars->objectkeys as $objectkey) {
+                        [$source, $key] = explode(':', $objectkey, 2);
+                        if (!isset($sources[$source])) {
+                            $sources[$source] = [];
+                        }
+                        $sources[$source][] = $key;
+                    }
+                } else {
+                    if (!isset($vars->source) && !empty($cfgSources)) {
+                        reset($cfgSources);
+                        $vars->source = key($cfgSources);
+                    }
+                    $sources[$vars->source] = [];
+                }
 
-                $params = $driver->getParams();
-                foreach ($results as $ob) {
-                    if ($vcard) {
-                        $data[] = $driver->tovCard($ob, $version, null, true);
-                    } else {
-                        $row = array();
-                        foreach ($fields as $field) {
-                            if ((substr($field, 0, 2) == '__' && $field != '__members' && $field != '__uid') ||
-                                isset($blobs[$field])) {
-                                continue;
-                            }
-                            $attribute = $ob->getValue($field);
-                            if ($field == '__members') {
-                                if (empty($attribute)) {
-                                    $row['kind'] = '';
-                                    $row['members'] = '';
+                if ($vcard = in_array($vars->exportID, [Horde_Data::EXPORT_VCARD, 'vcard30'])) {
+                    $version = ($vars->exportID == 'vcard30') ? '3.0' : '2.1';
+                }
+
+                $all_fields = $data = [];
+                $tfd = $injector->getInstance('Turba_Factory_Driver');
+
+                foreach ($sources as $source => $objectkeys) {
+                    /* Create a Turba storage instance. */
+                    $driver = $tfd->create($source);
+                    $blobs = $driver->getBlobs();
+
+                    /* Get the full, sorted contact list. */
+                    try {
+                        $results = count($objectkeys)
+                            ? $driver->getObjects($objectkeys)
+                            : $driver->search([])->objects;
+                    } catch (Turba_Exception $e) {
+                        throw new Turba_Exception(sprintf(_("Failed to search the directory: %s"), $e->getMessage()));
+                    }
+
+                    $fields = array_keys($driver->map);
+                    $all_fields = array_merge($all_fields, $fields);
+
+                    $params = $driver->getParams();
+                    foreach ($results as $ob) {
+                        if ($vcard) {
+                            $data[] = $driver->tovCard($ob, $version, null, true);
+                        } else {
+                            $row = [];
+                            foreach ($fields as $field) {
+                                if ((substr($field, 0, 2) == '__' && $field != '__members' && $field != '__uid') ||
+                                    isset($blobs[$field])) {
                                     continue;
                                 }
-                                $row['kind'] = 'group';
-                                $members = $ob->listMembers();
-                                $uids = array();
-                                foreach ($members->objects as $member) {
-                                    $uids[] = $member->getValue('__uid');
+                                $attribute = $ob->getValue($field);
+                                if ($field == '__members') {
+                                    if (empty($attribute)) {
+                                        $row['kind'] = '';
+                                        $row['members'] = '';
+                                        continue;
+                                    }
+                                    $row['kind'] = 'group';
+                                    $members = $ob->listMembers();
+                                    $uids = [];
+                                    foreach ($members->objects as $member) {
+                                        $uids[] = $member->getValue('__uid');
+                                    }
+                                    $row['members'] = implode(',', $uids);
+                                } elseif ($field == '__uid') {
+                                    $row['uid'] = !empty($attribute) ? $attribute : '';
+                                } elseif ($attributes[$field]['type'] == 'date') {
+                                    $row[$field] = strftime('%Y-%m-%d', $attribute);
+                                } elseif ($attributes[$field]['type'] == 'time') {
+                                    $row[$field] = strftime('%R', $attribute);
+                                } elseif ($attributes[$field]['type'] == 'datetime') {
+                                    $row[$field] = strftime('%Y-%m-%d %R', $attribute);
+                                } else {
+                                    $row[$field] = Horde_String::convertCharset($attribute, 'UTF-8', $params['charset']);
                                 }
-                                $row['members'] = implode(',', $uids);
-                            } elseif ($field == '__uid') {
-                                $row['uid'] = !empty($attribute) ? $attribute : '';
-                            } elseif ($attributes[$field]['type'] == 'date') {
-                                $row[$field] = strftime('%Y-%m-%d', $attribute);
-                            } elseif ($attributes[$field]['type'] == 'time') {
-                                $row[$field] = strftime('%R', $attribute);
-                            } elseif ($attributes[$field]['type'] == 'datetime') {
-                                $row[$field] = strftime('%Y-%m-%d %R', $attribute);
-                            } else {
-                                $row[$field] = Horde_String::convertCharset($attribute, 'UTF-8', $params['charset']);
+                            }
+                            $data[] = $row;
+                        }
+                    }
+                }
+
+                /* Make sure that all rows have the same columns if exporting from
+                 * different sources. */
+                if (!$vcard && count($sources) > 1) {
+                    for ($i = 0; $i < count($data); $i++) {
+                        foreach ($all_fields as $field) {
+                            if (!isset($data[$i][$field])) {
+                                $data[$i][$field] = '';
                             }
                         }
-                        $data[] = $row;
                     }
                 }
-            }
 
-            /* Make sure that all rows have the same columns if exporting from
-             * different sources. */
-            if (!$vcard && count($sources) > 1) {
-                for ($i = 0; $i < count($data); $i++) {
-                    foreach ($all_fields as $field) {
-                        if (!isset($data[$i][$field])) {
-                            $data[$i][$field] = '';
-                        }
-                    }
+                switch ($vars->exportID) {
+                    case Horde_Data::EXPORT_CSV:
+                        $injector->getInstance('Horde_Core_Factory_Data')->create('Csv', ['cleanup' => [$this, 'cleanupData']])->exportFile(_("contacts.csv"), $data, true);
+                        exit;
+
+                    case Horde_Data::EXPORT_OUTLOOKCSV:
+                        $injector->getInstance('Horde_Core_Factory_Data')->create('Outlookcsv', ['cleanup' => [$this, 'cleanupData']])->exportFile(_("contacts.csv"), $data, true, array_flip($this->getOutlookMapping()));
+                        exit;
+
+                    case Horde_Data::EXPORT_TSV:
+                        $injector->getInstance('Horde_Core_Factory_Data')->create('Tsv', ['cleanup' => [$this, 'cleanupData']])->exportFile(_("contacts.tsv"), $data, true);
+                        exit;
+
+                    case Horde_Data::EXPORT_VCARD:
+                    case 'vcard30':
+                        $injector->getInstance('Horde_Core_Factory_Data')->create('Vcard', ['cleanup' => [$this, 'cleanupData']])->exportFile(_("contacts.vcf"), $data, true);
+                        exit;
+
+                    case 'ldif':
+                        $ldif = new Turba_Data_Ldif(
+                            $injector->getInstance('Horde_Core_Data_Storage'),
+                            [
+                                'browser' => $injector->getInstance('Horde_Browser'),
+                                'vars' => Horde_Variables::getDefaultVariables(),
+                                'cleanup' => [$this, 'cleanupData'],
+                            ]
+                        );
+                        $ldif->exportFile(_("contacts.ldif"), $data, true);
+                        exit;
                 }
-            }
 
-            switch ($vars->exportID) {
-            case Horde_Data::EXPORT_CSV:
-                $injector->getInstance('Horde_Core_Factory_Data')->create('Csv', array('cleanup' => array($this, 'cleanupData')))->exportFile(_("contacts.csv"), $data, true);
-                exit;
-
-            case Horde_Data::EXPORT_OUTLOOKCSV:
-                $injector->getInstance('Horde_Core_Factory_Data')->create('Outlookcsv', array('cleanup' => array($this, 'cleanupData')))->exportFile(_("contacts.csv"), $data, true, array_flip($this->getOutlookMapping()));
-                exit;
-
-            case Horde_Data::EXPORT_TSV:
-                $injector->getInstance('Horde_Core_Factory_Data')->create('Tsv', array('cleanup' => array($this, 'cleanupData')))->exportFile(_("contacts.tsv"), $data, true);
-                exit;
-
-            case Horde_Data::EXPORT_VCARD:
-            case 'vcard30':
-                $injector->getInstance('Horde_Core_Factory_Data')->create('Vcard', array('cleanup' => array($this, 'cleanupData')))->exportFile(_("contacts.vcf"), $data, true);
-                exit;
-
-            case 'ldif':
-                $ldif = new Turba_Data_Ldif(
-                    $injector->getInstance('Horde_Core_Data_Storage'),
-                    array(
-                        'browser' => $injector->getInstance('Horde_Browser'),
-                        'vars' => Horde_Variables::getDefaultVariables(),
-                        'cleanup' => array($this, 'cleanupData')
-                    )
-                );
-                $ldif->exportFile(_("contacts.ldif"), $data, true);
-                exit;
-            }
-
-            break;
+                break;
         }
         return [];
     }
@@ -862,7 +869,7 @@ class Turba_Application extends Horde_Registry_Application
      */
     public function getOutlookMapping()
     {
-        return array(
+        return [
             'Title' => 'namePrefix',
             'First Name' => 'firstname',
             'Middle Name' => 'middlenames',
@@ -903,7 +910,7 @@ class Turba_Application extends Horde_Registry_Application
             'Office Location' => 'office',
             'Spouse' => 'spouse',
             'Web Page' => 'website',
-        );
+        ];
     }
 
     /* DAV methods. */
@@ -917,66 +924,66 @@ class Turba_Application extends Horde_Registry_Application
         $hordeUser = $registry->convertUsername($user, true);
         $dav = $injector->getInstance('Horde_Dav_Storage');
         $factory = $injector->getInstance('Turba_Shares');
-        $books = array();
+        $books = [];
         foreach (Turba::getAddressBooks(Horde_Perms::SHOW) as $id => $book) {
             $readOnly = false;
             switch ($book['type']) {
-            // Ugly hack! There is currently no clean way to retrieve address
-            // books that the user "owns", or to find out if a SQL/LDAP/Kolab
-            // address book contains per-user or global contacts.
-            case 'share':
-                $share = $factory->getShare($id);
-                if (($user == '-system-' && strlen($share->get('owner'))) ||
-                    ($user != '-system-' &&
-                     $hordeUser != $share->get('owner') &&
-                     $hordeUser != $registry->getAuth())) {
-                    continue 2;
-                }
-                $readOnly = !$share->hasPermission($hordeUser, Horde_Perms::EDIT);
-                break;
+                // Ugly hack! There is currently no clean way to retrieve address
+                // books that the user "owns", or to find out if a SQL/LDAP/Kolab
+                // address book contains per-user or global contacts.
+                case 'share':
+                    $share = $factory->getShare($id);
+                    if (($user == '-system-' && strlen($share->get('owner'))) ||
+                        ($user != '-system-' &&
+                         $hordeUser != $share->get('owner') &&
+                         $hordeUser != $registry->getAuth())) {
+                        continue 2;
+                    }
+                    $readOnly = !$share->hasPermission($hordeUser, Horde_Perms::EDIT);
+                    break;
 
-            case 'favourites':
-            case 'vbook':
-                if ($user == '-system-') {
-                    continue 2;
-                }
-                $readOnly = true;
-                break;
-
-            default:
-                if (!Turba::permissionsFilter(array($id => $book), Horde_Perms::EDIT)) {
+                case 'favourites':
+                case 'vbook':
+                    if ($user == '-system-') {
+                        continue 2;
+                    }
                     $readOnly = true;
-                }
-                break;
+                    break;
+
+                default:
+                    if (!Turba::permissionsFilter([$id => $book], Horde_Perms::EDIT)) {
+                        $readOnly = true;
+                    }
+                    break;
             }
             try {
                 $id = $dav->getExternalCollectionId($id, 'contacts') ?: $id;
             } catch (Horde_Dav_Exception $e) {
             }
-            $books[] = array(
+            $books[] = [
                 'id' => $id,
                 'uri' => $id,
                 'principaluri' => 'principals/' . $user,
                 '{DAV:}displayname' => $book['title'],
                 '{' . CardDAV\Plugin::NS_CARDDAV . '}supported-address-data'
                     => new CardDAV\Xml\Property\SupportedAddressData(
-                        array(
-                            array(
+                        [
+                            [
                                 'contentType' => 'text/directory',
-                                'version' => '3.0'
-                            ),
-                            array(
+                                'version' => '3.0',
+                            ],
+                            [
                                 'contentType' => 'text/vcard',
-                                'version' => '3.0'
-                            ),
-                            array(
+                                'version' => '3.0',
+                            ],
+                            [
                                 'contentType' => 'text/x-vcard',
-                                'version' => '2.1'
-                            ),
-                        )
+                                'version' => '2.1',
+                            ],
+                        ]
                     ),
-                '{http://sabredav.org/ns}read-only' => $readOnly
-            );
+                '{http://sabredav.org/ns}read-only' => $readOnly,
+            ];
         }
         return $books;
     }
@@ -996,9 +1003,9 @@ class Turba_Application extends Horde_Registry_Application
             throw new Turba_Exception("Address Book does not exist or no permission to edit");
         }
 
-        $list = $driver->search(array(), null, 'AND', array('__modified', '__uid'));
+        $list = $driver->search([], null, 'AND', ['__modified', '__uid']);
         $list->reset();
-        $contacts = array();
+        $contacts = [];
         while ($contact = $list->next()) {
             $id = $contact->getValue('__key');
             $modified = $contact->lastModification();
@@ -1006,12 +1013,12 @@ class Turba_Application extends Horde_Registry_Application
                 $id = $dav->getExternalObjectId($id, $internal) ?: $id . '.vcf';
             } catch (Horde_Dav_Exception $e) {
             }
-            $contacts[] = array(
+            $contacts[] = [
                 'id' => $id,
                 'uri' => $id,
                 'lastmodified' => $modified,
                 'etag' => '"' . md5($contact->getValue('__key') . '|' . $modified) . '"',
-            );
+            ];
         }
 
         return $contacts;
@@ -1053,14 +1060,14 @@ class Turba_Application extends Horde_Registry_Application
         $data = $driver->tovCard($contact, '3.0', null, true)
             ->exportvCalendar();
 
-        return array(
+        return [
             'id' => $id,
             'carddata' => $data,
             'uri' => $id,
             'lastmodified' => $modified,
             'etag' => '"' . md5($contact->getValue('__key') . '|' . $modified) . '"',
             'size' => strlen($data),
-        );
+        ];
     }
 
     /**

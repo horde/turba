@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines AJAX actions used to process Turba minisearch requests.
  *
@@ -27,8 +28,8 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
     {
         global $attributes, $injector, $registry;
 
-        $ob = new stdClass;
-        $results = array();
+        $ob = new stdClass();
+        $results = [];
         $search = trim($this->vars->search);
 
         if (!is_null($search)) {
@@ -36,7 +37,7 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
                 try {
                     $res = $injector->getInstance('Turba_Factory_Driver')
                         ->create($val)
-                        ->search(array('name' => $search));
+                        ->search(['name' => $search]);
 
                     while ($ob = $res->next()) {
                         if ($ob->isGroup()) {
@@ -47,9 +48,9 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
                                 ($attributes[$k]['type'] == 'email')) {
                                 if (!empty($v)) {
                                     try {
-                                        $mail_link = $registry->call('mail/compose', array(
-                                            array('to' => $v)
-                                        ));
+                                        $mail_link = $registry->call('mail/compose', [
+                                            ['to' => $v],
+                                        ]);
                                     } catch (Horde_Exception $e) {
                                         $mail_link = 'mailto:' . urlencode($v);
                                     }
@@ -60,7 +61,7 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
 
                                 $results[] = '<li class="linedRow">' .
                                     Horde::link(Horde::url($ob->url()), _("View Contact"), '', '_parent') .
-                                    Horde_Themes_Image::tag('contact.png', array('alt' => _("View Contact"))) . '</a> ' .
+                                    Horde_Themes_Image::tag('contact.png', ['alt' => _("View Contact")]) . '</a> ' .
                                     (!empty($v) ? '<a href="' . $mail_link . '">' : '') .
                                     $link .
                                     (!empty($v) ? '</a>' : '') . '</li>';
@@ -69,7 +70,8 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
                             }
                         }
                     }
-                } catch (Turba_Exception $e) {}
+                } catch (Turba_Exception $e) {
+                }
             }
         }
 

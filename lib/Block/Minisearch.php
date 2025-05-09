@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Allow searching of address books from the portal.
  *
@@ -14,15 +15,15 @@ class Turba_Block_Minisearch extends Horde_Core_Block
      *
      * @var array
      */
-    protected $_options = array();
+    protected $_options = [];
 
     /**
      */
-    public function __construct($app, $params = array())
+    public function __construct($app, $params = [])
     {
         parent::__construct($app, $params);
         foreach (Turba::getAddressBooks(Horde_Perms::READ) as $key => $addressbook) {
-             $this->_options[$key] = $addressbook['title'];
+            $this->_options[$key] = $addressbook['title'];
         }
         $this->_name = _("Contact Search");
     }
@@ -39,13 +40,13 @@ class Turba_Block_Minisearch extends Horde_Core_Block
      */
     protected function _params()
     {
-        return array(
-            'addressbooks' => array(
+        return [
+            'addressbooks' => [
                 'type' => 'multienum',
                 'name' => _("Address Books"),
-                'values' => $this->_options
-            )
-        );
+                'values' => $this->_options,
+            ],
+        ];
     }
     /**
      */
@@ -57,10 +58,10 @@ class Turba_Block_Minisearch extends Horde_Core_Block
             ? array_keys($this->_options)
             : $this->_params['addressbooks'];
 
-        $page_output->addInlineJsVars(array(
+        $page_output->addInlineJsVars([
             'TurbaMinisearch.abooks' => $abooks,
-            'TurbaMinisearch.URI_AJAX' => $registry->getServiceLink('ajax', 'turba')->url
-        ));
+            'TurbaMinisearch.URI_AJAX' => $registry->getServiceLink('ajax', 'turba')->url,
+        ]);
         $page_output->addScriptFile('minisearch.js');
 
         Horde::startBuffer();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines AJAX actions used in the Turba smartmobile view.
  *
@@ -31,7 +32,7 @@ class Turba_Ajax_Application_Handler_Smartmobile extends Horde_Core_Ajax_Applica
         global $attributes, $cfgSources, $injector, $notification, $registry;
 
         $contact = null;
-        $out = new stdClass;
+        $out = new stdClass();
 
         $source = $this->vars->get('source');
         if (isset($cfgSources[$source])) {
@@ -47,12 +48,12 @@ class Turba_Ajax_Application_Handler_Smartmobile extends Horde_Core_Ajax_Applica
             return $out;
         }
 
-        $out->entry = array();
+        $out->entry = [];
 
         if (!count($tabs = $contact->driver->tabs)) {
-            $tabs = array(
-                _("Entries") => array_keys($contact->driver->getCriteria())
-            );
+            $tabs = [
+                _("Entries") => array_keys($contact->driver->getCriteria()),
+            ];
         }
 
         foreach ($tabs as $key => $val) {
@@ -61,35 +62,35 @@ class Turba_Ajax_Application_Handler_Smartmobile extends Horde_Core_Ajax_Applica
                     $url = null;
 
                     switch ($val2) {
-                    case 'email':
-                    case 'emails':
-                        $addrs = $GLOBALS['injector']
-                            ->getInstance('Horde_Mail_Rfc822')
-                            ->parseAddressList($val3, array(
-                                'limit' => $val2 == 'emails' ? 0 : 1
-                            ));
-                        foreach ($addrs as $addr) {
-                            $addr = $addr->writeAddress(true);
-                            try {
-                                $url = strval($registry->call('mail/compose', array(
-                                    array('to' => $addr)
-                                )));
-                            } catch (Horde_Exception $e) {
+                        case 'email':
+                        case 'emails':
+                            $addrs = $GLOBALS['injector']
+                                ->getInstance('Horde_Mail_Rfc822')
+                                ->parseAddressList($val3, [
+                                    'limit' => $val2 == 'emails' ? 0 : 1,
+                                ]);
+                            foreach ($addrs as $addr) {
+                                $addr = $addr->writeAddress(true);
+                                try {
+                                    $url = strval($registry->call('mail/compose', [
+                                        ['to' => $addr],
+                                    ]));
+                                } catch (Horde_Exception $e) {
+                                }
+                                $out->entry[$key][] = array_filter([
+                                    'l' => $attributes[$val2]['label'],
+                                    'u' => $url,
+                                    'v' => $addr,
+                                ]);
                             }
-                            $out->entry[$key][] = array_filter(array(
-                                'l' => $attributes[$val2]['label'],
-                                'u' => $url,
-                                'v' => $addr
-                            ));
-                        }
-                        continue 2;
+                            continue 2;
                     }
 
-                    $out->entry[$key][] = array_filter(array(
+                    $out->entry[$key][] = array_filter([
                         'l' => $attributes[$val2]['label'],
                         'u' => $url,
-                        'v' => $val3
-                    ));
+                        'v' => $val3,
+                    ]);
                 }
             }
         }
@@ -101,21 +102,21 @@ class Turba_Ajax_Application_Handler_Smartmobile extends Horde_Core_Ajax_Applica
             $url = new Horde_Core_Smartmobile_Url();
             $url->setAnchor('entry');
 
-            $out->group = array(
+            $out->group = [
                 'l' => _("Contact List Members"),
-                'm' => array()
-            );
+                'm' => [],
+            ];
 
             while ($ob = $members->next()) {
-                $out->group['m'][] = array(
+                $out->group['m'][] = [
                     'n' => strlen($name = Turba::formatName($ob))
                                ? $name
                                : ('[' . _("No Name") . ']'),
-                    'u' => strval($url->copy()->setRaw(true)->add(array(
-                               'key' => $ob->getValue('__key'),
-                               'source' => $ob->getSource()
-                           )))
-                );
+                    'u' => strval($url->copy()->setRaw(true)->add([
+                        'key' => $ob->getValue('__key'),
+                        'source' => $ob->getSource(),
+                    ])),
+                ];
             }
         }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba browse.php.
  *
@@ -25,7 +26,7 @@ if (empty($cfgSources[Turba::$source]['browse'])) {
     }
 }
 
-$params = array(
+$params = [
     'addSources' => $addSources,
     'attributes' => $attributes,
     'browse_source_count' => $browse_source_count,
@@ -42,7 +43,7 @@ $params = array(
     'source' => Turba::$source,
     'turba_shares' => $injector->getInstance('Turba_Shares'),
     'vars' => Horde_Variables::getDefaultVariables(),
-);
+];
 
 $browse = new Turba_View_Browse($params);
 $browse->run();

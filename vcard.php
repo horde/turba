@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba vcard.php.
  *
@@ -40,4 +41,4 @@ if (!$filename) {
     $filename = _("contact");
 }
 
-$injector->getInstance('Horde_Core_Factory_Data')->create('Vcard')->exportFile($filename . '.vcf', array($driver->tovCard($object, '2.1', null, true)));
+$injector->getInstance('Horde_Core_Factory_Data')->create('Vcard')->exportFile($filename . '.vcf', [$driver->tovCard($object, '2.1', null, true)]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Turba
  */
@@ -26,12 +27,12 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
             $this->appendButtons(_("Finish"));
         } elseif ($source . ':' . $key == $objectkeys[count($objectkeys) - 1]) {
             /* Last contact */
-            $this->setButtons(array(array('value' => _("Previous"), 'class' => 'horde-button')));
-            $this->appendButtons(array(array('value' => _("Finish"), 'class' => 'horde-default')));
+            $this->setButtons([['value' => _("Previous"), 'class' => 'horde-button']]);
+            $this->appendButtons([['value' => _("Finish"), 'class' => 'horde-default']]);
         } else {
             /* In between */
-            $this->setButtons(array(array('value' => _("Previous"), 'class' => 'horde-button')));
-            $this->appendButtons(array(array('value' => _("Next"), 'class' => 'horde-default')));
+            $this->setButtons([['value' => _("Previous"), 'class' => 'horde-button']]);
+            $this->appendButtons([['value' => _("Next"), 'class' => 'horde-default']]);
             $this->appendButtons(_("Finish"));
         }
     }
@@ -43,8 +44,7 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
         $method = 'get',
         $enctype = null,
         $focus = true
-    )
-    {
+    ) {
         parent::renderActive($renderer, $vars, $action, $method, $enctype, $focus);
 
         $results = new Turba_List($vars->get('objectkeys'));
@@ -57,10 +57,10 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
 
             $listView = new Turba_View_List(
                 $results,
-                array(
-                    'Group' => true
-                ),
-                isset($sources[$source]) ? $sources[$source] : array()
+                [
+                    'Group' => true,
+                ],
+                $sources[$source] ?? []
             );
             $numDisplayed = 0;
             echo '<br />' . $listView->getPage($numDisplayed);
@@ -73,13 +73,13 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
 
         $this->getInfo($this->_vars, $info);
 
-        $next_page = Horde::url('edit.php', true)->add(array(
+        $next_page = Horde::url('edit.php', true)->add([
             'source' => $info['source'],
             'original_source' => $info['original_source'],
             'objectkeys' => $info['objectkeys'],
             'url' => Horde::signUrl($info['url']),
-            'actionID' => 'groupedit'
-        ));
+            'actionID' => 'groupedit',
+        ]);
 
         $objectkey = array_search($info['source'] . ':' . $info['key'], $info['objectkeys']);
 
@@ -93,7 +93,7 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
             }
         } elseif ($submitbutton == _("Previous") && $info['source'] . ':' . $info['key'] != $info['objectkeys'][0]) {
             /* Previous contact */
-            list(, $previous_key) = explode(':', $info['objectkeys'][$objectkey - 1]);
+            [, $previous_key] = explode(':', $info['objectkeys'][$objectkey - 1]);
             $next_page->add('key', $previous_key);
             if ($this->getOpenSection()) {
                 $next_page->add('__formOpenSection', $this->getOpenSection());
@@ -101,7 +101,7 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
         } elseif ($submitbutton == _("Next") &&
                   $info['source'] . ':' . $info['key'] != $info['objectkeys'][count($info['objectkeys']) - 1]) {
             /* Next contact */
-            list(, $next_key) = explode(':', $info['objectkeys'][$objectkey + 1]);
+            [, $next_key] = explode(':', $info['objectkeys'][$objectkey + 1]);
             $next_page->add('key', $next_key);
             if ($this->getOpenSection()) {
                 $next_page->add('__formOpenSection', $this->getOpenSection());

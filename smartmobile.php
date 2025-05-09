@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba smartmobile view.
  *
@@ -18,10 +19,10 @@ Horde_Registry::appInit('turba');
 
 $ob = new Turba_Smartmobile($injector->getInstance('Horde_Variables'));
 
-$page_output->header(array(
+$page_output->header([
     'title' => _("Mobile Addressbook"),
-    'view' => $registry::VIEW_SMARTMOBILE
-));
+    'view' => $registry::VIEW_SMARTMOBILE,
+]);
 
 $ob->render();
 

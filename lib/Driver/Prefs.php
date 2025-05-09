@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba directory driver implementation for Horde Preferences - very simple,
  * lightweight container.
@@ -25,7 +26,7 @@ class Turba_Driver_Prefs extends Turba_Driver
      *
      * @return array  Hash containing the search results.
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
         return $count_only ? count($this->_getAddressBook()) : array_values($this->_getAddressBook());
     }
@@ -43,15 +44,19 @@ class Turba_Driver_Prefs extends Turba_Driver
      *                           @since 4.2.0
      *
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         $book = $this->_getAddressBook();
 
-        $results = array();
+        $results = [];
         if (!is_array($ids)) {
-            $ids = array($ids);
+            $ids = [$ids];
         }
 
         foreach ($ids as $id) {
@@ -72,7 +77,7 @@ class Turba_Driver_Prefs extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(), array $date_fields = array())
+    protected function _add(array $attributes, array $blob_fields = [], array $date_fields = [])
     {
         $book = $this->_getAddressBook();
         $book[$attributes['id']] = $attributes;
@@ -104,12 +109,12 @@ class Turba_Driver_Prefs extends Turba_Driver
      * Saves the specified object in the preferences.
      *
      * @param Turba_Object $object TODO
-     * 
+     *
      * @return string object id
      */
-    function _save($object)
+    public function _save($object)
     {
-        $object_keys = $this->toDriverKeys(array('__key' => $object->getValue('__key')));
+        $object_keys = $this->toDriverKeys(['__key' => $object->getValue('__key')]);
         $object_id = reset($object_keys);
         $attributes = $this->toDriverKeys($object->getAttributes());
 
@@ -134,7 +139,7 @@ class Turba_Driver_Prefs extends Turba_Driver
             return $prefbooks[$this->_params['name']];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -149,7 +154,7 @@ class Turba_Driver_Prefs extends Turba_Driver
 
         $val = $prefs->getValue('prefbooks');
         $prefbooks = empty($val)
-            ? array()
+            ? []
             : unserialize($val);
 
         $prefbooks[$this->_params['name']] = $addressbook;

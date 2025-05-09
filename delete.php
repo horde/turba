@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba delete.php.
  *
@@ -40,8 +41,8 @@ try {
     $notification->push(sprintf(_("There was an error deleting this contact: %s"), $e->getMessage()), 'horde.error');
 }
 
-$page_output->header(array(
-    'title' => _("Deletion failed")
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => _("Deletion failed"),
+]);
+$notification->notify(['listeners' => 'status']);
 $page_output->footer();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_Driver:: class provides a common abstracted interface to the
  * various directory search drivers.  It includes functions for searching,
@@ -40,7 +41,7 @@ class Turba_Driver_Share extends Turba_Driver
      *
      * @return Turba_Driver
      */
-    public function __construct($name = '', array $params = array())
+    public function __construct($name = '', array $params = [])
     {
         parent::__construct($name, $params);
         $this->_share = $this->_params['config']['params']['share'];
@@ -70,7 +71,7 @@ class Turba_Driver_Share extends Turba_Driver
      */
     public function __call($method, $args)
     {
-        return call_user_func_array(array($this->_driver, $method), $args);
+        return call_user_func_array([$this->_driver, $method], $args);
     }
 
     /**
@@ -178,7 +179,7 @@ class Turba_Driver_Share extends Turba_Driver
      * @return string  TODO
      * @throws Turba_Exception
      */
-    protected  function _getContactOwner()
+    protected function _getContactOwner()
     {
         $params = @unserialize($this->_share->get('params'));
         if (!empty($params['name'])) {
@@ -235,7 +236,7 @@ class Turba_Driver_Share extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
         return $this->_driver->_search($criteria, $fields, $blobFields, $count_only);
     }
@@ -254,10 +255,14 @@ class Turba_Driver_Share extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         return $this->_driver->_read($key, $ids, $owner, $fields, $blobFields, $dateFields);
     }
 
@@ -270,7 +275,7 @@ class Turba_Driver_Share extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(), array $date_fields = array())
+    protected function _add(array $attributes, array $blob_fields = [], array $date_fields = [])
     {
         return $this->_driver->_add($attributes, $blob_fields, $date_fields);
     }

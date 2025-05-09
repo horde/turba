@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -26,9 +27,11 @@ class Turba_Form_Contact extends Turba_Form_ContactBase
      * @param Turba_Object $contact
      */
     public function __construct(
-        $vars, Turba_Object $contact, $tabs = true, $title = null
-    )
-    {
+        $vars,
+        Turba_Object $contact,
+        $tabs = true,
+        $title = null
+    ) {
         global $injector, $notification;
 
         if (is_null($title)) {
@@ -37,7 +40,7 @@ class Turba_Form_Contact extends Turba_Form_ContactBase
         parent::__construct($vars, '', $title);
 
         /* Get the values through the Turba_Object class. */
-        $object = array();
+        $object = [];
 
         foreach (array_keys($contact->driver->getCriteria()) as $info_key) {
             $object[$info_key] = $contact->getValue($info_key);
@@ -59,7 +62,7 @@ class Turba_Form_Contact extends Turba_Form_ContactBase
             try {
                 $files = $contact->listFiles();
                 $this->addVariable(_("Files"), '__vfs', 'html', false);
-                $vars->set('__vfs', implode('<br />', array_map(array($contact, 'vfsEditUrl'), $files)));
+                $vars->set('__vfs', implode('<br />', array_map([$contact, 'vfsEditUrl'], $files)));
             } catch (Turba_Exception $e) {
                 $notification->push($files, 'horde.error');
             }

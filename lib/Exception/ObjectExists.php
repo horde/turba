@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Exception thrown if a Turba Object already exists.
  *
@@ -12,6 +13,4 @@
  * @license  http://www.horde.org/licenses/apache ASL
  * @package  Turba
  */
-class Turba_Exception_ObjectExists extends Turba_Exception
-{
-}
+class Turba_Exception_ObjectExists extends Turba_Exception {}

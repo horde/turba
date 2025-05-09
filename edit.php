@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba edit.php.
  *
@@ -35,7 +36,7 @@ if ($groupedit && (!$key || $key == '**search')) {
     $original_source = ($key == '**search')
         ? $key
         : $vars->original_source;
-    list($source, $key) = explode(':', $vars->objectkeys[0], 2);
+    [$source, $key] = explode(':', $vars->objectkeys[0], 2);
     if (empty($original_source)) {
         $original_source = $source;
     }
@@ -89,13 +90,13 @@ try {
 
 $title = sprintf($contact->isGroup() ? _("Edit Contact List \"%s\"") : _("Edit \"%s\""), $contact->getValue('name'));
 Horde::startBuffer();
-$notification->notify(array('listeners' => 'status'));
+$notification->notify(['listeners' => 'status']);
 $form->setTitle($title);
 $form->renderActive($form->getRenderer(), $vars, Horde::url('edit.php'), 'post');
 $formHtml = Horde::endBuffer();
 
-$page_output->header(array(
-    'title' => $title
-));
+$page_output->header([
+    'title' => $title,
+]);
 echo $formHtml;
 $page_output->footer();

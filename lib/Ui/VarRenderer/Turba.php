@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file contains all Horde_Core_Ui_VarRenderer extensions required for
  * editing contacts.
@@ -28,11 +29,13 @@ class Horde_Core_Ui_VarRenderer_Turba extends Horde_Core_Ui_VarRenderer_Html
         $value = htmlspecialchars($var->getValue($vars));
 
         $html = sprintf('<input id="%s" type="text" name="%s" value="%s" />', $varname, $varname, $value);
-        $html .= sprintf('<span id="%s_loading_img" style="display:none;">%s</span>',
+        $html .= sprintf(
+            '<span id="%s_loading_img" style="display:none;">%s</span>',
             $varname,
-            Horde_Themes_Image::tag('loading.gif', array('alt' => _("Loading..."))));
+            Horde_Themes_Image::tag('loading.gif', ['alt' => _("Loading...")])
+        );
 
-        $GLOBALS['injector']->getInstance('Horde_Core_Factory_Imple')->create('Turba_Ajax_Imple_TagAutoCompleter', array('id' => $varname));
+        $GLOBALS['injector']->getInstance('Horde_Core_Factory_Imple')->create('Turba_Ajax_Imple_TagAutoCompleter', ['id' => $varname]);
         return $html;
     }
 }

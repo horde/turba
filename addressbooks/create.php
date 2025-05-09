@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba addressbooks - create.
  *
@@ -33,9 +34,9 @@ if ($form->validate($vars)) {
     }
 }
 
-$page_output->header(array(
-    'title' => $form->getTitle()
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => $form->getTitle(),
+]);
+$notification->notify(['listeners' => 'status']);
 echo $form->renderActive($form->getRenderer(), $vars, Horde::url('addressbooks/create.php'), 'post');
 $page_output->footer();

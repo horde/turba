@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba directory driver implementation for an IMSP server.
  *
@@ -61,10 +62,10 @@ class Turba_Driver_Imsp extends Turba_Driver
      *
      * @var array
      */
-    protected $_capabilities = array(
+    protected $_capabilities = [
         'delete_all' => true,
-        'delete_addressbook' => true
-    );
+        'delete_addressbook' => true,
+    ];
 
     /**
      * Constructs a new Turba imsp driver object.
@@ -73,7 +74,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      * @param array $params  Hash containing additional configuration
      *                       parameters.
      */
-    public function __construct($name = '', array $params = array())
+    public function __construct($name = '', array $params = [])
     {
         parent::__construct($name, $params);
 
@@ -103,9 +104,9 @@ class Turba_Driver_Imsp extends Turba_Driver
      *
      * @return array  Hash containing the search results.
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
-        $query = $results = array();
+        $query = $results = [];
 
         if (!$this->_authenticated) {
             return $query;
@@ -144,10 +145,14 @@ class Turba_Driver_Imsp extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array())
-    {
-        $results = array();
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = []
+    ) {
+        $results = [];
 
         if (!$this->_authenticated) {
             return $results;
@@ -155,15 +160,14 @@ class Turba_Driver_Imsp extends Turba_Driver
 
         $ids = array_values($ids);
         $idCount = count($ids);
-        $IMSPGroups = $members = $tmembers = array();
+        $IMSPGroups = $members = $tmembers = [];
 
         for ($i = 0; $i < $idCount; ++$i) {
-            $result = array();
+            $result = [];
 
             try {
-                $temp = isset($IMSPGroups[$ids[$i]])
-                    ? $IMSPGroups[$ids[$i]]
-                    : $this->_imsp->getEntry($this->_bookName, $ids[$i]);
+                $temp = $IMSPGroups[$ids[$i]]
+                    ?? $this->_imsp->getEntry($this->_bookName, $ids[$i]);
             } catch (Horde_Imsp_Exception $e) {
                 continue;
             }
@@ -211,9 +215,10 @@ class Turba_Driver_Imsp extends Turba_Driver
                             }
                         }
                         if ($needMember) {
-                            $memberName = $this->_imsp->search
-                                ($this->_bookName,
-                                 array('email' => trim($emailList[$j])));
+                            $memberName = $this->_imsp->search(
+                                $this->_bookName,
+                                ['email' => trim($emailList[$j])]
+                            );
 
                             if (count($memberName)) {
                                 $members[] = $memberName[0];
@@ -233,7 +238,8 @@ class Turba_Driver_Imsp extends Turba_Driver
                 //$tmembers = $this->_checkMemberFormat($tmembers);
 
                 $temp['__members'] = serialize($this->_removeDuplicated(
-                                               array($members, $tmembers)));
+                    [$members, $tmembers]
+                ));
                 $temp['__type'] = 'Group';
                 $temp['email'] = null;
                 $result = $temp;
@@ -262,7 +268,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(), array $date_fields = array())
+    protected function _add(array $attributes, array $blob_fields = [], array $date_fields = [])
     {
         /* We need to map out Turba_Object_Groups back to IMSP groups before
          * writing out to the server. We need to array_values() it in
@@ -278,7 +284,7 @@ class Turba_Driver_Imsp extends Turba_Driver
             if (is_array($temp)) {
                 $members = array_values($temp);
             } else {
-                $members = array();
+                $members = [];
             }
 
             // This searches the current IMSP address book to see if
@@ -288,16 +294,20 @@ class Turba_Driver_Imsp extends Turba_Driver
             // address book for each group member (this is necessary for
             // those sources that may be used both in AND out of Horde).
             try {
-                $result = $this->_read('name', $members, null, array('email'));
+                $result = $this->_read('name', $members, null, ['email']);
                 $count = count($result);
                 for ($i = 0; $i < $count; ++$i) {
                     if (isset($result[$i]['email'])) {
-                        $contact = sprintf("%s<%s>\n", $members[$i],
-                                           $result[$i]['email']);
+                        $contact = sprintf(
+                            "%s<%s>\n",
+                            $members[$i],
+                            $result[$i]['email']
+                        );
                         $attributes['email'] .= $contact;
                     }
                 }
-            } catch (Turba_Exception $e) {}
+            } catch (Turba_Exception $e) {
+            }
         }
 
         unset($attributes['__type'], $attributes['fullname']);
@@ -335,14 +345,14 @@ class Turba_Driver_Imsp extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-     protected function _deleteAll()
-     {
-         try {
-             $this->_imsp->deleteAddressbook($this->_bookName);
-         } catch (Horde_Imsp_Exception $e) {
-             throw new Turba_Exception($e);
-         }
-     }
+    protected function _deleteAll()
+    {
+        try {
+            $this->_imsp->deleteAddressbook($this->_bookName);
+        } catch (Horde_Imsp_Exception $e) {
+            throw new Turba_Exception($e);
+        }
+    }
 
     /**
      * Saves the specified object to the IMSP server.
@@ -354,7 +364,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     protected function _save($object)
     {
-        $object_keys = $this->toDriverKeys(array('__key' => $object->getValue('__key')));
+        $object_keys = $this->toDriverKeys(['__key' => $object->getValue('__key')]);
         $object_id = reset($object_keys);
         $object_key = key($object_keys);
         $attributes = $this->toDriverKeys($object->getAttributes());
@@ -410,7 +420,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     protected function _doSearch($criteria, $glue)
     {
-        $results = array();
+        $results = [];
         foreach ($criteria as $vals) {
             if (!empty($vals['OR'])) {
                 $results[] = $this->_doSearch($vals['OR'], 'OR');
@@ -428,7 +438,7 @@ class Turba_Driver_Imsp extends Turba_Driver
                         } elseif (!empty($test['AND'])) {
                             $results[] = $this->_doSearch($test['AND'], 'AND');
                         } else {
-                            $results[] = $this->_doSearch(array($test), $glue);
+                            $results[] = $this->_doSearch([$test], $glue);
                         }
                     }
                 }
@@ -447,36 +457,36 @@ class Turba_Driver_Imsp extends Turba_Driver
      *
      * @return array  Array containing a list of names that match the search.
      */
-    function _sendSearch($criteria)
+    public function _sendSearch($criteria)
     {
         $names = '';
-        $imspSearch = array();
+        $imspSearch = [];
         $searchkey = $criteria['field'];
         $searchval = $criteria['test'];
         $searchop = $criteria['op'];
         $hasName = false;
         $this->_noGroups = false;
         $cache = $GLOBALS['injector']->getInstance('Horde_Cache');
-        $key = implode(".", array_merge($criteria, array($this->_bookName)));
+        $key = implode(".", array_merge($criteria, [$this->_bookName]));
 
         /* Now make sure we aren't searching on a dynamically created
          * field. */
         switch ($searchkey) {
-        case 'fullname':
-            if (!$hasName) {
-                $searchkey = 'name';
-                $hasName = true;
-            } else {
-                $searchkey = '';
-            }
-            break;
+            case 'fullname':
+                if (!$hasName) {
+                    $searchkey = 'name';
+                    $hasName = true;
+                } else {
+                    $searchkey = '';
+                }
+                break;
 
-        case '__owner':
-            if (!$this->params['contact_ownership']) {
-                $searchkey = '';
-                $hasName = true;
-            }
-            break;
+            case '__owner':
+                if (!$this->params['contact_ownership']) {
+                    $searchkey = '';
+                    $hasName = true;
+                }
+                break;
         }
 
         /* Are we searching for only Turba_Object_Groups or Turba_Objects?
@@ -484,21 +494,21 @@ class Turba_Driver_Imsp extends Turba_Driver
          * links work correctly in Turba. */
         if ($searchkey == '__type') {
             switch ($searchval) {
-            case 'Group':
-                $searchkey = $this->_groupField;
-                $searchval = $this->_groupValue;
-                break;
+                case 'Group':
+                    $searchkey = $this->_groupField;
+                    $searchval = $this->_groupValue;
+                    break;
 
-            case 'Object':
-                if (!$hasName) {
-                    $searchkey = 'name';
-                    $searchval = '';
-                    $hasName = true;
-                } else {
-                    $searchkey = '';
-                }
-                $this->_noGroups = true;
-                break;
+                case 'Object':
+                    if (!$hasName) {
+                        $searchkey = 'name';
+                        $searchval = '';
+                        $hasName = true;
+                    } else {
+                        $searchkey = '';
+                    }
+                    $this->_noGroups = true;
+                    break;
             }
         }
 
@@ -550,7 +560,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     protected function _getDuplicated($names)
     {
-        $matched = $results = array();
+        $matched = $results = [];
 
         /* If there is only 1 array, simply return it. */
         if (count($names) < 2) {
@@ -582,7 +592,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     protected function _removeDuplicated($names)
     {
-        $unames = array();
+        $unames = [];
         for ($i = 0; $i < count($names); ++$i) {
             if (is_array($names[$i])) {
                 $unames = array_merge($unames, $names[$i]);
@@ -684,7 +694,7 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     protected function _getContactOwner()
     {
-       return $this->params['name'];
+        return $this->params['name'];
     }
 
     /**

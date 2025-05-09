@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Merges one contact into another.
  *

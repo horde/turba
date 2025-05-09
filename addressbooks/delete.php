@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba addressbooks - delete.
  *
@@ -50,9 +51,9 @@ if ($form->validate(new Horde_Variables($_POST))) {
     Horde::url('', true)->redirect();
 }
 
-$page_output->header(array(
-    'title' => $form->getTitle()
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => $form->getTitle(),
+]);
+$notification->notify(['listeners' => 'status']);
 echo $form->renderActive($form->getRenderer(), $vars, Horde::url('addressbooks/delete.php'), 'post');
 $page_output->footer();

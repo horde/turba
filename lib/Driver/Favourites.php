@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Read-only Turba directory driver implementation for favourite
  * recipients. Relies on the contacts/favouriteRecipients API method.
@@ -23,17 +24,17 @@ class Turba_Driver_Favourites extends Turba_Driver
      *
      * @return boolean  True if the user has permission, otherwise false.
      */
-     public function hasPermission($perm)
-     {
-         switch ($perm) {
-         case Horde_Perms::DELETE:
-         case Horde_Perms::EDIT:
-             return false;
+    public function hasPermission($perm)
+    {
+        switch ($perm) {
+            case Horde_Perms::DELETE:
+            case Horde_Perms::EDIT:
+                return false;
 
-         default:
-             return true;
-         }
-     }
+            default:
+                return true;
+        }
+    }
 
     /**
      * Always returns true because the driver is read-only and there is
@@ -60,9 +61,9 @@ class Turba_Driver_Favourites extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
-        $results = array();
+        $results = [];
 
         foreach ($this->_getAddressBook() as $key => $contact) {
             if (!count($criteria)) {
@@ -116,11 +117,11 @@ class Turba_Driver_Favourites extends Turba_Driver
             return false;
         }
         switch ($val['op']) {
-        case '=':
-            return (string)$contact[$val['field']] == (string)$val['test'];
-        case 'LIKE':
-            return empty($val['test']) ||
-                stristr($contact[$val['field']], $val['test']) !== false;
+            case '=':
+                return (string) $contact[$val['field']] == (string) $val['test'];
+            case 'LIKE':
+                return empty($val['test']) ||
+                    stristr($contact[$val['field']], $val['test']) !== false;
         }
         return false;
     }
@@ -139,15 +140,19 @@ class Turba_Driver_Favourites extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         $book = $this->_getAddressBook();
 
-        $results = array();
+        $results = [];
         if (!is_array($ids)) {
-            $ids = array($ids);
+            $ids = [$ids];
         }
 
         foreach ($ids as $id) {
@@ -173,21 +178,21 @@ class Turba_Driver_Favourites extends Turba_Driver
         }
 
         try {
-            $addresses = $registry->call('contacts/favouriteRecipients', array($this->_params['limit']));
+            $addresses = $registry->call('contacts/favouriteRecipients', [$this->_params['limit']]);
         } catch (Horde_Exception $e) {
             if ($e->getCode() == Horde_Registry::AUTH_FAILURE ||
                 $e->getCode() == Horde_Registry::NOT_ACTIVE ||
                 $e->getCode() == Horde_Registry::PERMISSION_DENIED) {
-                return array();
+                return [];
             }
             throw new Turba_Exception($e);
         } catch (Exception $e) {
             throw new Turba_Exception($e);
         }
 
-        $addressbook = array();
+        $addressbook = [];
         foreach ($addresses as $address) {
-            $addressbook[$address] = array('email' => $address);
+            $addressbook[$address] = ['email' => $address];
         }
 
         return $addressbook;

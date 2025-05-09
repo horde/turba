@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Horde_Form for creating address books.
  *
@@ -22,9 +23,9 @@ class Turba_Form_CreateAddressBook extends Horde_Form
         parent::__construct($vars, _("Create Address Book"));
 
         $this->addVariable(_("Name"), 'name', 'text', true);
-        $this->addVariable(_("Description"), 'description', 'longtext', false, false, null, array(4, 60));
+        $this->addVariable(_("Description"), 'description', 'longtext', false, false, null, [4, 60]);
 
-        $this->setButtons(array(_("Create")));
+        $this->setButtons([_("Create")]);
     }
 
     /**
@@ -38,12 +39,14 @@ class Turba_Form_CreateAddressBook extends Horde_Form
         $driver = $GLOBALS['injector']
             ->getInstance('Turba_Factory_Driver')
             ->createFromConfig($cfgSources[$GLOBALS['conf']['shares']['source']]);
-        $params = array(
-            'params' => array('source' => $GLOBALS['conf']['shares']['source']),
+        $params = [
+            'params' => ['source' => $GLOBALS['conf']['shares']['source']],
             'name' => $this->_vars->get('name'),
             'desc' => $this->_vars->get('description'),
+        ];
+        return $driver->createShare(
+            strval(new Horde_Support_Randomid()),
+            $params
         );
-        return $driver->createShare(strval(new Horde_Support_Randomid()),
-                                    $params);
     }
 }

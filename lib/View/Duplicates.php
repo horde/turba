@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_View_Duplicates class provides an interface for displaying and
  * resolving duplicate contacts.
@@ -54,9 +55,12 @@ class Turba_View_Duplicates
      * @param string $type          A field name.
      * @param string $duplicate     A duplicate value.
      */
-    public function __construct(array $duplicates, Turba_Driver $driver,
-                                $type = null, $duplicate = null)
-    {
+    public function __construct(
+        array $duplicates,
+        Turba_Driver $driver,
+        $type = null,
+        $duplicate = null
+    ) {
         $this->_duplicates = $duplicates;
         $this->_driver     = $driver;
         $this->_type       = $type;
@@ -68,7 +72,7 @@ class Turba_View_Duplicates
      */
     public function display()
     {
-        $view = new Horde_View(array('templatePath' => TURBA_TEMPLATES . '/search/duplicate'));
+        $view = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/search/duplicate']);
         new Horde_View_Helper_Text($view);
 
         $hasDuplicate = $this->_type && $this->_duplicate &&
@@ -87,7 +91,7 @@ class Turba_View_Duplicates
             while ($contact = $duplicate->next()) {
                 $contact->lastModification();
             }
-            $duplicate->sort(array(array('field' => '__modified', 'ascending' => false)));
+            $duplicate->sort([['field' => '__modified', 'ascending' => false]]);
             $view->mergeTarget = $duplicate->reset()->getValue('__key');
             while ($contact = $duplicate->next()) {
                 $view->source = $contact->getSource();
@@ -111,11 +115,11 @@ class Turba_View_Duplicates
         }
 
         $view->duplicates = $this->_duplicates;
-        $view->hasDuplicate = (bool)$hasDuplicate;
+        $view->hasDuplicate = (bool) $hasDuplicate;
         $view->attributes = $GLOBALS['attributes'];
         $view->link = Horde::url('search.php')
-            ->add(array('source' => $this->_driver->getName(),
-                        'search_mode' => 'duplicate'));
+            ->add(['source' => $this->_driver->getName(),
+                'search_mode' => 'duplicate']);
 
         echo $view->render('list');
     }

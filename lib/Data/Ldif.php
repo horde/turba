@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Horde_Data implementation for LDAP Data Interchange Format (LDIF).
  *
@@ -21,7 +22,7 @@ class Turba_Data_Ldif extends Horde_Data_Base
      *
      * @var array
      */
-    protected $_mozillaAttr = array(
+    protected $_mozillaAttr = [
         'cn', 'givenName', 'sn', 'mail', 'mozillaSecondEmail', 'mozillaNickname',
         'homeStreet', 'mozillaHomeStreet2', 'mozillaHomeLocalityName',
         'mozillaHomeState', 'mozillaHomePostalCode',
@@ -29,15 +30,15 @@ class Turba_Data_Ldif extends Horde_Data_Base
         'mozillaWorkStreet2', 'l', 'st', 'postalCode',
         'c', 'homePhone', 'telephoneNumber', 'mobile',
         'fax', 'title', 'company', 'description', 'mozillaWorkUrl',
-        'department', 'mozillaNickname'
-    );
+        'department', 'mozillaNickname',
+    ];
 
     /**
      * Useful Turba address book attribute names.
      *
      * @var array
      */
-    protected $_turbaAttr = array(
+    protected $_turbaAttr = [
         'name', 'firstname', 'lastname', 'email', 'emails', 'alias',
         'homeAddress', 'homeStreet', 'homeCity',
         'homeProvince', 'homePostalCode', 'homeCountry',
@@ -45,15 +46,15 @@ class Turba_Data_Ldif extends Horde_Data_Base
         'workPostalCode', 'workCountry',
         'homePhone', 'workPhone', 'cellPhone',
         'fax', 'title', 'company', 'notes', 'website',
-        'department', 'nickname'
-    );
+        'department', 'nickname',
+    ];
 
     /**
      * Turba address book attribute names and the corresponding Mozilla name.
      *
      * @var array
      */
-    protected $_turbaMozillaMap = array(
+    protected $_turbaMozillaMap = [
         'name' => 'cn',
         'firstname' => 'givenName',
         'lastname' => 'sn',
@@ -82,12 +83,12 @@ class Turba_Data_Ldif extends Horde_Data_Base
         'workCountry' => 'c',
         'website' => 'mozillaWorkUrl',
         'department' => 'department',
-        'nickname' => 'mozillaNickname'
-    );
+        'nickname' => 'mozillaNickname',
+    ];
 
     public function importData($contents, $header = false)
     {
-        $data = array();
+        $data = [];
         $records = preg_split('/(\r?\n){2}/', $contents);
         foreach ($records as $record) {
             if (trim($record) == '') {
@@ -96,7 +97,7 @@ class Turba_Data_Ldif extends Horde_Data_Base
             }
             /* one key:value pair per line */
             $lines = preg_split('/\r?\n/', $record);
-            $hash = array();
+            $hash = [];
             foreach ($lines as $line) {
                 // [0] = key, [1] = delimiter, [2] = value
                 $res = preg_split('/(:[:<]?) */', $line, 2, PREG_SPLIT_DELIM_CAPTURE);
@@ -192,77 +193,77 @@ class Turba_Data_Ldif extends Horde_Data_Base
      *                data set after the final step.
      * @throws Horde_Data_Exception
      */
-    public function nextStep($action, array $param = array())
+    public function nextStep($action, array $param = [])
     {
         switch ($action) {
-        case Horde_Data::IMPORT_FILE:
-            parent::nextStep($action, $param);
+            case Horde_Data::IMPORT_FILE:
+                parent::nextStep($action, $param);
 
-            $f_data = $this->importFile($_FILES['import_file']['tmp_name']);
+                $f_data = $this->importFile($_FILES['import_file']['tmp_name']);
 
-            $data = array();
-            foreach ($f_data as $record) {
-                $turbaHash = array();
-                foreach ($this->_turbaAttr as $value) {
-                    switch ($value) {
-                    case 'homeAddress':
-                        // These are the keys we're interested in.
-                        $keys = array('homeStreet', 'mozillaHomeStreet2',
-                                      'mozillaHomeLocalityName', 'mozillaHomeState',
-                                      'mozillaHomePostalCode', 'mozillaHomeCountryName');
+                $data = [];
+                foreach ($f_data as $record) {
+                    $turbaHash = [];
+                    foreach ($this->_turbaAttr as $value) {
+                        switch ($value) {
+                            case 'homeAddress':
+                                // These are the keys we're interested in.
+                                $keys = ['homeStreet', 'mozillaHomeStreet2',
+                                    'mozillaHomeLocalityName', 'mozillaHomeState',
+                                    'mozillaHomePostalCode', 'mozillaHomeCountryName'];
 
-                        // Grab all of them that exist in $record.
-                        $values = array_intersect_key($record, array_flip($keys));
+                                // Grab all of them that exist in $record.
+                                $values = array_intersect_key($record, array_flip($keys));
 
-                        // Special handling for State if both State
-                        // and Locality Name are set.
-                        if (isset($values['mozillaHomeLocalityName'])
-                            && isset($values['mozillaHomeState'])) {
-                            $values['mozillaHomeLocalityName'] .= ', ' . $values['mozillaHomeState'];
-                            unset($values['mozillaHomeState']);
+                                // Special handling for State if both State
+                                // and Locality Name are set.
+                                if (isset($values['mozillaHomeLocalityName'])
+                                    && isset($values['mozillaHomeState'])) {
+                                    $values['mozillaHomeLocalityName'] .= ', ' . $values['mozillaHomeState'];
+                                    unset($values['mozillaHomeState']);
+                                }
+
+                                if ($values) {
+                                    $turbaHash[$value] = implode("\n", $values);
+                                }
+                                break;
+
+                            case 'workAddress':
+                                // These are the keys we're interested in.
+                                $keys = ['street', 'mozillaWorkStreet2', 'l',
+                                    'st', 'postalCode', 'c'];
+
+                                // Grab all of them that exist in $record.
+                                $values = array_intersect_key($record, array_flip($keys));
+
+                                // Special handling for "st" if both "st" and
+                                // "l" are set.
+                                if (isset($values['l']) && isset($values['st'])) {
+                                    $values['l'] .= ', ' . $values['st'];
+                                    unset($values['st']);
+                                }
+
+                                if ($values) {
+                                    $turbaHash[$value] = implode("\n", $values);
+                                }
+                                break;
+
+                            default:
+                                if (isset($record[$this->_turbaMozillaMap[$value]])) {
+                                    $turbaHash[$value] = $record[$this->_turbaMozillaMap[$value]];
+                                }
+                                break;
                         }
-
-                        if ($values) {
-                            $turbaHash[$value] = implode("\n", $values);
-                        }
-                        break;
-
-                    case 'workAddress':
-                        // These are the keys we're interested in.
-                        $keys = array('street', 'mozillaWorkStreet2', 'l',
-                                      'st', 'postalCode', 'c');
-
-                        // Grab all of them that exist in $record.
-                        $values = array_intersect_key($record, array_flip($keys));
-
-                        // Special handling for "st" if both "st" and
-                        // "l" are set.
-                        if (isset($values['l']) && isset($values['st'])) {
-                            $values['l'] .= ', ' . $values['st'];
-                            unset($values['st']);
-                        }
-
-                        if ($values) {
-                            $turbaHash[$value] = implode("\n", $values);
-                        }
-                        break;
-
-                    default:
-                        if (isset($record[$this->_turbaMozillaMap[$value]])) {
-                            $turbaHash[$value] = $record[$this->_turbaMozillaMap[$value]];
-                        }
-                        break;
                     }
+
+                    $data[] = $turbaHash;
                 }
 
-                $data[] = $turbaHash;
-            }
+                $this->storage->set('data', null);
+                return $data;
 
-            $this->storage->set('data', null);
-            return $data;
-
-        default:
-            return parent::nextStep($action, $param);
+            default:
+                return parent::nextStep($action, $param);
         }
     }
 
@@ -292,7 +293,7 @@ class Turba_Data_Ldif extends Horde_Data_Base
             return false;
         }
         for ($i = 0; $i < strlen($str); ++$i) {
-            if (ord($str[$i]) > 127 || $str[$i] == NULL || $str[$i] == "\n" ||
+            if (ord($str[$i]) > 127 || $str[$i] == null || $str[$i] == "\n" ||
                 $str[$i] == "\r") {
                 return false;
             }

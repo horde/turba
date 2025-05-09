@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -32,10 +33,11 @@ class Turba_Object_Group extends Turba_Object
      * @param array $options        Hash of options for this object. @since
      *                              Turba 4.2
      */
-    public function __construct(Turba_Driver $driver,
-                                array $attributes = array(),
-                                array $options = array())
-    {
+    public function __construct(
+        Turba_Driver $driver,
+        array $attributes = [],
+        array $options = []
+    ) {
         parent::__construct($driver, $attributes, $options);
         $this->attributes['__type'] = 'Group';
     }
@@ -57,10 +59,10 @@ class Turba_Object_Group extends Turba_Object
      */
     public function url($view = null, $full = false)
     {
-        return Horde::url('browse.php', $full)->add(array(
+        return Horde::url('browse.php', $full)->add([
             'source' => $this->getSource(),
-            'key' => $this->getValue('__key')
-        ));
+            'key' => $this->getValue('__key'),
+        ]);
     }
 
     /**
@@ -95,7 +97,7 @@ class Turba_Object_Group extends Turba_Object
         // Explode members.
         $members = @unserialize($this->attributes['__members']);
         if (!is_array($members)) {
-            $members = array();
+            $members = [];
         }
 
         // If the contact is from a different source, store its source
@@ -162,7 +164,7 @@ class Turba_Object_Group extends Turba_Object
 
         $children = unserialize($this->attributes['__members']);
         if (!is_array($children)) {
-            $children = array();
+            $children = [];
         }
 
         reset($children);
@@ -180,7 +182,7 @@ class Turba_Object_Group extends Turba_Object
                     continue;
                 }
             } else {
-                list($sourceId, $contactId) = explode(':', $member, 2);
+                [$sourceId, $contactId] = explode(':', $member, 2);
                 try {
                     $driver = $GLOBALS['injector']->getInstance('Turba_Factory_Driver')->create($sourceId);
                 } catch (Turba_Exception $e) {
@@ -234,9 +236,10 @@ class Turba_Object_Group extends Turba_Object
      * @throws Turba_Exception
      */
     public static function createGroup(
-        $source, $members, array $opts = array()
-    )
-    {
+        $source,
+        $members,
+        array $opts = []
+    ) {
         global $injector;
 
         /* Throws Turba_Exception */
@@ -251,14 +254,15 @@ class Turba_Object_Group extends Turba_Object
                 throw new Turba_Exception($error);
             }
 
-            $newGroup = array_merge($opts['attr'], array(
+            $newGroup = array_merge($opts['attr'], [
                 '__owner' => $driver->getContactOwner(),
-                '__type' => 'Group'
-            ));
+                '__type' => 'Group',
+            ]);
 
             try {
                 $group = $driver->getObject($driver->add($newGroup));
-            } catch (Turba_Exception $e) {}
+            } catch (Turba_Exception $e) {
+            }
         } else {
             $group = null;
         }
@@ -267,8 +271,8 @@ class Turba_Object_Group extends Turba_Object
             throw new Turba_Exception(_("Could not create or add to group."));
         }
 
-        $out = new stdClass;
-        $out->errors = array();
+        $out = new stdClass();
+        $out->errors = [];
         $out->success = 0;
         $out->group = $group;
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Defines the AJAX interface for Turba.
  *
@@ -21,9 +22,9 @@ class Turba_Ajax_Application extends Horde_Core_Ajax_Application
         global $registry;
 
         switch ($registry->getView()) {
-        case $registry::VIEW_SMARTMOBILE:
-            $this->addHandler('Turba_Ajax_Application_Handler_Smartmobile');
-            break;
+            case $registry::VIEW_SMARTMOBILE:
+                $this->addHandler('Turba_Ajax_Application_Handler_Smartmobile');
+                break;
         }
 
         $this->addHandler('Turba_Ajax_Application_Handler_Minisearch');

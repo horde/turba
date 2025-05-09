@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba view.php.
  *

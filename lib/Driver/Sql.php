@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba directory driver implementation for the Horde_Db database abstraction
  * layer.
@@ -21,17 +22,17 @@ class Turba_Driver_Sql extends Turba_Driver
      *
      * @var array
      */
-    protected $_capabilities = array(
+    protected $_capabilities = [
         'delete_addressbook' => true,
-        'delete_all' => true
-    );
+        'delete_all' => true,
+    ];
 
     /**
      * count() cache.
      *
      * @var array
      */
-    protected $_countCache = array();
+    protected $_countCache = [];
 
     /**
      * Handle for the current database connection.
@@ -49,7 +50,7 @@ class Turba_Driver_Sql extends Turba_Driver
      * 'db' - (Horde_Db_Adapter) A DB Adapter object.
      * </pre>
      */
-    public function __construct($name = '', array $params = array())
+    public function __construct($name = '', array $params = [])
     {
         if (empty($params['db'])) {
             throw new InvalidArgumentException('Missing required Horde_Db_Adapter object');
@@ -72,7 +73,7 @@ class Turba_Driver_Sql extends Turba_Driver
             /* Build up the full query. */
             $query = 'SELECT COUNT(*) FROM ' . $this->_params['table'] .
                      ' WHERE ' . $this->toDriver('__owner') . ' = ?';
-            $values = array($test);
+            $values = [$test];
 
             /* Run query. */
             try {
@@ -99,9 +100,9 @@ class Turba_Driver_Sql extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
-        return $this->_internalSearch($criteria, $fields, $blobFields, array(), $count_only);
+        return $this->_internalSearch($criteria, $fields, $blobFields, [], $count_only);
     }
 
     /**
@@ -122,11 +123,11 @@ class Turba_Driver_Sql extends Turba_Driver
      *                              count of matching entries.
      * @throws Turba_Exception
      */
-    protected function _internalSearch(array $criteria, array $fields, $blobFields = array(), $appendWhere = array(), $count_only = false)
+    protected function _internalSearch(array $criteria, array $fields, $blobFields = [], $appendWhere = [], $count_only = false)
     {
         /* Build the WHERE clause. */
         $where = '';
-        $values = array();
+        $values = [];
 
         if (count($criteria) || !empty($this->_params['filter'])) {
             foreach ($criteria as $key => $vals) {
@@ -176,12 +177,12 @@ class Turba_Driver_Sql extends Turba_Driver
         }
     }
 
-    protected function _parseRead($blobFields, $result, $dateFields = array())
+    protected function _parseRead($blobFields, $result, $dateFields = [])
     {
-        $results = array();
+        $results = [];
 
         foreach ($result as $row) {
-            $entry = array();
+            $entry = [];
 
             foreach ($row as $field => $val) {
                 if (isset($blobFields[$field])) {
@@ -275,11 +276,11 @@ class Turba_Driver_Sql extends Turba_Driver
     public function searchDuplicates()
     {
         $owner = $this->getContactOwner();
-        $fields = array();
+        $fields = [];
         if (is_array($this->map['name'])) {
             if (in_array('lastname', $this->map['name']['fields']) &&
                 isset($this->map['lastname'])) {
-                $field = array($this->map['lastname']);
+                $field = [$this->map['lastname']];
                 if (in_array('firstname', $this->map['name']['fields']) &&
                     isset($this->map['firstname'])) {
                     $field[] = $this->map['firstname'];
@@ -292,7 +293,8 @@ class Turba_Driver_Sql extends Turba_Driver
         if (isset($this->map['email'])) {
             $fields[] = $this->map['email'];
         }
-        $nameFormat = $GLOBALS['prefs']->getValue('name_format');;
+        $nameFormat = $GLOBALS['prefs']->getValue('name_format');
+        ;
         if ($nameFormat != 'first_last' && $nameFormat != 'last_first') {
             $nameFormat = 'first_last';
         }
@@ -301,27 +303,33 @@ class Turba_Driver_Sql extends Turba_Driver
         $joins = $this->_buildJoin($fields);
         $where = $this->_buildWhere($fields);
 
-        $duplicates = array();
+        $duplicates = [];
         for ($i = 0; $i < count($joins); $i++) {
             /* Build up the full query. */
-            $values = array();
-            $query = sprintf('SELECT DISTINCT a1.%s, %s FROM %s a1 JOIN %s a2 ON %s AND a1.%s <> a2.%s WHERE',
-                             $this->map['__key'],
-                             $order[$i],
-                             $this->_params['table'],
-                             $this->_params['table'],
-                             $joins[$i],
-                             $this->map['__key'],
-                             $this->map['__key']);
+            $values = [];
+            $query = sprintf(
+                'SELECT DISTINCT a1.%s, %s FROM %s a1 JOIN %s a2 ON %s AND a1.%s <> a2.%s WHERE',
+                $this->map['__key'],
+                $order[$i],
+                $this->_params['table'],
+                $this->_params['table'],
+                $joins[$i],
+                $this->map['__key'],
+                $this->map['__key']
+            );
             if (isset($this->map['__owner'])) {
-                $query .= sprintf(' a1.%s = ? AND a2.%s = ? AND',
-                                 $this->map['__owner'],
-                                 $this->map['__owner']);
-                $values = array($owner, $owner);
+                $query .= sprintf(
+                    ' a1.%s = ? AND a2.%s = ? AND',
+                    $this->map['__owner'],
+                    $this->map['__owner']
+                );
+                $values = [$owner, $owner];
             }
-            $query .= sprintf(' %s ORDER BY %s',
-                              $where[$i],
-                              $order[$i]);
+            $query .= sprintf(
+                ' %s ORDER BY %s',
+                $where[$i],
+                $order[$i]
+            );
 
             /* Run query. */
             try {
@@ -334,7 +342,7 @@ class Turba_Driver_Sql extends Turba_Driver
                 ? 'name'
                 : array_search($fields[$i], $this->map);
 
-            $contacts = array();
+            $contacts = [];
             foreach ($ids as $id) {
                 $contact = $this->getObject($id);
                 $value = $contact->getValue($field);
@@ -372,15 +380,20 @@ class Turba_Driver_Sql extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(), array $dateFields = array())
-    {
-        $values = array();
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
+        $values = [];
 
         $in = '';
         if (is_array($ids)) {
             if (!count($ids)) {
-                return array();
+                return [];
             }
 
             foreach ($ids as $id) {
@@ -419,10 +432,12 @@ class Turba_Driver_Sql extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(),
-                            array $date_fields = array())
-    {
-        list($fields, $values) = $this->_prepareWrite(
+    protected function _add(
+        array $attributes,
+        array $blob_fields = [],
+        array $date_fields = []
+    ) {
+        [$fields, $values] = $this->_prepareWrite(
             $attributes,
             $blob_fields,
             $date_fields
@@ -440,7 +455,7 @@ class Turba_Driver_Sql extends Turba_Driver
 
     protected function _prepareWrite($attributes, $blob_fields, $date_fields)
     {
-        $fields = $values = array();
+        $fields = $values = [];
 
         foreach ($attributes as $field => $value) {
             $fields[] = $field;
@@ -455,7 +470,7 @@ class Turba_Driver_Sql extends Turba_Driver
             }
         }
 
-        return array($fields, $values);
+        return [$fields, $values];
     }
 
     /**
@@ -475,7 +490,7 @@ class Turba_Driver_Sql extends Turba_Driver
     {
         $query = 'DELETE FROM ' . $this->_params['table'] .
                  ' WHERE ' . $object_key . ' = ?';
-        $values = array($object_id);
+        $values = [$object_id];
 
         try {
             $this->_db->delete($query, $values);
@@ -500,8 +515,8 @@ class Turba_Driver_Sql extends Turba_Driver
 
         /* Get owner id */
         $values = empty($sourceName)
-            ? array($GLOBALS['registry']->getAuth())
-            : array($sourceName);
+            ? [$GLOBALS['registry']->getAuth()]
+            : [$sourceName];
 
         if (empty($this->map['__owner'])) {
             throw new Turba_Exception_NotSupported('Unable to find __owner field. Cannot delete.');
@@ -509,8 +524,12 @@ class Turba_Driver_Sql extends Turba_Driver
         $owner_field = $this->map['__owner'];
 
         /* Need a list of UIDs so we can notify History */
-        $query = sprintf('SELECT %s FROM %s WHERE %s = ?',
-            $this->map['__uid'], $this->_params['table'], $owner_field);
+        $query = sprintf(
+            'SELECT %s FROM %s WHERE %s = ?',
+            $this->map['__uid'],
+            $this->_params['table'],
+            $owner_field
+        );
 
         try {
             $ids = $this->_db->selectValues($query, $values);
@@ -539,14 +558,14 @@ class Turba_Driver_Sql extends Turba_Driver
      */
     protected function _save(Turba_Object $object)
     {
-        $object_keys = $this->toDriverKeys(array('__key' => $object->getValue('__key')));
+        $object_keys = $this->toDriverKeys(['__key' => $object->getValue('__key')]);
         $object_id = reset($object_keys);
         $object_key = key($object_keys);
         $attributes = $this->toDriverKeys($object->getAttributes());
         $blob_fields = $this->toDriverKeys($this->getBlobs());
         $date_fields = $this->toDriverKeys($this->getDateFields());
         unset($attributes[$object_key]);
-        list($fields, $values) = $this->_prepareWrite(
+        [$fields, $values] = $this->_prepareWrite(
             $attributes,
             $blob_fields,
             $date_fields
@@ -556,7 +575,7 @@ class Turba_Driver_Sql extends Turba_Driver
             $this->_db->updateBlob(
                 $this->_params['table'],
                 array_combine($fields, $values),
-                array($object_key . ' = ?', array($object_id))
+                [$object_key . ' = ?', [$object_id]]
             );
         } catch (Horde_Db_Exception $e) {
             throw new Turba_Exception(_("Server error when saving data."));
@@ -590,7 +609,7 @@ class Turba_Driver_Sql extends Turba_Driver
     protected function _buildSearchQuery($glue, array $criteria)
     {
         $clause = '';
-        $values = array();
+        $values = [];
 
         foreach ($criteria as $key => $vals) {
             if (!empty($vals['OR']) || !empty($vals['AND'])) {
@@ -606,7 +625,7 @@ class Turba_Driver_Sql extends Turba_Driver
                         $clause .= ' ' . $glue . ' ';
                     }
                     $rhs = $this->_convertToDriver($vals['test']);
-                    $binds = $this->_db->buildClause($vals['field'], $vals['op'], $rhs, true, array('begin' => !empty($vals['begin'])));
+                    $binds = $this->_db->buildClause($vals['field'], $vals['op'], $rhs, true, ['begin' => !empty($vals['begin'])]);
                     if (is_array($binds)) {
                         $clause .= $binds[0];
                         $values = array_merge($values, $binds[1]);
@@ -630,7 +649,7 @@ class Turba_Driver_Sql extends Turba_Driver
                             if ($rhs == '' && $test['op'] == '=') {
                                 $clause .= '(' . $this->_db->buildClause($test['field'], '=', $rhs) . ' OR ' . $test['field'] . ' IS NULL)';
                             } else {
-                                $binds = $this->_db->buildClause($test['field'], $test['op'], $rhs, true, array('begin' => !empty($test['begin'])));
+                                $binds = $this->_db->buildClause($test['field'], $test['op'], $rhs, true, ['begin' => !empty($test['begin'])]);
                                 if (is_array($binds)) {
                                     $clause .= $binds[0];
                                     $values = array_merge($values, $binds[1]);
@@ -644,7 +663,7 @@ class Turba_Driver_Sql extends Turba_Driver
             }
         }
 
-        return array($clause, $values);
+        return [$clause, $values];
     }
 
     /**
@@ -658,7 +677,7 @@ class Turba_Driver_Sql extends Turba_Driver
      */
     public function toTurbaKeys(array $entry)
     {
-        $new_entry = array();
+        $new_entry = [];
         foreach ($this->map as $key => $val) {
             $key = preg_replace('/.*\.(.*)/', '$1', $key);
             if (!is_array($val)) {
@@ -727,52 +746,53 @@ class Turba_Driver_Sql extends Turba_Driver
     {
         $t_object = $this->toDriver($field);
         $criteria = $this->makesearch(
-            array('__owner' => $this->getContactOwner()),
+            ['__owner' => $this->getContactOwner()],
             'AND',
-            array($this->toDriver('__owner') => true),
-            false);
+            [$this->toDriver('__owner') => true],
+            false
+        );
 
         // Limit to entries that actually contain a birthday and that are in the
         // date range we are looking for.
-        $criteria['AND'][] = array(
+        $criteria['AND'][] = [
             'field' => $t_object,
             'op' => '<>',
-            'test' => ''
-        );
-        $criteria['AND'][] = array(
+            'test' => '',
+        ];
+        $criteria['AND'][] = [
             'field' => $t_object,
             'op' => '<>',
-            'test' => '0000-00-00'
-        );
+            'test' => '0000-00-00',
+        ];
 
         if ($start->year == $end->year) {
             $start = sprintf('%02d-%02d', $start->month, $start->mday);
             $end = sprintf('%02d-%02d', $end->month, $end->mday);
-            $where = array('sql' => $t_object . ' IS NOT NULL AND SUBSTR('
+            $where = ['sql' => $t_object . ' IS NOT NULL AND SUBSTR('
                            . $t_object . ', 6, 5) BETWEEN ? AND ?',
-                           'params' => array($start, $end));
+                'params' => [$start, $end]];
         } else {
-            $months = array();
+            $months = [];
             $diff = ($end->month + 12) - $start->month;
-            $newDate = new Horde_Date(array(
+            $newDate = new Horde_Date([
                 'month' => $start->month,
                 'mday' => $start->mday,
-                'year' => $start->year
-            ));
+                'year' => $start->year,
+            ]);
             for ($i = 0; $i <= $diff; ++$i) {
                 $months[] = sprintf('%02d', $newDate->month++);
             }
-            $where = array('sql' => $t_object . ' IS NOT NULL AND SUBSTR('
+            $where = ['sql' => $t_object . ' IS NOT NULL AND SUBSTR('
                            . $t_object . ', 6, 2) IN ('
                            . str_repeat('?,', count($months) - 1) . '?)',
-                           'params' => $months);
+                'params' => $months];
         }
 
-        $fields_pre = array(
-            '__key', '__type', '__owner', 'name', 'birthday', 'anniversary', 'photo'
-        );
+        $fields_pre = [
+            '__key', '__type', '__owner', 'name', 'birthday', 'anniversary', 'photo',
+        ];
 
-        $fields = array();
+        $fields = [];
         foreach ($fields_pre as $field) {
             $result = $this->toDriver($field);
             if (is_array($result)) {
@@ -791,7 +811,7 @@ class Turba_Driver_Sql extends Turba_Driver
             $this->_internalSearch(
                 $criteria,
                 $fields,
-                array($this->toDriver('photo') => true),
+                [$this->toDriver('photo') => true],
                 $where
             )
         );

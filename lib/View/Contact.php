@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_View_Contact:: class provides an API for viewing events.
  *
@@ -50,7 +51,8 @@ class Turba_View_Contact
                 'object[__' . $what . ']',
                 'text',
                 false,
-                false);
+                false
+            );
             $v->disable();
             $vars->set('object[__' . $what . ']', $when);
         }
@@ -61,10 +63,10 @@ class Turba_View_Contact
         /* Comments. */
         if (!empty($conf['comments']['allow']) && $registry->hasMethod('forums/doComments')) {
             try {
-                $comments = $registry->call('forums/doComments', array('turba', $this->contact->driver->getName() . '.' . $this->contact->getValue('__key'), 'commentCallback'));
+                $comments = $registry->call('forums/doComments', ['turba', $this->contact->driver->getName() . '.' . $this->contact->getValue('__key'), 'commentCallback']);
             } catch (Horde_Exception $e) {
                 Horde::log($e, 'DEBUG');
-                $comments = array();
+                $comments = [];
             }
         }
         if (!empty($comments['threads'])) {

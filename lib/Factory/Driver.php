@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A Horde_Injector:: based Turba_Driver:: factory.
  *
@@ -30,7 +31,7 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
      *
      * @var array
      */
-    private $_instances = array();
+    private $_instances = [];
 
     /**
      * Return the Turba_Driver:: instance.
@@ -45,7 +46,7 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
      * @return Turba_Driver  The singleton instance.
      * @throws Turba_Exception
      */
-    public function createFromConfig($config, $srcName = '', $cfgSources = array())
+    public function createFromConfig($config, $srcName = '', $cfgSources = [])
     {
         if (empty($cfgSources)) {
             $cfgSources = $GLOBALS['cfgSources'];
@@ -107,7 +108,8 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
             if (!isset($srcConfig['type'])) {
                 throw new Turba_Exception(
                     sprintf(
-                        _("The address book \"%s\" does not exist."), $srcName
+                        _("The address book \"%s\" does not exist."),
+                        $srcName
                     )
                 );
             }
@@ -119,37 +121,36 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
             }
 
             if (empty($srcConfig['params'])) {
-                $srcConfig['params'] = array();
+                $srcConfig['params'] = [];
             }
 
             switch ($class) {
-            case 'Turba_Driver_Sql':
-                try {
-                    $srcConfig['params']['db'] =
-                        empty($srcConfig['params']['sql'])
-                            ? $this->_injector->getInstance('Horde_Db_Adapter')
-                            : $this->_injector->getInstance(
-                            'Horde_Core_Factory_Db'
-                        )->create('turba', $srcConfig['params']['sql']);
-                    $srcConfig['params']['charset'] =
-                        isset($srcConfig['params']['sql']['charset'])
-                            ? $srcConfig['params']['sql']['charset']
-                            : 'UTF-8';
-                } catch (Horde_Db_Exception $e) {
-                    throw new Turba_Exception(
-                        _("Server error when initializing database connection.")
-                    );
-                }
-                break;
+                case 'Turba_Driver_Sql':
+                    try {
+                        $srcConfig['params']['db'] =
+                            empty($srcConfig['params']['sql'])
+                                ? $this->_injector->getInstance('Horde_Db_Adapter')
+                                : $this->_injector->getInstance(
+                                    'Horde_Core_Factory_Db'
+                                )->create('turba', $srcConfig['params']['sql']);
+                        $srcConfig['params']['charset'] =
+                            $srcConfig['params']['sql']['charset']
+                                ?? 'UTF-8';
+                    } catch (Horde_Db_Exception $e) {
+                        throw new Turba_Exception(
+                            _("Server error when initializing database connection.")
+                        );
+                    }
+                    break;
 
-            case 'Turba_Driver_Kolab':
-                $srcConfig['params']['storage'] =
-                    $this->_injector->getInstance('Horde_Kolab_Storage');
-                break;
+                case 'Turba_Driver_Kolab':
+                    $srcConfig['params']['storage'] =
+                        $this->_injector->getInstance('Horde_Kolab_Storage');
+                    break;
 
-            case 'Turba_Driver_Vbook':
-                $srcConfig['params']['source'] = $cfgSources;
-                break;
+                case 'Turba_Driver_Vbook':
+                    $srcConfig['params']['source'] = $cfgSources;
+                    break;
             }
 
             /* Make sure charset exists. */

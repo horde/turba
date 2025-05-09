@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Horde_Form for editing address books.
  *
@@ -56,7 +57,7 @@ class Turba_Form_EditAddressBook extends Horde_Form
             $v->setDefault($owner_name ? $owner_name : _("System"));
         }
 
-        $this->addVariable(_("Description"), 'description', 'longtext', false, false, null, array(4, 60));
+        $this->addVariable(_("Description"), 'description', 'longtext', false, false, null, [4, 60]);
 
         /* Subscription URLs. */
         $url = $registry->get('webroot', 'horde');
@@ -85,23 +86,33 @@ class Turba_Form_EditAddressBook extends Horde_Form
                         )
                     . '/';
                 $this->addVariable(
-                     _("CardDAV Subscription URL"), '', 'link', false, false, null,
-                     array(array(
-                         'url' => $carddavUrl,
-                         'text' => $carddavUrl,
-                     'title' => _("Copy this URL to a CardDAV client to subscribe to this address book"),
-                         'target' => '_blank')
-                     )
+                    _("CardDAV Subscription URL"),
+                    '',
+                    'link',
+                    false,
+                    false,
+                    null,
+                    [[
+                        'url' => $carddavUrl,
+                        'text' => $carddavUrl,
+                        'title' => _("Copy this URL to a CardDAV client to subscribe to this address book"),
+                        'target' => '_blank'],
+                    ]
                 );
             }
             $this->addVariable(
-                 _("CardDAV Account URL"), '', 'link', false, false, null,
-                 array(array(
-                     'url' => $accountUrl,
-                     'text' => $accountUrl,
-                 'title' => _("Copy this URL to a CarddAV client to subscribe to all your address books"),
-                     'target' => '_blank')
-                 )
+                _("CardDAV Account URL"),
+                '',
+                'link',
+                false,
+                false,
+                null,
+                [[
+                    'url' => $accountUrl,
+                    'text' => $accountUrl,
+                    'title' => _("Copy this URL to a CarddAV client to subscribe to all your address books"),
+                    'target' => '_blank'],
+                ]
             );
         } catch (Horde_Exception $e) {
         }
@@ -111,62 +122,73 @@ class Turba_Form_EditAddressBook extends Horde_Form
                : '-system-')
             . '/' . $addressbook->getName() . '/';
         $this->addVariable(
-             _("WebDAV URL"), '', 'link', false, false, null,
-             array(array(
-                 'url' => $webdavUrl,
-                 'text' => $webdavUrl,
-                 'title' => _("Copy this URL to a WebDAV client to browse this address book"),
-                 'target' => '_blank')
-             )
+            _("WebDAV URL"),
+            '',
+            'link',
+            false,
+            false,
+            null,
+            [[
+                'url' => $webdavUrl,
+                'text' => $webdavUrl,
+                'title' => _("Copy this URL to a WebDAV client to browse this address book"),
+                'target' => '_blank'],
+            ]
         );
 
         /* Permissions link. */
         if (empty($conf['share']['no_sharing']) && $owner) {
             $url = Horde::url($registry->get('webroot', 'horde')
                               . '/services/shares/edit.php')
-                ->add(array('app' => 'turba', 'share' => $addressbook->getName()));
+                ->add(['app' => 'turba', 'share' => $addressbook->getName()]);
             $this->addVariable(
-                 '', '', 'link', false, false, null,
-                 array(array(
-                     'url' => $url,
-                     'text' => _("Change Permissions"),
-                     'onclick' => Horde::popupJs(
-                          $url,
-                          array('params' => array('urlencode' => true)))
-                          . 'return false;',
-                     'class' => 'horde-button',
-                     'target' => '_blank')
-                 )
+                '',
+                '',
+                'link',
+                false,
+                false,
+                null,
+                [[
+                    'url' => $url,
+                    'text' => _("Change Permissions"),
+                    'onclick' => Horde::popupJs(
+                        $url,
+                        ['params' => ['urlencode' => true]]
+                    )
+                         . 'return false;',
+                    'class' => 'horde-button',
+                    'target' => '_blank'],
+                ]
             );
         }
 
-        $this->setButtons(array(
+        $this->setButtons([
             _("Save"),
-            array('class' => 'horde-delete', 'value' => _("Delete")),
-            array('class' => 'horde-cancel', 'value' => _("Cancel"))
-        ));
+            ['class' => 'horde-delete', 'value' => _("Delete")],
+            ['class' => 'horde-cancel', 'value' => _("Cancel")],
+        ]);
     }
 
     public function execute()
     {
         switch ($this->_vars->submitbutton) {
-        case _("Save"):
-            $this->_addressbook->set('name', $this->_vars->get('name'));
-            $this->_addressbook->set('desc', $this->_vars->get('description'));
-            try {
-                $this->_addressbook->save();
-            } catch (Horde_Share_Exception $e) {
-                throw new Turba_Exception(sprintf(_("Unable to save address book \"%s\": %s"), $this->_vars->get('name'), $e->getMessage()));
-            }
-            break;
-        case _("Delete"):
-            Horde::url('addressbooks/delete.php')
-                ->add('a', $this->_vars->a)
-                ->redirect();
-            break;
-        case _("Cancel"):
-            Horde::url('', true)->redirect();
-            break;
+            case _("Save"):
+                $this->_addressbook->set('name', $this->_vars->get('name'));
+                $this->_addressbook->set('desc', $this->_vars->get('description'));
+                try {
+                    $this->_addressbook->save();
+                } catch (Horde_Share_Exception $e) {
+                    throw new Turba_Exception(sprintf(_("Unable to save address book \"%s\": %s"), $this->_vars->get('name'), $e->getMessage()));
+                }
+                break;
+            case _("Delete"):
+                Horde::url('addressbooks/delete.php')
+                    ->add('a', $this->_vars->a)
+                    ->redirect();
+                break;
+            case _("Cancel"):
+                Horde::url('', true)->redirect();
+                break;
         }
     }
 

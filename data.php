@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba data.php.
  *
@@ -44,37 +45,37 @@ if (!$conf['menu']['import_export']) {
 if (!$cfgSources) {
     $notification->push(_("No Address Books are currently available. Import and Export is disabled."), 'horde.error');
     $page_output->header();
-    $notification->notify(array('listeners' => 'status'));
+    $notification->notify(['listeners' => 'status']);
     $page_output->footer();
     exit;
 }
 
 /* Importable file types. */
-$file_types = array(
+$file_types = [
     'csv'      => _("CSV"),
     'tsv'      => _("TSV"),
     'vcard'    => _("vCard"),
     'mulberry' => _("Mulberry Address Book"),
     'pine'     => _("Pine Address Book"),
-    'ldif'     => _("LDIF Address Book")
-);
+    'ldif'     => _("LDIF Address Book"),
+];
 
 /* Templates for the different import steps. */
-$templates = array(
-    Horde_Data::IMPORT_FILE => array(TURBA_TEMPLATES . '/data/export.inc'),
-    Horde_Data::IMPORT_CSV => array($registry->get('templates', 'horde') . '/data/csvinfo.inc'),
-    Horde_Data::IMPORT_TSV => array($registry->get('templates', 'horde') . '/data/tsvinfo.inc'),
-    Horde_Data::IMPORT_MAPPED => array($registry->get('templates', 'horde') . '/data/csvmap.inc'),
-    Horde_Data::IMPORT_DATETIME => array($registry->get('templates', 'horde') . '/data/datemap.inc')
-);
+$templates = [
+    Horde_Data::IMPORT_FILE => [TURBA_TEMPLATES . '/data/export.inc'],
+    Horde_Data::IMPORT_CSV => [$registry->get('templates', 'horde') . '/data/csvinfo.inc'],
+    Horde_Data::IMPORT_TSV => [$registry->get('templates', 'horde') . '/data/tsvinfo.inc'],
+    Horde_Data::IMPORT_MAPPED => [$registry->get('templates', 'horde') . '/data/csvmap.inc'],
+    Horde_Data::IMPORT_DATETIME => [$registry->get('templates', 'horde') . '/data/datemap.inc'],
+];
 
 /* Initial values. */
 $vars = $injector->getInstance('Horde_Variables');
 $import_step = $vars->get('import_step', 0) + 1;
 $next_step = Horde_Data::IMPORT_FILE;
-$app_fields = $bad_charset = $time_fields = array();
+$app_fields = $bad_charset = $time_fields = [];
 $error = false;
-$import_mapping = array(
+$import_mapping = [
     'e-mail' => 'email',
     'homeaddress' => 'homeAddress',
     'businessaddress' => 'workAddress',
@@ -119,16 +120,16 @@ $import_mapping = array(
     'Work Phone' => 'workPhone',
     'Organization' => 'company',
     'Web Page 1' => 'website',
-);
-$param = array(
+];
+$param = [
     'time_fields' => $time_fields,
     'file_types'  => $file_types,
     'import_mapping' => array_merge(
         $app_ob->getOutlookMapping(),
         $import_mapping
-    )
-);
-if (in_array($vars->import_format, array('mulberry', 'pine'))) {
+    ),
+];
+if (in_array($vars->import_format, ['mulberry', 'pine'])) {
     $vars->import_format = 'tsv';
 }
 if ($vars->actionID != 'select') {
@@ -138,25 +139,26 @@ if ($vars->actionID != 'select') {
 $data = null;
 if ($vars->import_format) {
     switch ($vars->import_format) {
-    case 'ldif':
-        $driver = 'Turba_Data_Ldif';
-        break;
+        case 'ldif':
+            $driver = 'Turba_Data_Ldif';
+            break;
 
-    case 'csv':
-        $param['check_charset'] = true;
-        // Fall-through
+        case 'csv':
+            $param['check_charset'] = true;
+            // Fall-through
 
-    default:
-        $driver = $vars->import_format;
-        break;
+            // no break
+        default:
+            $driver = $vars->import_format;
+            break;
     }
 
     try {
         $data = $injector->getInstance('Horde_Core_Factory_Data')->create(
             $driver,
-            array(
-                'cleanup' => array($app_ob, 'cleanupData')
-            )
+            [
+                'cleanup' => [$app_ob, 'cleanupData'],
+            ]
         );
     } catch (Horde_Exception $e) {
         $notification->push(_("This file format is not supported."), 'horde.error');
@@ -166,41 +168,41 @@ if ($vars->import_format) {
 
 /* Loop through the action handlers. */
 switch ($vars->actionID) {
-case Horde_Data::IMPORT_FILE:
-    try {
-        $driver = $injector->getInstance('Turba_Factory_Driver')->create($vars->dest);
-    } catch (Horde_Exception $e) {
-        $notification->push($e, 'horde.error');
-        $error = true;
+    case Horde_Data::IMPORT_FILE:
+        try {
+            $driver = $injector->getInstance('Turba_Factory_Driver')->create($vars->dest);
+        } catch (Horde_Exception $e) {
+            $notification->push($e, 'horde.error');
+            $error = true;
+            break;
+        }
+
+        if (Turba::hasMaxContacts($driver, true)) {
+            $error = true;
+        } else {
+            $data->storage->set('target', $vars->dest);
+            $data->storage->set('purge', $vars->purge);
+        }
         break;
-    }
 
-    if (Turba::hasMaxContacts($driver, true)) {
-        $error = true;
-    } else {
-        $data->storage->set('target', $vars->dest);
-        $data->storage->set('purge', $vars->purge);
-    }
-    break;
+    case Horde_Data::IMPORT_MAPPED:
+    case Horde_Data::IMPORT_DATETIME:
+        foreach ($cfgSources[$data->storage->get('target')]['map'] as $field => $null) {
+            if (substr($field, 0, 2) != '__' && !is_array($null)) {
+                switch ($attributes[$field]['type']) {
+                    case 'monthyear':
+                    case 'monthdayyear':
+                        $time_fields[$field] = 'date';
+                        break;
 
-case Horde_Data::IMPORT_MAPPED:
-case Horde_Data::IMPORT_DATETIME:
-    foreach ($cfgSources[$data->storage->get('target')]['map'] as $field => $null) {
-        if (substr($field, 0, 2) != '__' && !is_array($null)) {
-            switch ($attributes[$field]['type']) {
-            case 'monthyear':
-            case 'monthdayyear':
-                $time_fields[$field] = 'date';
-                break;
-
-            case 'time':
-                $time_fields[$field] = 'time';
-                break;
+                    case 'time':
+                        $time_fields[$field] = 'time';
+                        break;
+                }
             }
         }
-    }
-    $param['time_fields'] = $time_fields;
-    break;
+        $param['time_fields'] = $time_fields;
+        break;
 }
 
 if (!$error && $data) {
@@ -228,7 +230,7 @@ if (!$error && $data) {
             try {
                 $next_step = $data->nextStep($vars->actionID, $param);
             } catch (Horde_Data_Exception_Charset $e) {
-                $bad_charset = array('UTF-8', 'windows-1252');
+                $bad_charset = ['UTF-8', 'windows-1252'];
                 throw $e;
             }
         }
@@ -264,7 +266,7 @@ if (is_array($next_step)) {
 
         $error = false;
         $imported = 0;
-        $contact_groups = array();
+        $contact_groups = [];
         foreach ($next_step as $row) {
             if ($row instanceof Horde_Icalendar_Vcard) {
                 $row = $driver->toHash($row);
@@ -289,8 +291,10 @@ if (is_array($next_step)) {
             if (count($result)) {
                 $result->reset();
                 $object = $result->next();
-                $notification->push(sprintf(_("\"%s\" already exists and was not imported."),
-                                            $object->getValue('name')), 'horde.message');
+                $notification->push(sprintf(
+                    _("\"%s\" already exists and was not imported."),
+                    $object->getValue('name')
+                ), 'horde.message');
             } else {
                 /* Check for, and validate, any email fields */
                 foreach (array_keys($row) as $field) {
@@ -300,9 +304,9 @@ if (is_array($next_step)) {
 
                         $rfc822 = $injector->getInstance('Horde_Mail_Rfc822');
                         try {
-                            $row[$field] = strval($rfc822->parseAddressList($row[$field], array(
-                                'limit' => $allow_multi ? 0 : 1
-                            )));
+                            $row[$field] = strval($rfc822->parseAddressList($row[$field], [
+                                'limit' => $allow_multi ? 0 : 1,
+                            ]));
                         } catch (Horde_Mail_Exception $e) {
                             $row[$field] = '';
                         }
@@ -327,7 +331,7 @@ if (is_array($next_step)) {
             unset($attributes['__members']);
             $group_obj = new Turba_Object_Group($driver, $attributes);
             foreach (explode(',', $group['__members']) as $uid) {
-                $results = $driver->search(array('__uid' => $uid));
+                $results = $driver->search(['__uid' => $uid]);
                 if (count($results->objects)) {
                     $object = array_pop($results->objects);
                     $group_obj->addMember($object->getValue('__key'), $object->getSource());
@@ -342,40 +346,42 @@ if (is_array($next_step)) {
             $driver->add($attributes);
         }
         if (!$error && $imported) {
-            $notification->push(sprintf(_("%s file successfully imported."),
-                                        $file_types[$data->storage->get('format')]), 'horde.success');
+            $notification->push(sprintf(
+                _("%s file successfully imported."),
+                $file_types[$data->storage->get('format')]
+            ), 'horde.success');
         }
     }
     $next_step = $data->cleanup();
 }
 
 switch ($next_step) {
-case Horde_Data::IMPORT_MAPPED:
-case Horde_Data::IMPORT_DATETIME:
-    foreach ($cfgSources[$data->storage->get('target')]['map'] as $field => $null) {
-        if ((substr($field, 0, 2) != '__'  && !is_array($null)) || ($field == '__uid' || $field == '__members')) {
-            if ($field == '__uid') {
-                $app_fields['__uid'] = _("UID");
-            } elseif ($field == '__members') {
-                $app_fields['__members'] = _("Contact list members");
-            } else {
-                $app_fields[$field] = $attributes[$field]['label'];
+    case Horde_Data::IMPORT_MAPPED:
+    case Horde_Data::IMPORT_DATETIME:
+        foreach ($cfgSources[$data->storage->get('target')]['map'] as $field => $null) {
+            if ((substr($field, 0, 2) != '__'  && !is_array($null)) || ($field == '__uid' || $field == '__members')) {
+                if ($field == '__uid') {
+                    $app_fields['__uid'] = _("UID");
+                } elseif ($field == '__members') {
+                    $app_fields['__members'] = _("Contact list members");
+                } else {
+                    $app_fields[$field] = $attributes[$field]['label'];
+                }
             }
         }
-    }
-    break;
+        break;
 }
 
-$page_output->header(array(
-    'title' => _("Import/Export Address Books")
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => _("Import/Export Address Books"),
+]);
+$notification->notify(['listeners' => 'status']);
 
 $default_source = $prefs->getValue('default_dir');
 if ($next_step == Horde_Data::IMPORT_FILE) {
     /* Build the directory sources select widget. */
     $unique_source = '';
-    $source_options = array();
+    $source_options = [];
     foreach (Turba::getAddressBooks() as $key => $entry) {
         if (!empty($entry['export'])) {
             $source_options[] = '<option value="' . htmlspecialchars($key) . '">' .
@@ -386,7 +392,7 @@ if ($next_step == Horde_Data::IMPORT_FILE) {
 
     /* Build the directory destination select widget. */
     $unique_dest = '';
-    $dest_options = array();
+    $dest_options = [];
     $hasWriteable = false;
     foreach (Turba::getAddressBooks(Horde_Perms::EDIT) as $key => $entry) {
         $selected = ($key == $default_source) ? ' selected="selected"' : '';
@@ -401,7 +407,7 @@ if ($next_step == Horde_Data::IMPORT_FILE) {
     }
 
     /* Build the charset options. */
-    $charsets = array();
+    $charsets = [];
 
     if (!empty($bad_charset)) {
         $charsets = $registry->nlsconfig->encodings_sort;

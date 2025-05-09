@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2012-2017 Horde LLC (http://www.horde.org/)
  *
@@ -40,9 +41,9 @@ class Turba_Smartmobile
 
         $this->vars = $vars;
 
-        $this->view = new Horde_View(array(
-            'templatePath' => TURBA_TEMPLATES . '/smartmobile'
-        ));
+        $this->view = new Horde_View([
+            'templatePath' => TURBA_TEMPLATES . '/smartmobile',
+        ]);
         $this->view->addHelper('Horde_Core_Smartmobile_View_Helper');
         $this->view->addHelper('Horde_Core_View_Helper_Image');
         $this->view->addHelper('Text');
@@ -52,7 +53,7 @@ class Turba_Smartmobile
 
         $page_output->addScriptFile('smartmobile.js');
 
-        $notification->notify(array('listeners' => 'status'));
+        $notification->notify(['listeners' => 'status']);
     }
 
     /**
@@ -69,7 +70,7 @@ class Turba_Smartmobile
     {
         global $injector;
 
-        $this->view->list = array();
+        $this->view->list = [];
         if ($GLOBALS['browse_source_count']) {
             foreach (Turba::getAddressBooks() as $key => $val) {
                 if (!empty($val['browse'])) {
@@ -80,7 +81,7 @@ class Turba_Smartmobile
                     }
 
                     try {
-                        $contacts = $driver->search(array(), null, 'AND', array('__key', 'name'));
+                        $contacts = $driver->search([], null, 'AND', ['__key', 'name']);
                         $contacts->reset();
                     } catch (Turba_Exception $e) {
                         continue;
@@ -88,15 +89,15 @@ class Turba_Smartmobile
                     $url = new Horde_Core_Smartmobile_Url();
                     $url->add('source', $key);
                     $url->setAnchor('entry');
-                    $tmp = array();
+                    $tmp = [];
 
                     while ($contact = $contacts->next()) {
                         $name = Turba::formatName($contact);
-                        $tmp[] = array(
+                        $tmp[] = [
                             'group' => $contact->isGroup(),
                             'name' => strlen($name) ? $name : ('[' . _("No Name") . ']'),
-                            'url' => strval($url->add('key', $contact->getValue('__key')))
-                        );
+                            'url' => strval($url->add('key', $contact->getValue('__key'))),
+                        ];
                     }
 
                     $this->view->list[$val['title']] = $tmp;
@@ -112,17 +113,17 @@ class Turba_Smartmobile
     {
         global $page_output;
 
-        $code = array(
+        $code = [
             /* Gettext strings. */
-            'text' => array(
+            'text' => [
                 'browse' => _("Browse"),
-                'group' => _("Contact List")
-            )
-        );
+                'group' => _("Contact List"),
+            ],
+        ];
 
-        $page_output->addInlineJsVars(array(
-            'var Turba' => $code
-        ), array('top' => true));
+        $page_output->addInlineJsVars([
+            'var Turba' => $code,
+        ], ['top' => true]);
     }
 
 }

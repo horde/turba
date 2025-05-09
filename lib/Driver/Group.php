@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Read-only Turba_Driver implementation for creating a Horde_Group based
  * address book.
@@ -15,7 +16,6 @@
  */
 class Turba_Driver_Group extends Turba_Driver
 {
-
     protected $_gid;
     /**
      * Constructor function.
@@ -25,9 +25,9 @@ class Turba_Driver_Group extends Turba_Driver
      *                       parameters.
      *
      */
-    public function __construct($name = '', array $params = array())
+    public function __construct($name = '', array $params = [])
     {
-         $this->_gid = $params['gid'];
+        $this->_gid = $params['gid'];
     }
 
     /**
@@ -41,12 +41,12 @@ class Turba_Driver_Group extends Turba_Driver
     public function hasPermission($perm)
     {
         switch ($perm) {
-        case Horde_Perms::EDIT:
-        case Horde_Perms::DELETE:
-            return false;
+            case Horde_Perms::EDIT:
+            case Horde_Perms::DELETE:
+                return false;
 
-        default:
-            return true;
+            default:
+                return true;
         }
     }
 
@@ -64,9 +64,9 @@ class Turba_Driver_Group extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
-        $results = array();
+        $results = [];
 
         foreach ($this->_getAddressBook() as $key => $contact) {
             $found = !isset($criteria['OR']);
@@ -75,12 +75,12 @@ class Turba_Driver_Group extends Turba_Driver
                     foreach ($vals as $val) {
                         if (isset($contact[$val['field']])) {
                             switch ($val['op']) {
-                            case 'LIKE':
-                                if (stristr($contact[$val['field']], $val['test']) === false) {
-                                    continue 4;
-                                }
-                                $found = true;
-                                break;
+                                case 'LIKE':
+                                    if (stristr($contact[$val['field']], $val['test']) === false) {
+                                        continue 4;
+                                    }
+                                    $found = true;
+                                    break;
                             }
                         }
                     }
@@ -88,12 +88,12 @@ class Turba_Driver_Group extends Turba_Driver
                     foreach ($vals as $val) {
                         if (isset($contact[$val['field']])) {
                             switch ($val['op']) {
-                            case 'LIKE':
-                                if (empty($val['test']) ||
-                                    stristr($contact[$val['field']], $val['test']) !== false) {
-                                    $found = true;
-                                    break 3;
-                                }
+                                case 'LIKE':
+                                    if (empty($val['test']) ||
+                                        stristr($contact[$val['field']], $val['test']) !== false) {
+                                        $found = true;
+                                        break 3;
+                                    }
                             }
                         }
                     }
@@ -121,14 +121,18 @@ class Turba_Driver_Group extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         $book = $this->_getAddressBook();
-        $results = array();
+        $results = [];
         if (!is_array($ids)) {
-            $ids = array($ids);
+            $ids = [$ids];
         }
         foreach ($ids as $id) {
             if (isset($book[$id])) {
@@ -146,7 +150,7 @@ class Turba_Driver_Group extends Turba_Driver
     {
         $groups = $GLOBALS['injector']->getInstance('Horde_Group');
         $members = $groups->listUsers($this->_gid);
-        $addressbook = array();
+        $addressbook = [];
         foreach ($members as $member) {
             $identity = $GLOBALS['injector']->getInstance('Horde_Core_Factory_Identity')->create($member);
             $name = $identity->getValue('fullname');
@@ -154,10 +158,10 @@ class Turba_Driver_Group extends Turba_Driver
             // We use the email as the key since we could have multiple users
             // with the same fullname, so no email = no entry in address book.
             if (!empty($email)) {
-                $addressbook[$email] = array(
+                $addressbook[$email] = [
                     'name' => ((!empty($name) ? $name : $member)),
-                    'email' => $identity->getValue('from_addr')
-                );
+                    'email' => $identity->getValue('from_addr'),
+                ];
             }
         }
 

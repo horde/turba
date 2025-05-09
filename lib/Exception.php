@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Base exception class for Turba.
  *
@@ -12,6 +13,4 @@
  * @license  http://www.horde.org/licenses/apache ASL
  * @package  Turba
  */
-class Turba_Exception extends Horde_Exception_Wrapped
-{
-}
+class Turba_Exception extends Horde_Exception_Wrapped {}

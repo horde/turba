@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -42,14 +43,14 @@ class Turba_Object
      *
      * @var array
      */
-    public $sortValue = array();
+    public $sortValue = [];
 
     /**
      * Any additional options.
      *
      * @var boolean
      */
-    protected $_options = array();
+    protected $_options = [];
 
     /**
      * Reference to this object's VFS instance.
@@ -66,7 +67,7 @@ class Turba_Object
      *
      * @var array
      */
-    protected $_attributeFields = array();
+    protected $_attributeFields = [];
 
     /**
      * Constructs a new Turba_Object object.
@@ -76,10 +77,11 @@ class Turba_Object
      * @param array $options        Hash of options for this object. @since
      *                              Turba 4.2
      */
-    public function __construct(Turba_Driver $driver,
-                                array $attributes = array(),
-                                array $options = array())
-    {
+    public function __construct(
+        Turba_Driver $driver,
+        array $attributes = [],
+        array $options = []
+    ) {
         $this->driver = $driver;
         foreach ($attributes as $attribute => $value) {
             $this->setValue($attribute, $value);
@@ -137,12 +139,13 @@ class Turba_Object
                 return $hooks->callHook(
                     'decode_attribute',
                     'turba',
-                    array($attribute, $this->attributes[$attribute], $this)
+                    [$attribute, $this->attributes[$attribute], $this]
                 );
-            } catch (Turba_Exception $e) {}
+            } catch (Turba_Exception $e) {
+            }
         } elseif (isset($this->driver->map[$attribute]) &&
             is_array($this->driver->map[$attribute])) {
-            $args = array();
+            $args = [];
             foreach ($this->driver->map[$attribute]['fields'] as $field) {
                 $args[] = $this->getValue($field);
             }
@@ -156,10 +159,11 @@ class Turba_Object
                     (!empty($conf['photos']['height']) || !empty($conf['photos']['width']))) {
                     // Do resizing
                     $img = $injector->getInstance('Horde_Core_Factory_Image')->create(
-                        array(
+                        [
                             'data' => $this->attributes[$attribute . '_orig'],
-                            'type' => 'jpeg'
-                        ));
+                            'type' => 'jpeg',
+                        ]
+                    );
                     $img->resize($conf['photos']['width'], $conf['photos']['height']);
                     $this->setValue($attribute, $img->raw(true));
                     $this->store();
@@ -167,12 +171,12 @@ class Turba_Object
             }
             return empty($this->attributes[$attribute])
                 ? null
-                : array(
-                      'load' => array(
-                          'data' => $this->attributes[$attribute],
-                          'file' => basename(Horde::getTempFile('horde_form_', false, '', false, true))
-                      )
-                  );
+                : [
+                    'load' => [
+                        'data' => $this->attributes[$attribute],
+                        'file' => basename(Horde::getTempFile('horde_form_', false, '', false, true)),
+                    ],
+                ];
         } elseif (!isset($this->attributes[$attribute])) {
             if (isset($attributes[$attribute]) &&
                 ($attributes[$attribute]['type'] == 'Turba:TurbaTags') &&
@@ -203,12 +207,12 @@ class Turba_Object
                 $value = $hooks->callHook(
                     'encode_attribute',
                     'turba',
-                    array(
+                    [
                         $attribute,
                         $value,
-                        isset($this->attributes[$attribute]) ? $this->attributes[$attribute] : null,
-                        $this
-                    )
+                        $this->attributes[$attribute] ?? null,
+                        $this,
+                    ]
                 );
             } catch (Turba_Exception $e) {
             }
@@ -221,9 +225,9 @@ class Turba_Object
             strpos($attribute, '__') === false) {
             if (isset($attributes[$attribute])) {
                 $type = $attributes[$attribute]['type'];
-                if (in_array($type, array('phone', 'email', 'address'))) {
+                if (in_array($type, ['phone', 'email', 'address'])) {
                     if (!isset($this->_attributeFields[$type])) {
-                        $this->_attributeFields[$type] = array();
+                        $this->_attributeFields[$type] = [];
                     }
                     $this->_attributeFields[$type][] = $value;
                 }
@@ -350,7 +354,8 @@ class Turba_Object
                     $time = max($time, $entry['ts']);
                 }
             }
-        } catch (Exception $e) {}
+        } catch (Exception $e) {
+        }
         $this->setValue('__modified', $time);
 
         return $time;
@@ -380,9 +385,9 @@ class Turba_Object
     public function getHistory()
     {
         if (!$this->getValue('__uid')) {
-            return array();
+            return [];
         }
-        $history = array();
+        $history = [];
         try {
             $log = $GLOBALS['injector']
                 ->getInstance('Horde_History')
@@ -403,7 +408,7 @@ class Turba_Object
                 }
             }
         } catch (Exception $e) {
-            return array();
+            return [];
         }
 
         return $history;
@@ -451,10 +456,10 @@ class Turba_Object
      */
     public function url($view = null, $full = false)
     {
-        $url = Horde::url('contact.php', $full)->add(array(
+        $url = Horde::url('contact.php', $full)->add([
             'source' => $this->driver->getName(),
-            'key' => $this->getValue('__key')
-        ));
+            'key' => $this->getValue('__key'),
+        ]);
 
         if (!is_null($view)) {
             $url->add('view', $view);
@@ -553,10 +558,11 @@ class Turba_Object
                 if ($vfs->exists(Turba::VFS_PATH, $this->getValue('__uid'))) {
                     return $vfs->listFolder(Turba::VFS_PATH . '/' . $this->getValue('__uid'));
                 }
-            } catch (Turba_Exception $e) {}
+            } catch (Turba_Exception $e) {
+            }
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -576,14 +582,14 @@ class Turba_Object
         $viewer = $GLOBALS['injector']->getInstance('Horde_Core_Factory_MimeViewer')->create($mime_part);
 
         // We can always download files.
-        $url_params = array(
+        $url_params = [
             'actionID' => 'download_file',
             'file' => $file['name'],
             'type' => $file['type'],
             'source' => $this->driver->getName(),
-            'key' => $this->getValue('__key')
-        );
-        $dl = Horde::link($registry->downloadUrl($file['name'], $url_params), $file['name']) . Horde_Themes_Image::tag('download.png', array('alt' => _("Download"))) . '</a>';
+            'key' => $this->getValue('__key'),
+        ];
+        $dl = Horde::link($registry->downloadUrl($file['name'], $url_params), $file['name']) . Horde_Themes_Image::tag('download.png', ['alt' => _("Download")]) . '</a>';
 
         // Let's see if we can view this one, too.
         if ($viewer && !($viewer instanceof Horde_Mime_Viewer_Default)) {

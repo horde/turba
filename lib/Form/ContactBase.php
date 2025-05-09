@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Base class for forms dealing with a contact.
  *
@@ -18,14 +19,14 @@ abstract class Turba_Form_ContactBase extends Horde_Form
 
         // Run through once to see what form actions, if any, we need
         // to set up.
-        $actions = array();
+        $actions = [];
         $map = $contact->driver->map;
         $fields = array_keys($contact->driver->getCriteria());
         foreach ($fields as $field) {
             if (is_array($map[$field])) {
                 foreach ($map[$field]['fields'] as $action_field) {
                     if (!isset($actions[$action_field])) {
-                        $actions[$action_field] = array();
+                        $actions[$action_field] = [];
                     }
                     $actions[$action_field]['fields'] = $map[$field]['fields'];
                     $actions[$action_field]['format'] = $map[$field]['format'];
@@ -37,7 +38,7 @@ abstract class Turba_Form_ContactBase extends Horde_Form
         // Now run through and add the form variables.
         $tabs = $contact->driver->tabs;
         if (!count($tabs)) {
-            $tabs = array('' => $fields);
+            $tabs = ['' => $fields];
         }
         $i = 0;
         foreach ($tabs as $tab => $tab_fields) {
@@ -55,25 +56,27 @@ abstract class Turba_Form_ContactBase extends Horde_Form
                     continue;
                 }
                 $attribute = $attributes[$field];
-                $params = isset($attribute['params']) ? $attribute['params'] : array();
-                $desc = isset($attribute['desc']) ? $attribute['desc'] : null;
+                $params = $attribute['params'] ?? [];
+                $desc = $attribute['desc'] ?? null;
 
                 if (is_array($map[$field])) {
                     $v = $this->addVariable($attribute['label'], 'object[' . $field . ']', $attribute['type'], false, false, $desc, $params);
                     $v->disable();
                 } else {
-                    $readonly = isset($attribute['readonly']) ? $attribute['readonly'] : null;
+                    $readonly = $attribute['readonly'] ?? null;
                     $v = $this->addVariable($attribute['label'], 'object[' . $field . ']', $attribute['type'], $attribute['required'], $readonly, $desc, $params);
 
                     if (!empty($actions[$field])) {
-                        $actionfields = array();
+                        $actionfields = [];
                         foreach ($actions[$field]['fields'] as $f) {
                             $actionfields[] = $this->_getId('object[' . $f . ']');
                         }
-                        $a = Horde_Form_Action::factory('updatefield',
-                                                        array('format' => $actions[$field]['format'],
-                                                              'target' => $this->_getId('object[' . $actions[$field]['target'] . ']'),
-                                                              'fields' => $actionfields));
+                        $a = Horde_Form_Action::factory(
+                            'updatefield',
+                            ['format' => $actions[$field]['format'],
+                                'target' => $this->_getId('object[' . $actions[$field]['target'] . ']'),
+                                'fields' => $actionfields]
+                        );
                         $v->setAction($a);
                     }
                 }
@@ -116,9 +119,9 @@ abstract class Turba_Form_ContactBase extends Horde_Form
      *
      * @return object Horde_Form_Renderer  The form renderer.
      */
-    public function getRenderer($params = array())
+    public function getRenderer($params = [])
     {
-        $params['varrenderer_driver'] = array('turba', 'turba');
+        $params['varrenderer_driver'] = ['turba', 'turba'];
         return new Horde_Form_Renderer($params);
     }
 }

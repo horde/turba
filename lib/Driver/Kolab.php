@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Horde Turba driver for the Kolab IMAP Server.
  *
@@ -64,22 +65,22 @@ class Turba_Driver_Kolab extends Turba_Driver
      *
      * @var array
      */
-    protected $_capabilities = array(
+    protected $_capabilities = [
         'delete_addressbook' => true,
         'delete_all' => true,
-    );
+    ];
 
     /**
      * Any additional options passed to Turba_Object constructors.
      *
      * @var array
      */
-    protected $_objectOptions = array('removeMissing' => true);
+    protected $_objectOptions = ['removeMissing' => true];
 
     /**
      * Attempts to open a Kolab Groupware folder.
      */
-    public function __construct($name = '', $params = array())
+    public function __construct($name = '', $params = [])
     {
         if (empty($params['storage'])) {
             throw new InvalidArgumentException('Missing required storage handler.');
@@ -121,17 +122,17 @@ class Turba_Driver_Kolab extends Turba_Driver
         $hash = parent::toDriverKeys($hash);
 
         if (isset($hash['name'])) {
-            $hash['name'] = array('full-name' => $hash['name']);
+            $hash['name'] = ['full-name' => $hash['name']];
         }
 
         /* TODO: use Horde_Kolab_Format_Xml_Type_Composite_* */
-        foreach (array('full-name',
-                       'given-name',
-                       'middle-names',
-                       'last-name',
-                       'initials',
-                       'prefix',
-                       'suffix') as $sub) {
+        foreach (['full-name',
+            'given-name',
+            'middle-names',
+            'last-name',
+            'initials',
+            'prefix',
+            'suffix'] as $sub) {
             if (isset($hash[$sub])) {
                 $hash['name'][$sub] = $hash[$sub];
                 unset($hash[$sub]);
@@ -145,57 +146,57 @@ class Turba_Driver_Kolab extends Turba_Driver
 
         if (isset($hash['emails'])) {
             $list = new Horde_Mail_Rfc822_List($hash['emails']);
-            $hash['email'] = array();
+            $hash['email'] = [];
             foreach ($list as $address) {
-                $hash['email'][] = array('smtp-address' => $address->bare_address);
+                $hash['email'][] = ['smtp-address' => $address->bare_address];
             }
             unset($hash['emails']);
         }
 
-        foreach (array('phone-business1',
-                       'phone-business2',
-                       'phone-businessfax',
-                       'phone-car',
-                       'phone-company',
-                       'phone-home1',
-                       'phone-home2',
-                       'phone-homefax',
-                       'phone-mobile',
-                       'phone-pager',
-                       'phone-radio',
-                       'phone-assistant') as $sub) {
+        foreach (['phone-business1',
+            'phone-business2',
+            'phone-businessfax',
+            'phone-car',
+            'phone-company',
+            'phone-home1',
+            'phone-home2',
+            'phone-homefax',
+            'phone-mobile',
+            'phone-pager',
+            'phone-radio',
+            'phone-assistant'] as $sub) {
             if (isset($hash[$sub])) {
                 if (!isset($hash['phone'])) {
-                    $hash['phone'] = array();
+                    $hash['phone'] = [];
                 }
-                $hash['phone'][] = array('type' => substr($sub, 6),
-                                         'number' => $hash[$sub]);
+                $hash['phone'][] = ['type' => substr($sub, 6),
+                    'number' => $hash[$sub]];
                 unset($hash[$sub]);
             }
         }
 
-        $address = array();
-        foreach (array('addr-business-street',
-                       'addr-business-locality',
-                       'addr-business-region',
-                       'addr-business-postal-code',
-                       'addr-business-country') as $sub) {
+        $address = [];
+        foreach (['addr-business-street',
+            'addr-business-locality',
+            'addr-business-region',
+            'addr-business-postal-code',
+            'addr-business-country'] as $sub) {
             if (isset($hash[$sub])) {
                 $address[substr($sub, 14)] = $hash[$sub];
                 unset($hash[$sub]);
             }
         }
         if ($address) {
-            $hash['address'] = array();
+            $hash['address'] = [];
             $address['type'] = 'business';
             $hash['address'][] = $address;
         }
-        $address = array();
-        foreach (array('addr-home-street',
-                       'addr-home-locality',
-                       'addr-home-region',
-                       'addr-home-postal-code',
-                       'addr-home-country') as $sub) {
+        $address = [];
+        foreach (['addr-home-street',
+            'addr-home-locality',
+            'addr-home-region',
+            'addr-home-postal-code',
+            'addr-home-country'] as $sub) {
             if (isset($hash[$sub])) {
                 $address[substr($sub, 10)] = $hash[$sub];
                 unset($hash[$sub]);
@@ -203,7 +204,7 @@ class Turba_Driver_Kolab extends Turba_Driver
         }
         if ($address) {
             if (!isset($hash['address'])) {
-                $hash['address'] = array();
+                $hash['address'] = [];
             }
             $address['type'] = 'home';
             $hash['address'][] = $address;
@@ -316,9 +317,9 @@ class Turba_Driver_Kolab extends Turba_Driver
         /* Fetch the contacts first */
         $raw_contacts = $this->_getData()->getObjects();
         if (!$raw_contacts) {
-            $raw_contacts = array();
+            $raw_contacts = [];
         }
-        $contacts = array();
+        $contacts = [];
         foreach ($raw_contacts as $id => $contact) {
             if ($contact->getType() != 'contact') {
                 continue;
@@ -336,9 +337,9 @@ class Turba_Driver_Kolab extends Turba_Driver
                 $name = $contact['picture'];
                 $stream = $this->_getData()->getAttachment($backendId, $name);
                 if ($stream) {
-                    $contact['photo'] = new Horde_Stream_Existing(array(
-                        'stream' => $stream
-                    ));
+                    $contact['photo'] = new Horde_Stream_Existing([
+                        'stream' => $stream,
+                    ]);
                     foreach ($contact['_attachments']['type'] as $type => $list) {
                         if (array_search($name, $list) !== false) {
                             $contact['phototype'] = $type;
@@ -363,7 +364,7 @@ class Turba_Driver_Kolab extends Turba_Driver
             }
 
             if (isset($contact['email'])) {
-                $contact['emails'] = array();
+                $contact['emails'] = [];
                 foreach ($contact['email'] as $email) {
                     $contact['emails'][] = $email['smtp-address'];
                 }
@@ -398,7 +399,7 @@ class Turba_Driver_Kolab extends Turba_Driver
 
         /* Now we retrieve distribution-lists */
         $raw_groups = $this->_getListData()->getObjects();
-        $groups = array();
+        $groups = [];
         if ($raw_groups) {
             foreach ($raw_groups as $id => $group) {
                 if ($group->getType() != 'distribution-list') {
@@ -432,9 +433,12 @@ class Turba_Driver_Kolab extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _search(array $criteria, array $fields,
-                               array $blobFields = array(), $count_only = false)
-    {
+    protected function _search(
+        array $criteria,
+        array $fields,
+        array $blobFields = [],
+        $count_only = false
+    ) {
         $this->connect();
 
         if (!count($criteria)) {
@@ -444,7 +448,7 @@ class Turba_Driver_Kolab extends Turba_Driver
         }
 
         // keep only entries matching criteria
-        $ids = array();
+        $ids = [];
         foreach ($criteria as $key => $criteria) {
             $ids[] = $this->_doSearch($criteria, strval($key));
         }
@@ -454,12 +458,12 @@ class Turba_Driver_Kolab extends Turba_Driver
         if ($ids) {
             $result = $this->_read(
                 'uid',
-                array_map(array('Horde_Url', 'uriB64Encode'), $ids),
+                array_map(['Horde_Url', 'uriB64Encode'], $ids),
                 null,
                 $fields
             );
         } else {
-            $result = array();
+            $result = [];
         }
 
         Horde::log(sprintf('Kolab returned %s results', count($result)), 'DEBUG');
@@ -477,7 +481,7 @@ class Turba_Driver_Kolab extends Turba_Driver
      */
     protected function _doSearch($criteria, $glue)
     {
-        $ids = array();
+        $ids = [];
 
         foreach ($criteria as $vals) {
             if (!empty($vals['OR'])) {
@@ -496,7 +500,7 @@ class Turba_Driver_Kolab extends Turba_Driver
                         } elseif (!empty($test['AND'])) {
                             $ids[] = $this->_doSearch($test['AND'], 'AND');
                         } else {
-                            $ids[] = $this->_doSearch(array($test), $glue);
+                            $ids[] = $this->_doSearch([$test], $glue);
                         }
                     }
                 }
@@ -521,7 +525,7 @@ class Turba_Driver_Kolab extends Turba_Driver
      */
     protected function _selectEntries($test)
     {
-        $ids = array();
+        $ids = [];
 
         if (!isset($test['field'])) {
             Horde::log('Search field not set. Returning all entries.', 'DEBUG');
@@ -530,9 +534,8 @@ class Turba_Driver_Kolab extends Turba_Driver
             }
         } else {
             $field = $test['field'];
-            $value = isset($test['test'])
-                ? $test['test']
-                : '';
+            $value = $test['test']
+                ?? '';
 
             // Special emails hack
             if ($field == 'email') {
@@ -573,7 +576,7 @@ class Turba_Driver_Kolab extends Turba_Driver
      */
     protected function _getAND($ids)
     {
-        $matched = $results = array();
+        $matched = $results = [];
 
         /* If there is only 1 array, simply return it. */
         if (count($ids) < 2) {
@@ -605,7 +608,7 @@ class Turba_Driver_Kolab extends Turba_Driver
      */
     protected function _removeDuplicated($ids)
     {
-        $unames = array();
+        $unames = [];
         for ($i = 0; $i < count($ids); ++$i) {
             if (is_array($ids[$i])) {
                 $unames = array_merge($unames, $ids[$i]);
@@ -629,16 +632,20 @@ class Turba_Driver_Kolab extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         $this->connect();
 
-        $results = array();
+        $results = [];
 
         if (!is_array($ids)) {
-            $ids = array($ids);
+            $ids = [$ids];
         }
 
         $count = count($fields);
@@ -650,7 +657,7 @@ class Turba_Driver_Kolab extends Turba_Driver
 
             if (!isset($object['__type']) || $object['__type'] == 'Object') {
                 if ($count) {
-                    $result = array();
+                    $result = [];
                     foreach ($fields as $field) {
                         if (isset($object[$field])) {
                             $result[$field] = $object[$field];
@@ -661,7 +668,7 @@ class Turba_Driver_Kolab extends Turba_Driver
                     $results[] = $object;
                 }
             } else {
-                $member_ids = array();
+                $member_ids = [];
                 if (isset($object['member'])) {
                     foreach ($object['member'] as $member) {
                         if (isset($member['uid'])) {
@@ -692,23 +699,23 @@ class Turba_Driver_Kolab extends Turba_Driver
                         }
                         $display_name = $member['display-name'];
                         $smtp_address = $member['smtp-address'];
-                        $criteria = array(
-                            'AND' => array(
-                                array(
+                        $criteria = [
+                            'AND' => [
+                                [
                                     'field' => 'full-name',
                                     'op' => 'LIKE',
                                     'test' => $display_name,
                                     'begin' => false,
-                                ),
-                                array(
+                                ],
+                                [
                                     'field' => 'emails',
                                     'op' => 'LIKE',
                                     'test' => $smtp_address,
                                     'begin' => false,
-                                ),
-                            ),
-                        );
-                        $fields = array('uid');
+                                ],
+                            ],
+                        ];
+                        $fields = ['uid'];
 
                         // we expect only one result here!!!
                         $contacts = $this->_search($criteria, $fields);
@@ -740,7 +747,7 @@ class Turba_Driver_Kolab extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(), array $date_fields = array())
+    protected function _add(array $attributes, array $blob_fields = [], array $date_fields = [])
     {
         $this->connect();
         $this->_store($attributes);
@@ -794,7 +801,7 @@ class Turba_Driver_Kolab extends Turba_Driver
     {
         $this->connect();
         $this->synchronize();
-        $uids = array_map(array('Horde_Url', 'uriB64Decode'), array_keys($this->_contacts_cache));
+        $uids = array_map(['Horde_Url', 'uriB64Decode'], array_keys($this->_contacts_cache));
 
         /* Delete contacts */
         $this->_getData()->deleteAll();
@@ -814,8 +821,10 @@ class Turba_Driver_Kolab extends Turba_Driver
     protected function _save(Turba_Object $object)
     {
         $this->connect();
-        return $this->_store($this->toDriverKeys($object->getAttributes()),
-                             $object->getValue('__uid'));
+        return $this->_store(
+            $this->toDriverKeys($object->getAttributes()),
+            $object->getValue('__uid')
+        );
     }
 
     /**
@@ -835,16 +844,16 @@ class Turba_Driver_Kolab extends Turba_Driver
             if (isset($attributes['photo']) && isset($attributes['phototype'])) {
                 $filename = 'photo.'
                     . Horde_Mime_Magic::mimeToExt($attributes['phototype']);
-                $attributes['_attachments'][$filename] = array(
+                $attributes['_attachments'][$filename] = [
                     'type' => $attributes['phototype'],
-                    'content' => Horde_Stream_Wrapper_String::getStream($attributes['photo'])
-                );
+                    'content' => Horde_Stream_Wrapper_String::getStream($attributes['photo']),
+                ];
                 $attributes['picture'] = $filename;
                 unset($attributes['photo'], $attributes['phototype']);
             }
 
             // EAS sets the date fields to '' instead of null -> fix it up
-            $fix_date_fields = array('birthday', 'anniversary');
+            $fix_date_fields = ['birthday', 'anniversary'];
             foreach ($fix_date_fields as $fix_date) {
                 if (empty($attributes[$fix_date])) {
                     unset($attributes[$fix_date]);
@@ -872,13 +881,13 @@ class Turba_Driver_Kolab extends Turba_Driver
     {
         if (isset($attributes['__members'])) {
             $member_ids = unserialize($attributes['__members']);
-            $attributes['member'] = array();
+            $attributes['member'] = [];
             foreach ($member_ids as $member_id) {
                 $source_id = null;
                 if (strpos($member_id, ':')) {
-                    list($source_id, $member_id) = explode(':', $member_id, 2);
+                    [$source_id, $member_id] = explode(':', $member_id, 2);
                 }
-                $mail = array('uid' => Horde_Url::uriB64Decode($member_id));
+                $mail = ['uid' => Horde_Url::uriB64Decode($member_id)];
                 $member = null;
                 if ($source_id) {
                     try {
@@ -932,9 +941,9 @@ class Turba_Driver_Kolab extends Turba_Driver
     protected function _makeKey(array $attributes)
     {
         return Horde_Url::uriB64Encode(
-            isset($attributes['uid'])
-                ? $attributes['uid']
-                : $this->_generateUid());
+            $attributes['uid']
+                ?? $this->_generateUid()
+        );
     }
 
     /**
@@ -985,13 +994,13 @@ class Turba_Driver_Kolab extends Turba_Driver
      *
      * @return boolean TODO
      */
-    public function checkDefaultShare(Horde_Share_Object $share,
-                                      array $srcconfig)
-    {
+    public function checkDefaultShare(
+        Horde_Share_Object $share,
+        array $srcconfig
+    ) {
         $params = @unserialize($share->get('params'));
-        return isset($params['default'])
-            ? $params['default']
-            : false;
+        return $params['default']
+            ?? false;
     }
 
     /**
@@ -1001,18 +1010,19 @@ class Turba_Driver_Kolab extends Turba_Driver
      */
     public function setDefaultShare($share)
     {
-           $addressbooks = $GLOBALS['injector']->getInstance('Turba_Shares')
-               ->listShares(
-                   $GLOBALS['registry']->getAuth(),
-                   array('perm' => Horde_Perms::SHOW,
-                         'attributes' => $GLOBALS['registry']->getAuth()));
-           foreach ($addressbooks as $id => $addressbook) {
-               if ($id == $share) {
-                   $addressbook->set('default', true);
-                   $addressbook->save();
-                   break;
-               }
-           }
+        $addressbooks = $GLOBALS['injector']->getInstance('Turba_Shares')
+            ->listShares(
+                $GLOBALS['registry']->getAuth(),
+                ['perm' => Horde_Perms::SHOW,
+                    'attributes' => $GLOBALS['registry']->getAuth()]
+            );
+        foreach ($addressbooks as $id => $addressbook) {
+            if ($id == $share) {
+                $addressbook->set('default', true);
+                $addressbook->save();
+                break;
+            }
+        }
     }
 
     /**

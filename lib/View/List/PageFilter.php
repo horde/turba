@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_View_List:: class provides an interface for objects that
  * visualize Turba_List objects.
@@ -7,9 +8,9 @@
  * @author  Jon Parise <jon@csh.rit.edu>
  * @package Turba
  */
- /**
-  * Skips objects which are not on the current page
-  */
+/**
+ * Skips objects which are not on the current page
+ */
 class Turba_View_List_PageFilter
 {
     protected $_min;

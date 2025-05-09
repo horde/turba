@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_View_EditContact:: class provides an API for viewing events.
  *

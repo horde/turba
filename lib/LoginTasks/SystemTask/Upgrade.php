@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Login system task for automated upgrade tasks.
  *
@@ -21,18 +22,18 @@ class Turba_LoginTasks_SystemTask_Upgrade extends Horde_Core_LoginTasks_SystemTa
 
     /**
      */
-    protected $_versions = array(
-        '4.2'
-    );
+    protected $_versions = [
+        '4.2',
+    ];
 
     /**
      */
     protected function _upgrade($version)
     {
         switch ($version) {
-        case '4.2':
-            $this->_upgradeColumnsPref();
-            break;
+            case '4.2':
+                $this->_upgradeColumnsPref();
+                break;
         }
     }
 
@@ -41,7 +42,7 @@ class Turba_LoginTasks_SystemTask_Upgrade extends Horde_Core_LoginTasks_SystemTa
      */
     protected function _upgradeColumnsPref()
     {
-        $newColumns = array();
+        $newColumns = [];
         foreach (Turba::getColumns() as $source => $columns) {
             if (($pos = array_search('category', $columns)) !== false) {
                 array_splice($columns, $pos, 1, '__tags');

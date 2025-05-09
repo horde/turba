@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba script to add a new entry into an address book.
  *
@@ -56,12 +57,12 @@ if ($form->validate()) {
     $form->execute();
 }
 Horde::startBuffer();
-$notification->notify(array('listeners' => 'status'));
+$notification->notify(['listeners' => 'status']);
 $form->renderActive($form->getRenderer(), $vars, Horde::url('add.php'), 'post');
 $formHtml = Horde::endBuffer();
 
-$page_output->header(array(
-    'title' => _("New Contact")
-));
+$page_output->header([
+    'title' => _("New Contact"),
+]);
 echo $formHtml;
 $page_output->footer();

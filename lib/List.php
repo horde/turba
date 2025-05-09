@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_List:: class provides an interface for dealing with a
  * list of Turba_Objects.
@@ -21,7 +22,7 @@ class Turba_List implements Countable
      *
      * @var array
      */
-    public $objects = array();
+    public $objects = [];
 
     /**
      * The field to compare objects by.
@@ -33,10 +34,10 @@ class Turba_List implements Countable
     /**
      * Constructor.
      */
-    public function __construct(array $ids = array())
+    public function __construct(array $ids = [])
     {
         foreach ($ids as $value) {
-            list($source, $key) = explode(':', $value);
+            [$source, $key] = explode(':', $value);
             try {
                 $driver = $GLOBALS['injector']->getInstance('Turba_Factory_Driver')->create($source);
                 $this->insert($driver->getObject($key));
@@ -122,12 +123,12 @@ class Turba_List implements Countable
         global $attributes, $prefs;
 
         if (!$order) {
-            $order = array(
-                array(
+            $order = [
+                [
                     'ascending' => true,
-                    'field' => 'lastname'
-                )
-            );
+                    'field' => 'lastname',
+                ],
+            ];
         }
 
         $need_lastname = $need_firstname = false;
@@ -155,7 +156,7 @@ class Turba_List implements Countable
         }
 
         if ($need_firstname || $need_lastname) {
-            $sorted_objects = array();
+            $sorted_objects = [];
             foreach ($this->objects as $key => $object) {
                 $name = $object->getValue('name');
                 $firstname = $object->getValue('firstname');
@@ -165,15 +166,15 @@ class Turba_List implements Countable
                 }
                 if (!$firstname) {
                     switch ($name_format) {
-                    case 'last_first':
-                        $firstname = preg_replace('/' . preg_quote($lastname, '/') . ',\s*/', '', $name);
-                        break;
-                    case 'first_last':
-                        $firstname = preg_replace('/\s+' . preg_quote($lastname, '/') . '/', '', $name);
-                        break;
-                    default:
-                        $firstname = preg_replace('/\s*' . preg_quote($lastname, '/') . '(,\s*)?/', '', $name);
-                        break;
+                        case 'last_first':
+                            $firstname = preg_replace('/' . preg_quote($lastname, '/') . ',\s*/', '', $name);
+                            break;
+                        case 'first_last':
+                            $firstname = preg_replace('/\s+' . preg_quote($lastname, '/') . '/', '', $name);
+                            break;
+                        default:
+                            $firstname = preg_replace('/\s*' . preg_quote($lastname, '/') . '(,\s*)?/', '', $name);
+                            break;
                     }
                 }
                 $object->setValue('__lastname', $lastname);
@@ -193,7 +194,7 @@ class Turba_List implements Countable
                 $f = $attributes[$val['field']];
                 if (!empty($f['cmptype'])) {
                     $sm = $f['cmptype'];
-                } elseif (in_array($f['type'], array('int', 'intlist', 'number'))) {
+                } elseif (in_array($f['type'], ['int', 'intlist', 'number'])) {
                     $sm = 'int';
                 }
             }
@@ -204,7 +205,7 @@ class Turba_List implements Countable
 
         /* Exceptions thrown inside a sort incorrectly cause an error. See
          * Bug #9202. */
-        @usort($sorted_objects, array($this, '_cmp'));
+        @usort($sorted_objects, [$this, '_cmp']);
 
         $this->objects = $sorted_objects;
     }
@@ -227,21 +228,21 @@ class Turba_List implements Countable
             $f = $field['field'];
 
             switch ($field['sortmethod']) {
-            case 'int':
-                $result = ($a->getValue($f) > $b->getValue($f)) ? 1 : -1;
-                break;
+                case 'int':
+                    $result = ($a->getValue($f) > $b->getValue($f)) ? 1 : -1;
+                    break;
 
-            case 'text':
-                if (!isset($a->sortValue[$f])) {
-                    $a->sortValue[$f] = Horde_String::lower($a->getValue($f), true, 'UTF-8');
-                }
-                if (!isset($b->sortValue[$f])) {
-                    $b->sortValue[$f] = Horde_String::lower($b->getValue($f), true, 'UTF-8');
-                }
+                case 'text':
+                    if (!isset($a->sortValue[$f])) {
+                        $a->sortValue[$f] = Horde_String::lower($a->getValue($f), true, 'UTF-8');
+                    }
+                    if (!isset($b->sortValue[$f])) {
+                        $b->sortValue[$f] = Horde_String::lower($b->getValue($f), true, 'UTF-8');
+                    }
 
-                // Use strcoll for locale-safe comparisons.
-                $result = strcoll($a->sortValue[$f], $b->sortValue[$f]);
-                break;
+                    // Use strcoll for locale-safe comparisons.
+                    $result = strcoll($a->sortValue[$f], $b->sortValue[$f]);
+                    break;
             }
 
             if ($result != 0) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2017 Horde LLC (http://www.horde.org/)
  *
@@ -75,10 +76,10 @@ class Contacts implements Iterator
                 $hash[$blob] = base64_encode($hash[$blob]);
             }
         }
-        return array(
+        return [
             'addressbook' => $this->_driver->getName(),
-            'contact' => $hash
-        );
+            'contact' => $hash,
+        ];
     }
 
     /**
@@ -109,7 +110,7 @@ class Contacts implements Iterator
         }
 
         $this->_list = new ArrayIterator(
-            $this->_driver->search(array())->objects
+            $this->_driver->search([])->objects
         );
     }
 

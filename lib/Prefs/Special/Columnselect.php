@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Special prefs handling for the 'columnselect' preference.
  *
@@ -16,9 +17,7 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
 {
     /**
      */
-    public function init(Horde_Core_Prefs_Ui $ui)
-    {
-    }
+    public function init(Horde_Core_Prefs_Ui $ui) {}
 
     /**
      */
@@ -37,19 +36,19 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
 
         $t->set('columns', htmlspecialchars($prefs->getValue('columns')));
 
-        $col_list = $cols = array();
+        $col_list = $cols = [];
         foreach ($cfgSources as $source => $info) {
-            $info['map']['__tags'] = array();
+            $info['map']['__tags'] = [];
 
-            $col_list[] = array(
+            $col_list[] = [
                 'first' => empty($col_list),
                 'source' => htmlspecialchars($source),
-                'title' => htmlspecialchars($info['title'])
-            );
+                'title' => htmlspecialchars($info['title']),
+            ];
 
             // First the selected columns in their current order.
             $i = 0;
-            $inputs = array();
+            $inputs = [];
 
             if (isset($sources[$source])) {
                 $selected = array_flip($sources[$source]);
@@ -60,12 +59,12 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
                         continue;
                     }
 
-                    $inputs[] = array(
+                    $inputs[] = [
                         'checked' => isset($selected[$column]),
                         'column' => htmlspecialchars($column),
                         'i' => $i++,
-                        'label' => htmlspecialchars($attributes[$column]['label'])
-                    );
+                        'label' => htmlspecialchars($attributes[$column]['label']),
+                    ];
                 }
             } else {
                 // Need to unset this for the loop below, otherwise
@@ -81,19 +80,19 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
                     continue;
                 }
 
-                $inputs[] = array(
+                $inputs[] = [
                     'checked' => isset($selected[$column]),
                     'column' => htmlspecialchars($column),
                     'i' => $i++,
-                    'label' => htmlspecialchars($attributes[$column]['label'])
-                );
+                    'label' => htmlspecialchars($attributes[$column]['label']),
+                ];
             }
 
-            $cols[] = array(
+            $cols[] = [
                 'first' => empty($cols),
                 'inputs' => $inputs,
-                'source' => htmlspecialchars($source)
-            );
+                'source' => htmlspecialchars($source),
+            ];
         }
 
         if (!empty($col_list)) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba directory driver implementation for virtual address books.
  *
@@ -47,7 +48,7 @@ class Turba_Driver_Vbook extends Turba_Driver
      *                  source name of parent source in the global cfgSources
      *                  array.
      */
-    public function __construct($name = '', array $params = array())
+    public function __construct($name = '', array $params = [])
     {
         parent::__construct($name, $params);
 
@@ -60,7 +61,7 @@ class Turba_Driver_Vbook extends Turba_Driver
             ->createFromConfig($this->_params['source']);
 
         $this->searchCriteria = empty($this->_params['criteria'])
-            ? array()
+            ? []
             : $this->_params['criteria'];
         $this->searchType = (count($this->searchCriteria) > 1)
             ? 'advanced'
@@ -108,20 +109,23 @@ class Turba_Driver_Vbook extends Turba_Driver
      * @throws Turba_Exception
      */
     protected function _search(
-        array $criteria, array $fields, array $blobFields = array(), $count_only = false)
-    {
+        array $criteria,
+        array $fields,
+        array $blobFields = [],
+        $count_only = false
+    ) {
         /* Add the passed in search criteria to the vbook criteria
          * (which need to be mapped from turba fields to
          * driver-specific fields). */
-        $new_criteria = array();
+        $new_criteria = [];
         if (empty($criteria['AND'])) {
-            $new_criteria['AND'] = array(
+            $new_criteria['AND'] = [
                 $criteria,
-                $this->makeSearch($this->searchCriteria, 'AND', array())
-            );
+                $this->makeSearch($this->searchCriteria, 'AND', []),
+            ];
         } else {
             $new_criteria = $criteria;
-            $new_criteria['AND'][] = $this->makeSearch($this->searchCriteria, 'AND', array());
+            $new_criteria['AND'][] = $this->makeSearch($this->searchCriteria, 'AND', []);
         }
         $results = $this->_driver->_search($new_criteria, $fields, $blobFields);
         return $count_only ? count($results) : $results;
@@ -169,10 +173,14 @@ class Turba_Driver_Vbook extends Turba_Driver
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         return $this->_driver->_read($key, $ids, $owner, $fields, $blobFields, $dateFields);
     }
 
@@ -185,7 +193,7 @@ class Turba_Driver_Vbook extends Turba_Driver
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(), array $date_fields = array())
+    protected function _add(array $attributes, array $blob_fields = [], array $date_fields = [])
     {
         throw new Turba_Exception(_("You cannot add new contacts to a virtual address book"));
     }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The Turba_View_Browse class provides the logic for browsing lists
  * of contacts.
@@ -16,7 +17,7 @@ class Turba_View_Browse
     /**
      * @var array
      */
-     protected $_params;
+    protected $_params;
 
     /**
      * Constructor;
@@ -54,281 +55,316 @@ class Turba_View_Browse
         if (isset($driver)) {
             $actionID = $vars->get('actionID');
             switch ($actionID) {
-            case 'delete':
-                $keys = $vars->get('objectkeys');
-                if (!is_array($keys)) {
-                    break;
-                }
+                case 'delete':
+                    $keys = $vars->get('objectkeys');
+                    if (!is_array($keys)) {
+                        break;
+                    }
 
-                $key = false;
-                if ($vars->exists('key')) {
-                    $key = $vars->get('key');
-                }
-                if ($key && $key != '**search') {
-                    // We are removing a contact from a list.
-                    $errorCount = 0;
-                    $list = $driver->getObject($key);
-                    foreach ($keys as $sourceKey) {
-                        list($objectSource, $objectKey) = explode(':', $sourceKey, 2);
-                        if (!$list->removeMember($objectKey, $objectSource)) {
-                            $errorCount++;
+                    $key = false;
+                    if ($vars->exists('key')) {
+                        $key = $vars->get('key');
+                    }
+                    if ($key && $key != '**search') {
+                        // We are removing a contact from a list.
+                        $errorCount = 0;
+                        $list = $driver->getObject($key);
+                        foreach ($keys as $sourceKey) {
+                            [$objectSource, $objectKey] = explode(':', $sourceKey, 2);
+                            if (!$list->removeMember($objectKey, $objectSource)) {
+                                $errorCount++;
+                            }
                         }
-                    }
-                    if (!$errorCount) {
-                        $notification->push(
-                            sprintf(_("Successfully removed %d contact(s) from list."),
-                                count($keys)),
-                            'horde.success');
-                    } elseif (count($keys) == $errorCount) {
-                        $notification->push(
-                            sprintf(_("Error removing %d contact(s) from list."),
-                                 count($keys)),
-                            'horde.error');
-                    } else {
-                        $notification->push(
-                            sprintf(_("Error removing %d of %d requested contact(s) from list."),
-                                $errorCount,
-                                count($keys)),
-                            'horde.error');
-                    }
-                    $list->store();
-                } else {
-                    // We are deleting an object.
-                    $errorCount = 0;
-                    foreach ($keys as $sourceKey) {
-                        list($objectSource, $objectKey) = explode(':', $sourceKey, 2);
-                        try {
-                            $driver->delete($objectKey);
-                        } catch (Turba_Exception $e) {
-                            ++$errorCount;
-                        }
-                    }
-                    if (!$errorCount) {
-                        $notification->push(
-                            sprintf(ngettext("Successfully deleted %d contact.", "Successfully deleted %d contacts.", count($keys)),
-                                count($keys)),
-                            'horde.success');
-                    } elseif (count($keys) == $errorCount) {
-                        $notification->push(
-                            sprintf(ngettext("Error deleting %d contact.", "Error deleting %d contacts.", count($keys)),
-                                count($keys)),
-                            'horde.error');
-                    } else {
-                        $notification->push(
-                            sprintf(ngettext("Error deleting %d of %d requested contact.", "Error deleting %d of %d requested contacts.", count($keys)),
-                                $errorCount,
-                                count($keys)),
-                            'horde.error');
-                    }
-                }
-                break;
-
-            case 'move':
-            case 'copy':
-                $keys = $vars->get('objectkeys');
-                if (!(is_array($keys) && $keys)) {
-                    break;
-                }
-
-                // If we have data, try loading the target address book driver.
-                $targetSource = $vars->get('targetAddressbook');
-
-                try {
-                    $targetDriver = $factory->create($targetSource);
-                } catch (Turba_Exception $e) {
-                    $notification->push($e, 'horde.error');
-                    break;
-                }
-
-                if (Turba::hasMaxContacts($targetDriver)) {
-                    break;
-                }
-
-                foreach ($keys as $sourceKey) {
-                    // Split up the key into source and object ids.
-                    list($objectSource, $objectKey) = explode(':', $sourceKey, 2);
-
-                    // Ignore this entry if the target is the same as the
-                    // source.
-                    if ($objectSource == $targetDriver->getName()) {
-                        continue;
-                    }
-
-                    // Try and load the driver for the source.
-                    try {
-                        $sourceDriver = $factory->create($objectSource);
-                    } catch (Turba_Exception $e) {
-                        $notification->push($e, 'horde.error');
-                        continue;
-                    }
-
-                    try {
-                        $object = $sourceDriver->getObject($objectKey);
-                    } catch (Horde_Exception_NotFound $e) {
-                        $notification->push(
-                            _("Failed to find object to be added"),
-                            'horde.error'
-                        );
-                        continue;
-                    }
-
-                    if ($object->isGroup()) {
-                        if ($actionID == 'move') {
+                        if (!$errorCount) {
                             $notification->push(
-                                sprintf(_("\"%s\" was not moved because it is a list."),
-                                    $object->getValue('name')),
-                                'horde.warning');
+                                sprintf(
+                                    _("Successfully removed %d contact(s) from list."),
+                                    count($keys)
+                                ),
+                                'horde.success'
+                            );
+                        } elseif (count($keys) == $errorCount) {
+                            $notification->push(
+                                sprintf(
+                                    _("Error removing %d contact(s) from list."),
+                                    count($keys)
+                                ),
+                                'horde.error'
+                            );
                         } else {
                             $notification->push(
-                                sprintf(_("\"%s\" was not copied because it is a list."),
-                                    $object->getValue('name')),
-                                'horde.warning');
+                                sprintf(
+                                    _("Error removing %d of %d requested contact(s) from list."),
+                                    $errorCount,
+                                    count($keys)
+                                ),
+                                'horde.error'
+                            );
                         }
-                        continue;
-                    }
-
-                    // Try adding to the target.
-                    $objAttributes = array();
-
-                    // Get the values through the Turba_Object class.
-                    foreach (array_keys($targetDriver->getCriteria()) as $info_key) {
-                        if (!is_array($targetDriver->map[$info_key]) ||
-                            isset($targetDriver->map[$info_key]['attribute'])) {
-                            $objectValue = $object->getValue($info_key);
-
-                            // Get 'data' value if object type is image, the
-                            // direct value in other case.
-                            $objAttributes[$info_key] =
-                                isset($attributes[$info_key]) &&
-                                    $attributes[$info_key]['type'] == 'image'
-                                    ? $objectValue['load']['data']
-                                    : $objectValue;
+                        $list->store();
+                    } else {
+                        // We are deleting an object.
+                        $errorCount = 0;
+                        foreach ($keys as $sourceKey) {
+                            [$objectSource, $objectKey] = explode(':', $sourceKey, 2);
+                            try {
+                                $driver->delete($objectKey);
+                            } catch (Turba_Exception $e) {
+                                ++$errorCount;
+                            }
+                        }
+                        if (!$errorCount) {
+                            $notification->push(
+                                sprintf(
+                                    ngettext("Successfully deleted %d contact.", "Successfully deleted %d contacts.", count($keys)),
+                                    count($keys)
+                                ),
+                                'horde.success'
+                            );
+                        } elseif (count($keys) == $errorCount) {
+                            $notification->push(
+                                sprintf(
+                                    ngettext("Error deleting %d contact.", "Error deleting %d contacts.", count($keys)),
+                                    count($keys)
+                                ),
+                                'horde.error'
+                            );
+                        } else {
+                            $notification->push(
+                                sprintf(
+                                    ngettext("Error deleting %d of %d requested contact.", "Error deleting %d of %d requested contacts.", count($keys)),
+                                    $errorCount,
+                                    count($keys)
+                                ),
+                                'horde.error'
+                            );
                         }
                     }
-                    unset($objAttributes['__owner']);
-                    if ($actionID == 'copy') {
-                        unset($objAttributes['__uid']);
+                    break;
+
+                case 'move':
+                case 'copy':
+                    $keys = $vars->get('objectkeys');
+                    if (!(is_array($keys) && $keys)) {
+                        break;
                     }
-                    // Try adding tags.
-                    $objAttributes['__tags'] = $object->getValue('__tags');
+
+                    // If we have data, try loading the target address book driver.
+                    $targetSource = $vars->get('targetAddressbook');
 
                     try {
-                        $targetDriver->add($objAttributes);
+                        $targetDriver = $factory->create($targetSource);
                     } catch (Turba_Exception $e) {
-                        $notification->push(
-                            sprintf(_("Failed to add %s to %s: %s"),
-                                $object->getValue('name'),
-                                $targetDriver->title,
-                                $e),
-                            'horde.error');
+                        $notification->push($e, 'horde.error');
                         break;
                     }
 
-                    $notification->push(
-                        sprintf(_("Successfully added %s to %s"),
-                            $object->getValue('name'),
-                            $targetDriver->title),
-                        'horde.success');
+                    if (Turba::hasMaxContacts($targetDriver)) {
+                        break;
+                    }
 
-                    // If we're moving objects, and we succeeded,
-                    // delete them from the original source now.
-                    if ($actionID == 'move') {
+                    foreach ($keys as $sourceKey) {
+                        // Split up the key into source and object ids.
+                        [$objectSource, $objectKey] = explode(':', $sourceKey, 2);
+
+                        // Ignore this entry if the target is the same as the
+                        // source.
+                        if ($objectSource == $targetDriver->getName()) {
+                            continue;
+                        }
+
+                        // Try and load the driver for the source.
                         try {
-                            $sourceDriver->delete($objectKey, false);
+                            $sourceDriver = $factory->create($objectSource);
+                        } catch (Turba_Exception $e) {
+                            $notification->push($e, 'horde.error');
+                            continue;
+                        }
+
+                        try {
+                            $object = $sourceDriver->getObject($objectKey);
+                        } catch (Horde_Exception_NotFound $e) {
+                            $notification->push(
+                                _("Failed to find object to be added"),
+                                'horde.error'
+                            );
+                            continue;
+                        }
+
+                        if ($object->isGroup()) {
+                            if ($actionID == 'move') {
+                                $notification->push(
+                                    sprintf(
+                                        _("\"%s\" was not moved because it is a list."),
+                                        $object->getValue('name')
+                                    ),
+                                    'horde.warning'
+                                );
+                            } else {
+                                $notification->push(
+                                    sprintf(
+                                        _("\"%s\" was not copied because it is a list."),
+                                        $object->getValue('name')
+                                    ),
+                                    'horde.warning'
+                                );
+                            }
+                            continue;
+                        }
+
+                        // Try adding to the target.
+                        $objAttributes = [];
+
+                        // Get the values through the Turba_Object class.
+                        foreach (array_keys($targetDriver->getCriteria()) as $info_key) {
+                            if (!is_array($targetDriver->map[$info_key]) ||
+                                isset($targetDriver->map[$info_key]['attribute'])) {
+                                $objectValue = $object->getValue($info_key);
+
+                                // Get 'data' value if object type is image, the
+                                // direct value in other case.
+                                $objAttributes[$info_key] =
+                                    isset($attributes[$info_key]) &&
+                                        $attributes[$info_key]['type'] == 'image'
+                                        ? $objectValue['load']['data']
+                                        : $objectValue;
+                            }
+                        }
+                        unset($objAttributes['__owner']);
+                        if ($actionID == 'copy') {
+                            unset($objAttributes['__uid']);
+                        }
+                        // Try adding tags.
+                        $objAttributes['__tags'] = $object->getValue('__tags');
+
+                        try {
+                            $targetDriver->add($objAttributes);
                         } catch (Turba_Exception $e) {
                             $notification->push(
-                                sprintf(_("There was an error deleting \"%s\" from the source address book."),
-                                    $object->getValue('name')),
-                                'horde.error');
+                                sprintf(
+                                    _("Failed to add %s to %s: %s"),
+                                    $object->getValue('name'),
+                                    $targetDriver->title,
+                                    $e
+                                ),
+                                'horde.error'
+                            );
+                            break;
                         }
 
-                        /* Log the adding of this item in the history again,
-                         * because otherwise the delete log would be after the
-                         * add log. */
-                        try {
-                            $history->log('turba:' . $targetDriver->getName() . ':' . $objAttributes['__uid'],
-                                      array('action' => 'add'),
-                                      true);
-                        } catch (Exception $e) {
-                            Horde::log($e, 'ERR');
+                        $notification->push(
+                            sprintf(
+                                _("Successfully added %s to %s"),
+                                $object->getValue('name'),
+                                $targetDriver->title
+                            ),
+                            'horde.success'
+                        );
+
+                        // If we're moving objects, and we succeeded,
+                        // delete them from the original source now.
+                        if ($actionID == 'move') {
+                            try {
+                                $sourceDriver->delete($objectKey, false);
+                            } catch (Turba_Exception $e) {
+                                $notification->push(
+                                    sprintf(
+                                        _("There was an error deleting \"%s\" from the source address book."),
+                                        $object->getValue('name')
+                                    ),
+                                    'horde.error'
+                                );
+                            }
+
+                            /* Log the adding of this item in the history again,
+                             * because otherwise the delete log would be after the
+                             * add log. */
+                            try {
+                                $history->log(
+                                    'turba:' . $targetDriver->getName() . ':' . $objAttributes['__uid'],
+                                    ['action' => 'add'],
+                                    true
+                                );
+                            } catch (Exception $e) {
+                                Horde::log($e, 'ERR');
+                            }
                         }
                     }
-                }
-                break;
-
-            case 'add':
-                // Add a contact to a list.
-                $keys = $vars->get('objectkeys');
-                if (!($targetKey = $vars->get('targetList'))) {
                     break;
-                }
-                $args = array();
 
-                if (strlen($vars->get('targetNew'))) {
-                    $targetSource = $vars->get('targetAddressbook');
-                    $args['attr'] = array('name' => $targetKey);
-                } else {
-                    list($targetSource, $args['gid']) = explode(':', $targetKey, 2);
-                    if (!isset($cfgSources[$targetSource])) {
+                case 'add':
+                    // Add a contact to a list.
+                    $keys = $vars->get('objectkeys');
+                    if (!($targetKey = $vars->get('targetList'))) {
                         break;
                     }
-                }
+                    $args = [];
 
-                $members = array();
-                foreach ($keys as $key) {
-                    $members[] = explode(':', $key, 2);
-                }
-
-                try {
-                    $res = Turba_Object_Group::createGroup(
-                        $targetSource,
-                        $members,
-                        $args
-                    );
-                } catch (Turba_Exception $e) {
-                    $notification->push($e, 'horde.error');
-                    break;
-                }
-
-                if (isset($args['name'])) {
-                    $notification->push(
-                        sprintf(
-                            _("Successfully created the contact list \"%s\"."),
-                            $args['name']
-                        ),
-                        'horde.success'
-                    );
-                }
-
-                if (!empty($res->error)) {
-                    if ($res->success) {
-                        $notification->push(
-                            sprintf(
-                                _("Error adding %d of %d requested contact(s) to list."),
-                                count($res->error),
-                                count($res->error) + $res->success
-                            ),
-                            'horde.error'
-                        );
+                    if (strlen($vars->get('targetNew'))) {
+                        $targetSource = $vars->get('targetAddressbook');
+                        $args['attr'] = ['name' => $targetKey];
                     } else {
+                        [$targetSource, $args['gid']] = explode(':', $targetKey, 2);
+                        if (!isset($cfgSources[$targetSource])) {
+                            break;
+                        }
+                    }
+
+                    $members = [];
+                    foreach ($keys as $key) {
+                        $members[] = explode(':', $key, 2);
+                    }
+
+                    try {
+                        $res = Turba_Object_Group::createGroup(
+                            $targetSource,
+                            $members,
+                            $args
+                        );
+                    } catch (Turba_Exception $e) {
+                        $notification->push($e, 'horde.error');
+                        break;
+                    }
+
+                    if (isset($args['name'])) {
                         $notification->push(
                             sprintf(
-                                _("Error adding %d contact(s) to list."),
-                                count($res->error)
+                                _("Successfully created the contact list \"%s\"."),
+                                $args['name']
                             ),
-                            'horde.error'
+                            'horde.success'
                         );
                     }
-                } elseif ($res->success) {
-                    $notification->push(
-                        sprintf(
-                            _("Successfully added %d contact(s) to list."),
-                            $res->success
-                        ),
-                        'horde.success'
-                    );
-                }
-                break;
+
+                    if (!empty($res->error)) {
+                        if ($res->success) {
+                            $notification->push(
+                                sprintf(
+                                    _("Error adding %d of %d requested contact(s) to list."),
+                                    count($res->error),
+                                    count($res->error) + $res->success
+                                ),
+                                'horde.error'
+                            );
+                        } else {
+                            $notification->push(
+                                sprintf(
+                                    _("Error adding %d contact(s) to list."),
+                                    count($res->error)
+                                ),
+                                'horde.error'
+                            );
+                        }
+                    } elseif ($res->success) {
+                        $notification->push(
+                            sprintf(
+                                _("Successfully added %d contact(s) to list."),
+                                $res->success
+                            ),
+                            'horde.success'
+                        );
+                    }
+                    break;
             }
 
             // We might get here from the search page but are not allowed to
@@ -339,13 +375,13 @@ class Turba_View_Browse
             }
         }
 
-        $templates = array();
+        $templates = [];
         if (isset($driver)) {
             Turba::addBrowseJs();
 
             // Read the columns to display from the preferences.
             $sources = Turba::getColumns();
-            $columns = isset($sources[$source]) ? $sources[$source] : array();
+            $columns = $sources[$source] ?? [];
             $sortorder = Turba::getPreferredSortOrder();
 
             if ($vars->get('key')) {
@@ -358,8 +394,10 @@ class Turba_View_Browse
                 }
 
                 if ($list && $list->isGroup()) {
-                    $title = sprintf(_("Contacts in list: %s"),
-                                     $list->getValue('name'));
+                    $title = sprintf(
+                        _("Contacts in list: %s"),
+                        $list->getValue('name')
+                    );
                     $templates[] = '/browse/header.inc';
 
                     // Show List Members.
@@ -368,10 +406,16 @@ class Turba_View_Browse
                         if (count($results) != $list->count()) {
                             $count = $list->count() - count($results);
                             $notification->push(
-                                sprintf(ngettext("There is %d contact in this list that is not viewable to you",
-                                                 "There are %d contacts in this list that are not viewable to you", $count),
-                                $count),
-                            'horde.message');
+                                sprintf(
+                                    ngettext(
+                                        "There is %d contact in this list that is not viewable to you",
+                                        "There are %d contacts in this list that are not viewable to you",
+                                        $count
+                                    ),
+                                    $count
+                                ),
+                                'horde.message'
+                            );
                         }
                         $view = new Turba_View_List($results, null, $columns);
                         $view->setType('list');
@@ -386,19 +430,19 @@ class Turba_View_Browse
                 if (empty($cfgSources[$source]['browse'])) {
                     $notification->push(_("Your default address book is not browseable."), 'horde.warning');
                 } else {
-                    $type_filter = array();
+                    $type_filter = [];
                     switch ($vars->get('show')) {
-                    case 'contacts':
-                        $type_filter = array('__type' => 'Object');
-                        break;
+                        case 'contacts':
+                            $type_filter = ['__type' => 'Object'];
+                            break;
 
-                    case 'lists':
-                        $type_filter = array('__type' => 'Group');
-                        break;
+                        case 'lists':
+                            $type_filter = ['__type' => 'Group'];
+                            break;
                     }
 
                     try {
-                        $results = $driver->search($type_filter, $sortorder, 'AND', array_merge(array('__uid'), $columns ? $columns : array('name')));
+                        $results = $driver->search($type_filter, $sortorder, 'AND', array_merge(['__uid'], $columns ? $columns : ['name']));
                         $view = new Turba_View_List($results, null, $columns);
                         $view->setType('directory');
                     } catch (Turba_Exception $e) {
@@ -413,10 +457,10 @@ class Turba_View_Browse
         $page_output->addScriptFile('quickfinder.js', 'horde');
         $page_output->addScriptFile('scriptaculous/effects.js', 'horde');
         $page_output->addScriptFile('redbox.js', 'horde');
-        $page_output->header(array(
-            'title' => $title
-        ));
-        $notification->notify(array('listeners' => 'status'));
+        $page_output->header([
+            'title' => $title,
+        ]);
+        $notification->notify(['listeners' => 'status']);
         foreach ($templates as $template) {
             require TURBA_TEMPLATES . $template;
         }

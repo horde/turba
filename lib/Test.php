@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This class provides the Turba configuration for the test script.
  *
@@ -9,6 +10,7 @@
  *
  * @author  Michael Slusarz <slusarz@horde.org>
  * @package Turba
+ * @coversNothing
  */
 class Turba_Test extends Horde_Test
 {
@@ -17,28 +19,28 @@ class Turba_Test extends Horde_Test
      *
      * @var array
      */
-    protected $_moduleList = array();
+    protected $_moduleList = [];
 
     /**
      * PHP settings list.
      *
      * @var array
      */
-    protected $_settingsList = array();
+    protected $_settingsList = [];
 
     /**
      * PEAR modules list.
      *
      * @var array
      */
-    protected $_pearList = array();
+    protected $_pearList = [];
 
     /**
      * Inter-Horde application dependencies.
      *
      * @var array
      */
-    protected $_appList = array();
+    protected $_appList = [];
 
     /**
      */
@@ -46,12 +48,12 @@ class Turba_Test extends Horde_Test
     {
         parent::__construct();
 
-        $this->_fileList += array(
+        $this->_fileList += [
             'config/attributes.php' => null,
             'config/backends.php' => null,
             'config/mime_drivers.php' => null,
-            'config/prefs.php' => null
-        );
+            'config/prefs.php' => null,
+        ];
     }
 
     /**
@@ -63,15 +65,15 @@ class Turba_Test extends Horde_Test
     {
         $ret = '<h1>LDAP Support Test</h1>';
 
-        $params = array(
+        $params = [
             'server' => Horde_Util::getPost('server'),
             'port' => Horde_Util::getPost('port', 389),
             'basedn' => Horde_Util::getPost('basedn'),
             'user' => Horde_Util::getPost('user'),
             'passwd' => Horde_Util::getPost('passwd'),
             'filter' => Horde_Util::getPost('filter'),
-            'proto' => Horde_Util::getPost('proto')
-        );
+            'proto' => Horde_Util::getPost('proto'),
+        ];
 
         if (!empty($params['server']) &&
             !empty($params['basedn']) &&
