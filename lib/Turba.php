@@ -138,7 +138,7 @@ class Turba
         Horde_Variables $vars,
         $source
     ) {
-        if (!strlen($sortby = $vars->get('sortby'))) {
+        if (!strlen((string)$sortby = $vars->get('sortby'))) {
             return;
         }
 

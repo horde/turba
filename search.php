@@ -95,7 +95,7 @@ if ($driver) {
         break;
 
     case 'basic':
-        $t_val = trim($val);
+        $t_val = trim((string)$val);
         if (empty($t_val)) {
             if ($browsable) {
                 $do_search = true;
