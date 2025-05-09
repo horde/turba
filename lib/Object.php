@@ -1,5 +1,5 @@
 <?php
-
+use function PHP81_BC\strftime;
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
