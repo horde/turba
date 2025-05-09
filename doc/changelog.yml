@@ -1,16 +1,19 @@
 ---
-5.0.0alpha9:
-  api: 5.0.0alpha1
+5.0.0-alpha9:
+  api: 5.0.0-alpha1
   state:
-    release: alpha
-    api: alpha
-  date: 2024-01-10
+    release: true
+    api: true
+  date: 2025-05-09
   license:
-    identifier: ASL
+    identifier: Apache-1.1
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-    
-5.0.0alpha8:
+  notes: |
+    fix: use compat library for deprecated strftime
+    fix: DeleteContact string conversion
+    fix: More explicit null to string conversions
+    style: apply php-cs-fixer
+5.0.0-alpha8:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -20,9 +23,10 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    Original version string was 5.0.0alpha8
     [rla] Update license identifier ASL to SPDX format - Apache-1.1
     |+
-5.0.0alpha7:
+5.0.0-alpha7:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -31,8 +35,10 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-5.0.0alpha6:
+  notes: |-
+    Original version string was 5.0.0alpha7
+    |+
+5.0.0-alpha6:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -42,9 +48,10 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    Original version string was 5.0.0alpha6
     [rla] Applied formal fixes and tentative return types.
     |+
-5.0.0alpha5:
+5.0.0-alpha5:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -53,8 +60,10 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-5.0.0alpha4:
+  notes: |-
+    Original version string was 5.0.0alpha5
+    |+
+5.0.0-alpha4:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -63,8 +72,10 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-5.0.0alpha3:
+  notes: |-
+    Original version string was 5.0.0alpha4
+    |+
+5.0.0-alpha3:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -73,8 +84,10 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-5.0.0alpha2:
+  notes: |-
+    Original version string was 5.0.0alpha3
+    |+
+5.0.0-alpha2:
   api: 5.0.0alpha1
   state:
     release: alpha
@@ -83,8 +96,10 @@
   license:
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
-  notes: |+
-5.0.0alpha1:
+  notes: |-
+    Original version string was 5.0.0alpha2
+    |+
+5.0.0-alpha1:
   api: 5.0.0
   state:
     release: beta
@@ -94,6 +109,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    Original version string was 5.0.0alpha1
     [jan] Make image type column fit any valid media type name.
     [jan] Try harder to import attributes that don't match exactly the address book configuration (Bug #14673).
     [jan] Add API to backup and restore user data.
@@ -474,42 +490,7 @@
     [mjr] Add EAS client created shares to the sync_books preference (Bug #13359).
     [mjr] Add missing API support for searchTags API (Bug #13362).
     [mjr] Fix issue that caused contacts to be tagged with a broken username.
-4.2.0:
-  api: 4.0.0
-  state:
-    release: stable
-    api: stable
-  date: 2014-07-08
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [jan] Fix fatal error if importing CSV data with date fields.
-4.2.0RC2:
-  api: 4.0.0
-  state:
-    release: beta
-    api: stable
-  date: 2014-07-01
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [mjr] Fix another regression with exporting photos in vCard when we are ignoring empty values.
-4.2.0RC1:
-  api: 4.0.0
-  state:
-    release: beta
-    api: stable
-  date: 2014-06-17
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [mjr] Fix regression with exporting photos in vCard when we are ignoring empty values.
-    [jan] Update Polish translation (Maciej Uhlig <maciej.uhlig@us.edu.pl>).
-    [jan] Update Japanese translation (Hiromi Kimura <hiromi@tac.tsukuba.ac.jp>).
-4.2.0beta1:
+4.2.0-beta1:
   api: 4.0.0
   state:
     release: beta
@@ -519,8 +500,9 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    Original version string was 4.2.0beta1
     [jan] Export composite attributes to vCard too.
-4.2.0alpha1:
+4.2.0-alpha1:
   api: 4.0.0
   state:
     release: alpha
@@ -530,6 +512,7 @@
     identifier: ASL
     uri: http://www.horde.org/licenses/apache
   notes: |
+    Original version string was 4.2.0alpha1
     [jan] Don't export binary fields to CSV/TSV.
     [mms] Fix search in Facebook driver.
     [jan] Add script to import contacts from Open-Xchange.
@@ -542,6 +525,43 @@
     [mjr] Add API support for supporting multiple addressbooks via ActiveSync.
     [jan] Remember currently open tab when switching or saving contact views (Request #12609).
     [jan] Replace categories with tags (Request #9544).
+4.2.0-RC2:
+  api: 4.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2014-07-01
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.2.0RC2
+    [mjr] Fix another regression with exporting photos in vCard when we are ignoring empty values.
+4.2.0-RC1:
+  api: 4.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2014-06-17
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.2.0RC1
+    [mjr] Fix regression with exporting photos in vCard when we are ignoring empty values.
+    [jan] Update Polish translation (Maciej Uhlig <maciej.uhlig@us.edu.pl>).
+    [jan] Update Japanese translation (Hiromi Kimura <hiromi@tac.tsukuba.ac.jp>).
+4.2.0:
+  api: 4.0.0
+  state:
+    release: stable
+    api: stable
+  date: 2014-07-08
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    [jan] Fix fatal error if importing CSV data with date fields.
 4.1.5:
   api: 4.0.0
   state:
@@ -612,6 +632,48 @@
     [mjr] Honor the 'browse' setting when attempting empty searches.
     [jan] Set generic 'phone' attribute when importing from vCard (Bug #12329).
     [mjr] Add API methods for using history modification sequences.
+4.1.0-beta2:
+  api: 4.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2013-05-14
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.1.0beta2
+    [mjr] Update the default SQL schema.
+    [jan] Fix incorrect dependencies.
+4.1.0-beta1:
+  api: 4.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2013-05-07
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.1.0beta1
+    [jan] Add CardDAV server support.
+    [mjr] Update the default SQL source schema (Request #11993).
+    [mms] Add links to group members on smartmobile entry page.
+    [mms] Add group icon to group contacts in smartmobile browse view.
+    [jan] Allow to search all search fields at once in basic searching.
+4.1.0-RC1:
+  api: 4.0.0
+  state:
+    release: beta
+    api: stable
+  date: 2013-05-29
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.1.0RC1
+    [mms] Back button in smartmobile view for group member returns to group entry, not browse list.
+    [mms] Fix resetting smartmobile entry page when viewing more than 1 contact.
 4.1.0:
   api: 4.0.0
   state:
@@ -623,45 +685,6 @@
     uri: http://www.horde.org/licenses/apache
   notes: |
     [jan] Fix searching in LDAP address books (Bug #12297).
-4.1.0RC1:
-  api: 4.0.0
-  state:
-    release: beta
-    api: stable
-  date: 2013-05-29
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [mms] Back button in smartmobile view for group member returns to group entry, not browse list.
-    [mms] Fix resetting smartmobile entry page when viewing more than 1 contact.
-4.1.0beta2:
-  api: 4.0.0
-  state:
-    release: beta
-    api: stable
-  date: 2013-05-14
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [mjr] Update the default SQL schema.
-    [jan] Fix incorrect dependencies.
-4.1.0beta1:
-  api: 4.0.0
-  state:
-    release: beta
-    api: stable
-  date: 2013-05-07
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [jan] Add CardDAV server support.
-    [mjr] Update the default SQL source schema (Request #11993).
-    [mms] Add links to group members on smartmobile entry page.
-    [mms] Add group icon to group contacts in smartmobile browse view.
-    [jan] Allow to search all search fields at once in basic searching.
 4.0.4:
   api: 4.0.0
   state:
@@ -719,6 +742,84 @@
     [jan] Fix searching shares for duplicates.
     [mjr] Fix calling decode_attribute hook when exporting to ActiveSync (kd@tu-cottbus.de, Bug #11678).
     [jan] Update Slovak translation (Jozef Sudolský <jozef.sudolsky@elbia.sk>).
+4.0.0-beta3:
+  api: 4.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-10-12
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.0.0beta3
+    [jan] Support importing contacts via API if using 'emails' attributes (Bug #8358).
+    [jan] Support 'emails' attribute with ActiveSync.
+    [jan] Fix marking contacts as deleted in the history if deleting shared address books (Bug #11480).
+    [jan] Set gender field values literally to 'male' or 'female'.
+    [jan] Drop preference which address books to display.
+    [gwr] Mark the initial default share as such with the Kolab backend.
+    [gwr] Always mark the initial share as default addressbook.
+    [mms] Initial implementation of smartmobile view.
+4.0.0-beta2:
+  api: 4.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-08-29
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.0.0beta2
+    [jan] Use Horde 5 action bar.
+4.0.0-beta1:
+  api: 4.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-07-20
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.0.0beta1
+    [jan] Add configuration example for Kolab/IMAP address books.
+    [jan] Update icon set.
+    [jan] Fix searching multiple names via the API.
+    [jan] Fix searching and listing clients via the API.
+4.0.0-alpha1:
+  api: 4.0.0alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2012-07-06
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.0.0alpha1
+    First alpha release for Horde 5.
+    [mms] Import API call now throws an ObjectExists exception when a duplicate is found.
+    [jan] Add parameters to specify field size of phone and email fields.
+4.0.0-RC1:
+  api: 4.0.0beta1
+  state:
+    release: beta
+    api: beta
+  date: 2012-10-27
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 4.0.0RC1
+    [jan] Allow searching for 'emails' attributes (Bug #11185).
+    [jan] Fix LIKE matching of attributes in Kolab driver.
+    [mms] Convert turba minisearch block to the Horde AJAX framework.
+    [jan] Support 'emails' attribute in smartphone view (Bug #11544).
+    [jan] Attach share owner to all address book titles (Bug #11528).
+    [jan] Fix exporting from browse view (Bug #11526).
+    [jan] Return to the same page after running actions from the browse view.
 4.0.0:
   api: 4.0.0
   state:
@@ -731,79 +832,6 @@
   notes: |
     [jan] Update Polish translation (Krzysztof Kozera <krzysztof113@o2.pl>).
     [jan] Update Dutch translation (Arjen de Korte <arjen+horde@de-korte.org>).
-4.0.0RC1:
-  api: 4.0.0beta1
-  state:
-    release: beta
-    api: beta
-  date: 2012-10-27
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [jan] Allow searching for 'emails' attributes (Bug #11185).
-    [jan] Fix LIKE matching of attributes in Kolab driver.
-    [mms] Convert turba minisearch block to the Horde AJAX framework.
-    [jan] Support 'emails' attribute in smartphone view (Bug #11544).
-    [jan] Attach share owner to all address book titles (Bug #11528).
-    [jan] Fix exporting from browse view (Bug #11526).
-    [jan] Return to the same page after running actions from the browse view.
-4.0.0beta3:
-  api: 4.0.0beta1
-  state:
-    release: beta
-    api: beta
-  date: 2012-10-12
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [jan] Support importing contacts via API if using 'emails' attributes (Bug #8358).
-    [jan] Support 'emails' attribute with ActiveSync.
-    [jan] Fix marking contacts as deleted in the history if deleting shared address books (Bug #11480).
-    [jan] Set gender field values literally to 'male' or 'female'.
-    [jan] Drop preference which address books to display.
-    [gwr] Mark the initial default share as such with the Kolab backend.
-    [gwr] Always mark the initial share as default addressbook.
-    [mms] Initial implementation of smartmobile view.
-4.0.0beta2:
-  api: 4.0.0beta1
-  state:
-    release: beta
-    api: beta
-  date: 2012-08-29
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [jan] Use Horde 5 action bar.
-4.0.0beta1:
-  api: 4.0.0beta1
-  state:
-    release: beta
-    api: beta
-  date: 2012-07-20
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [jan] Add configuration example for Kolab/IMAP address books.
-    [jan] Update icon set.
-    [jan] Fix searching multiple names via the API.
-    [jan] Fix searching and listing clients via the API.
-4.0.0alpha1:
-  api: 4.0.0alpha1
-  state:
-    release: alpha
-    api: alpha
-  date: 2012-07-06
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    First alpha release for Horde 5.
-    [mms] Import API call now throws an ObjectExists exception when a duplicate is found.
-    [jan] Add parameters to specify field size of phone and email fields.
 3.0.15:
   api: 3.0.0
   state:
@@ -1010,6 +1038,66 @@
     [mjr] Fix merging duplicate contacts (Bug #9828).
     [mjr] Allow unsetting the GAL and Client Address Book settings (Bug #9843).
     [mjr] Fix importing objects with categories (Bug #9841).
+3.0.0-beta1:
+  api: 3.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-16
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 3.0.0beta1
+    [mjr] Fix the listTimeObjects API for shared sources (Bug #9649).
+    [jan] Fix importing contacts with SyncML (Simon Bühler, Bug #9641).
+3.0.0-alpha1:
+  api: 3.0.0
+  state:
+    release: alpha
+    api: alpha
+  date: 2011-03-09
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 3.0.0alpha1
+    First alpha release for Horde 4.
+    [jan] Provide default configuration files instead of .dist versions.
+    [jan] Create a default address book if the user doesn't own any yet.
+    [jan] Rename sources.php to backends.php.
+    [mjr] If default addressbook is not browsable, try one from the addressbook pref (Request: 6536).
+    [jan] Add duplicate search and merging.
+    [mjr] The listTimeObjects API now returns categories for each source individually instead of returning only the categories available (Request #8504).
+3.0.0-RC2:
+  api: 3.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-29
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 3.0.0RC2
+    Second release candidate for Horde 4.
+    [mjr] Fix issue that caused the inability to preview contact images while uploading (Bug #9702).
+3.0.0-RC1:
+  api: 3.0.0
+  state:
+    release: beta
+    api: beta
+  date: 2011-03-23
+  license:
+    identifier: ASL
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    Original version string was 3.0.0RC1
+    First release candidate for Horde 4.
+    [gwr] Adapted the Kolab driver to Horde 4.
+    [mjr] Fix issue that caused erroneous file listings for objects in sources without a __uid value.
+    [cjh] Fix storing of binary fields.
+    [mjr] Fix/refactor IMSP driver.
 3.0.0:
   api: 3.0.0
   state:
@@ -1026,62 +1114,6 @@
     [mjr] Datatree share to SQL upgrade script refactored for Horde 4.
     [jan] Move all executable scripts to bin/ and prefix with turba-.
     [jan] Add fields to all addresses if multiple passed to addField() API method (Request #3482).
-3.0.0RC2:
-  api: 3.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-29
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    Second release candidate for Horde 4.
-    [mjr] Fix issue that caused the inability to preview contact images while uploading (Bug #9702).
-3.0.0RC1:
-  api: 3.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-23
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    First release candidate for Horde 4.
-    [gwr] Adapted the Kolab driver to Horde 4.
-    [mjr] Fix issue that caused erroneous file listings for objects in sources without a __uid value.
-    [cjh] Fix storing of binary fields.
-    [mjr] Fix/refactor IMSP driver.
-3.0.0beta1:
-  api: 3.0.0
-  state:
-    release: beta
-    api: beta
-  date: 2011-03-16
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    [mjr] Fix the listTimeObjects API for shared sources (Bug #9649).
-    [jan] Fix importing contacts with SyncML (Simon Bühler, Bug #9641).
-3.0.0alpha1:
-  api: 3.0.0
-  state:
-    release: alpha
-    api: alpha
-  date: 2011-03-09
-  license:
-    identifier: ASL
-    uri: http://www.horde.org/licenses/apache
-  notes: |
-    First alpha release for Horde 4.
-    [jan] Provide default configuration files instead of .dist versions.
-    [jan] Create a default address book if the user doesn't own any yet.
-    [jan] Rename sources.php to backends.php.
-    [mjr] If default addressbook is not browsable, try one from the addressbook pref (Request: 6536).
-    [jan] Add duplicate search and merging.
-    [mjr] The listTimeObjects API now returns categories for each source individually instead of returning only the categories available (Request #8504).
 2.3.6:
   notes: |
     [mjr] Fix issue that caused erroneous file listings for objects in sources without a __uid value.
@@ -1140,14 +1172,9 @@
     [cjh] Add a PostgreSQL-specific upgrade script for 2.2.1 to 2.3 (michael.menge@zdv.uni-tuebingen.de, Bug #7462).
     [jan] Don't overwrite empty address books preference when creating new shares (Bug #7399).
     [mms] Upgrade prototype.js to v1.6.0.3.
-2.3.0:
+2.3.0-RC1:
   notes: |
-    [jan] Change group field in shares table to work with LDAP groups (Bug #6883).
-    [jan] Fix exporting address books with country fields as vCards (Bug #7372).
-    [mjr] Make sure we use all address books when searching via the api and the user's addressbooks pref is empty (Bug #7357).
-    [mjr] Correctly calculate the age of time objects (Bug #7330).
-2.3.0RC1:
-  notes: |
+    Original version string was 2.3.0RC1
     [jan] Improve vCard EMAIL field parsing (Bug #7281).
     [jan] Correctly import and export address extensions (Bug #7279).
     [jan] Export full country names to vCard addresses.
@@ -1172,6 +1199,12 @@
     [jan] Fix searching of client address books that have been disabled in the preferences (Bug #6961).
     [mjr] Fix issue with removeUserData api that caused the deleted user's address books to not be deleted as well as remove an erroneous error notification (Bug #6969).
     [cjh] Fix the column selector/sorter in IE (Bug #6912).
+2.3.0:
+  notes: |
+    [jan] Change group field in shares table to work with LDAP groups (Bug #6883).
+    [jan] Fix exporting address books with country fields as vCards (Bug #7372).
+    [mjr] Make sure we use all address books when searching via the api and the user's addressbooks pref is empty (Bug #7357).
+    [mjr] Correctly calculate the age of time objects (Bug #7330).
 2.2.2:
   notes: |
     [jan] SECURITY: Escape output in test.php.
@@ -1180,74 +1213,9 @@
     [cjh] SECURITY: Escape contact names in the contact display view.
     [jan] Fix importing of certain phone numbers from vCard (Bug #6744).
     [mjr] Correct a function declaration in the 2.1_to_2.2_sql_schema.php upgrade script that was causing fatal errors.
-2.2.0:
+2.2.0-alpha1:
   notes: |
-    [mjr] Fix importing email addresses from CSV files to be consistent with what we allow to be entered via the UI. (Bug #6725)
-    [cjh] Improve resource usage in datatree_to_sql share migration script (Bug #6740).
-2.2.0RC4:
-  notes: |
-    [cjh] Fix editing contacts that were accessed by UID (Bug #6672).
-    [cjh] Apply fix for http://dev.rubyonrails.org/ticket/11473 to prototype.js (Request #6590).
-    [cjh] Add an upgrade script for the new SQL share driver (Request #6109).
-    [cjh] Include composite fields in data exports (Bug #6517).
-    [gwr] Add distribution list support to the Kolab driver.
-    [cjh] Add vCard/syncing support for a large number of additional attributes (horde@ssn.at, Request #6573).
-    [cjh] Update composite fields in LDAP DNs (horde@ssn.at, Bug #6575).
-    [mjr] Fix paging in search results.
-    [cjh] Allow setting default values for attributes.
-    [cjh] Show a browse link in the address book list for each address book (thomas.jarosch@intra2net.com, Request #6613).
-    [mjr] Fixed a bug that caused field values to get mismatched with the column names when a single DB field is mapped to multiple Turba fields.
-    [mjr] Fix changing sort order on the search view.
-    [jan] Add preference to choose address books for synchronization.
-    [jan] Improved importing of names from vCards (Bug #6568).
-    [jan] Fix incomplete copying and moving of attributes to composite fields (Bug #6565).
-    [gwr] Fix the relation of key/uid within the Kolab driver.
-    [gwr] Export/import of the emails attribute (Bug #6504).
-    [mas] Encode DN correctly when exporting to LDIF. (Bug #6518).
-    [gwr] Fix virtual address books when using shares.
-    [gwr] Fix searching for the Kolab driver.
-    [cjh] Replace the address book column sorter with a Scriptaculous-based one; fixes re-ordering columns in some cases (Bug #6444).
-    [jan] Always return to the last view after saving a contact.
-    [jan] Correctly determine default address books in the API (SyncML, WebDAV).
-    [jan] Add categories imported through the API (SyncML, WebDAV).
-    [jan] Store categories as strings.
-    [cjh] Show who created or made the last change to a contact along with the date (Request #6305).
-    [mjr] Prevent overwriting contact entries with the upgrade script (Bug #6308).
-2.2.0RC3:
-  notes: |
-    [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug #6208) (CVE-2008-0807).
-    [jan] Add configuration to more flexibly parse full names into the name parts.
-2.2.0RC2:
-  notes: |
-    [jan] SECURITY: Fix privilege escalation in Horde API.
-    [mjr] Degrade gracefully when no VFS is configured.
-    [cjh] Fixed the share flattening upgrade script.
-    [mjr] Fixed issue that caused mangling of composite fields when moving or copying contacts from one address book to another (Bug #6058).
-    [mjr] Fixed issue that caused listTimeObjects to only return objects from a single address book when using a shared SQL source.
-    [cjh] Update address book management UI to match other groupware apps.
-    [jan] Trim composite field values before saving to the backend (Bug #5979).
-    [mjr] Fixed issue where composite fields with 'attribute' value set were not getting set in the backend when being imported via the API. (Bug #5978)
-    [mjr] Time object categories are now automatically detected.
-    [mjr] Fix issue that caused listTimeObjects API to miss returning objects when the date range crosses over into the next year.
-    [jan] Improved portability of the upgrade script (Bug #5949).
-    [mjr] Added anniversary support to the listTimeObjects API.
-2.2.0RC1:
-  notes: |
-    [jan] Fix birthday calculation on years before 1970 with DST (Bug #5791).
-    [jan] Implement WebDAV DELETE.
-    [jan] Change default SQL scheme to match with RFC 2426 (vCard 3.0) as closely as possible.
-    [cjh] Add $matchBegin to the clientSearch API method (duck@obala.net, Request #5860).
-    [cjh] Avoid variable names that might interfere with function variables in sources.php.dist examples (Bug #5840).
-    [jan] Add clientFields() API method.
-    [mjr] More efficient fetching of entries when using the listTimeObjects API.
-    [jan] Move all Turba-specific hook examples from Horde's config/ directory.
-    [cjh] Fix generation of UIDs with PHP 5.2+.
-    [cjh] Handle categories when converting to and from vCards (rsalmon@mbpgroup.com, Bug #5648).
-    [cjh] Catch searches that seem non-empty but really aren't (Bug #5612).
-    [mjr] Fix fatal errors when no share enabled sources are present.
-    [mjr] Fix issue with naming new contact lists that was causing database errors, missing part of the contact list name, and other oddities.
-2.2.0alpha:
-  notes: |
+    Original version string was 2.2.0alpha
     [cjh] Add support for approximate searches, if the underlying backend and Horde code support them (Request #2901).
     [cjh] Add a print link for contacts (Request #2800).
     [cjh] Shared Address Books are now stored in a flat namespace so that they do not rely on the hierarchical (i.e. DataTree) properties of the Horde_Share API (Bug #4960).
@@ -1275,6 +1243,76 @@
     [mdj] Add failover support for SQL backend.
     [mjr] Add virtual address book support.
     [jan] Add driver to list most favourite recipients.
+2.2.0-RC4:
+  notes: |
+    Original version string was 2.2.0RC4
+    [cjh] Fix editing contacts that were accessed by UID (Bug #6672).
+    [cjh] Apply fix for http://dev.rubyonrails.org/ticket/11473 to prototype.js (Request #6590).
+    [cjh] Add an upgrade script for the new SQL share driver (Request #6109).
+    [cjh] Include composite fields in data exports (Bug #6517).
+    [gwr] Add distribution list support to the Kolab driver.
+    [cjh] Add vCard/syncing support for a large number of additional attributes (horde@ssn.at, Request #6573).
+    [cjh] Update composite fields in LDAP DNs (horde@ssn.at, Bug #6575).
+    [mjr] Fix paging in search results.
+    [cjh] Allow setting default values for attributes.
+    [cjh] Show a browse link in the address book list for each address book (thomas.jarosch@intra2net.com, Request #6613).
+    [mjr] Fixed a bug that caused field values to get mismatched with the column names when a single DB field is mapped to multiple Turba fields.
+    [mjr] Fix changing sort order on the search view.
+    [jan] Add preference to choose address books for synchronization.
+    [jan] Improved importing of names from vCards (Bug #6568).
+    [jan] Fix incomplete copying and moving of attributes to composite fields (Bug #6565).
+    [gwr] Fix the relation of key/uid within the Kolab driver.
+    [gwr] Export/import of the emails attribute (Bug #6504).
+    [mas] Encode DN correctly when exporting to LDIF. (Bug #6518).
+    [gwr] Fix virtual address books when using shares.
+    [gwr] Fix searching for the Kolab driver.
+    [cjh] Replace the address book column sorter with a Scriptaculous-based one; fixes re-ordering columns in some cases (Bug #6444).
+    [jan] Always return to the last view after saving a contact.
+    [jan] Correctly determine default address books in the API (SyncML, WebDAV).
+    [jan] Add categories imported through the API (SyncML, WebDAV).
+    [jan] Store categories as strings.
+    [cjh] Show who created or made the last change to a contact along with the date (Request #6305).
+    [mjr] Prevent overwriting contact entries with the upgrade script (Bug #6308).
+2.2.0-RC3:
+  notes: |
+    Original version string was 2.2.0RC3
+    [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug #6208) (CVE-2008-0807).
+    [jan] Add configuration to more flexibly parse full names into the name parts.
+2.2.0-RC2:
+  notes: |
+    Original version string was 2.2.0RC2
+    [jan] SECURITY: Fix privilege escalation in Horde API.
+    [mjr] Degrade gracefully when no VFS is configured.
+    [cjh] Fixed the share flattening upgrade script.
+    [mjr] Fixed issue that caused mangling of composite fields when moving or copying contacts from one address book to another (Bug #6058).
+    [mjr] Fixed issue that caused listTimeObjects to only return objects from a single address book when using a shared SQL source.
+    [cjh] Update address book management UI to match other groupware apps.
+    [jan] Trim composite field values before saving to the backend (Bug #5979).
+    [mjr] Fixed issue where composite fields with 'attribute' value set were not getting set in the backend when being imported via the API. (Bug #5978)
+    [mjr] Time object categories are now automatically detected.
+    [mjr] Fix issue that caused listTimeObjects API to miss returning objects when the date range crosses over into the next year.
+    [jan] Improved portability of the upgrade script (Bug #5949).
+    [mjr] Added anniversary support to the listTimeObjects API.
+2.2.0-RC1:
+  notes: |
+    Original version string was 2.2.0RC1
+    [jan] Fix birthday calculation on years before 1970 with DST (Bug #5791).
+    [jan] Implement WebDAV DELETE.
+    [jan] Change default SQL scheme to match with RFC 2426 (vCard 3.0) as closely as possible.
+    [cjh] Add $matchBegin to the clientSearch API method (duck@obala.net, Request #5860).
+    [cjh] Avoid variable names that might interfere with function variables in sources.php.dist examples (Bug #5840).
+    [jan] Add clientFields() API method.
+    [mjr] More efficient fetching of entries when using the listTimeObjects API.
+    [jan] Move all Turba-specific hook examples from Horde's config/ directory.
+    [cjh] Fix generation of UIDs with PHP 5.2+.
+    [cjh] Handle categories when converting to and from vCards (rsalmon@mbpgroup.com, Bug #5648).
+    [cjh] Catch searches that seem non-empty but really aren't (Bug #5612).
+    [mjr] Fix fatal errors when no share enabled sources are present.
+    [mjr] Fix issue with naming new contact lists that was causing database errors, missing part of the contact list name, and other oddities.
+2.2.0:
+  notes: |
+    [mjr] Fix importing email addresses from CSV files to be consistent with what we allow to be entered via the UI. (Bug #6725)
+    [cjh] Improve resource usage in datatree_to_sql share migration script (Bug #6740).
 2.1.7:
   notes: |
     [cjh] SECURITY: Fix unchecked access to contacts in the same SQL table (Bug #6208) (CVE-2008-0807).
@@ -1323,11 +1361,9 @@
     [cjh] Show the copy/move dropdown any time there is an editable address book that's not the current one (Bug #3588).
     [jan] Don't show warning after dealing with contacts from a non-browseable address book (Bug #3587).
     [jan] Fix configuration example for birthday fields.
-2.1.0:
+2.1.0-RC1:
   notes: |
-    [ben] Better support for MS-SQL
-2.1.0RC1:
-  notes: |
+    Original version string was 2.1.0RC1
     [mjr] Default to showing the 'A' page when browsing address books that contain more than the 'perpage' number of entries.
     [jan] Add Icelandic translation (Bjorn Davidsson <bjossi@snerpa.is>).
     [mjr] Fix paging when viewing search results.
@@ -1366,6 +1402,9 @@
     [jan] Add VFS support to attach files to contacts.
     [jan] Allow to edit several contacts at once.
     [jan] Retrieve only required fields from backend.
+2.1.0:
+  notes: |
+    [ben] Better support for MS-SQL
 2.0.5:
   notes: |
     [cjh] Close several XSS vulnerabilities with address book and contact data.
@@ -1375,11 +1414,9 @@
     [jan] Fix warnings in columns preference screen.
     [mjr] Check for global IMSP configuration and use if present.
     [mas] Restore BC in searching using SQL driver. (Bug #2419)
-2.0.3:
+2.0.3-RC1:
   notes: |
-    [jan] Add Turkish translation (Servet Güney <sguney@metu.edu.tr>, Ahmet Öztürk <oahmet@metu.edu.tr>).
-2.0.3RC1:
-  notes: |
+    Original version string was 2.0.3RC1
     [jan] Don't show "Add" icon if no writeable address books exist.
     [jan] Don't show "Browse" icon and list if no browseable address books exist.
     [jan] Add example how to use a field for Horde's category system.
@@ -1397,45 +1434,29 @@
     [jan] Add shortcut icon (favicon.ico).
     [mjr] Show Contacts and Show Groups links now work correctly with IMSP driver.
     [jan] Don't include names in email fields of distribution lists retrieved through the "search" API method (Bug #1384).
+2.0.3:
+  notes: |
+    [jan] Add Turkish translation (Servet Güney <sguney@metu.edu.tr>, Ahmet Öztürk <oahmet@metu.edu.tr>).
 2.0.2:
   notes: |
     [jan] Fixed warning in browse view (Bug #1363).
+2.0.1-RC1:
+  notes: |
+    Original version string was 2.0.1RC1
+    [jan] Create compose links for all email addresses at once in contact listings (requires IMP 4.0.2).
+    [jan] Open compose windows from the portal's minisearch block in the correct frame (Bug #1293).
+    [jan] Several performance optimizations.
+    [jan] Don't return empty result sets in search API (Bug #1210).
+    [cjh] Support TLS connections to LDAP servers (Bug #1149).
 2.0.1:
   notes: |
     [jan] Fixed some javascript errors when clicking on the column headers to resort contact listings (Bug #1313).
     [cjh] Quote LDAP DN entries according to RFC 1485 (Bug #1146).
     [cjh] When importing vCard 3.0 ADR fields, try to build a composite entry for workAddress or homeAddress, and keep the street address in workStreet or homeStreet (Bug #1109).
     [jan] Implement OR searches in IMSP driver (Michael Rubinsky <mike@theupstairsroom.com>, Bug #1256).
-2.0.1RC1:
+2.0.0-beta1:
   notes: |
-    [jan] Create compose links for all email addresses at once in contact listings (requires IMP 4.0.2).
-    [jan] Open compose windows from the portal's minisearch block in the correct frame (Bug #1293).
-    [jan] Several performance optimizations.
-    [jan] Don't return empty result sets in search API (Bug #1210).
-    [cjh] Support TLS connections to LDAP servers (Bug #1149).
-2.0.0:
-  notes: |
-    [cjh] UIDs need to be stored in the History system with a turba: prefix and with the contact owner so as not to confuse different instances of the same contact (if two users both have a contact in their seperate addressbooks in a private source, they should have unique histories for those contacts).
-    [cjh] Improve error and permission checking.
-2.0.0RC3:
-  notes: |
-    [cjh] Prevent copying/moving of groups (Bug #935).
-    [cjh] Fix IMSP groups (Michael Rubinsky <mike@theupstairsroom.com>)
-    [jan] Fix propagating of monthdayyear fields (Bug #920).
-    [jan] Fix SOAP namespace for API method signatures.
-    [cjh] Change to Turba::getMenu(), fixes the menu on the Options screen (Bug #898).
-    [jan] Fix some javascript errors with IE 5.0.
-2.0.0RC2:
-  notes: |
-    [cjh] Don't overwrite form data with object defaults when editing if validation fails (Bug #883).
-    [cjh] Use source permissions if they are present, and if not, fall back to the old source admin array (Bug #853).
-    [cjh] Ignore any __-prefixed attribute in building search criteria (Bug #877).
-2.0.0RC1:
-  notes: |
-    [mms] Fixed the delete API to not exit with error if the item to be deleted is not found in the first source provided.
-    [cjh] Removed miniwindow.php; it simply provided a frame around Turba with a close button.
-2.0.0beta:
-  notes: |
+    Original version string was 2.0.0beta
     [jan] Allow to group fields into tabs.
     [mms] Link email address in object view.
     [cjh] Merge the code for Turba_Source and Turba_Driver into simply Turba_Driver.
@@ -1448,8 +1469,9 @@
     [jan] Add access keys.
     [cjh] Add Kolab drivers (Stuart Bing� <s.binge@codefusion.co.za>).
     [cjh] The alphabetic pager now has an "All" option.
-2.0.0alpha:
+2.0.0-alpha1:
   notes: |
+    Original version string was 2.0.0alpha
     [cjh] Show an alphabetic pager for browsing address books (Mike Bydalek <mbydalek@zivix.com>).
     [cjh] Rename LDAP objects when their DN changes (Tarjei Huse <tarjei+a_lists.phpgw@nu.no>).
     [cjh] Add exporting of VCards from the browse/search view (Mike Bydalek <mbydalek@zivix.com>).
@@ -1473,6 +1495,30 @@
     [jon] Adapt to the new Horde::img() syntax.
     [cjh] Use the new Notification system.
     [jan] Remove the standard value for the language preference. The language to fall back to should be set Horde wide in lang.php instead.
+2.0.0-RC3:
+  notes: |
+    Original version string was 2.0.0RC3
+    [cjh] Prevent copying/moving of groups (Bug #935).
+    [cjh] Fix IMSP groups (Michael Rubinsky <mike@theupstairsroom.com>)
+    [jan] Fix propagating of monthdayyear fields (Bug #920).
+    [jan] Fix SOAP namespace for API method signatures.
+    [cjh] Change to Turba::getMenu(), fixes the menu on the Options screen (Bug #898).
+    [jan] Fix some javascript errors with IE 5.0.
+2.0.0-RC2:
+  notes: |
+    Original version string was 2.0.0RC2
+    [cjh] Don't overwrite form data with object defaults when editing if validation fails (Bug #883).
+    [cjh] Use source permissions if they are present, and if not, fall back to the old source admin array (Bug #853).
+    [cjh] Ignore any __-prefixed attribute in building search criteria (Bug #877).
+2.0.0-RC1:
+  notes: |
+    Original version string was 2.0.0RC1
+    [mms] Fixed the delete API to not exit with error if the item to be deleted is not found in the first source provided.
+    [cjh] Removed miniwindow.php; it simply provided a frame around Turba with a close button.
+2.0.0:
+  notes: |
+    [cjh] UIDs need to be stored in the History system with a turba: prefix and with the contact owner so as not to confuse different instances of the same contact (if two users both have a contact in their seperate addressbooks in a private source, they should have unique histories for those contacts).
+    [cjh] Improve error and permission checking.
 1.2.5:
   notes: |
     [jan] Close XSS when setting the parent frame's page title by javascript (cjh).
@@ -1560,14 +1606,9 @@
     [jan] Add Ukrainian translation (Andriy Kopystyansky <anri@polynet.lviv.ua>).
     [jan] Add Danish translation (Martin List-Petersen <martin@list-petersen.dk>).
     [jan] Fix bug "This person is already in your addressbook.".
-1.0.0:
+1.0.0-RC4:
   notes: |
-    [jan] Add Norwegian Bookmal translation (Oystein Steimler <oystein@rexta.net>).
-    [avsm] Add .htaccess files to deny access to data directories.
-    [jan] Add Finnish translation (Leena Heino <liinu@uta.fi>).
-    [cjh] Avoid adding duplicate entries through the add API method.
-1.0.0RC4:
-  notes: |
+    Original version string was 1.0.0RC4
     [rich] Include rewritten and reorganized documentation.
     [rich] License under Horde APL.
     [cjh] Make email addresses clickable in displayed objects.
@@ -1579,6 +1620,12 @@
     [jan] Add Korean translation (J.I Kim <aporie@netian.com>).
     [cjh] Remove duplicate entries from multiple sources from turbaExpandAddresses() results.
     [cjh] Don't show the addressbook select widget on the search page if there's just one to search from.
+1.0.0:
+  notes: |
+    [jan] Add Norwegian Bookmal translation (Oystein Steimler <oystein@rexta.net>).
+    [avsm] Add .htaccess files to deny access to data directories.
+    [jan] Add Finnish translation (Leena Heino <liinu@uta.fi>).
+    [cjh] Avoid adding duplicate entries through the add API method.
 0.0.3:
   notes: |
     [cjh] Add an optional 'strict' configuration array definining fields which must always be matched exactly.
