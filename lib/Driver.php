@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -38,14 +39,14 @@ class Turba_Driver implements Countable
      *
      * @var array
      */
-    public $map = array();
+    public $map = [];
 
     /**
      * Hash with all tabs and their fields.
      *
      * @var array
      */
-    public $tabs = array();
+    public $tabs = [];
 
     /**
      * List of all fields that can be accessed in the backend (excludes
@@ -53,14 +54,14 @@ class Turba_Driver implements Countable
      *
      * @var array
      */
-    public $fields = array();
+    public $fields = [];
 
     /**
      * Array of fields that must match exactly.
      *
      * @var array
      */
-    public $strict = array();
+    public $strict = [];
 
     /**
      * Array of fields to search "approximately" (@see
@@ -68,7 +69,7 @@ class Turba_Driver implements Countable
      *
      * @var array
      */
-    public $approximate = array();
+    public $approximate = [];
 
     /**
      * The name of a field to store contact list names in if not the default.
@@ -97,21 +98,21 @@ class Turba_Driver implements Countable
      *
      * @var array
      */
-    protected $_params = array();
+    protected $_params = [];
 
     /**
      * What can this backend do?
      *
      * @var array
      */
-    protected $_capabilities = array();
+    protected $_capabilities = [];
 
     /**
      * Any additional options passed to Turba_Object constructors.
      *
      * @var array
      */
-    protected $_objectOptions = array();
+    protected $_objectOptions = [];
 
     /**
      * Number of contacts in this source.
@@ -132,7 +133,7 @@ class Turba_Driver implements Countable
      *
      * @var array
      */
-    protected static $_asMap = array(
+    protected static $_asMap = [
         'name' => 'fileas',
         'lastname' => 'lastname',
         'firstname' => 'firstname',
@@ -179,8 +180,8 @@ class Turba_Driver implements Countable
         'carPhone' => 'carphonenumber',
         'assistPhone' => 'assistnamephonenumber',
         'companyPhone' => 'companymainphone',
-        'radioPhone' => 'radiophonenumber'
-    );
+        'radioPhone' => 'radiophonenumber',
+    ];
 
     /**
      * Constructs a new Turba_Driver object.
@@ -189,7 +190,7 @@ class Turba_Driver implements Countable
      * @param array $params  Hash containing additional configuration
      *                       parameters.
      */
-    public function __construct($name = '', array $params = array())
+    public function __construct($name = '', array $params = [])
     {
         $this->_name = $name;
         $this->_params = $params;
@@ -226,7 +227,7 @@ class Turba_Driver implements Countable
     {
         global $attributes;
 
-        $blobs = array();
+        $blobs = [];
         foreach (array_keys($this->fields) as $attribute) {
             if (isset($attributes[$attribute]) &&
                 $attributes[$attribute]['type'] == 'image') {
@@ -247,7 +248,7 @@ class Turba_Driver implements Countable
     {
         global $attributes;
 
-        $dates = array();
+        $dates = [];
         foreach (array_keys($this->fields) as $attribute) {
             if (isset($attributes[$attribute]) &&
                 $attributes[$attribute]['type'] == 'monthdayyear') {
@@ -297,7 +298,7 @@ class Turba_Driver implements Countable
             }
         }
 
-        $fields = array();
+        $fields = [];
         foreach ($hash as $key => $val) {
             if (!isset($this->map[$key])) {
                 continue;
@@ -305,27 +306,26 @@ class Turba_Driver implements Countable
             if (!is_array($this->map[$key])) {
                 $fields[$this->map[$key]] = $val;
             } elseif (!empty($this->map[$key]['attribute'])) {
-                $fieldarray = array();
+                $fieldarray = [];
                 foreach ($this->map[$key]['fields'] as $mapfields) {
-                    $fieldarray[] = isset($hash[$mapfields])
-                        ? $hash[$mapfields]
-                        : '';
+                    $fieldarray[] = $hash[$mapfields]
+                        ?? '';
                 }
                 $fields[$this->map[$key]['attribute']] = Turba::formatCompositeField($this->map[$key]['format'], $fieldarray);
             } else {
                 // If 'parse' is not specified, use 'format' and 'fields'.
                 if (!isset($this->map[$key]['parse'])) {
-                    $this->map[$key]['parse'] = array(
-                        array(
+                    $this->map[$key]['parse'] = [
+                        [
                             'format' => $this->map[$key]['format'],
-                            'fields' => $this->map[$key]['fields']
-                        )
-                    );
+                            'fields' => $this->map[$key]['fields'],
+                        ],
+                    ];
                 }
                 foreach ($this->map[$key]['parse'] as $parse) {
                     $splitval = sscanf($val, $parse['format']);
                     $count = 0;
-                    $tmp_fields = array();
+                    $tmp_fields = [];
                     foreach ($parse['fields'] as $mapfield) {
                         if (isset($hash[$mapfield])) {
                             // If the compositing fields are set
@@ -365,10 +365,14 @@ class Turba_Driver implements Countable
      *
      * @return array  An array of search criteria.
      */
-    public function makeSearch($criteria, $search_type, array $strict,
-                               $match_begin = false, array $custom_strict = array())
-    {
-        $search = $search_terms = $subsearch = $strict_search = array();
+    public function makeSearch(
+        $criteria,
+        $search_type,
+        array $strict,
+        $match_begin = false,
+        array $custom_strict = []
+    ) {
+        $search = $search_terms = $subsearch = $strict_search = [];
         $glue = $temp = '';
         $lastChar = '\"';
         $blobs = $this->getBlobs();
@@ -421,61 +425,61 @@ class Turba_Driver implements Countable
                     if (!empty($strict[$field])) {
                         /* For strict matches, use the original search
                          * vals. */
-                        $strict_search[] = array(
+                        $strict_search[] = [
                             'field' => $field,
                             'op' => '=',
                             'test' => $val,
-                        );
+                        ];
                     } elseif (!empty($custom_strict[$field])) {
-                        $search[] = array(
+                        $search[] = [
                             'field' => $field,
                             'op' => '=',
                             'test' => $val,
-                        );
+                        ];
                     } else {
                         /* Create a subsearch for each individual search
                          * term. */
                         if (count($search_terms) > 1) {
                             /* Build the 'OR' search for each search term
                              * on this field. */
-                            $atomsearch = array();
+                            $atomsearch = [];
                             for ($i = 0; $i < count($search_terms); ++$i) {
-                                $atomsearch[] = array(
+                                $atomsearch[] = [
                                     'field' => $field,
                                     'op' => 'LIKE',
                                     'test' => $search_terms[$i],
                                     'begin' => $match_begin,
                                     'approximate' => !empty($this->approximate[$field]),
-                                );
+                                ];
                             }
-                            $atomsearch[] = array(
+                            $atomsearch[] = [
                                 'field' => $field,
                                 'op' => '=',
                                 'test' => '',
                                 'begin' => $match_begin,
-                                'approximate' => !empty($this->approximate[$field])
-                            );
+                                'approximate' => !empty($this->approximate[$field]),
+                            ];
 
-                            $subsearch[] = array('OR' => $atomsearch);
+                            $subsearch[] = ['OR' => $atomsearch];
                             unset($atomsearch);
                             $glue = 'AND';
                         } else {
                             /* $parts may have more than one element, but
                              * if they are all quoted we will only have 1
                              * $subsearch. */
-                            $subsearch[] = array(
+                            $subsearch[] = [
                                 'field' => $field,
                                 'op' => 'LIKE',
                                 'test' => $search_terms[0],
                                 'begin' => $match_begin,
                                 'approximate' => !empty($this->approximate[$field]),
-                            );
+                            ];
                             $glue = 'OR';
                         }
                     }
                 }
                 if (count($subsearch)) {
-                    $search[] = array($glue => $subsearch);
+                    $search[] = [$glue => $subsearch];
                 }
             } else {
                 /* Not a composite field. */
@@ -483,49 +487,49 @@ class Turba_Driver implements Countable
                     continue;
                 }
                 if (!empty($strict[$this->map[$key]])) {
-                    $strict_search[] = array(
+                    $strict_search[] = [
                         'field' => $this->map[$key],
                         'op' => '=',
                         'test' => $val,
-                    );
+                    ];
                 } elseif (!empty($custom_strict[$this->map[$key]])) {
-                    $search[] = array(
+                    $search[] = [
                         'field' => $this->map[$key],
                         'op' => '=',
                         'test' => $val,
-                    );
+                    ];
                 } else {
-                    $search[] = array(
+                    $search[] = [
                         'field' => $this->map[$key],
                         'op' => 'LIKE',
                         'test' => $val,
                         'begin' => $match_begin,
                         'approximate' => !empty($this->approximate[$this->map[$key]]),
-                    );
+                    ];
                 }
             }
         }
 
         if (count($strict_search) && count($search)) {
-            return array(
-                'AND' => array(
+            return [
+                'AND' => [
                     $search_type => $strict_search,
-                    array(
-                        $search_type => $search
-                    )
-                )
-            );
+                    [
+                        $search_type => $search,
+                    ],
+                ],
+            ];
         } elseif (count($strict_search)) {
-            return array(
-                $search_type => $strict_search
-            );
+            return [
+                $search_type => $strict_search,
+            ];
         } elseif (count($search)) {
-            return array(
-                $search_type => $search
-            );
+            return [
+                $search_type => $search,
+            ];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -559,7 +563,7 @@ class Turba_Driver implements Countable
      */
     public function toTurbaKeys(array $entry)
     {
-        $new_entry = array();
+        $new_entry = [];
         foreach ($this->map as $key => $val) {
             if (!is_array($val)) {
                 $new_entry[$key] = (isset($entry[$val]) && (!empty($entry[$val]) || (is_string($entry[$val]) && strlen($entry[$val]))))
@@ -595,16 +599,20 @@ class Turba_Driver implements Countable
      *                                   entries (if $count_only is true).
      * @throws Turba_Exception
      */
-    public function search(array $search_criteria, $sort_order = null,
-                           $search_type = 'AND', array $return_fields = array(),
-                           array $custom_strict = array(), $match_begin = false,
-                           $count_only = false)
-    {
+    public function search(
+        array $search_criteria,
+        $sort_order = null,
+        $search_type = 'AND',
+        array $return_fields = [],
+        array $custom_strict = [],
+        $match_begin = false,
+        $count_only = false
+    ) {
         global $injector;
 
         /* Add any fields that must match exactly for this source to the
          * $strict_fields array. */
-        $strict_fields = $custom_strict_fields = array();
+        $strict_fields = $custom_strict_fields = [];
         foreach ($this->strict as $strict_field) {
             $strict_fields[$strict_field] = true;
         }
@@ -620,22 +628,27 @@ class Turba_Driver implements Countable
         }
 
         /* Translate the Turba attributes to driver-specific attributes. */
-        $fields = $this->makeSearch($search_criteria, $search_type,
-                                    $strict_fields, $match_begin, $custom_strict_fields);
+        $fields = $this->makeSearch(
+            $search_criteria,
+            $search_type,
+            $strict_fields,
+            $match_begin,
+            $custom_strict_fields
+        );
 
         /* If we are not using Horde_Share, enforce the requirement that the
          * current user must be the owner of the addressbook. */
         if (isset($this->map['__owner'])) {
-            $fields = array(
-                'AND' => array(
+            $fields = [
+                'AND' => [
                     $fields,
-                    array(
+                    [
                         'field' => $this->toDriver('__owner'),
                         'op' => '=',
-                        'test' => $this->getContactOwner()
-                    )
-                )
-            );
+                        'test' => $this->getContactOwner(),
+                    ],
+                ],
+            ];
         }
 
         if (in_array('email', $return_fields) &&
@@ -643,12 +656,12 @@ class Turba_Driver implements Countable
             $return_fields[] = 'emails';
         }
         if (count($return_fields)) {
-            $default_fields = array('__key', '__type', '__owner', '__members', 'name');
+            $default_fields = ['__key', '__type', '__owner', '__members', 'name'];
             if ($this->alternativeName) {
                 $default_fields[] = $this->alternativeName;
             }
             $return_fields_pre = array_unique(array_merge($default_fields, $return_fields));
-            $return_fields = array();
+            $return_fields = [];
             foreach ($return_fields_pre as $field) {
                 $result = $this->toDriver($field);
                 if (is_array($result)) {
@@ -667,7 +680,8 @@ class Turba_Driver implements Countable
              * where we might have 1 DB field mapped to 2 or more Turba
              * fields */
             $return_fields = array_values(
-                array_unique(array_values($this->fields)));
+                array_unique(array_values($this->fields))
+            );
         }
 
         /* Retrieve the search results from the driver. */
@@ -676,7 +690,7 @@ class Turba_Driver implements Countable
         /* Need some magic if we are searching tags */
         $list = $this->_filterTags(
             $objects,
-            !empty($search_criteria['tags']) ? $injector->getInstance('Turba_Tagger')->split($search_criteria['tags']) : array(),
+            !empty($search_criteria['tags']) ? $injector->getInstance('Turba_Tagger')->split($search_criteria['tags']) : [],
             $sort_order
         );
 
@@ -704,7 +718,7 @@ class Turba_Driver implements Countable
             return $this->_toTurbaObjects($objects, $sort_order);
         }
         $tag_results = $injector->getInstance('Turba_Tagger')
-            ->search($tags, array('list' => $this->_name));
+            ->search($tags, ['list' => $this->_name]);
 
         // Short circuit if we know we have no tag hits.
         if (!$tag_results) {
@@ -729,7 +743,7 @@ class Turba_Driver implements Countable
      */
     public function searchDuplicates()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -746,7 +760,7 @@ class Turba_Driver implements Countable
      *
      * @return Turba_List  A list object.
      */
-    protected function _toTurbaObjects(array $objects, array $sort_order = null)
+    protected function _toTurbaObjects(array $objects, ?array $sort_order = null)
     {
         $list = new Turba_List();
 
@@ -787,9 +801,10 @@ class Turba_Driver implements Countable
      * @throws Turba Exception
      */
     public function listTimeObjects(
-        Horde_Date $start, Horde_Date $end, $category
-    )
-    {
+        Horde_Date $start,
+        Horde_Date $end,
+        $category
+    ) {
         global $attributes, $registry;
 
         try {
@@ -797,11 +812,13 @@ class Turba_Driver implements Countable
         } catch (Turba_Exception $e) {
             /* Try the default implementation before returning an error */
             $res = $this->_getTimeObjectTurbaListFallback(
-                $start, $end, $category
+                $start,
+                $end,
+                $category
             );
         }
 
-        $t_objects = array();
+        $t_objects = [];
         while ($ob = $res->next()) {
             $t_object = $ob->getValue($category);
             if (empty($t_object)) {
@@ -842,16 +859,16 @@ class Turba_Driver implements Countable
                 if ($fd = fopen($file, 'w')) {
                     fwrite($fd, $imgdata['load']['data']);
                     fclose($fd);
-                    $img = (string)Horde::url(
+                    $img = (string) Horde::url(
                         $registry->get('webroot', 'horde')
                             . '/services/images/view.php',
                         true
                     )->add(
-                        array(
+                        [
                             'f' => basename($file),
                             'a' => 'resize',
-                            'v' => '25.25.1'
-                        )
+                            'v' => '25.25.1',
+                        ]
                     );
                 }
             }
@@ -863,7 +880,7 @@ class Turba_Driver implements Countable
                 $ob->getValue('name')
             );
 
-            $t_objects[] = array(
+            $t_objects[] = [
                 'id' => $key,
                 'title' => $title,
                 'start' => sprintf(
@@ -878,16 +895,16 @@ class Turba_Driver implements Countable
                     $t_object_end->month,
                     $t_object_end->mday
                 ),
-                'recurrence' => array(
+                'recurrence' => [
                     'type' => Horde_Date_Recurrence::RECUR_YEARLY_DATE,
-                    'interval' => 1
-                ),
-                'params' => array('source' => $this->_name, 'key' => $key),
+                    'interval' => 1,
+                ],
+                'params' => ['source' => $this->_name, 'key' => $key],
                 'link' => Horde::url('contact.php', true)
-                    ->add(array('source' => $this->_name, 'key' => $key))
+                    ->add(['source' => $this->_name, 'key' => $key])
                     ->setRaw(true),
                 'icon' => $img,
-            );
+            ];
         }
 
         return $t_objects;
@@ -926,7 +943,7 @@ class Turba_Driver implements Countable
      */
     protected function _getTimeObjectTurbaListFallback(Horde_Date $start, Horde_Date $end, $field)
     {
-        return $this->search(array(), null, 'AND', array('name', $field));
+        return $this->search([], null, 'AND', ['name', $field]);
     }
 
     /**
@@ -940,16 +957,19 @@ class Turba_Driver implements Countable
      */
     public function getObjects(array $objectIds)
     {
-        $objects = $this->_read($this->map['__key'], $objectIds,
-                                $this->getContactOwner(),
-                                array_values($this->fields),
-                                $this->toDriverKeys($this->getBlobs()),
-                                $this->toDriverKeys($this->getDateFields()));
+        $objects = $this->_read(
+            $this->map['__key'],
+            $objectIds,
+            $this->getContactOwner(),
+            array_values($this->fields),
+            $this->toDriverKeys($this->getBlobs()),
+            $this->toDriverKeys($this->getDateFields())
+        );
         if (!is_array($objects)) {
             throw new Horde_Exception_NotFound();
         }
 
-        $results = array();
+        $results = [];
         foreach ($objects as $object) {
             $object = $this->toTurbaKeys($object);
             $done = false;
@@ -980,7 +1000,7 @@ class Turba_Driver implements Countable
      */
     public function getObject($objectId)
     {
-        $result = $this->getObjects(array($objectId));
+        $result = $this->getObjects([$objectId]);
 
         if (empty($result[0])) {
             throw new Horde_Exception_NotFound();
@@ -1031,9 +1051,8 @@ class Turba_Driver implements Countable
 
         /* Remember any tags, since toDriverKeys will remove them.
          * (They are not stored in the Turba backend so have no mapping). */
-        $tags = isset($attributes['__tags'])
-            ? $attributes['__tags']
-            : false;
+        $tags = $attributes['__tags']
+            ?? false;
 
         $this->_add(
             $this->toDriverKeys($attributes),
@@ -1054,8 +1073,11 @@ class Turba_Driver implements Countable
         /* Log the creation of this item in the history log. */
         try {
             $injector->getInstance('Horde_History')
-                ->log('turba:' . $this->getName() . ':' . $uid,
-                      array('action' => 'add'), true);
+                ->log(
+                    'turba:' . $this->getName() . ':' . $uid,
+                    ['action' => 'add'],
+                    true
+                );
         } catch (Exception $e) {
             Horde::log($e, 'ERR');
         }
@@ -1104,7 +1126,7 @@ class Turba_Driver implements Countable
 
         $own_contact = $GLOBALS['prefs']->getValue('own_contact');
         if (!empty($own_contact)) {
-            @list(,$id) = explode(';', $own_contact);
+            @[, $id] = explode(';', $own_contact);
             if ($id == $object_id) {
                 $GLOBALS['prefs']->setValue('own_contact', '');
             }
@@ -1113,9 +1135,11 @@ class Turba_Driver implements Countable
         /* Log the deletion of this item in the history log. */
         if ($object->getValue('__uid')) {
             try {
-                $GLOBALS['injector']->getInstance('Horde_History')->log($object->getGuid(),
-                                                array('action' => 'delete'),
-                                                true);
+                $GLOBALS['injector']->getInstance('Horde_History')->log(
+                    $object->getGuid(),
+                    ['action' => 'delete'],
+                    true
+                );
             } catch (Exception $e) {
                 Horde::log($e, 'ERR');
             }
@@ -1137,15 +1161,16 @@ class Turba_Driver implements Countable
         /* Remove tags */
         if ($remove_tags) {
             $GLOBALS['injector']->getInstance('Turba_Tagger')
-                ->replaceTags($object->getValue('__uid'), array(), $this->getContactOwner(), 'contact');
+                ->replaceTags($object->getValue('__uid'), [], $this->getContactOwner(), 'contact');
 
             /* Tell content we removed the object
             /* (Might have tags disabled, hence no Content_* objects autoloadable).
              */
             try {
                 $GLOBALS['injector']->getInstance('Content_Objects_Manager')
-                    ->delete(array($object->getValue('__uid')), 'contact');
-            } catch (Horde_Exception $e) {}
+                    ->delete([$object->getValue('__uid')], 'contact');
+            } catch (Horde_Exception $e) {
+            }
         }
     }
 
@@ -1176,15 +1201,15 @@ class Turba_Driver implements Countable
                 // them, just to be able to calculate this using
                 // Turba_Object#getGuid
                 $guid = 'turba:' . $this->getName() . ':' . $uid;
-                $history->log($guid, array('action' => 'delete'), true);
+                $history->log($guid, ['action' => 'delete'], true);
 
                 // Remove tags.
                 $GLOBALS['injector']->getInstance('Turba_Tagger')
-                    ->replaceTags($uid, array(), $this->getContactOwner(), 'contact');
+                    ->replaceTags($uid, [], $this->getContactOwner(), 'contact');
 
                 /* Tell content we removed the object */
-               $GLOBALS['injector']->getInstance('Content_Objects_Manager')
-                    ->delete(array($uid), 'contact');
+                $GLOBALS['injector']->getInstance('Content_Objects_Manager')
+                     ->delete([$uid], 'contact');
             }
         } catch (Exception $e) {
             Horde::log($e, 'ERR');
@@ -1201,7 +1226,7 @@ class Turba_Driver implements Countable
      */
     protected function _deleteAll()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -1229,9 +1254,11 @@ class Turba_Driver implements Countable
 
             /* Log the modification of this item in the history log. */
             try {
-                $GLOBALS['injector']->getInstance('Horde_History')->log($object->getGuid(),
-                                                array('action' => 'modify'),
-                                                true);
+                $GLOBALS['injector']->getInstance('Horde_History')->log(
+                    $object->getGuid(),
+                    ['action' => 'modify'],
+                    true
+                );
             } catch (Exception $e) {
                 Horde::log($e, 'ERR');
             }
@@ -1247,7 +1274,7 @@ class Turba_Driver implements Countable
      */
     public function getCriteria()
     {
-        return array_diff_key($this->map, array('__key' => true));
+        return array_diff_key($this->map, ['__key' => true]);
     }
 
     /**
@@ -1273,9 +1300,12 @@ class Turba_Driver implements Countable
      *
      * @return Horde_Icalendar_Vcard  A vcard object.
      */
-    public function tovCard(Turba_Object $object, $version = '2.1',
-                            array $fields = null, $skipEmpty = false)
-    {
+    public function tovCard(
+        Turba_Object $object,
+        $version = '2.1',
+        ?array $fields = null,
+        $skipEmpty = false
+    ) {
         global $injector;
 
         $hash = $object->getAttributes();
@@ -1283,8 +1313,8 @@ class Turba_Driver implements Countable
         $vcard = new Horde_Icalendar_Vcard($version);
         $formattedname = false;
         $charset = ($version == '2.1')
-            ? array('CHARSET' => 'UTF-8')
-            : array();
+            ? ['CHARSET' => 'UTF-8']
+            : [];
 
         $hooks = $injector->getInstance('Horde_Core_Hooks');
         $decode_hook = $hooks->hookExists('decode_attribute', 'turba');
@@ -1303,679 +1333,703 @@ class Turba_Driver implements Countable
                     $val = $hooks->callHook(
                         'decode_attribute',
                         'turba',
-                        array($key, $val, $object)
+                        [$key, $val, $object]
                     );
-                } catch (Turba_Exception $e) {}
+                } catch (Turba_Exception $e) {
+                }
             }
             switch ($key) {
-            case '__uid':
-                $vcard->setAttribute('UID', $val);
-                break;
-
-            case 'name':
-                if ($fields && !isset($fields['FN'])) {
+                case '__uid':
+                    $vcard->setAttribute('UID', $val);
                     break;
-                }
-                $vcard->setAttribute('FN', $val, Horde_Mime::is8bit($val) ? $charset : array());
-                $formattedname = true;
-                break;
 
-            case 'nickname':
-            case 'alias':
-                $params = Horde_Mime::is8bit($val) ? $charset : array();
-                if (!$fields || isset($fields['NICKNAME'])) {
-                    $vcard->setAttribute('NICKNAME', $val, $params);
-                }
-                if (!$fields || isset($fields['X-EPOCSECONDNAME'])) {
-                    $vcard->setAttribute('X-EPOCSECONDNAME', $val, $params);
-                }
-                break;
-
-            case 'homeAddress':
-                if ($fields &&
-                    (!isset($fields['LABEL']) ||
-                     (isset($fields['LABEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['LABEL']->Params['TYPE']->ValEnum, 'HOME')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('LABEL', $val, array('HOME' => null));
-                } else {
-                    $vcard->setAttribute('LABEL', $val, array('TYPE' => 'HOME'));
-                }
-                break;
-
-            case 'workAddress':
-                if ($fields &&
-                    (!isset($fields['LABEL']) ||
-                     (isset($fields['LABEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['LABEL']->Params['TYPE']->ValEnum, 'WORK')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('LABEL', $val, array('WORK' => null));
-                } else {
-                    $vcard->setAttribute('LABEL', $val, array('TYPE' => 'WORK'));
-                }
-                break;
-
-            case 'otherAddress':
-                if ($fields && !isset($fields['LABEL'])) {
-                    break;
-                }
-                $vcard->setAttribute('LABEL', $val);
-                break;
-
-            case 'phone':
-                if ($fields && !isset($fields['TEL'])) {
-                    break;
-                }
-                $vcard->setAttribute('TEL', $val);
-                break;
-
-            case 'homePhone':
-                if ($fields &&
-                    (!isset($fields['TEL']) ||
-                     (isset($fields['TEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('HOME' => null, 'VOICE' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => array('HOME', 'VOICE')));
-                }
-                break;
-
-            case 'workPhone':
-                if ($fields &&
-                    (!isset($fields['TEL']) ||
-                     (isset($fields['TEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('WORK' => null, 'VOICE' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => array('WORK', 'VOICE')));
-                }
-                break;
-
-            case 'cellPhone':
-                if ($fields &&
-                    (!isset($fields['TEL']) ||
-                     (isset($fields['TEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'CELL')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('CELL' => null, 'VOICE' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => array('CELL', 'VOICE')));
-                }
-                break;
-
-            case 'homeCellPhone':
-                $parameters = array();
-                if ($fields) {
-                    if (!isset($fields['TEL'])) {
+                case 'name':
+                    if ($fields && !isset($fields['FN'])) {
                         break;
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'CELL')) {
-                        if ($version == '2.1') {
-                            $parameters['CELL'] = null;
-                            $parameters['VOICE'] = null;
-                        } else {
-                            $parameters['TYPE'] = array('CELL', 'VOICE');
-                        }
+                    $vcard->setAttribute('FN', $val, Horde_Mime::is8bit($val) ? $charset : []);
+                    $formattedname = true;
+                    break;
+
+                case 'nickname':
+                case 'alias':
+                    $params = Horde_Mime::is8bit($val) ? $charset : [];
+                    if (!$fields || isset($fields['NICKNAME'])) {
+                        $vcard->setAttribute('NICKNAME', $val, $params);
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')) {
-                        if ($version == '2.1') {
-                            $parameters['HOME'] = null;
-                            $parameters['VOICE'] = null;
-                        } else {
-                            $parameters['TYPE'] = array('HOME', 'VOICE');
-                        }
+                    if (!$fields || isset($fields['X-EPOCSECONDNAME'])) {
+                        $vcard->setAttribute('X-EPOCSECONDNAME', $val, $params);
                     }
-                    if (empty($parameters)) {
+                    break;
+
+                case 'homeAddress':
+                    if ($fields &&
+                        (!isset($fields['LABEL']) ||
+                         (isset($fields['LABEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['LABEL']->Params['TYPE']->ValEnum, 'HOME')))) {
                         break;
                     }
-                } else {
                     if ($version == '2.1') {
-                        $parameters = array('CELL' => null, 'HOME' => null, 'VOICE' => null);
+                        $vcard->setAttribute('LABEL', $val, ['HOME' => null]);
                     } else {
-                        $parameters = array('TYPE' => array('CELL', 'HOME', 'VOICE'));
+                        $vcard->setAttribute('LABEL', $val, ['TYPE' => 'HOME']);
                     }
-                }
-                $vcard->setAttribute('TEL', $val, $parameters);
-                break;
+                    break;
 
-            case 'workCellPhone':
-                $parameters = array();
-                if ($fields) {
-                    if (!isset($fields['TEL'])) {
+                case 'workAddress':
+                    if ($fields &&
+                        (!isset($fields['LABEL']) ||
+                         (isset($fields['LABEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['LABEL']->Params['TYPE']->ValEnum, 'WORK')))) {
                         break;
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'CELL')) {
-                        if ($version == '2.1') {
-                            $parameters['CELL'] = null;
-                            $parameters['VOICE'] = null;
-                        } else {
-                            $parameters['TYPE'] = array('CELL', 'VOICE');
-                        }
-                    }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')) {
-                        if ($version == '2.1') {
-                            $parameters['WORK'] = null;
-                            $parameters['VOICE'] = null;
-                        } else {
-                            $parameters['TYPE'] = array('WORK', 'VOICE');
-                        }
-                    }
-                    if (empty($parameters)) {
-                        break;
-                    }
-                } else {
                     if ($version == '2.1') {
-                        $parameters = array('CELL' => null, 'WORK' => null, 'VOICE' => null);
+                        $vcard->setAttribute('LABEL', $val, ['WORK' => null]);
                     } else {
-                        $parameters = array('TYPE' => array('CELL', 'WORK', 'VOICE'));
+                        $vcard->setAttribute('LABEL', $val, ['TYPE' => 'WORK']);
                     }
-                }
-                $vcard->setAttribute('TEL', $val, $parameters);
-                break;
-
-            case 'videoCall':
-                if ($fields &&
-                    (!isset($fields['TEL']) ||
-                     (isset($fields['TEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'VIDEO')))) {
                     break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('VIDEO' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => 'VIDEO'));
-                }
-                break;
 
-            case 'homeVideoCall':
-                $parameters = array();
-                if ($fields) {
-                    if (!isset($fields['TEL'])) {
+                case 'otherAddress':
+                    if ($fields && !isset($fields['LABEL'])) {
                         break;
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'VIDEO')) {
-                        if ($version == '2.1') {
-                            $parameters['VIDEO'] = null;
-                        } else {
-                            $parameters['TYPE'] = 'VIDEO';
-                        }
-                    }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')) {
-                        if ($version == '2.1') {
-                            $parameters['HOME'] = null;
-                        } else {
-                            $parameters['TYPE'] = 'HOME';
-                        }
-                    }
-                    if (empty($parameters)) {
+                    $vcard->setAttribute('LABEL', $val);
+                    break;
+
+                case 'phone':
+                    if ($fields && !isset($fields['TEL'])) {
                         break;
                     }
-                } else {
+                    $vcard->setAttribute('TEL', $val);
+                    break;
+
+                case 'homePhone':
+                    if ($fields &&
+                        (!isset($fields['TEL']) ||
+                         (isset($fields['TEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')))) {
+                        break;
+                    }
                     if ($version == '2.1') {
-                        $parameters = array('VIDEO' => null, 'HOME' => null);
+                        $vcard->setAttribute('TEL', $val, ['HOME' => null, 'VOICE' => null]);
                     } else {
-                        $parameters = array('TYPE' => array('VIDEO', 'HOME'));
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => ['HOME', 'VOICE']]);
                     }
-                }
-                $vcard->setAttribute('TEL', $val, $parameters);
-                break;
+                    break;
 
-            case 'workVideoCall':
-                $parameters = array();
-                if ($fields) {
-                    if (!isset($fields['TEL'])) {
+                case 'workPhone':
+                    if ($fields &&
+                        (!isset($fields['TEL']) ||
+                         (isset($fields['TEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')))) {
                         break;
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'VIDEO')) {
-                        if ($version == '2.1') {
-                            $parameters['VIDEO'] = null;
-                        } else {
-                            $parameters['TYPE'] = 'VIDEO';
-                        }
-                    }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')) {
-                        if ($version == '2.1') {
-                            $parameters['WORK'] = null;
-                        } else {
-                            $parameters['TYPE'] = 'WORK';
-                        }
-                    }
-                    if (empty($parameters)) {
-                        break;
-                    }
-                } else {
                     if ($version == '2.1') {
-                        $parameters = array('VIDEO' => null, 'WORK' => null);
+                        $vcard->setAttribute('TEL', $val, ['WORK' => null, 'VOICE' => null]);
                     } else {
-                        $parameters = array('TYPE' => array('VIDEO', 'WORK'));
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => ['WORK', 'VOICE']]);
                     }
-                }
-                $vcard->setAttribute('TEL', $val, $parameters);
-                break;
-
-            case 'sip':
-                if ($fields && !isset($fields['X-SIP'])) {
                     break;
-                }
-                $vcard->setAttribute('X-SIP', $val);
-                break;
-            case 'ptt':
-                if ($fields &&
-                    (!isset($fields['X-SIP']) ||
-                     (isset($fields['X-SIP']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['X-SIP']->Params['TYPE']->ValEnum, 'POC')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('X-SIP', $val, array('POC' => null));
-                } else {
-                    $vcard->setAttribute('X-SIP', $val, array('TYPE' => 'POC'));
-                }
-                break;
 
-            case 'voip':
-                if ($fields &&
-                    (!isset($fields['X-SIP']) ||
-                     (isset($fields['X-SIP']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['X-SIP']->Params['TYPE']->ValEnum, 'VOIP')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('X-SIP', $val, array('VOIP' => null));
-                } else {
-                    $vcard->setAttribute('X-SIP', $val, array('TYPE' => 'VOIP'));
-                }
-                break;
-
-            case 'shareView':
-                if ($fields &&
-                    (!isset($fields['X-SIP']) ||
-                     (isset($fields['X-SIP']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['X-SIP']->Params['TYPE']->ValEnum, 'SWIS')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('X-SIP', $val, array('SWIS' => null));
-                } else {
-                    $vcard->setAttribute('X-SIP', $val, array('TYPE' => 'SWIS'));
-                }
-                break;
-
-            case 'imaddress':
-            case 'imaddress2':
-            case 'imaddress3':
-                $vcard->setAttribute('IMPP', $val);
-                break;
-
-            case 'fax':
-                if ($fields &&
-                    (!isset($fields['TEL']) ||
-                     (isset($fields['TEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'FAX')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('FAX' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => 'FAX'));
-                }
-                break;
-
-            case 'homeFax':
-                $parameters = array();
-                if ($fields) {
-                    if (!isset($fields['TEL'])) {
+                case 'cellPhone':
+                    if ($fields &&
+                        (!isset($fields['TEL']) ||
+                         (isset($fields['TEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'CELL')))) {
                         break;
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'FAX')) {
-                        if ($version == '2.1') {
-                            $parameters['FAX'] = null;
-                        } else {
-                            $parameters['TYPE'] = 'FAX';
-                        }
-                    }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')) {
-                        if ($version == '2.1') {
-                            $parameters['HOME'] = null;
-                        } else {
-                            $parameters['TYPE'] = 'HOME';
-                        }
-                    }
-                    if (empty($parameters)) {
-                        break;
-                    }
-                } else {
                     if ($version == '2.1') {
-                        $parameters = array('FAX' => null, 'HOME' => null);
+                        $vcard->setAttribute('TEL', $val, ['CELL' => null, 'VOICE' => null]);
                     } else {
-                        $parameters = array('TYPE' => array('FAX', 'HOME'));
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => ['CELL', 'VOICE']]);
                     }
-                }
-                $vcard->setAttribute('TEL', $val, $parameters);
-                break;
+                    break;
 
-            case 'workFax':
-                $parameters = array();
-                if ($fields) {
-                    if (!isset($fields['TEL'])) {
-                        break;
-                    }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'FAX')) {
+                case 'homeCellPhone':
+                    $parameters = [];
+                    if ($fields) {
+                        if (!isset($fields['TEL'])) {
+                            break;
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'CELL')) {
+                            if ($version == '2.1') {
+                                $parameters['CELL'] = null;
+                                $parameters['VOICE'] = null;
+                            } else {
+                                $parameters['TYPE'] = ['CELL', 'VOICE'];
+                            }
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')) {
+                            if ($version == '2.1') {
+                                $parameters['HOME'] = null;
+                                $parameters['VOICE'] = null;
+                            } else {
+                                $parameters['TYPE'] = ['HOME', 'VOICE'];
+                            }
+                        }
+                        if (empty($parameters)) {
+                            break;
+                        }
+                    } else {
                         if ($version == '2.1') {
-                            $parameters['FAX'] = null;
+                            $parameters = ['CELL' => null, 'HOME' => null, 'VOICE' => null];
                         } else {
-                            $parameters['TYPE'] = 'FAX';
+                            $parameters = ['TYPE' => ['CELL', 'HOME', 'VOICE']];
                         }
                     }
-                    if (!isset($fields['TEL']->Params['TYPE']) ||
-                        $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')) {
+                    $vcard->setAttribute('TEL', $val, $parameters);
+                    break;
+
+                case 'workCellPhone':
+                    $parameters = [];
+                    if ($fields) {
+                        if (!isset($fields['TEL'])) {
+                            break;
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'CELL')) {
+                            if ($version == '2.1') {
+                                $parameters['CELL'] = null;
+                                $parameters['VOICE'] = null;
+                            } else {
+                                $parameters['TYPE'] = ['CELL', 'VOICE'];
+                            }
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')) {
+                            if ($version == '2.1') {
+                                $parameters['WORK'] = null;
+                                $parameters['VOICE'] = null;
+                            } else {
+                                $parameters['TYPE'] = ['WORK', 'VOICE'];
+                            }
+                        }
+                        if (empty($parameters)) {
+                            break;
+                        }
+                    } else {
                         if ($version == '2.1') {
-                            $parameters['WORK'] = null;
+                            $parameters = ['CELL' => null, 'WORK' => null, 'VOICE' => null];
                         } else {
-                            $parameters['TYPE'] = 'WORK';
+                            $parameters = ['TYPE' => ['CELL', 'WORK', 'VOICE']];
                         }
                     }
-                    if (empty($parameters)) {
+                    $vcard->setAttribute('TEL', $val, $parameters);
+                    break;
+
+                case 'videoCall':
+                    if ($fields &&
+                        (!isset($fields['TEL']) ||
+                         (isset($fields['TEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'VIDEO')))) {
                         break;
                     }
-                } else {
                     if ($version == '2.1') {
-                        $parameters = array('FAX' => null, 'WORK' => null);
+                        $vcard->setAttribute('TEL', $val, ['VIDEO' => null]);
                     } else {
-                        $parameters = array('TYPE' => array('FAX', 'WORK'));
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => 'VIDEO']);
                     }
-                }
-                $vcard->setAttribute('TEL', $val, $parameters);
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('FAX' => null, 'WORK' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => array('FAX', 'WORK')));
-                }
-                break;
-
-            case 'pager':
-                if ($fields &&
-                    (!isset($fields['TEL']) ||
-                     (isset($fields['TEL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'PAGER')))) {
                     break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('TEL', $val, array('PAGER' => null));
-                } else {
-                    $vcard->setAttribute('TEL', $val, array('TYPE' => 'PAGER'));
-                }
-                break;
 
-            case 'email':
-                if ($fields && !isset($fields['EMAIL'])) {
+                case 'homeVideoCall':
+                    $parameters = [];
+                    if ($fields) {
+                        if (!isset($fields['TEL'])) {
+                            break;
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'VIDEO')) {
+                            if ($version == '2.1') {
+                                $parameters['VIDEO'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'VIDEO';
+                            }
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')) {
+                            if ($version == '2.1') {
+                                $parameters['HOME'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'HOME';
+                            }
+                        }
+                        if (empty($parameters)) {
+                            break;
+                        }
+                    } else {
+                        if ($version == '2.1') {
+                            $parameters = ['VIDEO' => null, 'HOME' => null];
+                        } else {
+                            $parameters = ['TYPE' => ['VIDEO', 'HOME']];
+                        }
+                    }
+                    $vcard->setAttribute('TEL', $val, $parameters);
                     break;
-                }
-                if ($version == '2.1') {
+
+                case 'workVideoCall':
+                    $parameters = [];
+                    if ($fields) {
+                        if (!isset($fields['TEL'])) {
+                            break;
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'VIDEO')) {
+                            if ($version == '2.1') {
+                                $parameters['VIDEO'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'VIDEO';
+                            }
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')) {
+                            if ($version == '2.1') {
+                                $parameters['WORK'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'WORK';
+                            }
+                        }
+                        if (empty($parameters)) {
+                            break;
+                        }
+                    } else {
+                        if ($version == '2.1') {
+                            $parameters = ['VIDEO' => null, 'WORK' => null];
+                        } else {
+                            $parameters = ['TYPE' => ['VIDEO', 'WORK']];
+                        }
+                    }
+                    $vcard->setAttribute('TEL', $val, $parameters);
+                    break;
+
+                case 'sip':
+                    if ($fields && !isset($fields['X-SIP'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('X-SIP', $val);
+                    break;
+                case 'ptt':
+                    if ($fields &&
+                        (!isset($fields['X-SIP']) ||
+                         (isset($fields['X-SIP']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['X-SIP']->Params['TYPE']->ValEnum, 'POC')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('X-SIP', $val, ['POC' => null]);
+                    } else {
+                        $vcard->setAttribute('X-SIP', $val, ['TYPE' => 'POC']);
+                    }
+                    break;
+
+                case 'voip':
+                    if ($fields &&
+                        (!isset($fields['X-SIP']) ||
+                         (isset($fields['X-SIP']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['X-SIP']->Params['TYPE']->ValEnum, 'VOIP')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('X-SIP', $val, ['VOIP' => null]);
+                    } else {
+                        $vcard->setAttribute('X-SIP', $val, ['TYPE' => 'VOIP']);
+                    }
+                    break;
+
+                case 'shareView':
+                    if ($fields &&
+                        (!isset($fields['X-SIP']) ||
+                         (isset($fields['X-SIP']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['X-SIP']->Params['TYPE']->ValEnum, 'SWIS')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('X-SIP', $val, ['SWIS' => null]);
+                    } else {
+                        $vcard->setAttribute('X-SIP', $val, ['TYPE' => 'SWIS']);
+                    }
+                    break;
+
+                case 'imaddress':
+                case 'imaddress2':
+                case 'imaddress3':
+                    $vcard->setAttribute('IMPP', $val);
+                    break;
+
+                case 'fax':
+                    if ($fields &&
+                        (!isset($fields['TEL']) ||
+                         (isset($fields['TEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'FAX')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('TEL', $val, ['FAX' => null]);
+                    } else {
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => 'FAX']);
+                    }
+                    break;
+
+                case 'homeFax':
+                    $parameters = [];
+                    if ($fields) {
+                        if (!isset($fields['TEL'])) {
+                            break;
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'FAX')) {
+                            if ($version == '2.1') {
+                                $parameters['FAX'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'FAX';
+                            }
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'HOME')) {
+                            if ($version == '2.1') {
+                                $parameters['HOME'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'HOME';
+                            }
+                        }
+                        if (empty($parameters)) {
+                            break;
+                        }
+                    } else {
+                        if ($version == '2.1') {
+                            $parameters = ['FAX' => null, 'HOME' => null];
+                        } else {
+                            $parameters = ['TYPE' => ['FAX', 'HOME']];
+                        }
+                    }
+                    $vcard->setAttribute('TEL', $val, $parameters);
+                    break;
+
+                case 'workFax':
+                    $parameters = [];
+                    if ($fields) {
+                        if (!isset($fields['TEL'])) {
+                            break;
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'FAX')) {
+                            if ($version == '2.1') {
+                                $parameters['FAX'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'FAX';
+                            }
+                        }
+                        if (!isset($fields['TEL']->Params['TYPE']) ||
+                            $this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'WORK')) {
+                            if ($version == '2.1') {
+                                $parameters['WORK'] = null;
+                            } else {
+                                $parameters['TYPE'] = 'WORK';
+                            }
+                        }
+                        if (empty($parameters)) {
+                            break;
+                        }
+                    } else {
+                        if ($version == '2.1') {
+                            $parameters = ['FAX' => null, 'WORK' => null];
+                        } else {
+                            $parameters = ['TYPE' => ['FAX', 'WORK']];
+                        }
+                    }
+                    $vcard->setAttribute('TEL', $val, $parameters);
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('TEL', $val, ['FAX' => null, 'WORK' => null]);
+                    } else {
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => ['FAX', 'WORK']]);
+                    }
+                    break;
+
+                case 'pager':
+                    if ($fields &&
+                        (!isset($fields['TEL']) ||
+                         (isset($fields['TEL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['TEL']->Params['TYPE']->ValEnum, 'PAGER')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('TEL', $val, ['PAGER' => null]);
+                    } else {
+                        $vcard->setAttribute('TEL', $val, ['TYPE' => 'PAGER']);
+                    }
+                    break;
+
+                case 'email':
+                    if ($fields && !isset($fields['EMAIL'])) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute(
+                            'EMAIL',
+                            Horde_Icalendar_Vcard::getBareEmail($val),
+                            ['INTERNET' => null]
+                        );
+                    } else {
+                        $vcard->setAttribute(
+                            'EMAIL',
+                            Horde_Icalendar_Vcard::getBareEmail($val),
+                            ['TYPE' => 'INTERNET']
+                        );
+                    }
+                    break;
+
+                case 'homeEmail':
+                    if ($fields &&
+                        (!isset($fields['EMAIL']) ||
+                         (isset($fields['EMAIL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['EMAIL']->Params['TYPE']->ValEnum, 'HOME')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute(
+                            'EMAIL',
+                            Horde_Icalendar_Vcard::getBareEmail($val),
+                            ['HOME' => null]
+                        );
+                    } else {
+                        $vcard->setAttribute(
+                            'EMAIL',
+                            Horde_Icalendar_Vcard::getBareEmail($val),
+                            ['TYPE' => 'HOME']
+                        );
+                    }
+                    break;
+
+                case 'workEmail':
+                    if ($fields &&
+                        (!isset($fields['EMAIL']) ||
+                         (isset($fields['EMAIL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['EMAIL']->Params['TYPE']->ValEnum, 'WORK')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute(
+                            'EMAIL',
+                            Horde_Icalendar_Vcard::getBareEmail($val),
+                            ['WORK' => null]
+                        );
+                    } else {
+                        $vcard->setAttribute(
+                            'EMAIL',
+                            Horde_Icalendar_Vcard::getBareEmail($val),
+                            ['TYPE' => 'WORK']
+                        );
+                    }
+                    break;
+
+                case 'emails':
+                    if ($fields && !isset($fields['EMAIL'])) {
+                        break;
+                    }
+                    $emails = explode(',', $val);
+                    foreach ($emails as $email) {
+                        $vcard->setAttribute('EMAIL', Horde_Icalendar_Vcard::getBareEmail($email));
+                    }
+                    break;
+
+                case 'title':
+                    if ($fields && !isset($fields['TITLE'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('TITLE', $val, Horde_Mime::is8bit($val) ? $charset : []);
+                    break;
+
+                case 'role':
+                    if ($fields && !isset($fields['ROLE'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('ROLE', $val, Horde_Mime::is8bit($val) ? $charset : []);
+                    break;
+
+                case 'notes':
+                    if ($fields && !isset($fields['NOTE'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('NOTE', $val, Horde_Mime::is8bit($val) ? $charset : []);
+                    break;
+
+                case '__tags':
+                    $val = $injector->getInstance('Turba_Tagger')->split($val);
+                    // no break
+                case 'businessCategory':
+                    // No CATEGORIES in vCard 2.1
+                    if ($version == '2.1' ||
+                        ($fields && !isset($fields['CATEGORIES']))) {
+                        break;
+                    }
+                    $vcard->setAttribute('CATEGORIES', null, [], true, $val);
+                    break;
+
+                case 'anniversary':
+                    if (!$fields || isset($fields['X-ANNIVERSARY'])) {
+                        $vcard->setAttribute('X-ANNIVERSARY', $val);
+                    }
+                    break;
+
+                case 'spouse':
+                    if (!$fields || isset($fields['X-SPOUSE'])) {
+                        $vcard->setAttribute('X-SPOUSE', $val);
+                    }
+                    break;
+
+                case 'children':
+                    if (!$fields || isset($fields['X-CHILDREN'])) {
+                        $vcard->setAttribute('X-CHILDREN', $val);
+                    }
+                    break;
+
+                case 'website':
+                    if ($fields && !isset($fields['URL'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('URL', $val);
+                    break;
+
+                case 'homeWebsite':
+                    if ($fields &&
+                        (!isset($fields['URL']) ||
+                         (isset($fields['URL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['URL']->Params['TYPE']->ValEnum, 'HOME')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('URL', $val, ['HOME' => null]);
+                    } else {
+                        $vcard->setAttribute('URL', $val, ['TYPE' => 'HOME']);
+                    }
+                    break;
+
+                case 'workWebsite':
+                    if ($fields &&
+                        (!isset($fields['URL']) ||
+                         (isset($fields['URL']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['URL']->Params['TYPE']->ValEnum, 'WORK')))) {
+                        break;
+                    }
+                    if ($version == '2.1') {
+                        $vcard->setAttribute('URL', $val, ['WORK' => null]);
+                    } else {
+                        $vcard->setAttribute('URL', $val, ['TYPE' => 'WORK']);
+                    }
+                    break;
+
+                case 'freebusyUrl':
+                    if ($version == '2.1' ||
+                        ($fields && !isset($fields['FBURL']))) {
+                        break;
+                    }
+                    $vcard->setAttribute('FBURL', $val);
+                    break;
+
+                case 'birthday':
+                    if ($fields && !isset($fields['BDAY'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('BDAY', $val);
+                    break;
+
+                case 'timezone':
+                    if ($fields && !isset($fields['TZ'])) {
+                        break;
+                    }
+                    $vcard->setAttribute('TZ', $val, ['VALUE' => 'text']);
+                    break;
+
+                case 'latitude':
+                    if ($fields && !isset($fields['GEO'])) {
+                        break;
+                    }
+                    if (isset($hash['longitude'])) {
+                        $vcard->setAttribute(
+                            'GEO',
+                            ['latitude' => $val,
+                                'longitude' => $hash['longitude']]
+                        );
+                    }
+                    break;
+
+                case 'homeLatitude':
+                    if ($fields &&
+                        (!isset($fields['GEO']) ||
+                         (isset($fields['GEO']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['GEO']->Params['TYPE']->ValEnum, 'HOME')))) {
+                        break;
+                    }
+                    if (isset($hash['homeLongitude'])) {
+                        if ($version == '2.1') {
+                            $vcard->setAttribute(
+                                'GEO',
+                                ['latitude' => $val,
+                                    'longitude' => $hash['homeLongitude']],
+                                ['HOME' => null]
+                            );
+                        } else {
+                            $vcard->setAttribute(
+                                'GEO',
+                                ['latitude' => $val,
+                                    'longitude' => $hash['homeLongitude']],
+                                ['TYPE' => 'HOME']
+                            );
+                        }
+                    }
+                    break;
+
+                case 'workLatitude':
+                    if ($fields &&
+                        (!isset($fields['GEO']) ||
+                         (isset($fields['GEO']->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields['GEO']->Params['TYPE']->ValEnum, 'HOME')))) {
+                        break;
+                    }
+                    if (isset($hash['workLongitude'])) {
+                        if ($version == '2.1') {
+                            $vcard->setAttribute(
+                                'GEO',
+                                ['latitude' => $val,
+                                    'longitude' => $hash['workLongitude']],
+                                ['WORK' => null]
+                            );
+                        } else {
+                            $vcard->setAttribute(
+                                'GEO',
+                                ['latitude' => $val,
+                                    'longitude' => $hash['workLongitude']],
+                                ['TYPE' => 'WORK']
+                            );
+                        }
+                    }
+                    break;
+
+                case 'photo':
+                case 'logo':
+                    $name = Horde_String::upper($key);
+                    $params = [];
+                    if (strlen($hash[$key])) {
+                        $params['ENCODING'] = 'b';
+                    }
+                    if (isset($hash[$key . 'type'])) {
+                        $params['TYPE'] = $hash[$key . 'type'];
+                    }
+                    if ($fields &&
+                        (!isset($fields[$name]) ||
+                         (isset($params['TYPE']) &&
+                          isset($fields[$name]->Params['TYPE']) &&
+                          !$this->_hasValEnum($fields[$name]->Params['TYPE']->ValEnum, $params['TYPE'])))) {
+                        break;
+                    }
                     $vcard->setAttribute(
-                        'EMAIL',
-                        Horde_Icalendar_Vcard::getBareEmail($val),
-                        array('INTERNET' => null));
-                } else {
-                    $vcard->setAttribute(
-                        'EMAIL',
-                        Horde_Icalendar_Vcard::getBareEmail($val),
-                        array('TYPE' => 'INTERNET'));
-                }
-                break;
-
-            case 'homeEmail':
-                if ($fields &&
-                    (!isset($fields['EMAIL']) ||
-                     (isset($fields['EMAIL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['EMAIL']->Params['TYPE']->ValEnum, 'HOME')))) {
+                        $name,
+                        base64_encode($hash[$key]),
+                        $params
+                    );
                     break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('EMAIL',
-                                         Horde_Icalendar_Vcard::getBareEmail($val),
-                                         array('HOME' => null));
-                } else {
-                    $vcard->setAttribute('EMAIL',
-                                         Horde_Icalendar_Vcard::getBareEmail($val),
-                                         array('TYPE' => 'HOME'));
-                }
-                break;
-
-            case 'workEmail':
-                if ($fields &&
-                    (!isset($fields['EMAIL']) ||
-                     (isset($fields['EMAIL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['EMAIL']->Params['TYPE']->ValEnum, 'WORK')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('EMAIL',
-                                         Horde_Icalendar_Vcard::getBareEmail($val),
-                                         array('WORK' => null));
-                } else {
-                    $vcard->setAttribute('EMAIL',
-                                         Horde_Icalendar_Vcard::getBareEmail($val),
-                                         array('TYPE' => 'WORK'));
-                }
-                break;
-
-            case 'emails':
-                if ($fields && !isset($fields['EMAIL'])) {
-                    break;
-                }
-                $emails = explode(',', $val);
-                foreach ($emails as $email) {
-                    $vcard->setAttribute('EMAIL', Horde_Icalendar_Vcard::getBareEmail($email));
-                }
-                break;
-
-            case 'title':
-                if ($fields && !isset($fields['TITLE'])) {
-                    break;
-                }
-                $vcard->setAttribute('TITLE', $val, Horde_Mime::is8bit($val) ? $charset : array());
-                break;
-
-            case 'role':
-                if ($fields && !isset($fields['ROLE'])) {
-                    break;
-                }
-                $vcard->setAttribute('ROLE', $val, Horde_Mime::is8bit($val) ? $charset : array());
-                break;
-
-            case 'notes':
-                if ($fields && !isset($fields['NOTE'])) {
-                    break;
-                }
-                $vcard->setAttribute('NOTE', $val, Horde_Mime::is8bit($val) ? $charset : array());
-                break;
-
-            case '__tags':
-                $val = $injector->getInstance('Turba_Tagger')->split($val);
-            case 'businessCategory':
-                // No CATEGORIES in vCard 2.1
-                if ($version == '2.1' ||
-                    ($fields && !isset($fields['CATEGORIES']))) {
-                    break;
-                }
-                $vcard->setAttribute('CATEGORIES', null, array(), true, $val);
-                break;
-
-            case 'anniversary':
-                if (!$fields || isset($fields['X-ANNIVERSARY'])) {
-                    $vcard->setAttribute('X-ANNIVERSARY', $val);
-                }
-                break;
-
-            case 'spouse':
-                if (!$fields || isset($fields['X-SPOUSE'])) {
-                    $vcard->setAttribute('X-SPOUSE', $val);
-                }
-                break;
-
-            case 'children':
-                if (!$fields || isset($fields['X-CHILDREN'])) {
-                    $vcard->setAttribute('X-CHILDREN', $val);
-                }
-                break;
-
-            case 'website':
-                if ($fields && !isset($fields['URL'])) {
-                    break;
-                }
-                $vcard->setAttribute('URL', $val);
-                break;
-
-            case 'homeWebsite':
-                if ($fields &&
-                    (!isset($fields['URL']) ||
-                     (isset($fields['URL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['URL']->Params['TYPE']->ValEnum, 'HOME')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('URL', $val, array('HOME' => null));
-                } else {
-                    $vcard->setAttribute('URL', $val, array('TYPE' => 'HOME'));
-                }
-                break;
-
-            case 'workWebsite':
-                if ($fields &&
-                    (!isset($fields['URL']) ||
-                     (isset($fields['URL']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['URL']->Params['TYPE']->ValEnum, 'WORK')))) {
-                    break;
-                }
-                if ($version == '2.1') {
-                    $vcard->setAttribute('URL', $val, array('WORK' => null));
-                } else {
-                    $vcard->setAttribute('URL', $val, array('TYPE' => 'WORK'));
-                }
-                break;
-
-            case 'freebusyUrl':
-                if ($version == '2.1' ||
-                    ($fields && !isset($fields['FBURL']))) {
-                    break;
-                }
-                $vcard->setAttribute('FBURL', $val);
-                break;
-
-            case 'birthday':
-                if ($fields && !isset($fields['BDAY'])) {
-                    break;
-                }
-                $vcard->setAttribute('BDAY', $val);
-                break;
-
-            case 'timezone':
-                if ($fields && !isset($fields['TZ'])) {
-                    break;
-                }
-                $vcard->setAttribute('TZ', $val, array('VALUE' => 'text'));
-                break;
-
-            case 'latitude':
-                if ($fields && !isset($fields['GEO'])) {
-                    break;
-                }
-                if (isset($hash['longitude'])) {
-                    $vcard->setAttribute('GEO',
-                                         array('latitude' => $val,
-                                               'longitude' => $hash['longitude']));
-                }
-                break;
-
-            case 'homeLatitude':
-                if ($fields &&
-                    (!isset($fields['GEO']) ||
-                     (isset($fields['GEO']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['GEO']->Params['TYPE']->ValEnum, 'HOME')))) {
-                    break;
-                }
-                if (isset($hash['homeLongitude'])) {
-                    if ($version == '2.1') {
-                        $vcard->setAttribute('GEO',
-                                             array('latitude' => $val,
-                                                   'longitude' => $hash['homeLongitude']),
-                                             array('HOME' => null));
-                   } else {
-                        $vcard->setAttribute('GEO',
-                                             array('latitude' => $val,
-                                                   'longitude' => $hash['homeLongitude']),
-                                             array('TYPE' => 'HOME'));
-                   }
-                }
-                break;
-
-            case 'workLatitude':
-                if ($fields &&
-                    (!isset($fields['GEO']) ||
-                     (isset($fields['GEO']->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields['GEO']->Params['TYPE']->ValEnum, 'HOME')))) {
-                    break;
-                }
-                if (isset($hash['workLongitude'])) {
-                    if ($version == '2.1') {
-                        $vcard->setAttribute('GEO',
-                                             array('latitude' => $val,
-                                                   'longitude' => $hash['workLongitude']),
-                                             array('WORK' => null));
-                   } else {
-                        $vcard->setAttribute('GEO',
-                                             array('latitude' => $val,
-                                                   'longitude' => $hash['workLongitude']),
-                                             array('TYPE' => 'WORK'));
-                   }
-                }
-                break;
-
-            case 'photo':
-            case 'logo':
-                $name = Horde_String::upper($key);
-                $params = array();
-                if (strlen($hash[$key])) {
-                    $params['ENCODING'] = 'b';
-                }
-                if (isset($hash[$key . 'type'])) {
-                    $params['TYPE'] = $hash[$key . 'type'];
-                }
-                if ($fields &&
-                    (!isset($fields[$name]) ||
-                     (isset($params['TYPE']) &&
-                      isset($fields[$name]->Params['TYPE']) &&
-                      !$this->_hasValEnum($fields[$name]->Params['TYPE']->ValEnum, $params['TYPE'])))) {
-                    break;
-                }
-                $vcard->setAttribute($name,
-                                     base64_encode($hash[$key]),
-                                     $params);
-                break;
             }
         }
 
@@ -1984,16 +2038,16 @@ class Turba_Driver implements Countable
             $this->_guessName($hash);
         }
 
-        $a = array(
-            Horde_Icalendar_Vcard::N_FAMILY => isset($hash['lastname']) ? $hash['lastname'] : '',
-            Horde_Icalendar_Vcard::N_GIVEN  => isset($hash['firstname']) ? $hash['firstname'] : '',
-            Horde_Icalendar_Vcard::N_ADDL   => isset($hash['middlenames']) ? $hash['middlenames'] : '',
-            Horde_Icalendar_Vcard::N_PREFIX => isset($hash['namePrefix']) ? $hash['namePrefix'] : '',
-            Horde_Icalendar_Vcard::N_SUFFIX => isset($hash['nameSuffix']) ? $hash['nameSuffix'] : '',
-        );
+        $a = [
+            Horde_Icalendar_Vcard::N_FAMILY => $hash['lastname'] ?? '',
+            Horde_Icalendar_Vcard::N_GIVEN  => $hash['firstname'] ?? '',
+            Horde_Icalendar_Vcard::N_ADDL   => $hash['middlenames'] ?? '',
+            Horde_Icalendar_Vcard::N_PREFIX => $hash['namePrefix'] ?? '',
+            Horde_Icalendar_Vcard::N_SUFFIX => $hash['nameSuffix'] ?? '',
+        ];
         $val = implode(';', $a);
         if (!$fields || isset($fields['N'])) {
-            $vcard->setAttribute('N', $val, Horde_Mime::is8bit($val) ? $charset : array(), false, $a);
+            $vcard->setAttribute('N', $val, Horde_Mime::is8bit($val) ? $charset : [], false, $a);
         }
 
         if (!$formattedname && (!$fields || isset($fields['FN']))) {
@@ -2005,10 +2059,10 @@ class Turba_Driver implements Countable
             } else {
                 $val = '';
             }
-            $vcard->setAttribute('FN', $val, Horde_Mime::is8bit($val) ? $charset : array());
+            $vcard->setAttribute('FN', $val, Horde_Mime::is8bit($val) ? $charset : []);
         }
 
-        $org = array();
+        $org = [];
         if (!empty($hash['company']) ||
             (!$skipEmpty && array_key_exists('company', $hash))) {
             $org[] = $hash['company'];
@@ -2019,7 +2073,7 @@ class Turba_Driver implements Countable
         }
         if (count($org) && (!$fields || isset($fields['ORG']))) {
             $val = implode(';', $org);
-            $vcard->setAttribute('ORG', $val, Horde_Mime::is8bit($val) ? $charset : array(), false, $org);
+            $vcard->setAttribute('ORG', $val, Horde_Mime::is8bit($val) ? $charset : [], false, $org);
         }
 
         if ((!$fields || isset($fields['ADR'])) &&
@@ -2048,31 +2102,25 @@ class Turba_Driver implements Countable
                 !isset($hash['commonStreet'])) {
                 $hash['commonStreet'] = $hash['commonAddress'];
             }
-            $a = array(
-                Horde_Icalendar_Vcard::ADR_POB      => isset($hash['commonPOBox'])
-                    ? $hash['commonPOBox'] : '',
-                Horde_Icalendar_Vcard::ADR_EXTEND   => isset($hash['commonExtended'])
-                    ? $hash['commonExtended'] : '',
-                Horde_Icalendar_Vcard::ADR_STREET   => isset($hash['commonStreet'])
-                    ? $hash['commonStreet'] : '',
-                Horde_Icalendar_Vcard::ADR_LOCALITY => isset($hash['commonCity'])
-                    ? $hash['commonCity'] : '',
-                Horde_Icalendar_Vcard::ADR_REGION   => isset($hash['commonProvince'])
-                    ? $hash['commonProvince'] : '',
-                Horde_Icalendar_Vcard::ADR_POSTCODE => isset($hash['commonPostalCode'])
-                    ? $hash['commonPostalCode'] : '',
+            $a = [
+                Horde_Icalendar_Vcard::ADR_POB      => $hash['commonPOBox'] ?? '',
+                Horde_Icalendar_Vcard::ADR_EXTEND   => $hash['commonExtended'] ?? '',
+                Horde_Icalendar_Vcard::ADR_STREET   => $hash['commonStreet'] ?? '',
+                Horde_Icalendar_Vcard::ADR_LOCALITY => $hash['commonCity'] ?? '',
+                Horde_Icalendar_Vcard::ADR_REGION   => $hash['commonProvince'] ?? '',
+                Horde_Icalendar_Vcard::ADR_POSTCODE => $hash['commonPostalCode'] ?? '',
                 Horde_Icalendar_Vcard::ADR_COUNTRY  => isset($hash['commonCountry'])
                     ? Horde_Nls::getCountryISO($hash['commonCountry']) : '',
-            );
+            ];
 
             $val = implode(';', $a);
             if ($version == '2.1') {
-                $params = array();
+                $params = [];
                 if (Horde_Mime::is8bit($val)) {
                     $params['CHARSET'] = 'UTF-8';
                 }
             } else {
-                $params = array('TYPE' => '');
+                $params = ['TYPE' => ''];
             }
             $vcard->setAttribute('ADR', $val, $params, true, $a);
         }
@@ -2101,31 +2149,25 @@ class Turba_Driver implements Countable
             if (isset($hash['homeAddress']) && !isset($hash['homeStreet'])) {
                 $hash['homeStreet'] = $hash['homeAddress'];
             }
-            $a = array(
-                Horde_Icalendar_Vcard::ADR_POB      => isset($hash['homePOBox'])
-                    ? $hash['homePOBox'] : '',
-                Horde_Icalendar_Vcard::ADR_EXTEND   => isset($hash['homeExtended'])
-                    ? $hash['homeExtended'] : '',
-                Horde_Icalendar_Vcard::ADR_STREET   => isset($hash['homeStreet'])
-                    ? $hash['homeStreet'] : '',
-                Horde_Icalendar_Vcard::ADR_LOCALITY => isset($hash['homeCity'])
-                    ? $hash['homeCity'] : '',
-                Horde_Icalendar_Vcard::ADR_REGION   => isset($hash['homeProvince'])
-                    ? $hash['homeProvince'] : '',
-                Horde_Icalendar_Vcard::ADR_POSTCODE => isset($hash['homePostalCode'])
-                    ? $hash['homePostalCode'] : '',
+            $a = [
+                Horde_Icalendar_Vcard::ADR_POB      => $hash['homePOBox'] ?? '',
+                Horde_Icalendar_Vcard::ADR_EXTEND   => $hash['homeExtended'] ?? '',
+                Horde_Icalendar_Vcard::ADR_STREET   => $hash['homeStreet'] ?? '',
+                Horde_Icalendar_Vcard::ADR_LOCALITY => $hash['homeCity'] ?? '',
+                Horde_Icalendar_Vcard::ADR_REGION   => $hash['homeProvince'] ?? '',
+                Horde_Icalendar_Vcard::ADR_POSTCODE => $hash['homePostalCode'] ?? '',
                 Horde_Icalendar_Vcard::ADR_COUNTRY  => isset($hash['homeCountry'])
                     ? Horde_Nls::getCountryISO($hash['homeCountry']) : '',
-            );
+            ];
 
             $val = implode(';', $a);
             if ($version == '2.1') {
-                $params = array('HOME' => null);
+                $params = ['HOME' => null];
                 if (Horde_Mime::is8bit($val)) {
                     $params['CHARSET'] = 'UTF-8';
                 }
             } else {
-                $params = array('TYPE' => 'HOME');
+                $params = ['TYPE' => 'HOME'];
             }
             $vcard->setAttribute('ADR', $val, $params, true, $a);
         }
@@ -2154,31 +2196,25 @@ class Turba_Driver implements Countable
             if (isset($hash['workAddress']) && !isset($hash['workStreet'])) {
                 $hash['workStreet'] = $hash['workAddress'];
             }
-            $a = array(
-                Horde_Icalendar_Vcard::ADR_POB      => isset($hash['workPOBox'])
-                    ? $hash['workPOBox'] : '',
-                Horde_Icalendar_Vcard::ADR_EXTEND   => isset($hash['workExtended'])
-                    ? $hash['workExtended'] : '',
-                Horde_Icalendar_Vcard::ADR_STREET   => isset($hash['workStreet'])
-                    ? $hash['workStreet'] : '',
-                Horde_Icalendar_Vcard::ADR_LOCALITY => isset($hash['workCity'])
-                    ? $hash['workCity'] : '',
-                Horde_Icalendar_Vcard::ADR_REGION   => isset($hash['workProvince'])
-                    ? $hash['workProvince'] : '',
-                Horde_Icalendar_Vcard::ADR_POSTCODE => isset($hash['workPostalCode'])
-                    ? $hash['workPostalCode'] : '',
+            $a = [
+                Horde_Icalendar_Vcard::ADR_POB      => $hash['workPOBox'] ?? '',
+                Horde_Icalendar_Vcard::ADR_EXTEND   => $hash['workExtended'] ?? '',
+                Horde_Icalendar_Vcard::ADR_STREET   => $hash['workStreet'] ?? '',
+                Horde_Icalendar_Vcard::ADR_LOCALITY => $hash['workCity'] ?? '',
+                Horde_Icalendar_Vcard::ADR_REGION   => $hash['workProvince'] ?? '',
+                Horde_Icalendar_Vcard::ADR_POSTCODE => $hash['workPostalCode'] ?? '',
                 Horde_Icalendar_Vcard::ADR_COUNTRY  => isset($hash['workCountry'])
                     ? Horde_Nls::getCountryISO($hash['workCountry']) : '',
-            );
+            ];
 
             $val = implode(';', $a);
             if ($version == '2.1') {
-                $params = array('WORK' => null);
+                $params = ['WORK' => null];
                 if (Horde_Mime::is8bit($val)) {
                     $params['CHARSET'] = 'UTF-8';
                 }
             } else {
-                $params = array('TYPE' => 'WORK');
+                $params = ['TYPE' => 'WORK'];
             }
             $vcard->setAttribute('ADR', $val, $params, true, $a);
         }
@@ -2218,424 +2254,429 @@ class Turba_Driver implements Countable
      */
     public function toHash(Horde_Icalendar_Vcard $vcard)
     {
-        $hash = array();
+        $hash = [];
         $attr = $vcard->getAllAttributes();
         $imaddress = 1;
 
         foreach ($attr as $item) {
             switch ($item['name']) {
-            case 'UID':
-                $hash['__uid'] = $item['value'];
-                break;
-
-            case 'FN':
-                $hash['name'] = $item['value'];
-                break;
-
-            case 'N':
-                $name = $item['values'];
-                if (!empty($name[Horde_Icalendar_Vcard::N_FAMILY])) {
-                    $hash['lastname'] = $name[Horde_Icalendar_Vcard::N_FAMILY];
-                }
-                if (!empty($name[Horde_Icalendar_Vcard::N_GIVEN])) {
-                    $hash['firstname'] = $name[Horde_Icalendar_Vcard::N_GIVEN];
-                }
-                if (!empty($name[Horde_Icalendar_Vcard::N_ADDL])) {
-                    $hash['middlenames'] = $name[Horde_Icalendar_Vcard::N_ADDL];
-                }
-                if (!empty($name[Horde_Icalendar_Vcard::N_PREFIX])) {
-                    $hash['namePrefix'] = $name[Horde_Icalendar_Vcard::N_PREFIX];
-                }
-                if (!empty($name[Horde_Icalendar_Vcard::N_SUFFIX])) {
-                    $hash['nameSuffix'] = $name[Horde_Icalendar_Vcard::N_SUFFIX];
-                }
-                break;
-
-            case 'NICKNAME':
-            case 'X-EPOCSECONDNAME':
-                $hash['nickname'] = $item['value'];
-                $hash['alias'] = $item['value'];
-                break;
-
-            // We use LABEL but also support ADR.
-            case 'LABEL':
-                if (isset($item['params']['HOME']) && !isset($hash['homeAddress'])) {
-                    $hash['homeAddress'] = $item['value'];
-                } elseif (isset($item['params']['WORK']) && !isset($hash['workAddress'])) {
-                    $hash['workAddress'] = $item['value'];
-                } elseif (!isset($hash['commonAddress'])) {
-                    $hash['commonAddress'] = $item['value'];
-                }
-                break;
-
-            case 'ADR':
-                if (isset($item['params']['TYPE'])) {
-                    if (!is_array($item['params']['TYPE'])) {
-                        $item['params']['TYPE'] = array($item['params']['TYPE']);
-                    }
-                } else {
-                    $item['params']['TYPE'] = array();
-                    if (isset($item['params']['WORK'])) {
-                        $item['params']['TYPE'][] = 'WORK';
-                    }
-                    if (isset($item['params']['HOME'])) {
-                        $item['params']['TYPE'][] = 'HOME';
-                    }
-                    if (count($item['params']['TYPE']) == 0) {
-                        $item['params']['TYPE'][] = 'COMMON';
-                    }
-                }
-
-                $address = $item['values'];
-                foreach ($item['params']['TYPE'] as $adr) {
-                    switch (Horde_String::upper($adr)) {
-                    case 'HOME':
-                        $prefix = 'home';
-                        break;
-
-                    case 'WORK':
-                        $prefix = 'work';
-                        break;
-
-                    default:
-                        $prefix = 'common';
-                    }
-
-                    if (isset($hash[$prefix . 'Address'])) {
-                        continue;
-                    }
-
-                    $hash[$prefix . 'Address'] = '';
-
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_STREET])) {
-                        $hash[$prefix . 'Street'] = $address[Horde_Icalendar_Vcard::ADR_STREET];
-                        $hash[$prefix . 'Address'] .= $hash[$prefix . 'Street'] . "\n";
-                    }
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_EXTEND])) {
-                        $hash[$prefix . 'Extended'] = $address[Horde_Icalendar_Vcard::ADR_EXTEND];
-                        $hash[$prefix . 'Address'] .= $hash[$prefix . 'Extended'] . "\n";
-                    }
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_POB])) {
-                        $hash[$prefix . 'POBox'] = $address[Horde_Icalendar_Vcard::ADR_POB];
-                        $hash[$prefix . 'Address'] .= $hash[$prefix . 'POBox'] . "\n";
-                    }
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_LOCALITY])) {
-                        $hash[$prefix . 'City'] = $address[Horde_Icalendar_Vcard::ADR_LOCALITY];
-                        $hash[$prefix . 'Address'] .= $hash[$prefix . 'City'];
-                    }
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_REGION])) {
-                        $hash[$prefix . 'Province'] = $address[Horde_Icalendar_Vcard::ADR_REGION];
-                        $hash[$prefix . 'Address'] .= ', ' . $hash[$prefix . 'Province'];
-                    }
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_POSTCODE])) {
-                        $hash[$prefix . 'PostalCode'] = $address[Horde_Icalendar_Vcard::ADR_POSTCODE];
-                        $hash[$prefix . 'Address'] .= ' ' . $hash[$prefix . 'PostalCode'];
-                    }
-                    if (!empty($address[Horde_Icalendar_Vcard::ADR_COUNTRY])) {
-                        include 'Horde/Nls/Countries.php';
-                        $country = array_search($address[Horde_Icalendar_Vcard::ADR_COUNTRY], $countries);
-                        if ($country === false) {
-                            $country = $address[Horde_Icalendar_Vcard::ADR_COUNTRY];
-                        }
-                        $hash[$prefix . 'Country'] = $country;
-                        $hash[$prefix . 'Address'] .= "\n" . $address[Horde_Icalendar_Vcard::ADR_COUNTRY];
-                    }
-
-                    $hash[$prefix . 'Address'] = trim($hash[$prefix . 'Address']);
-                }
-                break;
-
-            case 'TZ':
-                // We only support textual timezones.
-                if (!isset($item['params']['VALUE']) ||
-                    Horde_String::lower($item['params']['VALUE']) != 'text') {
+                case 'UID':
+                    $hash['__uid'] = $item['value'];
                     break;
-                }
-                $timezones = explode(';', $item['value']);
-                $available_timezones = Horde_Nls::getTimezones();
-                foreach ($timezones as $timezone) {
-                    $timezone = trim($timezone);
-                    if (isset($available_timezones[$timezone])) {
-                        $hash['timezone'] = $timezone;
-                        break 2;
-                    }
-                }
-                break;
 
-            case 'GEO':
-                if (isset($item['params']['HOME'])) {
-                    $hash['homeLatitude'] = $item['value']['latitude'];
-                    $hash['homeLongitude'] = $item['value']['longitude'];
-                } elseif (isset($item['params']['WORK'])) {
-                    $hash['workLatitude'] = $item['value']['latitude'];
-                    $hash['workLongitude'] = $item['value']['longitude'];
-                } else {
-                    $hash['latitude'] = $item['value']['latitude'];
-                    $hash['longitude'] = $item['value']['longitude'];
-                }
-                break;
+                case 'FN':
+                    $hash['name'] = $item['value'];
+                    break;
 
-            case 'TEL':
-                if (isset($item['params']['FAX'])) {
-                    if (isset($item['params']['WORK']) &&
-                        !isset($hash['workFax'])) {
-                        $hash['workFax'] = $item['value'];
-                    } elseif (isset($item['params']['HOME']) &&
-                              !isset($hash['homeFax'])) {
-                        $hash['homeFax'] = $item['value'];
-                    } elseif (!isset($hash['fax'])) {
-                        $hash['fax'] = $item['value'];
+                case 'N':
+                    $name = $item['values'];
+                    if (!empty($name[Horde_Icalendar_Vcard::N_FAMILY])) {
+                        $hash['lastname'] = $name[Horde_Icalendar_Vcard::N_FAMILY];
                     }
-                } elseif (isset($item['params']['PAGER']) &&
-                          !isset($hash['pager'])) {
-                    $hash['pager'] = $item['value'];
-                } elseif (isset($item['params']['TYPE'])) {
-                    if (!is_array($item['params']['TYPE'])) {
-                        $item['params']['TYPE'] = array($item['params']['TYPE']);
+                    if (!empty($name[Horde_Icalendar_Vcard::N_GIVEN])) {
+                        $hash['firstname'] = $name[Horde_Icalendar_Vcard::N_GIVEN];
                     }
-                    foreach ($item['params']['TYPE'] as &$type) {
-                        $type = Horde_String::upper($type);
+                    if (!empty($name[Horde_Icalendar_Vcard::N_ADDL])) {
+                        $hash['middlenames'] = $name[Horde_Icalendar_Vcard::N_ADDL];
                     }
-                    // For vCard 3.0.
-                    if (in_array('CELL', $item['params']['TYPE'])) {
-                        if (in_array('HOME', $item['params']['TYPE']) &&
-                            !isset($hash['homeCellPhone'])) {
-                            $hash['homeCellPhone'] = $item['value'];
-                        } elseif (in_array('WORK', $item['params']['TYPE']) &&
-                                  !isset($hash['workCellPhone'])) {
-                            $hash['workCellPhone'] = $item['value'];
-                        } elseif (!isset($hash['cellPhone'])) {
-                            $hash['cellPhone'] = $item['value'];
+                    if (!empty($name[Horde_Icalendar_Vcard::N_PREFIX])) {
+                        $hash['namePrefix'] = $name[Horde_Icalendar_Vcard::N_PREFIX];
+                    }
+                    if (!empty($name[Horde_Icalendar_Vcard::N_SUFFIX])) {
+                        $hash['nameSuffix'] = $name[Horde_Icalendar_Vcard::N_SUFFIX];
+                    }
+                    break;
+
+                case 'NICKNAME':
+                case 'X-EPOCSECONDNAME':
+                    $hash['nickname'] = $item['value'];
+                    $hash['alias'] = $item['value'];
+                    break;
+
+                    // We use LABEL but also support ADR.
+                case 'LABEL':
+                    if (isset($item['params']['HOME']) && !isset($hash['homeAddress'])) {
+                        $hash['homeAddress'] = $item['value'];
+                    } elseif (isset($item['params']['WORK']) && !isset($hash['workAddress'])) {
+                        $hash['workAddress'] = $item['value'];
+                    } elseif (!isset($hash['commonAddress'])) {
+                        $hash['commonAddress'] = $item['value'];
+                    }
+                    break;
+
+                case 'ADR':
+                    if (isset($item['params']['TYPE'])) {
+                        if (!is_array($item['params']['TYPE'])) {
+                            $item['params']['TYPE'] = [$item['params']['TYPE']];
                         }
-                    } elseif (in_array('FAX', $item['params']['TYPE'])) {
-                        if (in_array('HOME', $item['params']['TYPE']) &&
-                            !isset($hash['homeFax'])) {
-                            $hash['homeFax'] = $item['value'];
-                        } elseif (in_array('WORK', $item['params']['TYPE']) &&
-                                  !isset($hash['workFax'])) {
+                    } else {
+                        $item['params']['TYPE'] = [];
+                        if (isset($item['params']['WORK'])) {
+                            $item['params']['TYPE'][] = 'WORK';
+                        }
+                        if (isset($item['params']['HOME'])) {
+                            $item['params']['TYPE'][] = 'HOME';
+                        }
+                        if (count($item['params']['TYPE']) == 0) {
+                            $item['params']['TYPE'][] = 'COMMON';
+                        }
+                    }
+
+                    $address = $item['values'];
+                    foreach ($item['params']['TYPE'] as $adr) {
+                        switch (Horde_String::upper($adr)) {
+                            case 'HOME':
+                                $prefix = 'home';
+                                break;
+
+                            case 'WORK':
+                                $prefix = 'work';
+                                break;
+
+                            default:
+                                $prefix = 'common';
+                        }
+
+                        if (isset($hash[$prefix . 'Address'])) {
+                            continue;
+                        }
+
+                        $hash[$prefix . 'Address'] = '';
+
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_STREET])) {
+                            $hash[$prefix . 'Street'] = $address[Horde_Icalendar_Vcard::ADR_STREET];
+                            $hash[$prefix . 'Address'] .= $hash[$prefix . 'Street'] . "\n";
+                        }
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_EXTEND])) {
+                            $hash[$prefix . 'Extended'] = $address[Horde_Icalendar_Vcard::ADR_EXTEND];
+                            $hash[$prefix . 'Address'] .= $hash[$prefix . 'Extended'] . "\n";
+                        }
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_POB])) {
+                            $hash[$prefix . 'POBox'] = $address[Horde_Icalendar_Vcard::ADR_POB];
+                            $hash[$prefix . 'Address'] .= $hash[$prefix . 'POBox'] . "\n";
+                        }
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_LOCALITY])) {
+                            $hash[$prefix . 'City'] = $address[Horde_Icalendar_Vcard::ADR_LOCALITY];
+                            $hash[$prefix . 'Address'] .= $hash[$prefix . 'City'];
+                        }
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_REGION])) {
+                            $hash[$prefix . 'Province'] = $address[Horde_Icalendar_Vcard::ADR_REGION];
+                            $hash[$prefix . 'Address'] .= ', ' . $hash[$prefix . 'Province'];
+                        }
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_POSTCODE])) {
+                            $hash[$prefix . 'PostalCode'] = $address[Horde_Icalendar_Vcard::ADR_POSTCODE];
+                            $hash[$prefix . 'Address'] .= ' ' . $hash[$prefix . 'PostalCode'];
+                        }
+                        if (!empty($address[Horde_Icalendar_Vcard::ADR_COUNTRY])) {
+                            /* Countries */
+                            if (class_exists(\Horde_Nls_Loader::class)) {
+                                $countries = \Horde_Nls_Loader::loadCountries();
+                            } else {
+                                include 'Horde/Nls/Countries.php';
+                            }
+                            $country = array_search($address[Horde_Icalendar_Vcard::ADR_COUNTRY], $countries);
+                            if ($country === false) {
+                                $country = $address[Horde_Icalendar_Vcard::ADR_COUNTRY];
+                            }
+                            $hash[$prefix . 'Country'] = $country;
+                            $hash[$prefix . 'Address'] .= "\n" . $address[Horde_Icalendar_Vcard::ADR_COUNTRY];
+                        }
+
+                        $hash[$prefix . 'Address'] = trim($hash[$prefix . 'Address']);
+                    }
+                    break;
+
+                case 'TZ':
+                    // We only support textual timezones.
+                    if (!isset($item['params']['VALUE']) ||
+                        Horde_String::lower($item['params']['VALUE']) != 'text') {
+                        break;
+                    }
+                    $timezones = explode(';', $item['value']);
+                    $available_timezones = Horde_Nls::getTimezones();
+                    foreach ($timezones as $timezone) {
+                        $timezone = trim($timezone);
+                        if (isset($available_timezones[$timezone])) {
+                            $hash['timezone'] = $timezone;
+                            break 2;
+                        }
+                    }
+                    break;
+
+                case 'GEO':
+                    if (isset($item['params']['HOME'])) {
+                        $hash['homeLatitude'] = $item['value']['latitude'];
+                        $hash['homeLongitude'] = $item['value']['longitude'];
+                    } elseif (isset($item['params']['WORK'])) {
+                        $hash['workLatitude'] = $item['value']['latitude'];
+                        $hash['workLongitude'] = $item['value']['longitude'];
+                    } else {
+                        $hash['latitude'] = $item['value']['latitude'];
+                        $hash['longitude'] = $item['value']['longitude'];
+                    }
+                    break;
+
+                case 'TEL':
+                    if (isset($item['params']['FAX'])) {
+                        if (isset($item['params']['WORK']) &&
+                            !isset($hash['workFax'])) {
                             $hash['workFax'] = $item['value'];
+                        } elseif (isset($item['params']['HOME']) &&
+                                  !isset($hash['homeFax'])) {
+                            $hash['homeFax'] = $item['value'];
                         } elseif (!isset($hash['fax'])) {
                             $hash['fax'] = $item['value'];
                         }
-                    } elseif (in_array('VIDEO', $item['params']['TYPE'])) {
-                        if (in_array('HOME', $item['params']['TYPE']) &&
-                            !isset($hash['homeVideoCall'])) {
-                            $hash['homeVideoCall'] = $item['value'];
+                    } elseif (isset($item['params']['PAGER']) &&
+                              !isset($hash['pager'])) {
+                        $hash['pager'] = $item['value'];
+                    } elseif (isset($item['params']['TYPE'])) {
+                        if (!is_array($item['params']['TYPE'])) {
+                            $item['params']['TYPE'] = [$item['params']['TYPE']];
+                        }
+                        foreach ($item['params']['TYPE'] as &$type) {
+                            $type = Horde_String::upper($type);
+                        }
+                        // For vCard 3.0.
+                        if (in_array('CELL', $item['params']['TYPE'])) {
+                            if (in_array('HOME', $item['params']['TYPE']) &&
+                                !isset($hash['homeCellPhone'])) {
+                                $hash['homeCellPhone'] = $item['value'];
+                            } elseif (in_array('WORK', $item['params']['TYPE']) &&
+                                      !isset($hash['workCellPhone'])) {
+                                $hash['workCellPhone'] = $item['value'];
+                            } elseif (!isset($hash['cellPhone'])) {
+                                $hash['cellPhone'] = $item['value'];
+                            }
+                        } elseif (in_array('FAX', $item['params']['TYPE'])) {
+                            if (in_array('HOME', $item['params']['TYPE']) &&
+                                !isset($hash['homeFax'])) {
+                                $hash['homeFax'] = $item['value'];
+                            } elseif (in_array('WORK', $item['params']['TYPE']) &&
+                                      !isset($hash['workFax'])) {
+                                $hash['workFax'] = $item['value'];
+                            } elseif (!isset($hash['fax'])) {
+                                $hash['fax'] = $item['value'];
+                            }
+                        } elseif (in_array('VIDEO', $item['params']['TYPE'])) {
+                            if (in_array('HOME', $item['params']['TYPE']) &&
+                                !isset($hash['homeVideoCall'])) {
+                                $hash['homeVideoCall'] = $item['value'];
+                            } elseif (in_array('WORK', $item['params']['TYPE']) &&
+                                      !isset($hash['workVideoCall'])) {
+                                $hash['workVideoCall'] = $item['value'];
+                            } elseif (!isset($hash['videoCall'])) {
+                                $hash['videoCall'] = $item['value'];
+                            }
+                        } elseif (in_array('PAGER', $item['params']['TYPE']) &&
+                                  !isset($hash['pager'])) {
+                            $hash['pager'] = $item['value'];
                         } elseif (in_array('WORK', $item['params']['TYPE']) &&
-                                  !isset($hash['workVideoCall'])) {
+                                  !isset($hash['workPhone'])) {
+                            $hash['workPhone'] = $item['value'];
+                        } elseif (in_array('HOME', $item['params']['TYPE']) &&
+                                  !isset($hash['homePhone'])) {
+                            $hash['homePhone'] = $item['value'];
+                        } elseif (!isset($hash['phone'])) {
+                            $hash['phone'] = $item['value'];
+                        }
+                    } elseif (isset($item['params']['CELL'])) {
+                        if (isset($item['params']['WORK']) &&
+                            !isset($hash['workCellPhone'])) {
+                            $hash['workCellPhone'] = $item['value'];
+                        } elseif (isset($item['params']['HOME']) &&
+                                  !isset($hash['homeCellPhone'])) {
+                            $hash['homeCellPhone'] = $item['value'];
+                        } elseif (!isset($hash['cellPhone'])) {
+                            $hash['cellPhone'] = $item['value'];
+                        }
+                    } elseif (isset($item['params']['VIDEO'])) {
+                        if (isset($item['params']['WORK']) &&
+                            !isset($hash['workVideoCall'])) {
                             $hash['workVideoCall'] = $item['value'];
+                        } elseif (isset($item['params']['HOME']) &&
+                                  !isset($hash['homeVideoCall'])) {
+                            $hash['homeVideoCall'] = $item['value'];
                         } elseif (!isset($hash['videoCall'])) {
                             $hash['videoCall'] = $item['value'];
                         }
-                    } elseif (in_array('PAGER', $item['params']['TYPE']) &&
-                              !isset($hash['pager'])) {
-                        $hash['pager'] = $item['value'];
-                    } elseif (in_array('WORK', $item['params']['TYPE']) &&
-                              !isset($hash['workPhone'])) {
-                        $hash['workPhone'] = $item['value'];
-                    } elseif (in_array('HOME', $item['params']['TYPE']) &&
-                              !isset($hash['homePhone'])) {
-                        $hash['homePhone'] = $item['value'];
-                    } elseif (!isset($hash['phone'])) {
-                        $hash['phone'] = $item['value'];
-                    }
-                } elseif (isset($item['params']['CELL'])) {
-                    if (isset($item['params']['WORK']) &&
-                        !isset($hash['workCellPhone'])) {
-                        $hash['workCellPhone'] = $item['value'];
-                    } elseif (isset($item['params']['HOME']) &&
-                              !isset($hash['homeCellPhone'])) {
-                        $hash['homeCellPhone'] = $item['value'];
-                    } elseif (!isset($hash['cellPhone'])) {
-                        $hash['cellPhone'] = $item['value'];
-                    }
-                } elseif (isset($item['params']['VIDEO'])) {
-                    if (isset($item['params']['WORK']) &&
-                        !isset($hash['workVideoCall'])) {
-                        $hash['workVideoCall'] = $item['value'];
-                    } elseif (isset($item['params']['HOME']) &&
-                              !isset($hash['homeVideoCall'])) {
-                        $hash['homeVideoCall'] = $item['value'];
-                    } elseif (!isset($hash['videoCall'])) {
-                        $hash['videoCall'] = $item['value'];
-                    }
-                } else {
-                    if (isset($item['params']['WORK']) &&
-                        !isset($hash['workPhone'])) {
-                        $hash['workPhone'] = $item['value'];
-                    } elseif (isset($item['params']['HOME']) &&
-                              !isset($hash['homePhone'])) {
-                        $hash['homePhone'] = $item['value'];
                     } else {
-                        $hash['phone'] = $item['value'];
+                        if (isset($item['params']['WORK']) &&
+                            !isset($hash['workPhone'])) {
+                            $hash['workPhone'] = $item['value'];
+                        } elseif (isset($item['params']['HOME']) &&
+                                  !isset($hash['homePhone'])) {
+                            $hash['homePhone'] = $item['value'];
+                        } else {
+                            $hash['phone'] = $item['value'];
+                        }
                     }
-                }
-                break;
+                    break;
 
-            case 'EMAIL':
-                $email_set = false;
-                if (isset($item['params']['HOME']) &&
-                    !empty($this->map['homeEmail']) &&
-                    (!isset($hash['homeEmail']) ||
-                     isset($item['params']['PREF']))) {
-                    $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
-                    $hash['homeEmail'] = $e ? $e : '';
-                    $email_set = true;
-                } elseif (isset($item['params']['WORK']) &&
-                          !empty($this->map['workEmail']) &&
-                          (!isset($hash['workEmail']) ||
-                           isset($item['params']['PREF']))) {
-                    $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
-                    $hash['workEmail'] = $e ? $e : '';
-                    $email_set = true;
-                } elseif (isset($item['params']['TYPE'])) {
-                    if (!is_array($item['params']['TYPE'])) {
-                        $item['params']['TYPE'] = array($item['params']['TYPE']);
-                    }
-                    foreach ($item['params']['TYPE'] as &$type) {
-                        $type = Horde_String::upper($type);
-                    }
-                    if (in_array('HOME', $item['params']['TYPE']) &&
+                case 'EMAIL':
+                    $email_set = false;
+                    if (isset($item['params']['HOME']) &&
                         !empty($this->map['homeEmail']) &&
                         (!isset($hash['homeEmail']) ||
-                         in_array('PREF', $item['params']['TYPE']))) {
+                         isset($item['params']['PREF']))) {
                         $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
                         $hash['homeEmail'] = $e ? $e : '';
                         $email_set = true;
-                    } elseif (in_array('WORK', $item['params']['TYPE']) &&
+                    } elseif (isset($item['params']['WORK']) &&
                               !empty($this->map['workEmail']) &&
                               (!isset($hash['workEmail']) ||
-                         in_array('PREF', $item['params']['TYPE']))) {
+                               isset($item['params']['PREF']))) {
                         $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
                         $hash['workEmail'] = $e ? $e : '';
                         $email_set = true;
+                    } elseif (isset($item['params']['TYPE'])) {
+                        if (!is_array($item['params']['TYPE'])) {
+                            $item['params']['TYPE'] = [$item['params']['TYPE']];
+                        }
+                        foreach ($item['params']['TYPE'] as &$type) {
+                            $type = Horde_String::upper($type);
+                        }
+                        if (in_array('HOME', $item['params']['TYPE']) &&
+                            !empty($this->map['homeEmail']) &&
+                            (!isset($hash['homeEmail']) ||
+                             in_array('PREF', $item['params']['TYPE']))) {
+                            $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
+                            $hash['homeEmail'] = $e ? $e : '';
+                            $email_set = true;
+                        } elseif (in_array('WORK', $item['params']['TYPE']) &&
+                                  !empty($this->map['workEmail']) &&
+                                  (!isset($hash['workEmail']) ||
+                             in_array('PREF', $item['params']['TYPE']))) {
+                            $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
+                            $hash['workEmail'] = $e ? $e : '';
+                            $email_set = true;
+                        }
                     }
-                }
 
-                if (!$email_set &&
-                    (!isset($hash['email']) ||
-                     isset($item['params']['PREF']) ||
-                     (!empty($item['params']['TYPE']) && is_array($item['params']['TYPE']) && in_array('PREF', $item['params']['TYPE'])))) {
-                    $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
-                    $hash['email'] = $e ? $e : '';
-                }
-
-                if (!isset($hash['emails'])) {
-                    $hash['emails'] = '';
-                }
-                if ($e = Horde_Icalendar_Vcard::getBareEmail($item['value'])) {
-                    if (strlen($hash['emails'])) {
-                        $hash['emails'] .= ',';
+                    if (!$email_set &&
+                        (!isset($hash['email']) ||
+                         isset($item['params']['PREF']) ||
+                         (!empty($item['params']['TYPE']) && is_array($item['params']['TYPE']) && in_array('PREF', $item['params']['TYPE'])))) {
+                        $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
+                        $hash['email'] = $e ? $e : '';
                     }
-                    $hash['emails'] .= $e;
-                }
-                break;
 
-            case 'TITLE':
-                $hash['title'] = $item['value'];
-                break;
-
-            case 'ROLE':
-                $hash['role'] = $item['value'];
-                break;
-
-            case 'ORG':
-                // The VCARD 2.1 specification requires the presence of two
-                // SEMI-COLON separated fields: Organizational Name and
-                // Organizational Unit. Additional fields are optional.
-                $hash['company'] = !empty($item['values'][0]) ? $item['values'][0] : '';
-                $hash['department'] = !empty($item['values'][1]) ? $item['values'][1] : '';
-                break;
-
-            case 'NOTE':
-                $hash['notes'] = $item['value'];
-                break;
-
-            case 'CATEGORIES':
-                $hash['businessCategory'] = $item['value'];
-                $hash['__tags'] = $item['values'];
-                break;
-
-            case 'URL':
-                if (isset($item['params']['HOME']) &&
-                    !isset($hash['homeWebsite'])) {
-                    $hash['homeWebsite'] = $item['value'];
-                } elseif (isset($item['params']['WORK']) &&
-                          !isset($hash['workWebsite'])) {
-                    $hash['workWebsite'] = $item['value'];
-                } elseif (!isset($hash['website'])) {
-                    $hash['website'] = $item['value'];
-                }
-                break;
-
-            case 'BDAY':
-                if (empty($item['value'])) {
-                    $hash['birthday'] = null;
-                } else {
-                    $hash['birthday'] = $item['value']['year'] . '-' . $item['value']['month'] . '-' .  $item['value']['mday'];
-                }
-                break;
-
-            case 'PHOTO':
-            case 'LOGO':
-                if (isset($item['params']['VALUE']) &&
-                    Horde_String::lower($item['params']['VALUE']) == 'uri') {
-                    // No support for URIs yet.
+                    if (!isset($hash['emails'])) {
+                        $hash['emails'] = '';
+                    }
+                    if ($e = Horde_Icalendar_Vcard::getBareEmail($item['value'])) {
+                        if (strlen($hash['emails'])) {
+                            $hash['emails'] .= ',';
+                        }
+                        $hash['emails'] .= $e;
+                    }
                     break;
-                }
-                if (!isset($item['params']['ENCODING']) ||
-                    (Horde_String::lower($item['params']['ENCODING']) != 'b' &&
-                     Horde_String::upper($item['params']['ENCODING']) != 'BASE64')) {
-                    // Invalid property.
+
+                case 'TITLE':
+                    $hash['title'] = $item['value'];
                     break;
-                }
-                $type = Horde_String::lower($item['name']);
-                $type_key = $type . (!empty($this->map[$type . '_orig']) ? '_orig' : '');
-                $hash[$type_key] = base64_decode($item['value']);
-                if (isset($item['params']['TYPE'])) {
-                    $hash[$type . 'type'] = $item['params']['TYPE'];
-                }
-                break;
 
-            case 'X-SIP':
-                if (isset($item['params']['POC']) &&
-                    !isset($hash['ptt'])) {
-                    $hash['ptt'] = $item['value'];
-                } elseif (isset($item['params']['VOIP']) &&
-                          !isset($hash['voip'])) {
-                    $hash['voip'] = $item['value'];
-                } elseif (isset($item['params']['SWIS']) &&
-                          !isset($hash['shareView'])) {
-                    $hash['shareView'] = $item['value'];
-                } elseif (!isset($hash['sip'])) {
-                    $hash['sip'] = $item['value'];
-                }
-                break;
+                case 'ROLE':
+                    $hash['role'] = $item['value'];
+                    break;
 
-            case 'IMPP':
-                switch($imaddress) {
-                    case 1: $hash['imaddress'] = $item['value']; break;
-                    case 2: $hash['imaddress2'] = $item['value']; break;
-                    case 3: $hash['imaddress3'] = $item['value']; break;
-                }
-                $imaddress++;
-                break;
+                case 'ORG':
+                    // The VCARD 2.1 specification requires the presence of two
+                    // SEMI-COLON separated fields: Organizational Name and
+                    // Organizational Unit. Additional fields are optional.
+                    $hash['company'] = !empty($item['values'][0]) ? $item['values'][0] : '';
+                    $hash['department'] = !empty($item['values'][1]) ? $item['values'][1] : '';
+                    break;
 
-            case 'X-ANNIVERSARY':
-                if (empty($item['value'])) {
-                    $hash['anniversary'] = null;
-                } else {
-                    $hash['anniversary'] = $item['value']['year'] . '-' . $item['value']['month'] . '-' . $item['value']['mday'];
-                }
-                break;
+                case 'NOTE':
+                    $hash['notes'] = $item['value'];
+                    break;
 
-            case 'X-CHILDREN':
-                $hash['children'] = $item['value'];
-                break;
+                case 'CATEGORIES':
+                    $hash['businessCategory'] = $item['value'];
+                    $hash['__tags'] = $item['values'];
+                    break;
 
-            case 'X-SPOUSE':
-                $hash['spouse'] = $item['value'];
-                break;
+                case 'URL':
+                    if (isset($item['params']['HOME']) &&
+                        !isset($hash['homeWebsite'])) {
+                        $hash['homeWebsite'] = $item['value'];
+                    } elseif (isset($item['params']['WORK']) &&
+                              !isset($hash['workWebsite'])) {
+                        $hash['workWebsite'] = $item['value'];
+                    } elseif (!isset($hash['website'])) {
+                        $hash['website'] = $item['value'];
+                    }
+                    break;
+
+                case 'BDAY':
+                    if (empty($item['value'])) {
+                        $hash['birthday'] = null;
+                    } else {
+                        $hash['birthday'] = $item['value']['year'] . '-' . $item['value']['month'] . '-' . $item['value']['mday'];
+                    }
+                    break;
+
+                case 'PHOTO':
+                case 'LOGO':
+                    if (isset($item['params']['VALUE']) &&
+                        Horde_String::lower($item['params']['VALUE']) == 'uri') {
+                        // No support for URIs yet.
+                        break;
+                    }
+                    if (!isset($item['params']['ENCODING']) ||
+                        (Horde_String::lower($item['params']['ENCODING']) != 'b' &&
+                         Horde_String::upper($item['params']['ENCODING']) != 'BASE64')) {
+                        // Invalid property.
+                        break;
+                    }
+                    $type = Horde_String::lower($item['name']);
+                    $type_key = $type . (!empty($this->map[$type . '_orig']) ? '_orig' : '');
+                    $hash[$type_key] = base64_decode($item['value']);
+                    if (isset($item['params']['TYPE'])) {
+                        $hash[$type . 'type'] = $item['params']['TYPE'];
+                    }
+                    break;
+
+                case 'X-SIP':
+                    if (isset($item['params']['POC']) &&
+                        !isset($hash['ptt'])) {
+                        $hash['ptt'] = $item['value'];
+                    } elseif (isset($item['params']['VOIP']) &&
+                              !isset($hash['voip'])) {
+                        $hash['voip'] = $item['value'];
+                    } elseif (isset($item['params']['SWIS']) &&
+                              !isset($hash['shareView'])) {
+                        $hash['shareView'] = $item['value'];
+                    } elseif (!isset($hash['sip'])) {
+                        $hash['sip'] = $item['value'];
+                    }
+                    break;
+
+                case 'IMPP':
+                    switch($imaddress) {
+                        case 1: $hash['imaddress'] = $item['value']; break;
+                        case 2: $hash['imaddress2'] = $item['value']; break;
+                        case 3: $hash['imaddress3'] = $item['value']; break;
+                    }
+                    $imaddress++;
+                    break;
+
+                case 'X-ANNIVERSARY':
+                    if (empty($item['value'])) {
+                        $hash['anniversary'] = null;
+                    } else {
+                        $hash['anniversary'] = $item['value']['year'] . '-' . $item['value']['month'] . '-' . $item['value']['mday'];
+                    }
+                    break;
+
+                case 'X-CHILDREN':
+                    $hash['children'] = $item['value'];
+                    break;
+
+                case 'X-SPOUSE':
+                    $hash['spouse'] = $item['value'];
+                    break;
             }
         }
 
@@ -2666,15 +2707,15 @@ class Turba_Driver implements Countable
      *
      * @return Horde_ActiveSync_Message_Contact
      */
-    public function toASContact(Turba_Object $object, array $options = array())
+    public function toASContact(Turba_Object $object, array $options = [])
     {
         global $injector;
 
-        $message = new Horde_ActiveSync_Message_Contact(array(
+        $message = new Horde_ActiveSync_Message_Contact([
             'logger' => $injector->getInstance('Horde_Log_Logger'),
             'protocolversion' => $options['protocolversion'],
-            'device' => !empty($options['device']) ? $options['device'] : null
-        ));
+            'device' => !empty($options['device']) ? $options['device'] : null,
+        ]);
         $hash = $object->getAttributes();
         if (!isset($hash['lastname']) && isset($hash['name'])) {
             $this->_guessName($hash);
@@ -2689,7 +2730,7 @@ class Turba_Driver implements Countable
             if (!isset($hash['commonStreet'])) {
                 $hash['commonStreet'] = $hash['commonHome'];
             }
-            foreach (array('Address', 'Street', 'POBox', 'Extended', 'City', 'Province', 'PostalCode', 'Country') as $field) {
+            foreach (['Address', 'Street', 'POBox', 'Extended', 'City', 'Province', 'PostalCode', 'Country'] as $field) {
                 $hash['home' . $field] = $hash['common' . $field];
             }
         } else {
@@ -2710,7 +2751,7 @@ class Turba_Driver implements Countable
                     $value = $hooks->callHook(
                         'decode_attribute',
                         'turba',
-                        array($field, $value, $object)
+                        [$field, $value, $object]
                     );
                 } catch (Turba_Exception $e) {
                     Horde::log($e);
@@ -2725,112 +2766,112 @@ class Turba_Driver implements Countable
             }
 
             switch ($field) {
-            case 'photo':
-                $message->picture = base64_encode($value);
-                break;
+                case 'photo':
+                    $message->picture = base64_encode($value);
+                    break;
 
-            case 'homeCountry':
-                $message->homecountry = !empty($hash['homeCountryFree'])
-                    ? $hash['homeCountryFree']
-                    : (!empty($hash['homeCountry'])
-                        ? Horde_Nls::getCountryISO($hash['homeCountry'])
-                        : null);
-                break;
+                case 'homeCountry':
+                    $message->homecountry = !empty($hash['homeCountryFree'])
+                        ? $hash['homeCountryFree']
+                        : (!empty($hash['homeCountry'])
+                            ? Horde_Nls::getCountryISO($hash['homeCountry'])
+                            : null);
+                    break;
 
-            case 'otherCountry':
-                $message->othercountry = !empty($hash['otherCountryFree'])
-                    ? $hash['otherCountryFree']
-                    : (!empty($hash['otherCountry'])
-                        ? Horde_Nls::getCountryISO($hash['otherCountry'])
-                        : null);
-                break;
+                case 'otherCountry':
+                    $message->othercountry = !empty($hash['otherCountryFree'])
+                        ? $hash['otherCountryFree']
+                        : (!empty($hash['otherCountry'])
+                            ? Horde_Nls::getCountryISO($hash['otherCountry'])
+                            : null);
+                    break;
 
-            case 'workCountry':
-                $message->businesscountry = !empty($hash['workCountryFree'])
-                    ? $hash['workCountryFree']
-                    : (!empty($hash['workCountry'])
-                        ? Horde_Nls::getCountryISO($hash['workCountry'])
-                        : null);
-                break;
+                case 'workCountry':
+                    $message->businesscountry = !empty($hash['workCountryFree'])
+                        ? $hash['workCountryFree']
+                        : (!empty($hash['workCountry'])
+                            ? Horde_Nls::getCountryISO($hash['workCountry'])
+                            : null);
+                    break;
 
-            case 'email':
-                $message->email1address = $value;
-                break;
+                case 'email':
+                    $message->email1address = $value;
+                    break;
 
-            case 'homeEmail':
-                $message->email2address = $value;
-                break;
+                case 'homeEmail':
+                    $message->email2address = $value;
+                    break;
 
-            case 'workEmail':
-                $message->email3address = $value;
-                break;
+                case 'workEmail':
+                    $message->email3address = $value;
+                    break;
 
-            case 'emails':
-                $address = 1;
-                foreach (explode(',', $value) as $email) {
-                    while ($address <= 3 &&
-                           $message->{'email' . $address . 'address'}) {
+                case 'emails':
+                    $address = 1;
+                    foreach (explode(',', $value) as $email) {
+                        while ($address <= 3 &&
+                               $message->{'email' . $address . 'address'}) {
+                            $address++;
+                        }
+                        if ($address > 3) {
+                            break;
+                        }
+                        $message->{'email' . $address . 'address'} = $email;
                         $address++;
                     }
-                    if ($address > 3) {
-                        break;
-                    }
-                    $message->{'email' . $address . 'address'} = $email;
-                    $address++;
-                }
-                break;
+                    break;
 
-            case 'children':
-                // Children FROM horde are a simple string value. Even though EAS
-                // uses an array stucture to pass them, we pass as a single
-                // string since we can't assure what delimter the user will
-                // use and (at least in some languages) a comma can be used
-                // within a full name.
-                $message->children = array($value);
-                break;
+                case 'children':
+                    // Children FROM horde are a simple string value. Even though EAS
+                    // uses an array stucture to pass them, we pass as a single
+                    // string since we can't assure what delimter the user will
+                    // use and (at least in some languages) a comma can be used
+                    // within a full name.
+                    $message->children = [$value];
+                    break;
 
-            case 'notes':
-                if (strlen($value) && $options['protocolversion'] > Horde_ActiveSync::VERSION_TWOFIVE) {
-                    $bp = $options['bodyprefs'];
-                    $note = new Horde_ActiveSync_Message_AirSyncBaseBody();
-                    // No HTML supported in Turba's notes. Always use plaintext.
-                    $note->type = Horde_ActiveSync::BODYPREF_TYPE_PLAIN;
-                    if (isset($bp[Horde_ActiveSync::BODYPREF_TYPE_PLAIN]['truncationsize']) &&
-                        Horde_String::length($value) > $bp[Horde_ActiveSync::BODYPREF_TYPE_PLAIN]['truncationsize']) {
+                case 'notes':
+                    if (strlen($value) && $options['protocolversion'] > Horde_ActiveSync::VERSION_TWOFIVE) {
+                        $bp = $options['bodyprefs'];
+                        $note = new Horde_ActiveSync_Message_AirSyncBaseBody();
+                        // No HTML supported in Turba's notes. Always use plaintext.
+                        $note->type = Horde_ActiveSync::BODYPREF_TYPE_PLAIN;
+                        if (isset($bp[Horde_ActiveSync::BODYPREF_TYPE_PLAIN]['truncationsize']) &&
+                            Horde_String::length($value) > $bp[Horde_ActiveSync::BODYPREF_TYPE_PLAIN]['truncationsize']) {
                             $note->data = Horde_String::substr($value, 0, $bp[Horde_ActiveSync::BODYPREF_TYPE_PLAIN]['truncationsize']);
                             $note->truncated = 1;
-                    } else {
-                        $note->data = $value;
+                        } else {
+                            $note->data = $value;
+                        }
+                        $note->estimateddatasize = Horde_String::length($value);
+                        $message->airsyncbasebody = $note;
+                    } elseif (strlen($value)) {
+                        // EAS 2.5
+                        $message->body = $value;
+                        $message->bodysize = strlen($message->body);
+                        $message->bodytruncated = 0;
                     }
-                    $note->estimateddatasize = Horde_String::length($value);
-                    $message->airsyncbasebody = $note;
-                } elseif (strlen($value)) {
-                    // EAS 2.5
-                    $message->body = $value;
-                    $message->bodysize = strlen($message->body);
-                    $message->bodytruncated = 0;
-                }
-                break;
+                    break;
 
-            case 'birthday':
-            case 'anniversary':
-                if (!empty($value) && $value != '0000-00-00') {
-                    try {
-                        $date = new Horde_Date($value);
-                    } catch (Horde_Date_Exception $e) {
-                        $message->$field = null;
-                    }
-                    // Some sanity checking to make sure the date was
-                    // successfully parsed.
-                    if ($date->month != 0) {
-                        $message->$field = $date;
+                case 'birthday':
+                case 'anniversary':
+                    if (!empty($value) && $value != '0000-00-00') {
+                        try {
+                            $date = new Horde_Date($value);
+                        } catch (Horde_Date_Exception $e) {
+                            $message->$field = null;
+                        }
+                        // Some sanity checking to make sure the date was
+                        // successfully parsed.
+                        if ($date->month != 0) {
+                            $message->$field = $date;
+                        } else {
+                            $message->$field = null;
+                        }
                     } else {
                         $message->$field = null;
                     }
-                } else {
-                    $message->$field = null;
-                }
-                break;
+                    break;
             }
         }
 
@@ -2856,7 +2897,7 @@ class Turba_Driver implements Countable
      */
     public function fromASContact(Horde_ActiveSync_Message_Contact $message)
     {
-        $hash = array();
+        $hash = [];
 
         foreach (self::$_asMap as $turbaField => $asField) {
             if (!$message->isGhosted($asField)) {
@@ -2880,7 +2921,8 @@ class Turba_Driver implements Countable
             } else {
                 $hash['notes'] = $message->body;
             }
-        } catch (InvalidArgumentException $e) {}
+        } catch (InvalidArgumentException $e) {
+        }
 
         // picture ($message->picture *should* already be base64 encdoed)
         if (!$message->isGhosted('picture')) {
@@ -2893,7 +2935,7 @@ class Turba_Driver implements Countable
         }
 
         /* Email addresses */
-        $hash['emails'] = array();
+        $hash['emails'] = [];
         if (!$message->isGhosted('email1address')) {
             $e = Horde_Icalendar_Vcard::getBareEmail($message->email1address);
             $hash['emails'][] = $hash['email'] = $e ? $e : '';
@@ -2911,7 +2953,7 @@ class Turba_Driver implements Countable
 
         /* Categories */
         if (!$message->isGhosted('categories') && empty($message->categories)) {
-            $hash['__tags'] = array();
+            $hash['__tags'] = [];
         } elseif (is_array($message->categories) &&
                   count($message->categories)) {
             $hash['__tags'] = $message->categories;
@@ -2943,7 +2985,11 @@ class Turba_Driver implements Countable
         }
 
         /* Countries */
-        include 'Horde/Nls/Countries.php';
+        if (class_exists(\Horde_Nls_Loader::class)) {
+            $countries = \Horde_Nls_Loader::loadCountries();
+        } else {
+            include 'Horde/Nls/Countries.php';
+        }
         if (!empty($message->homecountry)) {
             if (!empty($this->map['homeCountryFree'])) {
                 $hash['homeCountryFree'] = $message->homecountry;
@@ -3006,14 +3052,13 @@ class Turba_Driver implements Countable
             if (isset($this->map['name']) &&
                 is_array($this->map['name']) &&
                 !empty($this->map['name']['attribute'])) {
-                $fieldarray = array();
+                $fieldarray = [];
                 foreach ($this->map['name']['fields'] as $mapfields) {
-                    $fieldarray[] = isset($hash[$mapfields]) ?
-                        $hash[$mapfields] : '';
+                    $fieldarray[] = $hash[$mapfields] ?? '';
                 }
                 $hash['name'] = Turba::formatCompositeField($this->map['name']['format'], $fieldarray);
             } else {
-                $hash['name'] = isset($hash['firstname']) ? $hash['firstname'] : '';
+                $hash['name'] = $hash['firstname'] ?? '';
                 if (!empty($hash['lastname'])) {
                     $hash['name'] .= ' ' . $hash['lastname'];
                 }
@@ -3120,9 +3165,7 @@ class Turba_Driver implements Countable
      *
      * @param string $share  The default share ID.
      */
-    public function setDefaultShare($share)
-    {
-    }
+    public function setDefaultShare($share) {}
 
     /**
      * Creates an object key for a new object.
@@ -3152,9 +3195,7 @@ class Turba_Driver implements Countable
      *
      * @throws Turba_Exception
      */
-    protected function _init()
-    {
-    }
+    protected function _init() {}
 
     /**
      * Searches the address book with the given criteria and returns a
@@ -3170,7 +3211,7 @@ class Turba_Driver implements Countable
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _search(array $criteria, array $fields, array $blobFields = array(), $count_only = false)
+    protected function _search(array $criteria, array $fields, array $blobFields = [], $count_only = false)
     {
         throw new Turba_Exception(_("Searching is not available."));
     }
@@ -3189,10 +3230,14 @@ class Turba_Driver implements Countable
      * @return array  Hash containing the search results.
      * @throws Turba_Exception
      */
-    protected function _read($key, $ids, $owner, array $fields,
-                             array $blobFields = array(),
-                             array $dateFields = array())
-    {
+    protected function _read(
+        $key,
+        $ids,
+        $owner,
+        array $fields,
+        array $blobFields = [],
+        array $dateFields = []
+    ) {
         throw new Turba_Exception(_("Reading contacts is not available."));
     }
 
@@ -3205,7 +3250,7 @@ class Turba_Driver implements Countable
      *
      * @throws Turba_Exception
      */
-    protected function _add(array $attributes, array $blob_fields = array(), array $date_fields = array())
+    protected function _add(array $attributes, array $blob_fields = [], array $date_fields = [])
     {
         throw new Turba_Exception(_("Adding contacts is not available."));
     }
@@ -3276,15 +3321,17 @@ class Turba_Driver implements Countable
      * @return integer  The number of contacts that the user owns.
      * @throws Turba_Exception
      */
-    public function count()
+    public function count(): int
     {
         if (is_null($this->_count)) {
             $this->_count = count(
-                $this->_search(array('AND' => array(
-                                   array('field' => $this->toDriver('__owner'),
-                                         'op' => '=',
-                                         'test' => $this->getContactOwner()))),
-                               array($this->toDriver('__key')))
+                $this->_search(
+                    ['AND' => [
+                        ['field' => $this->toDriver('__owner'),
+                            'op' => '=',
+                            'test' => $this->getContactOwner()]]],
+                    [$this->toDriver('__key')]
+                )
             );
         }
 
