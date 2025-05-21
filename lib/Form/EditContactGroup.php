@@ -71,7 +71,7 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
     {
         parent::execute();
 
-        $this->getInfo($this->_vars, $info);
+        $info = $this->getInfo($this->_vars, $info);
 
         $next_page = Horde::url('edit.php', true)->add([
             'source' => $info['source'],

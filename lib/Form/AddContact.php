@@ -64,7 +64,7 @@ class Turba_Form_AddContact extends Turba_Form_ContactBase
         global $driver, $notification;
 
         /* Form valid, save data. */
-        $this->getInfo($this->_vars, $info);
+        $info = $this->getInfo($this->_vars, $info);
         foreach ($info['object'] as $info_key => $info_val) {
             if ($GLOBALS['attributes'][$info_key]['type'] == 'image') {
                 if (!empty($info_val['file'])) {
