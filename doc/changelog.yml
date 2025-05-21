@@ -1,4 +1,17 @@
 ---
+5.0.0-alpha10:
+  api: 5.0.0-alpha1
+  state:
+    release: true
+    api: true
+  date: 2025-05-21
+  license:
+    identifier: Apache-1.1
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    fix: Use return value rather than pass-by-reference
+    fix: Remove reference from signatures.
+    fix: htmlspecialchars, convert to string
 5.0.0-alpha9:
   api: 5.0.0-alpha1
   state:
