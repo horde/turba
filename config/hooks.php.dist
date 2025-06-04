@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba hooks configuration file.
  *
@@ -10,54 +11,55 @@
  *
  * $Id$
  */
+if (!class_exists('Turba_Hooks')) {
+    class Turba_Hooks
+    {
+        /**
+         * Called when we store a value.
+         *
+         * @param string $attribute      Attribute name.
+         * @param string $new            New value.
+         * @param string $old            Old value.
+         * @param Turba_Object $contact  Contact object.
+         *
+         * @return string  The encoded value.
+         */
+        //     public function encode_attribute($attribute, $new, $old, $contact)
+        //     {
+        //         switch ($attribute) {
+        //         case 'password':
+        //             /* Passwords should be MD5 encoded, but not displayed. */
+        //             return (is_null($new) || ($new == '') || ($new == '[Not Displayed]'))
+        //                 ? $old
+        //                 : hash('md5', $new);
+        //         }
+        //
+        //         return $new;
+        //     }
 
-class Turba_Hooks
-{
-    /**
-     * Called when we store a value.
-     *
-     * @param string $attribute      Attribute name.
-     * @param string $new            New value.
-     * @param string $old            Old value.
-     * @param Turba_Object $contact  Contact object.
-     *
-     * @return string  The encoded value.
-     */
-//     public function encode_attribute($attribute, $new, $old, $contact)
-//     {
-//         switch ($attribute) {
-//         case 'password':
-//             /* Passwords should be MD5 encoded, but not displayed. */
-//             return (is_null($new) || ($new == '') || ($new == '[Not Displayed]'))
-//                 ? $old
-//                 : hash('md5', $new);
-//         }
-//
-//         return $new;
-//     }
 
+        /**
+         * Called when we display a value.
+         *
+         * @param string $attribute      Attribute name.
+         * @param mixed $value           Attribute value.
+         * @param Turba_Object $contact  Contact object.
+         *
+         * @return string  The decoded value.
+         * @throws Turba_Exception  Thrown if there is nothing to decode.
+         */
+        //     public function decode_attribute($attribute, $value, $contact)
+        //     {
+        //         switch ($attribute) {
+        //         case 'password':
+        //             /* Passwords should be MD5 encoded, but not displayed. */
+        //             return (strstr($_SERVER['PHP_SELF'], 'editobject'))
+        //                 ? null
+        //                 : '[Not Displayed]';
+        //         }
+        //
+        //         throw new Turba_Exception('No decode handler.');
+        //     }
 
-    /**
-     * Called when we display a value.
-     *
-     * @param string $attribute      Attribute name.
-     * @param mixed $value           Attribute value.
-     * @param Turba_Object $contact  Contact object.
-     *
-     * @return string  The decoded value.
-     * @throws Turba_Exception  Thrown if there is nothing to decode.
-     */
-//     public function decode_attribute($attribute, $value, $contact)
-//     {
-//         switch ($attribute) {
-//         case 'password':
-//             /* Passwords should be MD5 encoded, but not displayed. */
-//             return (strstr($_SERVER['PHP_SELF'], 'editobject'))
-//                 ? null
-//                 : '[Not Displayed]';
-//         }
-//
-//         throw new Turba_Exception('No decode handler.');
-//     }
-
+    }
 }
