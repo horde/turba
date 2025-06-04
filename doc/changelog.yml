@@ -1,4 +1,15 @@
 ---
+5.0.0-alpha11:
+  api: 5.0.0-alpha1
+  state:
+    release: alpha
+    api: alpha
+  date: 2025-06-04
+  license:
+    identifier: Apache-1.1
+    uri: http://www.horde.org/licenses/apache
+  notes: |
+    fix: Add conditional to hook class template to prevent double declaration issues
 5.0.0-alpha10:
   api: 5.0.0-alpha1
   state:
