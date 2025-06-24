@@ -25,7 +25,7 @@
  */
 class Turba_Form_Type_TurbaTags extends Horde_Form_Type
 {
-    public function getInfo($vars, $var, $info)
+    public function getInfo($vars, $var)
     {
         $info = $var->getValue($vars);
         return $info;

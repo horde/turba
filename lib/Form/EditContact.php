@@ -71,7 +71,7 @@ class Turba_Form_EditContact extends Turba_Form_ContactBase
         }
 
         /* Form valid, save data. */
-        $info = $this->getInfo($this->_vars, $info);
+        $info = $this->getInfo($this->_vars);
 
         /* Update the contact. */
         foreach ($info['object'] as $info_key => $info_val) {
