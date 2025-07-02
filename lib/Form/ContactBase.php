@@ -50,6 +50,7 @@ abstract class Turba_Form_ContactBase extends Horde_Form
                 }
             }
             foreach ($tab_fields as $field) {
+                // Don't display the "orig" fields for images.
                 if (!in_array($field, $fields) ||
                     !isset($attributes[$field]) ||
                     ($attributes[$field]['type'] == 'image' && strpos($field, '_orig') !== false)) {
@@ -58,7 +59,6 @@ abstract class Turba_Form_ContactBase extends Horde_Form
                 $attribute = $attributes[$field];
                 $params = $attribute['params'] ?? [];
                 $desc = $attribute['desc'] ?? null;
-
                 if (is_array($map[$field])) {
                     $v = $this->addVariable($attribute['label'], 'object[' . $field . ']', $attribute['type'], false, false, $desc, $params);
                     $v->disable();
