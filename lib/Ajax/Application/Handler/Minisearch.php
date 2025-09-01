@@ -28,7 +28,7 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
     {
         global $attributes, $injector, $registry;
 
-        $ob = new stdClass();
+        $returnOb = new stdClass();
         $results = [];
         $search = trim($this->vars->search);
 
@@ -76,12 +76,12 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
         }
 
         if (count($results)) {
-            $ob->html = '<ul>' . implode('', $results) . '</ul>';
+            $returnOb->html = '<ul>' . implode('', $results) . '</ul>';
         } elseif (!is_null($search)) {
-            $ob->html = _("No contacts found");
+            $returnOb->html = _("No contacts found");
         }
 
-        return $ob;
+        return $returnOb;
     }
 
 }
