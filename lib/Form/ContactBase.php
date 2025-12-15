@@ -121,7 +121,7 @@ abstract class Turba_Form_ContactBase extends Horde_Form
      */
     public function getRenderer($params = [])
     {
-        $params['varrenderer_driver'] = ['turba', 'turba'];
+        $params['varrenderer_driver'] = ['turba', 'html'];
         return new Horde_Form_Renderer($params);
     }
 }

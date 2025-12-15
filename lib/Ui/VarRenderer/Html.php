@@ -11,14 +11,14 @@
  */
 
 /**
- * The Horde_Core_Ui_VarRenderer_Turba class provides additional methods for
+ * The Turba_Ui_VarRenderer_Html class provides additional methods for
  * rendering Turba specific fields.
  *
  * @todo    Clean this hack up with Horde_Form/H4
  * @author  Jan Schneider <jan@horde.org>
  * @package Turba
  */
-class Horde_Core_Ui_VarRenderer_Turba extends Horde_Core_Ui_VarRenderer_Html
+class Turba_Ui_VarRenderer_Html extends Horde_Core_Ui_VarRenderer_Html
 {
     /**
      * Render tag field.
