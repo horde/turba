@@ -1213,9 +1213,11 @@ class Turba_Api extends Horde_Registry_Api
             'count_only' => false,
         ], $opts);
 
+        $notRfc822Return = empty($opts['rfc822Return']);
+
         $results = !empty($opts['count_only'])
             ? 0
-            : (empty($opts['rfc822Return'])
+            : ($notRfc822Return
                 ? []
                 : new Horde_Mail_Rfc822_List());
 
@@ -1265,11 +1267,14 @@ class Turba_Api extends Horde_Registry_Api
                 $opts['fields'][$source] = $cfgSources[$source]['search'];
             }
 
+
+            $returnFields = $opts['returnFields'];
+
             // If this is an email search, ensure we are searching for and
             // returning all email-type fields.
             if (!empty($opts['emailSearch'])) {
-                $opts['returnFields'] = array_merge(
-                    $opts['returnFields'],
+                $returnFields = array_merge(
+                    $returnFields,
                     Turba::getAvailableEmailFields($source, false)
                 );
 
@@ -1298,7 +1303,7 @@ class Turba_Api extends Horde_Registry_Api
                         $criteria,
                         Turba::getPreferredSortOrder(),
                         'OR',
-                        $opts['returnFields'],
+                        $returnFields,
                         $opts['customStrict'],
                         $opts['matchBegin'],
                         $opts['count_only']
@@ -1349,7 +1354,7 @@ class Turba_Api extends Horde_Registry_Api
                             }
                         }
 
-                        if (empty($opts['rfc822Return'])) {
+                        if ($notRfc822Return) {
                             $out[] = [
                                 'email' => implode(', ', $emails),
                                 'id' => $listatt['__key'],
@@ -1368,8 +1373,7 @@ class Turba_Api extends Horde_Registry_Api
                         ];
 
                         foreach (array_keys($ob->driver->getCriteria()) as $key) {
-                            if (empty($opts['returnFields']) ||
-                                (!empty($opts['returnFields']) && in_array($key, $opts['returnFields']))) {
+                            if (empty($returnFields) || in_array($key, $returnFields))) {
                                 $att[$key] = $ob->getValue($key);
                             }
                         }
@@ -1383,8 +1387,8 @@ class Turba_Api extends Horde_Registry_Api
                         $email_fields = [];
                         foreach (array_keys($att) as $key) {
                             // Only concerned about keys that we want returned.
-                            if (!empty($opts['returnFields']) &&
-                                !in_array($key, $opts['returnFields'])) {
+                            if (!empty($returnFields) &&
+                                !in_array($key, $returnFields)) {
                                 continue;
                             }
 
@@ -1437,7 +1441,7 @@ class Turba_Api extends Horde_Registry_Api
                                 $seen_key = trim(Horde_String::lower($display_name)) . '/' . Horde_String::lower($val->bare_address);
                                 if (empty($seen[$seen_key])) {
                                     $seen[$seen_key] = true;
-                                    if (empty($opts['rfc822Return'])) {
+                                    if ($notRfc822Return) {
                                         $emails[] = $val->bare_address;
                                     } else {
                                         $val->personal = $display_name;
@@ -1445,39 +1449,22 @@ class Turba_Api extends Horde_Registry_Api
                                     }
                                 }
                             }
-                        } elseif (empty($opts['rfc822Return'])) {
+                        } elseif ($notRfc822Return) {
                             $emails[] = null;
                         }
 
-                        if (empty($opts['rfc822Return'])) {
+                        if ($notRfc822Return) {
                             foreach ($emails as $val) {
                                 $atts = [
                                     '__type' => 'Object',
                                     'id' => $att['__key'],
                                     'source' => $source,
+                                    'email' => $val,
+                                    'name' => $display_name,
                                 ];
-                                if (empty($opts['returnFields'])) {
-                                    $atts = [
-                                        '__type' => 'Object',
-                                        'id' => $att['__key'],
-                                        'source' => $source,
-                                        'email' => $val,
-                                        'name' => $display_name,
-                                    ];
-                                } else {
-                                    $atts = [];
-                                    $fields = [
-                                        '__type' => 'Object',
-                                        'id' => $att['__key'],
-                                        'source' => $source,
-                                        'email' => $val,
-                                        'name' => $display_name,
-                                    ];
-                                    foreach ($fields as $field => $value) {
-                                        if (in_array($field, $opts['returnFields'])) {
-                                            $atts[$field] = $value;
-                                        }
-                                    }
+
+                                if (!empty($returnFields)) {
+                                    $atts = array_intersect_key($atts, array_flip($returnFields));
                                 }
 
                                 $out[] = array_merge($att, $atts);
