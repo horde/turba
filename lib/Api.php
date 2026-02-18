@@ -1213,9 +1213,11 @@ class Turba_Api extends Horde_Registry_Api
             'count_only' => false,
         ], $opts);
 
+        $notRfc822Return = empty($opts['rfc822Return']);
+
         $results = !empty($opts['count_only'])
             ? 0
-            : (empty($opts['rfc822Return'])
+            : ($notRfc822Return
                 ? []
                 : new Horde_Mail_Rfc822_List());
 
@@ -1248,6 +1250,8 @@ class Turba_Api extends Horde_Registry_Api
             }
         }
 
+        $rfc822 = new Horde_Mail_Rfc822();
+
         $driver = $injector->getInstance('Turba_Factory_Driver');
         foreach ($opts['sources'] as $source) {
             // Skip invalid sources -or-
@@ -1265,11 +1269,13 @@ class Turba_Api extends Horde_Registry_Api
                 $opts['fields'][$source] = $cfgSources[$source]['search'];
             }
 
+            $returnFields = $opts['returnFields'];
+
             // If this is an email search, ensure we are searching for and
             // returning all email-type fields.
             if (!empty($opts['emailSearch'])) {
-                $opts['returnFields'] = array_merge(
-                    $opts['returnFields'],
+                $returnFields = array_merge(
+                    $returnFields,
                     Turba::getAvailableEmailFields($source, false)
                 );
 
@@ -1281,11 +1287,11 @@ class Turba_Api extends Horde_Registry_Api
 
             $sdriver = $driver->create($source);
             foreach ($names as $name) {
-                $trimname = trim($name);
                 $out = $criteria = [];
-                unset($tname);
 
-                if (strlen($trimname)) {
+                $trimname = trim($name);
+                $checkName = strlen($trimname) > 0;
+                if ($checkName) {
                     if (isset($opts['fields'][$source])) {
                         foreach ($opts['fields'][$source] as $field) {
                             $criteria[$field] = $trimname;
@@ -1298,7 +1304,7 @@ class Turba_Api extends Horde_Registry_Api
                         $criteria,
                         Turba::getPreferredSortOrder(),
                         'OR',
-                        $opts['returnFields'],
+                        $returnFields,
                         $opts['customStrict'],
                         $opts['matchBegin'],
                         $opts['count_only']
@@ -1309,13 +1315,12 @@ class Turba_Api extends Horde_Registry_Api
 
                 if ($opts['count_only']) {
                     $results += $search;
-
-                    continue;
-                } elseif (!($search instanceof Turba_List)) {
                     continue;
                 }
 
-                $rfc822 = new Horde_Mail_Rfc822();
+                if (!($search instanceof Turba_List)) {
+                    continue;
+                }
 
                 while ($ob = $search->next()) {
                     $emails = $seen = [];
@@ -1349,7 +1354,7 @@ class Turba_Api extends Horde_Registry_Api
                             }
                         }
 
-                        if (empty($opts['rfc822Return'])) {
+                        if ($notRfc822Return) {
                             $out[] = [
                                 'email' => implode(', ', $emails),
                                 'id' => $listatt['__key'],
@@ -1363,60 +1368,48 @@ class Turba_Api extends Horde_Registry_Api
                         }
                     } else {
                         /* Not a group. */
+                        $email = new Horde_Mail_Rfc822_List();
+
+                        $display_name = $ob->hasValue('name') || !isset($ob->driver->alternativeName)
+                            ? Turba::formatName($ob)
+                            : $ob->getValue($ob->driver->alternativeName);
+
+                        if ($checkName) {
+                            $tname = Horde_String_Transliterate::toAscii($name);
+                            $tdisplay_name = Horde_String_Transliterate::toAscii($display_name);
+                            $add = Horde_String::ipos($tdisplay_name, $tname) !== false;
+                        } else {
+                            $add = true;
+                        }
+
                         $att = [
                             '__key' => $ob->getValue('__key'),
                         ];
 
-                        foreach (array_keys($ob->driver->getCriteria()) as $key) {
-                            if (empty($opts['returnFields']) ||
-                                (!empty($opts['returnFields']) && in_array($key, $opts['returnFields']))) {
-                                $att[$key] = $ob->getValue($key);
-                            }
-                        }
-
-                        $email = new Horde_Mail_Rfc822_List();
-
-                        $display_name = ($ob->hasValue('name') || !isset($ob->driver->alternativeName))
-                            ? Turba::formatName($ob)
-                            : $ob->getValue($ob->driver->alternativeName);
-                        unset($tdisplay_name);
                         $email_fields = [];
-                        foreach (array_keys($att) as $key) {
-                            // Only concerned about keys that we want returned.
-                            if (!empty($opts['returnFields']) &&
-                                !in_array($key, $opts['returnFields'])) {
-                                continue;
-                            }
 
-                            if ($ob->getValue($key) &&
-                                isset($attributes[$key]) &&
-                                ($attributes[$key]['type'] == 'email')) {
-                                $e_val = $ob->getValue($key);
-                                $email_fields[$key] = $e_val;
-                                if (strlen($trimname)) {
+                        foreach (array_keys($ob->driver->getCriteria()) as $key) {
+                            // Only concerned about keys that we want returned.
+                            if (empty($returnFields) || in_array($key, $returnFields)) {
+                                $value = $ob->getValue($key);
+                                $att[$key] = $value;
+
+                                if ($value &&
+                                    isset($attributes[$key]) &&
+                                    $attributes[$key]['type'] == 'email') {
+                                    $email_fields[$key] = $value;
+
                                     /* Ticket #12480: Don't return email if it
                                      * doesn't contain the search string, since
                                      * an entry can contain multiple e-mail
                                      * fields. Return all e-mails if it
                                      * occurs in the name. */
-                                    if (!isset($tname)) {
-                                        $tname = Horde_String_Transliterate::toAscii($name);
+                                    if ($add || Horde_String::ipos(Horde_String_Transliterate::toAscii($value), $tname) !== false) {
+                                        // Multiple addresses support
+                                        $email->add($rfc822->parseAddressList($value, [
+                                            'limit' => isset($attributes[$key]['params']) && is_array($attributes[$key]['params']) && !empty($attributes[$key]['params']['allow_multi']) ? 0 : 1,
+                                        ]));
                                     }
-                                    if (!isset($tdisplay_name)) {
-                                        $tdisplay_name = Horde_String_Transliterate::toAscii($display_name);
-                                    }
-
-                                    $add = ((Horde_String::ipos(Horde_String_Transliterate::toAscii($e_val), $tname) !== false) ||
-                                            (Horde_String::ipos($tdisplay_name, $tname) !== false));
-                                } else {
-                                    $add = true;
-                                }
-
-                                if ($add) {
-                                    // Multiple addresses support
-                                    $email->add($rfc822->parseAddressList($e_val, [
-                                        'limit' => (isset($attributes[$key]['params']) && is_array($attributes[$key]['params']) && !empty($attributes[$key]['params']['allow_multi'])) ? 0 : 1,
-                                    ]));
                                 }
                             }
                         }
@@ -1428,7 +1421,7 @@ class Turba_Api extends Horde_Registry_Api
                         if (!count($email)) {
                             foreach ($email_fields as $e_field => $e_value) {
                                 $email->add($rfc822->parseAddressList($e_value, [
-                                    'limit' => (isset($attributes[$e_field]['params']) && is_array($attributes[$e_field]['params']) && !empty($attributes[$e_field]['params']['allow_multi'])) ? 0 : 1,
+                                    'limit' => isset($attributes[$e_field]['params']) && is_array($attributes[$e_field]['params']) && !empty($attributes[$e_field]['params']['allow_multi']) ? 0 : 1,
                                 ]));
                             }
                         }
@@ -1437,7 +1430,7 @@ class Turba_Api extends Horde_Registry_Api
                                 $seen_key = trim(Horde_String::lower($display_name)) . '/' . Horde_String::lower($val->bare_address);
                                 if (empty($seen[$seen_key])) {
                                     $seen[$seen_key] = true;
-                                    if (empty($opts['rfc822Return'])) {
+                                    if ($notRfc822Return) {
                                         $emails[] = $val->bare_address;
                                     } else {
                                         $val->personal = $display_name;
@@ -1445,39 +1438,22 @@ class Turba_Api extends Horde_Registry_Api
                                     }
                                 }
                             }
-                        } elseif (empty($opts['rfc822Return'])) {
+                        } elseif ($notRfc822Return) {
                             $emails[] = null;
                         }
 
-                        if (empty($opts['rfc822Return'])) {
+                        if ($notRfc822Return) {
                             foreach ($emails as $val) {
                                 $atts = [
                                     '__type' => 'Object',
                                     'id' => $att['__key'],
                                     'source' => $source,
+                                    'email' => $val,
+                                    'name' => $display_name,
                                 ];
-                                if (empty($opts['returnFields'])) {
-                                    $atts = [
-                                        '__type' => 'Object',
-                                        'id' => $att['__key'],
-                                        'source' => $source,
-                                        'email' => $val,
-                                        'name' => $display_name,
-                                    ];
-                                } else {
-                                    $atts = [];
-                                    $fields = [
-                                        '__type' => 'Object',
-                                        'id' => $att['__key'],
-                                        'source' => $source,
-                                        'email' => $val,
-                                        'name' => $display_name,
-                                    ];
-                                    foreach ($fields as $field => $value) {
-                                        if (in_array($field, $opts['returnFields'])) {
-                                            $atts[$field] = $value;
-                                        }
-                                    }
+
+                                if (!empty($returnFields)) {
+                                    $atts = array_intersect_key($atts, array_flip($returnFields));
                                 }
 
                                 $out[] = array_merge($att, $atts);
