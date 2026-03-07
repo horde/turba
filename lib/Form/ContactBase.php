@@ -51,9 +51,9 @@ abstract class Turba_Form_ContactBase extends Horde_Form
             }
             foreach ($tab_fields as $field) {
                 // Don't display the "orig" fields for images.
-                if (!in_array($field, $fields) ||
-                    !isset($attributes[$field]) ||
-                    ($attributes[$field]['type'] == 'image' && strpos($field, '_orig') !== false)) {
+                if (!in_array($field, $fields)
+                    || !isset($attributes[$field])
+                    || ($attributes[$field]['type'] == 'image' && strpos($field, '_orig') !== false)) {
                     continue;
                 }
                 $attribute = $attributes[$field];
@@ -88,9 +88,9 @@ abstract class Turba_Form_ContactBase extends Horde_Form
         }
 
         /* Add tags. */
-        if (isset($map['__uid']) &&
-            ($tagger = $injector->getInstance('Turba_Tagger')) &&
-            !($tagger instanceof Horde_Core_Tagger_Null)) {
+        if (isset($map['__uid'])
+            && ($tagger = $injector->getInstance('Turba_Tagger'))
+            && !($tagger instanceof Horde_Core_Tagger_Null)) {
             $this->addVariable(
                 _("Tags"),
                 'object[__tags]',

@@ -217,19 +217,19 @@ class Turba_View_Browse
 
                         // Get the values through the Turba_Object class.
                         foreach (array_keys($targetDriver->getCriteria()) as $info_key) {
-                            if (!is_array($targetDriver->map[$info_key]) ||
-                                isset($targetDriver->map[$info_key]['attribute'])) {
+                            if (!is_array($targetDriver->map[$info_key])
+                                || isset($targetDriver->map[$info_key]['attribute'])) {
                                 $objectValue = $object->getValue($info_key);
 
                                 // Get 'data' value if object type is image, the
                                 // direct value in other case.
-                                $objAttributes[$info_key] =
-                                    isset($targetDriver->map[$info_key]) &&
-                                        is_array($targetDriver->map[$info_key]) &&
-                                        isset($targetDriver->map[$info_key]['type']) &&
-                                        $targetDriver->map[$info_key]['type'] == 'image' &&
-                                        is_array($objectValue) &&
-                                        isset($objectValue['load']['data'])
+                                $objAttributes[$info_key]
+                                    = isset($targetDriver->map[$info_key])
+                                        && is_array($targetDriver->map[$info_key])
+                                        && isset($targetDriver->map[$info_key]['type'])
+                                        && $targetDriver->map[$info_key]['type'] == 'image'
+                                        && is_array($objectValue)
+                                        && isset($objectValue['load']['data'])
                                         ? $objectValue['load']['data']
                                         : $objectValue;
                             }

@@ -281,8 +281,8 @@ class Turba_Api extends Horde_Registry_Api
                     ? $info->get('name')
                     : $info['title'];
                 if (in_array('name', $properties)) {
-                    $results[$curpath . $addressbook]['name'] =
-                        sprintf(_("Contacts from %s"), $label);
+                    $results[$curpath . $addressbook]['name']
+                        = sprintf(_("Contacts from %s"), $label);
                 }
                 if (in_array('displayname', $properties)) {
                     $results[$curpath . $addressbook]['displayname'] = $label;
@@ -298,8 +298,8 @@ class Turba_Api extends Horde_Registry_Api
                 if (in_array('browseable', $properties)) {
                     $results[$curpath . $addressbook]['browseable'] = true;
                 }
-                if (in_array('read-only', $properties) &&
-                    ($info instanceof Horde_Share_Object)) {
+                if (in_array('read-only', $properties)
+                    && ($info instanceof Horde_Share_Object)) {
                     $results[$curpath . $addressbook]['read-only'] = !$info->hasPermission($registry->getAuth(), Horde_Perms::EDIT);
                 }
             }
@@ -1050,8 +1050,8 @@ class Turba_Api extends Horde_Registry_Api
         foreach ($this->_getSources($sources) as $source) {
             $sdriver = $driver->create($source);
 
-            if (!$GLOBALS['registry']->isAdmin() &&
-                !$sdriver->hasPermission(Horde_Perms::DELETE)) {
+            if (!$GLOBALS['registry']->isAdmin()
+                && !$sdriver->hasPermission(Horde_Perms::DELETE)) {
                 continue;
             }
 
@@ -1221,10 +1221,10 @@ class Turba_Api extends Horde_Registry_Api
                 ? []
                 : new Horde_Mail_Rfc822_List());
 
-        if (!isset($cfgSources) ||
-            !is_array($cfgSources) ||
-            !count($cfgSources) ||
-            is_null($names)) {
+        if (!isset($cfgSources)
+            || !is_array($cfgSources)
+            || !count($cfgSources)
+            || is_null($names)) {
             return $results;
         }
 
@@ -1256,10 +1256,10 @@ class Turba_Api extends Horde_Registry_Api
         foreach ($opts['sources'] as $source) {
             // Skip invalid sources -or-
             // skip sources that aren't browseable if the search is empty.
-            if (!isset($cfgSources[$source]) ||
-                (empty($cfgSources[$source]['browse']) &&
-                 (!count($names) ||
-                  ((count($names) == 1) && empty($names[0]))))) {
+            if (!isset($cfgSources[$source])
+                || (empty($cfgSources[$source]['browse'])
+                 && (!count($names)
+                  || ((count($names) == 1) && empty($names[0]))))) {
 
                 continue;
             }
@@ -1328,8 +1328,8 @@ class Turba_Api extends Horde_Registry_Api
                     if ($ob->isGroup()) {
                         /* Is a distribution list. */
                         $members = $ob->listMembers();
-                        if (!($members instanceof Turba_List) ||
-                            !count($members)) {
+                        if (!($members instanceof Turba_List)
+                            || !count($members)) {
                             continue;
                         }
 
@@ -1345,9 +1345,9 @@ class Turba_Api extends Horde_Registry_Api
 
                                 $seen_key = trim(Horde_String::lower($ob->getValue('name'))) . trim(Horde_String::lower(is_array($value) ? $value['load']['file'] : $value));
 
-                                if (isset($attributes[$key]) &&
-                                    ($attributes[$key]['type'] == 'email') &&
-                                    empty($seen[$seen_key])) {
+                                if (isset($attributes[$key])
+                                    && ($attributes[$key]['type'] == 'email')
+                                    && empty($seen[$seen_key])) {
                                     $emails[] = $value;
                                     $seen[$seen_key] = true;
                                 }
@@ -1394,9 +1394,9 @@ class Turba_Api extends Horde_Registry_Api
                                 $value = $ob->getValue($key);
                                 $att[$key] = $value;
 
-                                if ($value &&
-                                    isset($attributes[$key]) &&
-                                    $attributes[$key]['type'] == 'email') {
+                                if ($value
+                                    && isset($attributes[$key])
+                                    && $attributes[$key]['type'] == 'email') {
                                     $email_fields[$key] = $value;
 
                                     /* Ticket #12480: Don't return email if it
@@ -1485,9 +1485,9 @@ class Turba_Api extends Horde_Registry_Api
     {
         global $cfgSources;
 
-        if (!isset($cfgSources) ||
-            !is_array($cfgSources) ||
-            !isset($cfgSources[$source])) {
+        if (!isset($cfgSources)
+            || !is_array($cfgSources)
+            || !isset($cfgSources[$source])) {
             return [];
         }
 
@@ -1515,9 +1515,9 @@ class Turba_Api extends Horde_Registry_Api
     {
         global $cfgSources;
 
-        if (!isset($cfgSources) ||
-            !is_array($cfgSources) ||
-            !isset($cfgSources[$source])) {
+        if (!isset($cfgSources)
+            || !is_array($cfgSources)
+            || !isset($cfgSources[$source])) {
             return [];
         }
 
@@ -1598,8 +1598,8 @@ class Turba_Api extends Horde_Registry_Api
         $categories = [];
 
         foreach ($GLOBALS['attributes'] as $key => $attribute) {
-            if (($attribute['type'] == 'monthdayyear') &&
-                !empty($attribute['time_object_label'])) {
+            if (($attribute['type'] == 'monthdayyear')
+                && !empty($attribute['time_object_label'])) {
                 foreach ($GLOBALS['cfgSources'] as $srcKey => $source) {
                     if (!empty($source['map'][$key])) {
                         $categories[$key . '/' . $srcKey] = [
@@ -2005,8 +2005,8 @@ class Turba_Api extends Horde_Registry_Api
         if (!empty($filter)) {
             foreach (Turba::availableSources() as $key => $source) {
                 $curr = current(array_keys($filter));
-                if (!empty($source[$curr]) &&
-                    ($source[$curr] == current($filter))) {
+                if (!empty($source[$curr])
+                    && ($source[$curr] == current($filter))) {
                     $results[$key] = $source;
                 }
             }
@@ -2519,8 +2519,8 @@ class Turba_Api extends Horde_Registry_Api
         global $cfgSources, $injector, $prefs;
 
         /* Get default address book from user preferences. */
-        if (empty($source) &&
-            !($source = $prefs->getValue('default_dir'))) {
+        if (empty($source)
+            && !($source = $prefs->getValue('default_dir'))) {
             // On new installations default_dir is not set. Try default
             // addressbook if it's editable. Otherwise use first editable
             // addressbook.

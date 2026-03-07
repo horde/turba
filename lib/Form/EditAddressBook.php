@@ -31,9 +31,9 @@ class Turba_Form_EditAddressBook extends Horde_Form
 
         $this->_addressbook = $addressbook;
 
-        $owner = $addressbook->get('owner') == $registry->getAuth() ||
-            (is_null($addressbook->get('owner')) &&
-             $registry->isAdmin());
+        $owner = $addressbook->get('owner') == $registry->getAuth()
+            || (is_null($addressbook->get('owner'))
+             && $registry->isAdmin());
 
         parent::__construct(
             $vars,
@@ -61,8 +61,8 @@ class Turba_Form_EditAddressBook extends Horde_Form
 
         /* Subscription URLs. */
         $url = $registry->get('webroot', 'horde');
-        if (isset($conf['urls']['pretty']) &&
-            $conf['urls']['pretty'] == 'rewrite') {
+        if (isset($conf['urls']['pretty'])
+            && $conf['urls']['pretty'] == 'rewrite') {
             $webdavUrl = $url . '/rpc/turba/';
             $carddavUrl = $url . '/rpc/addressbooks/';
             $accountUrl = $url . '/rpc/';

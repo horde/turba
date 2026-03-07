@@ -75,9 +75,9 @@ class Turba_Test extends Horde_Test
             'proto' => Horde_Util::getPost('proto'),
         ];
 
-        if (!empty($params['server']) &&
-            !empty($params['basedn']) &&
-            !empty($params['filter'])) {
+        if (!empty($params['server'])
+            && !empty($params['basedn'])
+            && !empty($params['filter'])) {
             $ret .= $this->_doConnectionTest($params);
         }
 
@@ -98,9 +98,9 @@ class Turba_Test extends Horde_Test
      */
     protected function _doConnectionTest($params)
     {
-        $ret = 'server="' . htmlspecialchars($params['server']) . '" ' .
-            'basedn="' . htmlspecialchars($params['basedn']) . '" ' .
-            'filter="' . htmlspecialchars($params['filter']) . '"<br />';
+        $ret = 'server="' . htmlspecialchars($params['server']) . '" '
+            . 'basedn="' . htmlspecialchars($params['basedn']) . '" '
+            . 'filter="' . htmlspecialchars($params['filter']) . '"<br />';
 
         if (!empty($params['user'])) {
             $ret .= 'bind as user="' . htmlspecialchars($params['user']) . '"<br />';
@@ -130,9 +130,9 @@ class Turba_Test extends Horde_Test
                     $ret .= '<p>search returned ' . ldap_count_entries($ldap, $result) . " entries</p>\n";
                     $info = ldap_get_entries($ldap, $result);
                     for ($i = 0; $i < $info['count']; ++$i) {
-                        $ret .= '<p>dn is: ' . $info[$i]['dn'] . '<br />' .
-                            'first cn entry is: ' . $info[$i]['cn'][0] . '<br />' .
-                            'first mail entry is: ' . $info[$i]['mail'][0] . '</p>';
+                        $ret .= '<p>dn is: ' . $info[$i]['dn'] . '<br />'
+                            . 'first cn entry is: ' . $info[$i]['cn'][0] . '<br />'
+                            . 'first mail entry is: ' . $info[$i]['mail'][0] . '</p>';
 
                         if ($i >= 10) {
                             $ret .= '<p>(only first 10 entries displayed)</p>';

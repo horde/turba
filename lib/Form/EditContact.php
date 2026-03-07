@@ -121,9 +121,9 @@ class Turba_Form_EditContact extends Turba_Form_ContactBase
                 'source' => $this->_contact->getSource(),
             ]);
 
-            echo '<div class="editGroupMembers">' .
-                Horde::link($edit_url) . '<span class="iconImg groupImg"></span>' . _("Edit/View Contact List Members") . '</a>' .
-                '</div>';
+            echo '<div class="editGroupMembers">'
+                . Horde::link($edit_url) . '<span class="iconImg groupImg"></span>' . _("Edit/View Contact List Members") . '</a>'
+                . '</div>';
         }
     }
 

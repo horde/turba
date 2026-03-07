@@ -1,5 +1,7 @@
 <?php
+
 use function PHP81_BC\strftime;
+
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
  *
@@ -132,9 +134,9 @@ class Turba_Object
     {
         global $attributes, $injector, $conf;
 
-        if (isset($this->attributes[$attribute]) &&
-            ($hooks = $injector->getInstance('Horde_Core_Hooks')) &&
-            $hooks->hookExists('decode_attribute', 'turba')) {
+        if (isset($this->attributes[$attribute])
+            && ($hooks = $injector->getInstance('Horde_Core_Hooks'))
+            && $hooks->hookExists('decode_attribute', 'turba')) {
             try {
                 return $hooks->callHook(
                     'decode_attribute',
@@ -143,20 +145,20 @@ class Turba_Object
                 );
             } catch (Turba_Exception $e) {
             }
-        } elseif (isset($this->driver->map[$attribute]) &&
-            is_array($this->driver->map[$attribute])) {
+        } elseif (isset($this->driver->map[$attribute])
+            && is_array($this->driver->map[$attribute])) {
             $args = [];
             foreach ($this->driver->map[$attribute]['fields'] as $field) {
                 $args[] = $this->getValue($field);
             }
             return Turba::formatCompositeField($this->driver->map[$attribute]['format'], $args);
-        } elseif (isset($attributes[$attribute]) &&
-            ($attributes[$attribute]['type'] == 'image')) {
+        } elseif (isset($attributes[$attribute])
+            && ($attributes[$attribute]['type'] == 'image')) {
             // If there is no [$attribute], but we have a $attribute . '_orig',
             // then populate the $attribute data using default resizing config.
             if (empty($this->attributes[$attribute])) {
-                if (!empty($this->attributes[$attribute . '_orig']) &&
-                    (!empty($conf['photos']['height']) || !empty($conf['photos']['width']))) {
+                if (!empty($this->attributes[$attribute . '_orig'])
+                    && (!empty($conf['photos']['height']) || !empty($conf['photos']['width']))) {
                     // Do resizing
                     $img = $injector->getInstance('Horde_Core_Factory_Image')->create(
                         [
@@ -178,9 +180,9 @@ class Turba_Object
                     ],
                 ];
         } elseif (!isset($this->attributes[$attribute])) {
-            if (isset($attributes[$attribute]) &&
-                ($attributes[$attribute]['type'] == 'Turba:TurbaTags') &&
-                ($uid = $this->getValue('__uid'))) {
+            if (isset($attributes[$attribute])
+                && ($attributes[$attribute]['type'] == 'Turba:TurbaTags')
+                && ($uid = $this->getValue('__uid'))) {
                 $this->synchronizeTags($injector->getInstance('Turba_Tagger')->getTags($uid, 'contact'));
             } else {
                 return null;
@@ -221,8 +223,8 @@ class Turba_Object
         // If we don't know the attribute, it's not a private attribute,
         // and it's an email field, save it in case we need to populate an email
         // field on save.
-        if (!isset($this->driver->map[$attribute]) &&
-            strpos($attribute, '__') === false) {
+        if (!isset($this->driver->map[$attribute])
+            && strpos($attribute, '__') === false) {
             if (isset($attributes[$attribute])) {
                 $type = $attributes[$attribute]['type'];
                 if (in_array($type, ['phone', 'email', 'address'])) {
@@ -259,9 +261,9 @@ class Turba_Object
         foreach ($this->_attributeFields as $type => $values) {
             foreach ($values as $value) {
                 foreach (array_keys($this->driver->map) as $attribute) {
-                    if (isset($attributes[$attribute]) &&
-                        $attributes[$attribute]['type'] == $type &&
-                        empty($this->attributes[$attribute])) {
+                    if (isset($attributes[$attribute])
+                        && $attributes[$attribute]['type'] == $type
+                        && empty($this->attributes[$attribute])) {
                         $this->setValue($attribute, $value);
                         break;
                     }
@@ -280,8 +282,8 @@ class Turba_Object
      */
     public function hasValue($attribute)
     {
-        if (isset($this->driver->map[$attribute]) &&
-            is_array($this->driver->map[$attribute])) {
+        if (isset($this->driver->map[$attribute])
+            && is_array($this->driver->map[$attribute])) {
             foreach ($this->driver->map[$attribute]['fields'] as $field) {
                 if ($this->hasValue($field)) {
                     return true;
@@ -614,15 +616,15 @@ class Turba_Object
      */
     public function vfsEditUrl($file)
     {
-        $delform = '<form action="' .
-            Horde::url('deletefile.php') .
-            '" style="display:inline" method="post">' .
-            Horde_Util::formInput() .
-            '<input type="hidden" name="file" value="' . htmlspecialchars($file['name']) . '" />' .
-            '<input type="hidden" name="source" value="' . htmlspecialchars($this->driver->getName()) . '" />' .
-            '<input type="hidden" name="key" value="' . htmlspecialchars($this->getValue('__key')) . '" />' .
-            '<input type="image" class="img" src="' . Horde_Themes::img('delete.png') . '" />' .
-            '</form>';
+        $delform = '<form action="'
+            . Horde::url('deletefile.php')
+            . '" style="display:inline" method="post">'
+            . Horde_Util::formInput()
+            . '<input type="hidden" name="file" value="' . htmlspecialchars($file['name']) . '" />'
+            . '<input type="hidden" name="source" value="' . htmlspecialchars($this->driver->getName()) . '" />'
+            . '<input type="hidden" name="key" value="' . htmlspecialchars($this->getValue('__key')) . '" />'
+            . '<input type="image" class="img" src="' . Horde_Themes::img('delete.png') . '" />'
+            . '</form>';
 
         return $this->vfsDisplayUrl($file) . ' ' . $delform;
     }

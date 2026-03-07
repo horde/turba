@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author   Michael J. Rubinsky <mrubinsk@horde.org>
  * @category Horde
@@ -32,13 +33,13 @@ class TurbaUpgradeSchema extends Horde_Db_Migration_Base
         $cols = array_keys($t->getColumns());
 
         if (!in_array('object_assistant', $cols)) {
-            $this->addColumn('turba_objects', 'object_assistant', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_assistant', 'string', ['limit' => 255]);
         }
         if (!in_array('object_workemail', $cols)) {
-            $this->addColumn('turba_objects', 'object_workemail', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_workemail', 'string', ['limit' => 255]);
         }
         if (!in_array('object_homeemail', $cols)) {
-            $this->addColumn('turba_objects', 'object_homeemail', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_homeemail', 'string', ['limit' => 255]);
         }
 
     }

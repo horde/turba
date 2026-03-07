@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2020 Horde LLC (http://www.horde.org/)
  *
@@ -26,8 +27,8 @@ class TurbaUpgradePhototypes extends Horde_Db_Migration_Base
      */
     public function up()
     {
-        $this->changeColumn('turba_objects', 'object_phototype', 'string', array('limit' => 127));
-        $this->changeColumn('turba_objects', 'object_logotype', 'string', array('limit' => 127));
+        $this->changeColumn('turba_objects', 'object_phototype', 'string', ['limit' => 127]);
+        $this->changeColumn('turba_objects', 'object_logotype', 'string', ['limit' => 127]);
     }
 
     /**
@@ -35,7 +36,7 @@ class TurbaUpgradePhototypes extends Horde_Db_Migration_Base
      */
     public function down()
     {
-        $this->changeColumn('turba_objects', 'object_phototype', 'string', array('limit' => 10));
-        $this->changeColumn('turba_objects', 'object_logotype', 'string', array('limit' => 10));
+        $this->changeColumn('turba_objects', 'object_phototype', 'string', ['limit' => 10]);
+        $this->changeColumn('turba_objects', 'object_logotype', 'string', ['limit' => 10]);
     }
 }

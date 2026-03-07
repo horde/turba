@@ -44,8 +44,8 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
                             continue;
                         }
                         foreach ($ob->getAttributes() as $k => $v) {
-                            if (!empty($attributes[$k]['type']) &&
-                                ($attributes[$k]['type'] == 'email')) {
+                            if (!empty($attributes[$k]['type'])
+                                && ($attributes[$k]['type'] == 'email')) {
                                 if (!empty($v)) {
                                     try {
                                         $mail_link = $registry->call('mail/compose', [
@@ -59,12 +59,12 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
                                     ? htmlspecialchars($ob->getValue('name'))
                                     : htmlspecialchars($ob->getValue('name') . ' <' . $v . '>');
 
-                                $results[] = '<li class="linedRow">' .
-                                    Horde::link(Horde::url($ob->url()), _("View Contact"), '', '_parent') .
-                                    Horde_Themes_Image::tag('contact.png', ['alt' => _("View Contact")]) . '</a> ' .
-                                    (!empty($v) ? '<a href="' . $mail_link . '">' : '') .
-                                    $link .
-                                    (!empty($v) ? '</a>' : '') . '</li>';
+                                $results[] = '<li class="linedRow">'
+                                    . Horde::link(Horde::url($ob->url()), _("View Contact"), '', '_parent')
+                                    . Horde_Themes_Image::tag('contact.png', ['alt' => _("View Contact")]) . '</a> '
+                                    . (!empty($v) ? '<a href="' . $mail_link . '">' : '')
+                                    . $link
+                                    . (!empty($v) ? '</a>' : '') . '</li>';
 
                                 break;
                             }

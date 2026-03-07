@@ -53,9 +53,9 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
             if (isset($sources[$source])) {
                 $selected = array_flip($sources[$source]);
                 foreach ($sources[$source] as $column) {
-                    if ((substr($column, 0, 2) == '__' && $column != '__tags') ||
-                        !isset($info['map'][$column]) ||
-                        $column == 'name') {
+                    if ((substr($column, 0, 2) == '__' && $column != '__tags')
+                        || !isset($info['map'][$column])
+                        || $column == 'name') {
                         continue;
                     }
 
@@ -74,9 +74,9 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
 
             // Then the unselected columns in source order.
             foreach (array_keys($info['map']) as $column) {
-                if ((substr($column, 0, 2) == '__' && $column != '__tags') ||
-                    ($column == 'name') ||
-                    isset($selected[$column])) {
+                if ((substr($column, 0, 2) == '__' && $column != '__tags')
+                    || ($column == 'name')
+                    || isset($selected[$column])) {
                     continue;
                 }
 

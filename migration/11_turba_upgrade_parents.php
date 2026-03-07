@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2014-2017 Horde LLC (http://www.horde.org/)
  *
@@ -28,8 +29,8 @@ class TurbaUpgradeParents extends Horde_Db_Migration_Base
      */
     public function up()
     {
-        $this->changeColumn('turba_shares', 'share_parents', 'string', array('limit' => 4000));
-        $this->changeColumn('turba_sharesng', 'share_parents', 'string', array('limit' => 4000));
+        $this->changeColumn('turba_shares', 'share_parents', 'string', ['limit' => 4000]);
+        $this->changeColumn('turba_sharesng', 'share_parents', 'string', ['limit' => 4000]);
     }
 
     /**

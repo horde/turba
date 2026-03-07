@@ -1,4 +1,5 @@
 <?php
+
 class TurbaFixBlobLength extends Horde_Db_Migration_Base
 {
     public function up()
@@ -7,7 +8,5 @@ class TurbaFixBlobLength extends Horde_Db_Migration_Base
         $this->changeColumn('turba_objects', 'object_logo', 'binary');
     }
 
-    public function down()
-    {
-    }
+    public function down() {}
 }

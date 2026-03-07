@@ -6,12 +6,13 @@ require_once __DIR__ . '/TestBase.php';
  * @author  Jason M. Felice <jason.m.felice@gmail.com>
  * @package Turba
  * @subpackage UnitTests
+ * @coversNothing
  */
-class Turba_ToDo_GroupTest extends Turba_TestBase {
+class Turba_ToDo_GroupTest extends Turba_TestBase
+{
+    public $group;
 
-    var $group;
-
-    function setUp()
+    public function setUp()
     {
         $this->markTestIncomplete('Convert to use Horde_Test.');
         parent::setUp();
@@ -22,9 +23,9 @@ class Turba_ToDo_GroupTest extends Turba_TestBase {
         $this->assertOk($this->group);
     }
 
-    function test_listMembers_returns_objects_sorted_according_to_parameters()
+    public function test_listMembers_returns_objects_sorted_according_to_parameters()
     {
-        $this->assertSortsList(array($this->group, 'listMembers'));
+        $this->assertSortsList([$this->group, 'listMembers']);
     }
 
 }

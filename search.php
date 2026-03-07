@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba search.php.
  *
@@ -21,15 +22,17 @@ $vars = Horde_Variables::getDefaultVariables();
 if ($vars->search_mode) {
     $session->set('turba', 'search_mode', $vars->search_mode);
 }
-if (!in_array($session->get('turba', 'search_mode'), array('basic', 'advanced', 'duplicate'))) {
+if (!in_array($session->get('turba', 'search_mode'), ['basic', 'advanced', 'duplicate'])) {
     $session->set('turba', 'search_mode', 'basic');
 }
 $search_mode = $session->get('turba', 'search_mode');
 
 /* Get the current source. */
 $addressBooks = Turba::getAddressBooks();
-$editableAddressBooks = Turba::getAddressBooks(Horde_Perms::EDIT & Horde_Perms::DELETE,
-                                               array('require_add' => true));
+$editableAddressBooks = Turba::getAddressBooks(
+    Horde_Perms::EDIT & Horde_Perms::DELETE,
+    ['require_add' => true]
+);
 if ($search_mode == 'duplicate') {
     $addressBooks = $editableAddressBooks;
 }
@@ -41,16 +44,16 @@ if (!isset($addressBooks[$source])) {
     if (!isset($addressBooks[$source])) {
         $notification->push(_("No Address Books are currently available. Searching is disabled."), 'horde.error');
         $page_output->header();
-        $notification->notify(array('listeners' => 'status'));
+        $notification->notify(['listeners' => 'status']);
         $page_output->footer();
         exit;
     }
 }
 
 /* Build all available search criteria. */
-$allCriteria = $shareSources = array();
+$allCriteria = $shareSources = [];
 foreach ($addressBooks as $key => $entry) {
-    $allCriteria[$key] = array('' => _("All"));
+    $allCriteria[$key] = ['' => _("All")];
     foreach ($entry['search'] as $field) {
         $allCriteria[$key][$field] = $GLOBALS['attributes'][$field]['label'];
     }
@@ -67,7 +70,7 @@ try {
 } catch (Turba_Exception $e) {
     $notification->push($e, 'horde.error');
     $driver = null;
-    $map = array();
+    $map = [];
 }
 
 if ($driver) {
@@ -76,48 +79,48 @@ if ($driver) {
     $submitted = Horde_Util::getFormData('search');
     $browsable = !empty($cfgSources[$source]['browse']) && !empty($submitted);
     switch ($search_mode) {
-    case 'advanced':
-        $criteria = array();
-        foreach (array_keys($map) as $key) {
-            if ($key != '__key') {
-                $value = $vars->get($key);
-                if (strlen($value)) {
-                    $criteria[$key] = $value;
+        case 'advanced':
+            $criteria = [];
+            foreach (array_keys($map) as $key) {
+                if ($key != '__key') {
+                    $value = $vars->get($key);
+                    if (strlen($value)) {
+                        $criteria[$key] = $value;
+                    }
                 }
             }
-        }
-        if ($conf['tags']['enabled']) {
-            $criteria['tags'] = $vars->tags;
-        }
-        if (count($criteria) || $browsable) {
-            $do_search = true;
-        }
-        break;
-
-    case 'basic':
-        $t_val = trim((string)$val);
-        if (empty($t_val)) {
-            if ($browsable) {
+            if ($conf['tags']['enabled']) {
+                $criteria['tags'] = $vars->tags;
+            }
+            if (count($criteria) || $browsable) {
                 $do_search = true;
             }
-            $criteria = array();
             break;
-        }
-        if (!strlen($criteria)) {
-            /* Searching all fields in basic search. */
-            $criteria = array_combine(
-                array_filter(array_keys($allCriteria[$source])),
-                array_fill(0, count($allCriteria[$source]) - 1, $val)
-            );
-        } else {
-            $criteria = array($criteria => $val);
-        }
-        $do_search = true;
-        break;
 
-    case 'duplicate':
-        $do_search = $vars->search || $vars->dupe || count($addressBooks) == 1;
-        break;
+        case 'basic':
+            $t_val = trim((string) $val);
+            if (empty($t_val)) {
+                if ($browsable) {
+                    $do_search = true;
+                }
+                $criteria = [];
+                break;
+            }
+            if (!strlen($criteria)) {
+                /* Searching all fields in basic search. */
+                $criteria = array_combine(
+                    array_filter(array_keys($allCriteria[$source])),
+                    array_fill(0, count($allCriteria[$source]) - 1, $val)
+                );
+            } else {
+                $criteria = [$criteria => $val];
+            }
+            $do_search = true;
+            break;
+
+        case 'duplicate':
+            $do_search = $vars->search || $vars->dupe || count($addressBooks) == 1;
+            break;
     }
 
     /* Check for updated sort criteria */
@@ -143,14 +146,14 @@ if ($driver) {
             }
 
             /* Create the vbook. */
-            $params = array(
+            $params = [
                 'name' => $vname,
-                'params' => serialize(array(
+                'params' => serialize([
                     'type' => 'vbook',
                     'source' => $source,
-                    'criteria' => $criteria
-                ))
-            );
+                    'criteria' => $criteria,
+                ]),
+            ];
 
             try {
                 $share = Turba::createShare(strval(new Horde_Support_Randomid()), $params);
@@ -178,16 +181,15 @@ if ($driver) {
             }
         } else {
             try {
-                if (($search_mode == 'basic' &&
-                     ($results = $driver->search($criteria, null, 'OR'))) ||
-                    (($search_mode == 'advanced') &&
-                     ($results = $driver->search($criteria)))) {
+                if (($search_mode == 'basic'
+                     && ($results = $driver->search($criteria, null, 'OR')))
+                    || (($search_mode == 'advanced')
+                     && ($results = $driver->search($criteria)))) {
 
                     /* Read the columns to display from the preferences. */
                     $sources = Turba::getColumns();
-                    $columns = isset($sources[$source])
-                        ? $sources[$source]
-                        : array();
+                    $columns = $sources[$source]
+                        ?? [];
                     $results->sort(Turba::getPreferredSortOrder());
 
                     $view = new Turba_View_List($results, null, $columns);
@@ -212,13 +214,13 @@ if (count($editableAddressBooks)) {
 }
 
 /* The form header. */
-$headerView = new Horde_View(array('templatePath' => TURBA_TEMPLATES . '/search'));
+$headerView = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/search']);
 if (count($addressBooks) == 1) {
     $headerView->uniqueSource = key($addressBooks);
 }
 
 /* The search forms. */
-$searchView = new Horde_View(array('templatePath' => TURBA_TEMPLATES . '/search'));
+$searchView = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/search']);
 new Horde_View_Helper_Text($searchView);
 $searchView->addressBooks = $addressBooks;
 $searchView->attributes = $GLOBALS['attributes'];
@@ -230,7 +232,7 @@ $searchView->value = $val;
 
 /* The form footer and vbook section. */
 if ($search_mode != 'duplicate' && $session->get('turba', 'has_share')) {
-    $vbookView = new Horde_View(array('templatePath' => TURBA_TEMPLATES . '/search'));
+    $vbookView = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/search']);
     $vbookView->hasShare = true;
     $vbookView->shareSources = $shareSources;
     $vbookView->source = $source;
@@ -239,38 +241,38 @@ if ($search_mode != 'duplicate' && $session->get('turba', 'has_share')) {
 }
 
 switch ($search_mode) {
-case 'basic':
-    $title = _("Basic Search");
-    $page_output->addInlineScript(array(
-        '$("val").focus()'
-    ), true);
-    $page_output->addInlineJsVars(array(
-        'TurbaSearch.criteria' => $allCriteria,
-        'TurbaSearch.shareSources' => $shareSources));
-    break;
+    case 'basic':
+        $title = _("Basic Search");
+        $page_output->addInlineScript([
+            '$("val").focus()',
+        ], true);
+        $page_output->addInlineJsVars([
+            'TurbaSearch.criteria' => $allCriteria,
+            'TurbaSearch.shareSources' => $shareSources]);
+        break;
 
-case 'advanced':
-    $title = _("Advanced Search");
-    /* Include the tag field? */
-    if (($tagger = $injector->getInstance('Turba_Tagger')) &&
-       !($tagger instanceof Horde_Core_Tagger_Null)) {
-        $searchView->tag = true;
-        $injector->getInstance('Horde_Core_Factory_Imple')->create('Turba_Ajax_Imple_TagAutoCompleter', array('id' => 'tags'));
-    }
+    case 'advanced':
+        $title = _("Advanced Search");
+        /* Include the tag field? */
+        if (($tagger = $injector->getInstance('Turba_Tagger'))
+           && !($tagger instanceof Horde_Core_Tagger_Null)) {
+            $searchView->tag = true;
+            $injector->getInstance('Horde_Core_Factory_Imple')->create('Turba_Ajax_Imple_TagAutoCompleter', ['id' => 'tags']);
+        }
 
-    if (isset($results)) {
-        $page_output->addInlineJsVars(array(
-            'TurbaSearch.advanced' => true
-        ));
-    }
-    $page_output->addInlineScript(array(
-        '$("name").focus()'
-    ), true);
-    break;
+        if (isset($results)) {
+            $page_output->addInlineJsVars([
+                'TurbaSearch.advanced' => true,
+            ]);
+        }
+        $page_output->addInlineScript([
+            '$("name").focus()',
+        ], true);
+        break;
 
-case 'duplicate':
-    $title = _("Duplicate Search");
-    break;
+    case 'duplicate':
+        $title = _("Duplicate Search");
+        break;
 }
 
 $page_output->addScriptFile('search.js');
@@ -281,10 +283,10 @@ if (isset($view) && is_object($view)) {
     Turba::addBrowseJs();
 }
 
-$page_output->header(array(
-    'title' => $title
-));
-$notification->notify(array('listeners' => 'status'));
+$page_output->header([
+    'title' => $title,
+]);
+$notification->notify(['listeners' => 'status']);
 echo $tabs->render($search_mode);
 echo $headerView->render('header');
 echo $searchView->render($search_mode);

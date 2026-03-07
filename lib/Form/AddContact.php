@@ -34,8 +34,8 @@ class Turba_Form_AddContact extends Turba_Form_ContactBase
             $action = Horde_Form_Action::factory('submit');
             $v->setAction($action);
             $v->setOption('trackchange', true);
-            if (is_null($vars->get('formname')) &&
-                $vars->get($v->getVarName()) != $vars->get('__old_' . $v->getVarName())) {
+            if (is_null($vars->get('formname'))
+                && $vars->get($v->getVarName()) != $vars->get('__old_' . $v->getVarName())) {
                 $notification->push(sprintf(_("Selected address book \"%s\"."), $addSources[$vars->get('source')]['title']), 'horde.message');
             }
         } else {
@@ -96,8 +96,8 @@ class Turba_Form_AddContact extends Turba_Form_ContactBase
                 try {
                     $ob = $driver->getObject($key);
                     $notification->push(sprintf(_("%s added."), $ob->getValue('name')), 'horde.success');
-                    if (!empty($info['url']) &&
-                        $url = Horde::verifySignedUrl($info['url'])) {
+                    if (!empty($info['url'])
+                        && $url = Horde::verifySignedUrl($info['url'])) {
                         $url = new Horde_Url($url);
                     } else {
                         $url = $ob->url('Contact', true);

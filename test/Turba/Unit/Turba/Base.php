@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the core Turba class with various backends.
  *
@@ -31,6 +32,7 @@ require_once __DIR__ . '/../../TestCase.php';
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
+ * @coversNothing
  */
 class Turba_Unit_Turba_Base extends Turba_TestCase
 {
@@ -39,7 +41,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
      *
      * @var Horde_Test_Setup
      */
-    static $setup;
+    public static $setup;
 
     /**
      * The default share name expected to be used.
@@ -83,9 +85,10 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         $GLOBALS['conf']['share']['auto_create'] = true;
-        Turba::getConfigFromShares(array('test' => array('use_shares' => true)));
+        Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $this->assertEquals(
-            1, count($turba_shares->listShares('test@example.com'))
+            1,
+            count($turba_shares->listShares('test@example.com'))
         );
     }
 
@@ -93,7 +96,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         $GLOBALS['conf']['share']['auto_create'] = true;
-        Turba::getConfigFromShares(array('test' => array('use_shares' => true)));
+        Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $shares = $turba_shares->listShares('test@example.com');
         $default = array_pop($shares);
         $this->assertInstanceOf('Horde_Share_Object', $default);
@@ -107,9 +110,10 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         $GLOBALS['conf']['share']['auto_create'] = false;
-        Turba::getConfigFromShares(array('test' => array('use_shares' => true)));
+        Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $this->assertEquals(
-            0, count($turba_shares->listShares('test@example.com'))
+            0,
+            count($turba_shares->listShares('test@example.com'))
         );
     }
 
@@ -117,13 +121,14 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         $GLOBALS['conf']['share']['auto_create'] = true;
-        Turba::getConfigFromShares(array('test' => array('use_shares' => true)));
+        Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $shares = $turba_shares->listShares('test@example.com');
         $default = array_pop($shares);
         $this->assertInstanceOf('Horde_Share_Object', $default);
         $this->assertTrue(
             $default->hasPermission(
-                $GLOBALS['registry']->getAuth(), Horde_Perms::DELETE
+                $GLOBALS['registry']->getAuth(),
+                Horde_Perms::DELETE
             )
         );
     }

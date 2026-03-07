@@ -139,8 +139,8 @@ class Turba_Driver_Kolab extends Turba_Driver
             }
         }
 
-        if (isset($hash['__type']) && $hash['__type'] == 'Group' &&
-            isset($hash['name']['full-name'])) {
+        if (isset($hash['__type']) && $hash['__type'] == 'Group'
+            && isset($hash['name']['full-name'])) {
             $hash['display-name'] = $hash['name']['full-name'];
         }
 
@@ -235,9 +235,9 @@ class Turba_Driver_Kolab extends Turba_Driver
      */
     public function toTurbaKeys(array $entry)
     {
-        if (isset($entry['__type']) &&
-            $entry['__type'] == 'Group' &&
-            isset($entry['display-name'])) {
+        if (isset($entry['__type'])
+            && $entry['__type'] == 'Group'
+            && isset($entry['display-name'])) {
             $entry['last-name'] = $entry['display-name'];
         }
 
@@ -552,12 +552,12 @@ class Turba_Driver_Kolab extends Turba_Driver
             } else {
                 // 'op' is LIKE
                 foreach ($this->_contacts_cache as $entry) {
-                    if (empty($value) ||
-                        (isset($entry[$field]) &&
-                         ((empty($test['begin']) &&
-                           stripos($entry[$field], $value) !== false) ||
-                          (!empty($test['begin']) &&
-                           stripos($entry[$field], $value) === 0)))) {
+                    if (empty($value)
+                        || (isset($entry[$field])
+                         && ((empty($test['begin'])
+                           && stripos($entry[$field], $value) !== false)
+                          || (!empty($test['begin'])
+                           && stripos($entry[$field], $value) === 0)))) {
                         $ids[] = $entry['uid'];
                     }
                 }
@@ -776,8 +776,8 @@ class Turba_Driver_Kolab extends Turba_Driver
             throw new Turba_Exception(sprintf(_("Object with UID %s does not exist!"), $object_id));
         }
 
-        $data = isset($this->_contacts_cache[$object_id]['__type']) &&
-            $this->_contacts_cache[$object_id]['__type'] == 'Group'
+        $data = isset($this->_contacts_cache[$object_id]['__type'])
+            && $this->_contacts_cache[$object_id]['__type'] == 'Group'
             ? $this->_getListData()
             : $this->_getData();
 

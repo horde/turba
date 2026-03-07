@@ -1,26 +1,28 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @category   Horde
  * @package    Turba
  * @subpackage UnitTests
+ * @coversNothing
  */
 class Turba_Unit_ImportTest extends Turba_TestCase
 {
-    protected static $nameMap = array(
-        'name' => array(
-            'fields' => array('namePrefix', 'firstname', 'middlenames',
-                              'lastname', 'nameSuffix'),
+    protected static $nameMap = [
+        'name' => [
+            'fields' => ['namePrefix', 'firstname', 'middlenames',
+                'lastname', 'nameSuffix'],
             'attribute' => 'object_name',
-            'format' => '%s %s %s %s %s'
-        )
-    );
+            'format' => '%s %s %s %s %s',
+        ],
+    ];
 
-    protected static $emailMap = array(
+    protected static $emailMap = [
         'homeEmail' => 'object_homeemail',
-        'workEmail' => 'object_workemail'
-    );
+        'workEmail' => 'object_workemail',
+    ];
 
     public static function setUpBeforeClass()
     {
@@ -38,8 +40,8 @@ class Turba_Unit_ImportTest extends Turba_TestCase
 
     public function testImportVcard21()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:2.1
 FN;CHARSET=ISO-8859-1;ENCODING=QUOTED-PRINTABLE:=
 Jan Schneider=F6
@@ -74,7 +76,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'Jan Schneiderö',
                 'email' => 'jan@horde.org',
                 'emails' => 'jan@horde.org',
@@ -112,15 +114,15 @@ Dänemark',
                 'latitude' => 52.516276,
                 'longitude' => 13.377778,
                 'phone' => '+49 521 999999',
-            ),
+            ],
             $this->toHash($vcard)
         );
     }
 
     public function testImportVcard30()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:3.0
 FN:Jan Schneiderö
 EMAIL:jan@horde.org
@@ -146,7 +148,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'Jan Schneiderö',
                 'email' => 'jan@horde.org',
                 'emails' => 'jan@horde.org',
@@ -183,12 +185,12 @@ Dänemark',
                 'timezone' => 'Europe/Berlin',
                 'latitude' => 52.516276,
                 'longitude' => 13.377778,
-            ),
+            ],
             $this->toHash($vcard)
         );
 
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:3.0
 ITEM2.ADR;TYPE=HOME;TYPE=pref:;;Straße;Ort;;12345;Deutsch
  land
@@ -210,7 +212,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'homeAddress' => 'Straße
 Ort 12345
 Deutschland',
@@ -245,12 +247,12 @@ Deutschland',
                 'emails' => 'email@domain.tld',
                 'cellPhone' => '0123-123456',
                 '__uid' => 'b33393c4-98a1-4e1a-8f5c-d29459406093',
-            ),
+            ],
             $this->toHash($vcard)
         );
 
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:3.0
 PRODID:-//Apple Inc.//iPhone OS 10.3.2//EN
 N:Hzik;Zgg;;;
@@ -260,20 +262,20 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'Hzik',
                 'firstname' => 'Zgg',
                 'name' => 'Zgg Hzik',
                 'phone' => '+36303770746',
-            ),
+            ],
             $this->toHash($vcard)
         );
     }
 
     public function testImportFullName()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:3.0
 FN:Jan Schneider
 N:Schneider;Jan;K.;Mr.;
@@ -281,53 +283,53 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'Jan Schneider',
                 'lastname' => 'Schneider',
                 'firstname' => 'Jan',
                 'middlenames' => 'K.',
                 'namePrefix' => 'Mr.',
-            ),
+            ],
             $this->toHash($vcard)
         );
 
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'Schneider',
                 'firstname' => 'Jan',
                 'middlenames' => 'K.',
                 'namePrefix' => 'Mr.',
                 'name' => 'Jan Schneider',
-            ),
+            ],
             $this->toHash($vcard, self::$nameMap)
         );
     }
 
     public function testImportNameParts()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:3.0
 N:Schneider;Jan;K.;Mr.;
 END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'Schneider',
                 'firstname' => 'Jan',
                 'middlenames' => 'K.',
                 'namePrefix' => 'Mr.',
                 'name' => 'Mr. Jan K. Schneider',
-            ),
+            ],
             $this->toHash($vcard, self::$nameMap)
         );
     }
 
     public function testImportPhone()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:2.1
 REV:20080523T071425Z
 N:B;A;;;
@@ -342,7 +344,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'B',
                 'firstname' => 'A',
                 'cellPhone' => '1',
@@ -352,12 +354,12 @@ END:VCARD
                 'homePhone' => '5',
                 'workPhone' => '6',
                 'name' => 'A B',
-            ),
+            ],
             $this->toHash($vcard)
         );
 
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:2.1
 N:Mustermann;Maximilian
 FN;ENCODING=QUOTED-PRINTABLE;CHARSET=UTF-8:Maximilian Mustermann
@@ -383,7 +385,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'Mustermann',
                 'firstname' => 'Maximilian',
                 'name' => 'Maximilian Mustermann',
@@ -412,15 +414,15 @@ Foobar, Sachsen 01234',
                 'workWebsite' => '',
                 'birthday' => '',
                 'notes' => '',
-            ),
+            ],
             $this->toHash($vcard, self::$emailMap)
         );
     }
 
     public function testImportAddress()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:2.1
 N:Lastname;Firstname;;;
 FN:Lastname, Firstname
@@ -442,7 +444,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'Lastname',
                 'firstname' => 'Firstname',
                 'name' => 'Lastname, Firstname',
@@ -456,7 +458,7 @@ END:VCARD
                 'email' => 'email@domain.com',
                 'emails' => 'email@domain.com',
                 'website' => '',
-                '__tags' => array('Friends'),
+                '__tags' => ['Friends'],
                 'businessCategory' => 'Friends',
                 'notes' => '',
                 'homeAddress' => 'Street address
@@ -475,15 +477,15 @@ USA',
                 'workProvince' => 'St',
                 'workPostalCode' => '12345',
                 'workCountry' => 'USA',
-            ),
+            ],
             $this->toHash($vcard)
         );
     }
 
     public function testImportPhoto()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 FN:Jan Schneider
 N:Schneider;Jan;;;
 PHOTO;ENCODING=b;TYPE=image/png:iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6
@@ -502,8 +504,8 @@ END:VCARD
 
     public function testImportEmail()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 FN:Jan Schneider
 N:Schneider;Jan;;;
 EMAIL;WORK:work@example.com
@@ -516,7 +518,7 @@ END:VCARD
 ';
 
         $this->assertEquals(
-            array(
+            [
                 'name' => 'Jan Schneider',
                 'lastname' => 'Schneider',
                 'firstname' => 'Jan',
@@ -525,15 +527,15 @@ END:VCARD
                 'homeEmail' => 'home@example.com',
                 'email' => 'pref@example.com',
                 '__uid' => 'nhCnPyv0u7',
-            ),
+            ],
             $this->toHash($vcard, self::$emailMap)
         );
     }
 
     public function testImportInvalidBinaryEncoding()
     {
-        $vcard =
-'BEGIN:VCARD
+        $vcard
+= 'BEGIN:VCARD
 VERSION:3.0
 PRODID:-//Synthesis AG//NONSGML SyncML Engine V3.1.6.10//EN
 REV:20081004T151032
@@ -558,7 +560,7 @@ END:VCARD
 
         unset($hash['photo']);
         $this->assertEquals(
-            array(
+            [
                 'lastname' => 'McTester',
                 'firstname' => 'Testie',
                 'name' => 'Testie McTester',
@@ -581,13 +583,13 @@ London W1 1AA',
                 'commonCity' => 'London',
                 'commonPostalCode' => 'W1 1AA',
                 'birthday' => '2008-10-08',
-                'phototype' => 'JPEG'
-            ),
+                'phototype' => 'JPEG',
+            ],
             $hash
         );
     }
 
-    protected function toHash($vcard, $map = array())
+    protected function toHash($vcard, $map = [])
     {
         $driver = new Turba_Driver();
         foreach ($map as $field => $config) {

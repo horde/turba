@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the Kolab driver.
  *
@@ -31,6 +32,7 @@ require_once __DIR__ . '/Base.php';
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
+ * @coversNothing
  */
 class Turba_Unit_Driver_KolabTest extends Turba_Unit_Driver_Base
 {

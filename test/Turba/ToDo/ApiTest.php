@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the Turba API.
  *
@@ -28,6 +29,7 @@
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
+ * @coversNothing
  */
 class Turba_ToDo_ApiTest extends Turba_TestCase
 {
@@ -43,17 +45,17 @@ class Turba_ToDo_ApiTest extends Turba_TestCase
         /* HACK: ensure we've included this so that it won't get included
          * again, then override the globals it provides. */
         try {
-            $pushed = $registry->pushApp('turba', array('check_perms' => false));
+            $pushed = $registry->pushApp('turba', ['check_perms' => false]);
         } catch (Horde_Exception $e) {
             return;
         }
 
         $GLOBALS['source'] = '_test_sql';
-        $GLOBALS['cfgSources'] = array('_test_sql' => $this->getDriverConfig());
+        $GLOBALS['cfgSources'] = ['_test_sql' => $this->getDriverConfig()];
 
         $this->fakeAuth();
 
-        $results = _turba_search(array('Fabetes'));
+        $results = _turba_search(['Fabetes']);
         $this->assertNotEqual(0, count($results));
         if ($this->assertTrue(!empty($results['Fabetes']))) {
             $entry = array_shift($results['Fabetes']);

@@ -59,7 +59,7 @@ class Turba_Application extends Horde_Registry_Application
 
     /**
      */
-    public $version = '5.0.0-alpha11';
+    public $version = '5.0.0-alpha12';
 
     /**
      */
@@ -236,9 +236,9 @@ class Turba_Application extends Horde_Registry_Application
                 'collapsed' => false,
             ],
         ];
-        if ($GLOBALS['registry']->getAuth() &&
-            $GLOBALS['session']->get('turba', 'has_share') &&
-            !empty($conf['shares']['source'])) {
+        if ($GLOBALS['registry']->getAuth()
+            && $GLOBALS['session']->get('turba', 'has_share')
+            && !empty($conf['shares']['source'])) {
             $create = true;
             $sidebar->containers['my']['header']['add'] = [
                 'url' => Horde::url('addressbooks/create.php'),
@@ -774,8 +774,8 @@ class Turba_Application extends Horde_Registry_Application
                         } else {
                             $row = [];
                             foreach ($fields as $field) {
-                                if ((substr($field, 0, 2) == '__' && $field != '__members' && $field != '__uid') ||
-                                    isset($blobs[$field])) {
+                                if ((substr($field, 0, 2) == '__' && $field != '__members' && $field != '__uid')
+                                    || isset($blobs[$field])) {
                                     continue;
                                 }
                                 $attribute = $ob->getValue($field);
@@ -933,10 +933,10 @@ class Turba_Application extends Horde_Registry_Application
                 // address book contains per-user or global contacts.
                 case 'share':
                     $share = $factory->getShare($id);
-                    if (($user == '-system-' && strlen($share->get('owner'))) ||
-                        ($user != '-system-' &&
-                         $hordeUser != $share->get('owner') &&
-                         $hordeUser != $registry->getAuth())) {
+                    if (($user == '-system-' && strlen($share->get('owner')))
+                        || ($user != '-system-'
+                         && $hordeUser != $share->get('owner')
+                         && $hordeUser != $registry->getAuth())) {
                         continue 2;
                     }
                     $readOnly = !$share->hasPermission($hordeUser, Horde_Perms::EDIT);
@@ -1126,8 +1126,8 @@ class Turba_Application extends Horde_Registry_Application
                  * contact's history. */
                 $modified = $existing_contact->lastModification();
                 try {
-                    if (!empty($modified) &&
-                        $content->getAttribute('LAST-MODIFIED')->before($modified)) {
+                    if (!empty($modified)
+                        && $content->getAttribute('LAST-MODIFIED')->before($modified)) {
                         /* LAST-MODIFIED timestamp of existing entry is newer:
                          * don't replace it. */
                         continue;

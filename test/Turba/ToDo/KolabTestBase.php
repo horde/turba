@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Base for PHPUnit scenarios.
  *
@@ -23,6 +24,7 @@
  * @package  Kolab_Test
  * @author   Gunnar Wrobel <wrobel@pardus.de>
  * @license  http://www.horde.org/licenses/apache ASL
+ * @coversNothing
  */
 class Turba_KolabTestBase extends Turba_TestCase
 {
@@ -37,9 +39,9 @@ class Turba_KolabTestBase extends Turba_TestCase
      */
     public function runGiven(&$world, $action, $arguments)
     {
-        switch($action) {
-        default:
-            return parent::runGiven($world, $action, $arguments);
+        switch ($action) {
+            default:
+                return parent::runGiven($world, $action, $arguments);
         }
     }
 
@@ -54,9 +56,9 @@ class Turba_KolabTestBase extends Turba_TestCase
      */
     public function runWhen(&$world, $action, $arguments)
     {
-        switch($action) {
-        default:
-            return parent::runWhen($world, $action, $arguments);
+        switch ($action) {
+            default:
+                return parent::runWhen($world, $action, $arguments);
         }
     }
 
@@ -71,9 +73,9 @@ class Turba_KolabTestBase extends Turba_TestCase
      */
     public function runThen(&$world, $action, $arguments)
     {
-        switch($action) {
-        default:
-            return parent::runThen($world, $action, $arguments);
+        switch ($action) {
+            default:
+                return parent::runThen($world, $action, $arguments);
         }
     }
 
@@ -82,27 +84,21 @@ class Turba_KolabTestBase extends Turba_TestCase
      *
      * @return NULL
      */
-    public function prepareConfiguration()
-    {
-    }
+    public function prepareConfiguration() {}
 
     /**
      * Prepare the registry.
      *
      * @return NULL
      */
-    public function prepareRegistry()
-    {
-    }
+    public function prepareRegistry() {}
 
     /**
      * Prepare the notification setup.
      *
      * @return NULL
      */
-    public function prepareNotification()
-    {
-    }
+    public function prepareNotification() {}
 
     /**
      * Fix the read configuration.
@@ -125,10 +121,12 @@ class Turba_KolabTestBase extends Turba_TestCase
     {
         $world = &$this->prepareBasicSetup();
 
-        $this->assertTrue($world['auth']->authenticate('wrobel@example.org',
-                                                       array('password' => 'none')));
+        $this->assertTrue($world['auth']->authenticate(
+            'wrobel@example.org',
+            ['password' => 'none']
+        ));
 
-        $GLOBALS['registry']->pushApp('turba', array('check_perms' => false));
+        $GLOBALS['registry']->pushApp('turba', ['check_perms' => false]);
 
         // Turba base libraries.
         require_once TURBA_BASE . '/lib/Turba.php';
@@ -148,12 +146,12 @@ class Turba_KolabTestBase extends Turba_TestCase
         $GLOBALS['cfgSources'] = Turba::getConfigFromShares($cfgSources);
     }
 
-    function provideServerName()
+    public function provideServerName()
     {
         return 'localhost.localdomain';
     }
 
-    function provideHordeBase()
+    public function provideHordeBase()
     {
         require_once __DIR__ . '/../Application.php';
         return HORDE_BASE;

@@ -101,8 +101,8 @@ class Turba_Data_Ldif extends Horde_Data_Base
             foreach ($lines as $line) {
                 // [0] = key, [1] = delimiter, [2] = value
                 $res = preg_split('/(:[:<]?) */', $line, 2, PREG_SPLIT_DELIM_CAPTURE);
-                if ((count($res) == 3) &&
-                    in_array($res[0], $this->_mozillaAttr)) {
+                if ((count($res) == 3)
+                    && in_array($res[0], $this->_mozillaAttr)) {
                     $hash[$res[0]] = ($res[1] == '::')
                         ? base64_decode($res[2])
                         : $res[2];
@@ -293,8 +293,8 @@ class Turba_Data_Ldif extends Horde_Data_Base
             return false;
         }
         for ($i = 0; $i < strlen($str); ++$i) {
-            if (ord($str[$i]) > 127 || $str[$i] == null || $str[$i] == "\n" ||
-                $str[$i] == "\r") {
+            if (ord($str[$i]) > 127 || $str[$i] == null || $str[$i] == "\n"
+                || $str[$i] == "\r") {
                 return false;
             }
         }

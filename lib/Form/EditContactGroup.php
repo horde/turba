@@ -98,8 +98,8 @@ class Turba_Form_EditContactGroup extends Turba_Form_EditContact
             if ($this->getOpenSection()) {
                 $next_page->add('__formOpenSection', $this->getOpenSection());
             }
-        } elseif ($submitbutton == _("Next") &&
-                  $info['source'] . ':' . $info['key'] != $info['objectkeys'][count($info['objectkeys']) - 1]) {
+        } elseif ($submitbutton == _("Next")
+                  && $info['source'] . ':' . $info['key'] != $info['objectkeys'][count($info['objectkeys']) - 1]) {
             /* Next contact */
             [, $next_key] = explode(':', $info['objectkeys'][$objectkey + 1]);
             $next_page->add('key', $next_key);
