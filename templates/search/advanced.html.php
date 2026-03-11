@@ -31,7 +31,7 @@
 <?php if ($this->tag): ?>
 <tr>
   <td width="1%" class="nowrap rightAlign"><strong><label for="tags"><?php echo _("Tags") ?></label></strong></td>
-  <td class="leftAlign"><input type="text" size="30" id="tags" name="tags" value="<?php echo isset($this->criteria['tags']) ? $this->h($this->criteria['tags']) : '' ?>"/><span id="tags_loading_img" style="display:none;"><?php echo Horde_Themes_Image::tag('loading.gif', array('alt' => _("Loading...")))?></span></td>
+  <td class="leftAlign"><input type="text" size="30" id="tags" name="tags" value="<?php echo isset($this->criteria['tags']) ? $this->h($this->criteria['tags']) : '' ?>"/><span id="tags_loading_img" style="display:none;"><?php echo Horde_Themes_Image::tag('loading.gif', ['alt' => _("Loading...")])?></span></td>
 </tr>
 <?php endif; ?>
 </table>

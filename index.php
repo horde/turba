@@ -16,7 +16,7 @@ Horde_Registry::appInit('turba');
 
 switch ($registry->getView()) {
     case $registry::VIEW_SMARTMOBILE:
-        Horde::url('smartmobile.php')->redirect();
+        Horde::url('responsive', true)->redirect();
         break;
 
     default:
