@@ -138,7 +138,7 @@ class Turba
         Horde_Variables $vars,
         $source
     ) {
-        if (!strlen((string)$sortby = $vars->get('sortby'))) {
+        if (!strlen((string) $sortby = $vars->get('sortby'))) {
             return;
         }
 
@@ -203,8 +203,8 @@ class Turba
                     $source = array_splice($cols, 0, 1);
                     $columns[$source[0]] = [];
                     foreach ($cols as $col) {
-                        if ($col == '__tags' ||
-                            isset($GLOBALS['cfgSources'][$source[0]]['map'][$col])) {
+                        if ($col == '__tags'
+                            || isset($GLOBALS['cfgSources'][$source[0]]['map'][$col])) {
                             $columns[$source[0]][] = $col;
                         }
                     }
@@ -250,10 +250,10 @@ class Turba
             $namelist = explode(' ', $name);
             $name = $namelist[($nameindex = (count($namelist) - 1))];
 
-            while (!empty($name) &&
-                   (($nlength = Horde_String::length($name)) < 5) &&
-                   strspn($name[($nlength - 1)], '.:-') &&
-                   !empty($namelist[($nameindex - 1)])) {
+            while (!empty($name)
+                   && (($nlength = Horde_String::length($name)) < 5)
+                   && strspn($name[($nlength - 1)], '.:-')
+                   && !empty($namelist[($nameindex - 1)])) {
                 $name = $namelist[--$nameindex];
             }
         }
@@ -303,15 +303,15 @@ class Turba
         /* One field, we'll have to guess. */
         $name = $ob->getValue('name');
         $lastname = self::guessLastname($name);
-        if (($name_format == 'last_first') &&
-            !is_int(strpos($name, ',')) &&
-            (Horde_String::length($name) > Horde_String::length($lastname))) {
+        if (($name_format == 'last_first')
+            && !is_int(strpos($name, ','))
+            && (Horde_String::length($name) > Horde_String::length($lastname))) {
             return $lastname . ', ' . preg_replace('/\s+' . preg_quote($lastname, '/') . '/', '', $name);
         }
 
-        if (($name_format == 'first_last') &&
-            is_int(strpos($name, ',')) &&
-            (Horde_String::length($name) > Horde_String::length($lastname))) {
+        if (($name_format == 'first_last')
+            && is_int(strpos($name, ','))
+            && (Horde_String::length($name) > Horde_String::length($lastname))) {
             return preg_replace('/' . preg_quote($lastname, '/') . ',\s*/', '', $name) . ' ' . $lastname;
         }
 
@@ -481,8 +481,8 @@ class Turba
             }
             try {
                 $driver = $factory->createFromConfig($source, $sourceId);
-                if ($driver->hasPermission($permission) &&
-                    (empty($options['require_add']) || $driver->canAdd())) {
+                if ($driver->hasPermission($permission)
+                    && (empty($options['require_add']) || $driver->canAdd())) {
                     $out[$sourceId] = $source;
                 }
             } catch (Turba_Exception $e) {
@@ -563,8 +563,8 @@ class Turba
                 // We load vbooks last in case they're based on other shares.
                 $params['share'] = $share;
                 $vbooks[$name] = $params;
-            } elseif (!empty($params['source']) &&
-                      !empty($sources[$params['source']]['use_shares'])) {
+            } elseif (!empty($params['source'])
+                      && !empty($sources[$params['source']]['use_shares'])) {
                 if (empty($params['name'])) {
                     $params['name'] = $name;
                     $share->set('params', serialize($params));
@@ -601,9 +601,9 @@ class Turba
                 $newSources = array_merge($newSources, $sortedSources[$source]);
             }
 
-            if (!empty($conf['share']['auto_create']) &&
-                $auth_user &&
-                !$personal) {
+            if (!empty($conf['share']['auto_create'])
+                && $auth_user
+                && !$personal) {
                 // User's default share is missing.
                 try {
                     $driver = $injector
@@ -708,8 +708,8 @@ class Turba
         $owneronly = false,
         $permission = Horde_Perms::READ
     ) {
-        if (!$GLOBALS['session']->get('turba', 'has_share') ||
-            ($owneronly && !$GLOBALS['registry']->getAuth())) {
+        if (!$GLOBALS['session']->get('turba', 'has_share')
+            || ($owneronly && !$GLOBALS['registry']->getAuth())) {
             return [];
         }
 
@@ -811,9 +811,9 @@ class Turba
         $emailFields = [];
         foreach ($attributes as $field => $data) {
             if ($data['type'] == 'email') {
-                if (empty($source) || (!empty($source) &&
-                    in_array($field, array_keys($driver->map)) &&
-                    (!$searchable || ($searchable && in_array($field, $cfgSources[$source]['search']))))) {
+                if (empty($source) || (!empty($source)
+                    && in_array($field, array_keys($driver->map))
+                    && (!$searchable || ($searchable && in_array($field, $cfgSources[$source]['search']))))) {
 
                     $emailFields[] = $field;
                 }

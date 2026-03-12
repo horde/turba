@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2013-2017 Horde LLC (http://www.horde.org/)
  *
@@ -39,15 +40,15 @@ class TurbaUpgradeCategoriesToTags extends Horde_Db_Migration_Base
                     '/^Content_/',
                     $GLOBALS['registry']->get('fileroot', 'content') . '/lib/'
                 )
-        );
+            );
 
         if (!class_exists('Content_Tagger')) {
             throw new Horde_Exception('The Content_Tagger class could not be found. Make sure the Content application is installed.');
         }
 
         $type_mgr = $GLOBALS['injector']->getInstance('Content_Types_Manager');
-        $types = $type_mgr->ensureTypes(array('contact'));
-        $this->_type_ids = array('contact' => (int)$types[0]);
+        $types = $type_mgr->ensureTypes(['contact']);
+        $this->_type_ids = ['contact' => (int) $types[0]];
         $this->_tagger = $GLOBALS['injector']->getInstance('Content_Tagger');
         try {
             $this->_shares = $GLOBALS['injector']
@@ -75,8 +76,8 @@ class TurbaUpgradeCategoriesToTags extends Horde_Db_Migration_Base
                 if (strlen($owner)) {
                     $this->_tagger->tag(
                         $owner,
-                        array('object' => (string)$row['object_uid'],
-                              'type' => $this->_type_ids['contact']),
+                        ['object' => (string) $row['object_uid'],
+                            'type' => $this->_type_ids['contact']],
                         $row['object_category']
                     );
                 }
@@ -89,18 +90,19 @@ class TurbaUpgradeCategoriesToTags extends Horde_Db_Migration_Base
     public function down()
     {
         $this->_init();
-        $this->addColumn('turba_objects', 'object_category', 'string', array('limit' => 80));
+        $this->addColumn('turba_objects', 'object_category', 'string', ['limit' => 80]);
         $this->announce('Migrating contact tags to categories.');
         $sql = 'UPDATE turba_objects SET object_category = ? WHERE object_uid = ?';
         $rows = $this->select('SELECT object_uid FROM turba_objects');
         foreach ($rows as $row) {
             $tags = $this->_tagger->getTagsByObjects(
                 $row['object_uid'],
-                $this->_type_ids['contact']);
+                $this->_type_ids['contact']
+            );
             if (!count($tags) || !count($tags[$row['object_uid']])) {
                 continue;
             }
-            $this->update($sql, array(reset($tags[$row['object_uid']]), (string)$row['object_uid']));
+            $this->update($sql, [reset($tags[$row['object_uid']]), (string) $row['object_uid']]);
         }
         $this->announce('Contact tags successfully migrated.');
     }

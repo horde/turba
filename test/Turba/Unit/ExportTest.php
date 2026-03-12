@@ -1,10 +1,12 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @category   Horde
  * @package    Turba
  * @subpackage UnitTests
+ * @coversNothing
  */
 class Turba_Unit_ExportTest extends Turba_TestCase
 {
@@ -31,7 +33,7 @@ class Turba_Unit_ExportTest extends Turba_TestCase
                 ->setMethods(null)
                 ->getMock()
         );
-        $this->contact = array(
+        $this->contact = [
             'name' => 'Jan Schneiderö',
             'namePrefix' => 'Mr.',
             'firstname' => 'Jan',
@@ -64,9 +66,9 @@ class Turba_Unit_ExportTest extends Turba_TestCase
             'photo' => file_get_contents(__DIR__ . '/../fixtures/az.png'),
             'phototype' => 'image/png',
             '__tags' => 'Foo,Foo;Bar,Bar',
-        );
+        ];
         $this->driver = new Turba_Driver();
-        $this->driver->map = array_fill_keys(array_diff(array_keys($this->contact), array('__tags')), true);
+        $this->driver->map = array_fill_keys(array_diff(array_keys($this->contact), ['__tags']), true);
         $this->object = new Turba_Object($this->driver, $this->contact);
     }
 
@@ -75,7 +77,8 @@ class Turba_Unit_ExportTest extends Turba_TestCase
         $vcard = $this->driver->tovCard($this->object, '2.1');
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixtures/export_21.vcf',
-            $vcard->exportvCalendar());
+            $vcard->exportvCalendar()
+        );
     }
 
     public function testExportVcard30()
@@ -83,23 +86,25 @@ class Turba_Unit_ExportTest extends Turba_TestCase
         $vcard = $this->driver->tovCard($this->object, '3.0');
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixtures/export_30.vcf',
-            $vcard->exportvCalendar());
+            $vcard->exportvCalendar()
+        );
     }
 
     public function testExportBug9207()
     {
         $driver = clone $this->driver;
         $driver->alternativeName = 'company';
-        $driver->map['name'] = array(
-            'fields' => array('namePrefix', 'firstname', 'middlenames',
-                              'lastname', 'nameSuffix'),
-            'format' => '%s %s %s %s %s');
+        $driver->map['name'] = [
+            'fields' => ['namePrefix', 'firstname', 'middlenames',
+                'lastname', 'nameSuffix'],
+            'format' => '%s %s %s %s %s'];
         $contact = $this->contact;
         unset($contact['name']);
         $object = new Turba_Object($driver, $contact);
         $vcard = $this->driver->tovCard($object, '3.0');
         $this->assertStringEqualsFile(
             __DIR__ . '/../fixtures/bug_9207.vcf',
-            $vcard->exportvCalendar());
+            $vcard->exportvCalendar()
+        );
     }
 }

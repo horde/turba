@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author   Michael J. Rubinsky <mrubinsk@horde.org>
  * @category Horde
@@ -28,7 +29,7 @@ class TurbaUpgradeSqlhierarchical extends Horde_Db_Migration_Base
      */
     public function up()
     {
-        $this->addColumn('turba_shares', 'share_parents','text');
+        $this->addColumn('turba_shares', 'share_parents', 'text');
     }
 
     /**

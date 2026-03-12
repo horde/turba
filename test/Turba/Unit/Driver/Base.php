@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Driver test base.
  *
@@ -31,6 +32,7 @@ require_once __DIR__ . '/../../TestCase.php';
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
+ * @coversNothing
  */
 class Turba_Unit_Driver_Base extends Turba_TestCase
 {
@@ -39,17 +41,17 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
      *
      * @var Horde_Test_Setup
      */
-    static $setup;
+    public static $setup;
 
     /**
      * @static Turba_Driver
      */
-    static $driver;
+    public static $driver;
 
     /**
      * List of tasks added during the test.
      */
-    private $_added = array();
+    private $_added = [];
 
     public static function setUpBeforeClass()
     {
@@ -94,7 +96,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
 
     public function testAdd()
     {
-        $id = $this->_add(array('lastname' => 'TEST'));
+        $id = $this->_add(['lastname' => 'TEST']);
         $contact = self::$driver->getObject($id);
         $this->assertEquals('TEST', $contact->attributes['lastname']);
     }
@@ -103,7 +105,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
     {
         $this->assertInstanceOf(
             'Turba_List',
-            self::$driver->search(array(), null, 'AND')
+            self::$driver->search([], null, 'AND')
         );
     }
 

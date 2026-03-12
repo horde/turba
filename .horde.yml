@@ -36,7 +36,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 5.0.0-alpha11
+  release: 5.0.0-alpha12
   api: 5.0.0alpha1
 state:
   release: alpha
@@ -98,3 +98,4 @@ dependencies:
       horde/kolab_storage: ^3
       horde/ldap: ^3
       horde/openxchange: ^2
+vendor: horde

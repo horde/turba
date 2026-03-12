@@ -1,10 +1,12 @@
 <?php
+
 /**
  * @author     Jan Schneider <jan@horde.org>
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @category   Horde
  * @package    Turba
  * @subpackage UnitTests
+ * @coversNothing
  */
 class Turba_Unit_LdifTest extends Turba_TestCase
 {
@@ -28,24 +30,24 @@ class Turba_Unit_LdifTest extends Turba_TestCase
 
     public function exportFiles()
     {
-        return array(
-            array(
-                array(array(
+        return [
+            [
+                [[
                     'firstname' => 'John',
                     'lastname' => 'Püblic',
                     'name' => 'John Püblic',
-                    'email' => 'john@example.com'
-                )),
+                    'email' => 'john@example.com',
+                ]],
                 __DIR__ . '/../fixtures/bug_6518.ldif',
-            ),
-            array(
-                array(
-                    array(
+            ],
+            [
+                [
+                    [
                         'firstname' => 'John',
                         'lastname' => 'Smith',
                         'name' => 'John Smith',
-                        'email' => 'js23@school.edu'),
-                    array(
+                        'email' => 'js23@school.edu'],
+                    [
                         'firstname' => 'Charles',
                         'lastname' => 'Brown',
                         'name' => 'Charlie Brown',
@@ -72,24 +74,24 @@ class Turba_Unit_LdifTest extends Turba_TestCase
                         'freebusyUrl' => 'http://www.school.edu/~chuck/fb.ics',
                         'notes' => 'hi mom
 ',
-                        'email' => 'brown@school.edu'
-                    ),
-                ),
+                        'email' => 'brown@school.edu',
+                    ],
+                ],
                 __DIR__ . '/../fixtures/export.ldif',
-            ),
-        );
+            ],
+        ];
     }
 
     public function importFiles()
     {
-        $result = array(
-            array(
+        $result = [
+            [
                 'givenName' => 'John',
                 'sn' => 'Smith',
                 'cn' => 'John Smith',
                 'mail' => 'js23@school.edu',
-            ),
-            array(
+            ],
+            [
                 'givenName' => 'Charles',
                 'sn' => 'Brown',
                 'cn' => 'Charlie Brown',
@@ -118,18 +120,18 @@ class Turba_Unit_LdifTest extends Turba_TestCase
                 'description' => 'hi mom
 ',
                 'mozillaSecondEmail' => 'brown@gmail.com',
-            ),
-        );
+            ],
+        ];
 
-        return array(
-            array(
+        return [
+            [
                 $result,
                 __DIR__ . '/../fixtures/import.ldif',
-            ),
-            array(
+            ],
+            [
                 $result,
                 __DIR__ . '/../fixtures/importCRLF.ldif',
-            ),
-        );
+            ],
+        ];
     }
 }

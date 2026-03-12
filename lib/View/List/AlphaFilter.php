@@ -25,8 +25,8 @@ class Turba_View_List_AlphaFilter
     public function skip($ob)
     {
         $name = Turba::formatName($ob, $this->_format);
-        if ($this->_alpha != '*' &&
-            Horde_String::lower(substr($name, 0, 1)) != $this->_alpha) {
+        if ($this->_alpha != '*'
+            && Horde_String::lower(substr($name, 0, 1)) != $this->_alpha) {
             return true;
         }
 

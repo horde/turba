@@ -89,8 +89,8 @@ class Turba_Driver_Group extends Turba_Driver
                         if (isset($contact[$val['field']])) {
                             switch ($val['op']) {
                                 case 'LIKE':
-                                    if (empty($val['test']) ||
-                                        stristr($contact[$val['field']], $val['test']) !== false) {
+                                    if (empty($val['test'])
+                                        || stristr($contact[$val['field']], $val['test']) !== false) {
                                         $found = true;
                                         break 3;
                                     }

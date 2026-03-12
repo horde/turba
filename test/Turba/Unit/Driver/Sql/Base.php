@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test base for the SQL driver.
  *
@@ -34,7 +35,7 @@ require_once __DIR__ . '/../Base.php';
  */
 class Turba_Unit_Driver_Sql_Base extends Turba_Unit_Driver_Base
 {
-    static $callback;
+    public static $callback;
 
     public static function setUpBeforeClass()
     {
@@ -45,26 +46,26 @@ class Turba_Unit_Driver_Sql_Base extends Turba_Unit_Driver_Base
 
     protected static function getDb()
     {
-        call_user_func_array(self::$callback, array());
+        call_user_func_array(self::$callback, []);
     }
 
     public function testDuplicateDetectionFromAsWithNoEmail()
     {
-        $eas_obj = new Horde_ActiveSync_Message_Contact(array(
+        $eas_obj = new Horde_ActiveSync_Message_Contact([
             'device' => new Horde_ActiveSync_Device(
-                new Horde_ActiveSync_State_Sql(array(
+                new Horde_ActiveSync_State_Sql([
                     'db' => self::$setup->getInjector()
-                        ->getInstance('Horde_Db_Adapter')
-                ))
-            )
-        ));
+                        ->getInstance('Horde_Db_Adapter'),
+                ])
+            ),
+        ]);
         $eas_obj->firstname = 'Firstname';
         $eas_obj->fileas = 'Firstname';
         $eas_obj->homephonenumber = '+55555555';
         $hash = self::$driver->fromASContact($eas_obj);
         self::$driver->add($hash);
         unset($hash['phototype']);
-        $result = self::$driver->search($hash, array());
+        $result = self::$driver->search($hash, []);
         $this->assertEquals(1, count($result));
     }
 }

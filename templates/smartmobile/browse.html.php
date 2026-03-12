@@ -1,5 +1,5 @@
 <div id="browse" data-role="page">
- <?php echo $this->smartmobileHeader(array('logout' => true, 'portal' => true, 'title' => _("Browse"))) ?>
+ <?php echo $this->smartmobileHeader(['logout' => true, 'portal' => true, 'title' => _("Browse")]) ?>
 
  <div data-role="content">
 <?php if (empty($this->list)): ?>

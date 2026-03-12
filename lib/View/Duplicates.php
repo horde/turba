@@ -75,9 +75,9 @@ class Turba_View_Duplicates
         $view = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/search/duplicate']);
         new Horde_View_Helper_Text($view);
 
-        $hasDuplicate = $this->_type && $this->_duplicate &&
-            isset($this->_duplicates[$this->_type]) &&
-            isset($this->_duplicates[$this->_type][$this->_duplicate]);
+        $hasDuplicate = $this->_type && $this->_duplicate
+            && isset($this->_duplicates[$this->_type])
+            && isset($this->_duplicates[$this->_type][$this->_duplicate]);
         if ($hasDuplicate) {
             $vars = new Horde_Variables();
             $view->type = $GLOBALS['attributes'][$this->_type]['label'];

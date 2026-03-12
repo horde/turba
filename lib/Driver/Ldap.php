@@ -89,14 +89,14 @@ class Turba_Driver_Ldap extends Turba_Driver
         }
 
         /* Start TLS if we're using it. */
-        if (!empty($this->_params['tls']) &&
-            !@ldap_start_tls($this->_ds)) {
+        if (!empty($this->_params['tls'])
+            && !@ldap_start_tls($this->_ds)) {
             throw new Turba_Exception(sprintf(_("STARTTLS failed: (%s) %s"), ldap_errno($this->_ds), ldap_error($this->_ds)));
         }
 
         /* Bind to the server. */
-        if (isset($this->_params['bind_dn']) &&
-            isset($this->_params['bind_password'])) {
+        if (isset($this->_params['bind_dn'])
+            && isset($this->_params['bind_password'])) {
             $error = !@ldap_bind($this->_ds, $this->_params['bind_dn'], $this->_params['bind_password']);
         } else {
             $error = !(@ldap_bind($this->_ds));
@@ -121,9 +121,9 @@ class Turba_Driver_Ldap extends Turba_Driver
         if (is_array($this->_params['dn'])) {
             foreach ($this->_params['dn'] as $param) {
                 foreach ($this->map as $turbaname => $ldapname) {
-                    if ((is_array($ldapname)) &&
-                        (isset($ldapname['attribute'])) &&
-                        ($ldapname['attribute'] == $param)) {
+                    if ((is_array($ldapname))
+                        && (isset($ldapname['attribute']))
+                        && ($ldapname['attribute'] == $param)) {
                         $fieldarray = [];
                         foreach ($ldapname['fields'] as $mapfield) {
                             $fieldarray[] = $hash[$mapfield]
@@ -395,9 +395,9 @@ class Turba_Driver_Ldap extends Turba_Driver
         $oldres = @ldap_read($this->_ds, Horde_String::convertCharset($object_id, 'UTF-8', $this->_params['charset']), $filter, array_merge(array_keys($attributes), ['objectclass']));
         $info = ldap_get_attributes($this->_ds, ldap_first_entry($this->_ds, $oldres));
 
-        if ($this->_params['version'] == 3 &&
-            Horde_String::lower(str_replace([',', '"'], ['\\2C', ''], $this->_makeKey($attributes))) !=
-            Horde_String::lower(str_replace(',', '\\2C', $object_id))) {
+        if ($this->_params['version'] == 3
+            && Horde_String::lower(str_replace([',', '"'], ['\\2C', ''], $this->_makeKey($attributes)))
+            != Horde_String::lower(str_replace(',', '\\2C', $object_id))) {
             /* Need to rename the object. */
             $newrdn = $this->_makeRDN($attributes);
             if ($newrdn == '') {
@@ -427,17 +427,17 @@ class Turba_Driver_Ldap extends Turba_Driver
             /* Check to see if the old value and the new value are
              * different and that the new value is empty. If so then
              * we use ldap_mod_del to delete the attribute. */
-            if (isset($attributes[$key]) &&
-                ($var[0] != $attributes[$key]) &&
-                $attributes[$key] == '') {
+            if (isset($attributes[$key])
+                && ($var[0] != $attributes[$key])
+                && $attributes[$key] == '') {
 
                 $oldval[$key] = $var[0];
                 if (!@ldap_mod_del($this->_ds, Horde_String::convertCharset($object_id, 'UTF-8', $this->_params['charset']), $oldval)) {
                     throw new Turba_Exception(sprintf(_("Modify failed: (%s) %s"), ldap_errno($this->_ds), ldap_error($this->_ds)));
                 }
                 unset($attributes[$key]);
-            } elseif (isset($attributes[$key]) &&
-                      $var[0] == $attributes[$key]) {
+            } elseif (isset($attributes[$key])
+                      && $var[0] == $attributes[$key]) {
                 /* Drop unchanged elements from list of attributes to write. */
                 unset($attributes[$key]);
             }
@@ -611,8 +611,8 @@ class Turba_Driver_Ldap extends Turba_Driver
                             /* Otherwise rely on the attribute mapping
                              * in attributes.php. */
                             $attr = array_search($field_l, $this->map);
-                            $postal = (!empty($attr) && !empty($GLOBALS['attributes'][$attr]) &&
-                                       $GLOBALS['attributes'][$attr]['type'] == 'address');
+                            $postal = (!empty($attr) && !empty($GLOBALS['attributes'][$attr])
+                                       && $GLOBALS['attributes'][$attr]['type'] == 'address');
                         }
                         if ($postal) {
                             $result[$field] = str_replace('$', "\r\n", $result[$field]);
@@ -669,8 +669,8 @@ class Turba_Driver_Ldap extends Turba_Driver
                 /* Otherwise rely on the attribute mapping in
                  * attributes.php. */
                 $attr = array_search($key, $this->map);
-                $postal = (!empty($attr) && !empty($val) && !empty($GLOBALS['attributes'][$attr]) &&
-                           $GLOBALS['attributes'][$attr]['type'] == 'address');
+                $postal = (!empty($attr) && !empty($val) && !empty($GLOBALS['attributes'][$attr])
+                           && $GLOBALS['attributes'][$attr]['type'] == 'address');
             }
             if ($postal) {
                 /* Correctly store postal addresses. */
@@ -741,9 +741,9 @@ class Turba_Driver_Ldap extends Turba_Driver
             15 => 1, /* Directory string. */
         ];
 
-        return (preg_match('/^(.*)\.(\d+)\{\d+\}$/', $syntax, $matches) &&
-                ($matches[1] == "1.3.6.1.4.1.1466.115.121.1") &&
-                isset($okSyntax[$matches[2]]));
+        return (preg_match('/^(.*)\.(\d+)\{\d+\}$/', $syntax, $matches)
+                && ($matches[1] == "1.3.6.1.4.1.1466.115.121.1")
+                && isset($okSyntax[$matches[2]]));
     }
 
     /**

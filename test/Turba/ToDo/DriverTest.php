@@ -8,26 +8,27 @@ require_once __DIR__ . '/TestBase.php';
  * @author  Jason M. Felice <jason.m.felice@gmail.com>
  * @package Turba
  * @subpackage UnitTests
+ * @coversNothing
  */
-class Turba_ToDo_DriverTest extends Turba_TestBase {
-
-    function setUp()
+class Turba_ToDo_DriverTest extends Turba_TestBase
+{
+    public function setUp()
     {
         $this->markTestIncomplete('Convert to use Horde_Test.');
         parent::setUp();
         $this->setUpDatabase();
     }
 
-    function test_search_results_should_be_sorted_according_to_supplied_sort_order()
+    public function test_search_results_should_be_sorted_according_to_supplied_sort_order()
     {
-        $this->assertSortsList(array($this, 'doSearch'));
+        $this->assertSortsList([$this, 'doSearch']);
     }
 
-    function doSearch($order)
+    public function doSearch($order)
     {
         $driver = $this->getDriver();
         $this->fakeAuth();
-        return $driver->search(array('__type' => 'Object'), $order, 'AND');
+        return $driver->search(['__type' => 'Object'], $order, 'AND');
     }
 
 }

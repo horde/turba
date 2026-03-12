@@ -11,8 +11,10 @@
 <select id="turbaSearchCriteria" name="criteria">
   <option value=""><?php echo _("All") ?></option>
 <?php foreach ($this->addressBooks[$this->source]['search'] as $field): ?>
-  <option<?php if (count($this->criteria) == 1 && key($this->criteria) == $field) echo ' selected="selected"' ?> value="<?php echo $field ?>"><?php echo $this->h($this->attributes[$field]['label'])
- ?></option>
+  <option<?php if (count($this->criteria) == 1 && key($this->criteria) == $field) {
+      echo ' selected="selected"';
+  } ?> value="<?php echo $field ?>"><?php echo $this->h($this->attributes[$field]['label'])
+    ?></option>
 <?php endforeach ?>
 </select>
 

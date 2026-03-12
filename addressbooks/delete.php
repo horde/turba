@@ -31,8 +31,8 @@ try {
     $notification->push($e);
     Horde::url('', true)->redirect();
 }
-if (!$GLOBALS['registry']->getAuth() ||
-    $addressbook->get('owner') != $GLOBALS['registry']->getAuth()) {
+if (!$GLOBALS['registry']->getAuth()
+    || $addressbook->get('owner') != $GLOBALS['registry']->getAuth()) {
     $notification->push(_("You are not allowed to delete this addressbook."), 'horde.error');
     Horde::url('', true)->redirect();
 }

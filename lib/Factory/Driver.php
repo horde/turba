@@ -127,14 +127,14 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
             switch ($class) {
                 case 'Turba_Driver_Sql':
                     try {
-                        $srcConfig['params']['db'] =
-                            empty($srcConfig['params']['sql'])
+                        $srcConfig['params']['db']
+                            = empty($srcConfig['params']['sql'])
                                 ? $this->_injector->getInstance('Horde_Db_Adapter')
                                 : $this->_injector->getInstance(
                                     'Horde_Core_Factory_Db'
                                 )->create('turba', $srcConfig['params']['sql']);
-                        $srcConfig['params']['charset'] =
-                            $srcConfig['params']['sql']['charset']
+                        $srcConfig['params']['charset']
+                            = $srcConfig['params']['sql']['charset']
                                 ?? 'UTF-8';
                     } catch (Horde_Db_Exception $e) {
                         throw new Turba_Exception(
@@ -144,8 +144,8 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
                     break;
 
                 case 'Turba_Driver_Kolab':
-                    $srcConfig['params']['storage'] =
-                        $this->_injector->getInstance('Horde_Kolab_Storage');
+                    $srcConfig['params']['storage']
+                        = $this->_injector->getInstance('Horde_Kolab_Storage');
                     break;
 
                 case 'Turba_Driver_Vbook':

@@ -178,8 +178,8 @@ class Turba_Driver_Imsp extends Turba_Driver
                 $temp['__owner'] = $GLOBALS['registry']->getAuth();
             }
 
-            if ((isset($temp[$this->_groupField])) &&
-                ($temp[$this->_groupField] == $this->_groupValue)) {
+            if ((isset($temp[$this->_groupField]))
+                && ($temp[$this->_groupField] == $this->_groupValue)) {
                 if ($this->_noGroups) {
                     continue;
                 }
@@ -187,8 +187,8 @@ class Turba_Driver_Imsp extends Turba_Driver
                     $IMSPGroups[$ids[$i]] = $temp;
                 }
                 // move group ids to end of list
-                if ($idCount > count($IMSPGroups) &&
-                    $idCount - count($IMSPGroups) > $i) {
+                if ($idCount > count($IMSPGroups)
+                    && $idCount - count($IMSPGroups) > $i) {
                     $ids[] = $ids[$i];
                     unset($ids[$i]);
                     $ids = array_values($ids);
@@ -200,16 +200,16 @@ class Turba_Driver_Imsp extends Turba_Driver
             // Get the group members that might have been added from other
             // IMSP applications, but only if we need more information than
             // the group name
-            if ($isIMSPGroup &&
-                array_search('__members', $fields) !== false) {
+            if ($isIMSPGroup
+                && array_search('__members', $fields) !== false) {
                 if (isset($temp['email'])) {
                     $emailList = $this->_getGroupEmails($temp['email']);
                     $count = count($emailList);
                     for ($j = 0; $j < $count; ++$j) {
                         $needMember = true;
                         foreach ($results as $curResult) {
-                            if (!empty($curResult['email']) &&
-                                strtolower($emailList[$j]) == strtolower(trim($curResult['email']))) {
+                            if (!empty($curResult['email'])
+                                && strtolower($emailList[$j]) == strtolower(trim($curResult['email']))) {
                                 $members[] = $curResult['name'];
                                 $needMember = false;
                             }

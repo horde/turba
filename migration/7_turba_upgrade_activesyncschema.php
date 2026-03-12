@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author   Michael J. Rubinsky <mrubinsk@horde.org>
  * @category Horde
@@ -32,46 +33,46 @@ class TurbaUpgradeActiveSyncSchema extends Horde_Db_Migration_Base
         $cols = array_keys($t->getColumns());
 
         if (!in_array('object_homephone2', $cols)) {
-            $this->addColumn('turba_objects', 'object_homephone2', 'string', array('limit' => 25));
+            $this->addColumn('turba_objects', 'object_homephone2', 'string', ['limit' => 25]);
         }
         if (!in_array('object_carphone', $cols)) {
-            $this->addColumn('turba_objects', 'object_carphone', 'string', array('limit' => 25));
+            $this->addColumn('turba_objects', 'object_carphone', 'string', ['limit' => 25]);
         }
         if (!in_array('object_workphone2', $cols)) {
-            $this->addColumn('turba_objects', 'object_workphone2', 'string', array('limit' => 25));
+            $this->addColumn('turba_objects', 'object_workphone2', 'string', ['limit' => 25]);
         }
         if (!in_array('object_radiophone', $cols)) {
-            $this->addColumn('turba_objects', 'object_radiophone', 'string', array('limit' => 25));
+            $this->addColumn('turba_objects', 'object_radiophone', 'string', ['limit' => 25]);
         }
         if (!in_array('object_companyphone', $cols)) {
-            $this->addColumn('turba_objects', 'object_companyphone', 'string', array('limit' => 25));
+            $this->addColumn('turba_objects', 'object_companyphone', 'string', ['limit' => 25]);
         }
         if (!in_array('object_otherstreet', $cols)) {
-            $this->addColumn('turba_objects', 'object_otherstreet', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_otherstreet', 'string', ['limit' => 255]);
         }
         if (!in_array('object_otherpob', $cols)) {
-            $this->addColumn('turba_objects', 'object_otherpob', 'string', array('limit' => 10));
+            $this->addColumn('turba_objects', 'object_otherpob', 'string', ['limit' => 10]);
         }
         if (!in_array('object_othercity', $cols)) {
-            $this->addColumn('turba_objects', 'object_othercity', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_othercity', 'string', ['limit' => 255]);
         }
         if (!in_array('object_otherprovince', $cols)) {
-            $this->addColumn('turba_objects', 'object_otherprovince', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_otherprovince', 'string', ['limit' => 255]);
         }
         if (!in_array('object_otherpostalcode', $cols)) {
-            $this->addColumn('turba_objects', 'object_otherpostalcode', 'string', array('limit' => 10));
+            $this->addColumn('turba_objects', 'object_otherpostalcode', 'string', ['limit' => 10]);
         }
         if (!in_array('object_othercountry', $cols)) {
-            $this->addColumn('turba_objects', 'object_othercountry', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_othercountry', 'string', ['limit' => 255]);
         }
         if (!in_array('object_yomifirstname', $cols)) {
-            $this->addColumn('turba_objects', 'object_yomifirstname', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_yomifirstname', 'string', ['limit' => 255]);
         }
         if (!in_array('object_yomilastname', $cols)) {
-            $this->addColumn('turba_objects', 'object_yomilastname', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_yomilastname', 'string', ['limit' => 255]);
         }
         if (!in_array('object_manager', $cols)) {
-            $this->addColumn('turba_objects', 'object_manager', 'string', array('limit' => 255));
+            $this->addColumn('turba_objects', 'object_manager', 'string', ['limit' => 255]);
         }
     }
 

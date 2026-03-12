@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Test the core Turba class with a SQL backend.
  *

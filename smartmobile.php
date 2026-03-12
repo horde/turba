@@ -17,13 +17,6 @@
 require_once __DIR__ . '/lib/Application.php';
 Horde_Registry::appInit('turba');
 
-$ob = new Turba_Smartmobile($injector->getInstance('Horde_Variables'));
+// Redirect to responsive UI
+Horde::url('responsive', true)->redirect();
 
-$page_output->header([
-    'title' => _("Mobile Addressbook"),
-    'view' => $registry::VIEW_SMARTMOBILE,
-]);
-
-$ob->render();
-
-$page_output->footer();

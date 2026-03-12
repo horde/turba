@@ -71,8 +71,8 @@ class Turba_Driver_Sql extends Turba_Driver
         $test = $this->getContactOwner();
         if (!isset($this->_countCache[$test])) {
             /* Build up the full query. */
-            $query = 'SELECT COUNT(*) FROM ' . $this->_params['table'] .
-                     ' WHERE ' . $this->toDriver('__owner') . ' = ?';
+            $query = 'SELECT COUNT(*) FROM ' . $this->_params['table']
+                     . ' WHERE ' . $this->toDriver('__owner') . ' = ?';
             $values = [$test];
 
             /* Run query. */
@@ -278,11 +278,11 @@ class Turba_Driver_Sql extends Turba_Driver
         $owner = $this->getContactOwner();
         $fields = [];
         if (is_array($this->map['name'])) {
-            if (in_array('lastname', $this->map['name']['fields']) &&
-                isset($this->map['lastname'])) {
+            if (in_array('lastname', $this->map['name']['fields'])
+                && isset($this->map['lastname'])) {
                 $field = [$this->map['lastname']];
-                if (in_array('firstname', $this->map['name']['fields']) &&
-                    isset($this->map['firstname'])) {
+                if (in_array('firstname', $this->map['name']['fields'])
+                    && isset($this->map['firstname'])) {
                     $field[] = $this->map['firstname'];
                 }
                 $fields[] = $field;
@@ -488,8 +488,8 @@ class Turba_Driver_Sql extends Turba_Driver
      */
     protected function _delete($object_key, $object_id)
     {
-        $query = 'DELETE FROM ' . $this->_params['table'] .
-                 ' WHERE ' . $object_key . ' = ?';
+        $query = 'DELETE FROM ' . $this->_params['table']
+                 . ' WHERE ' . $object_key . ' = ?';
         $values = [$object_id];
 
         try {

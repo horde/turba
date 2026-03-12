@@ -120,8 +120,8 @@ class Turba_Driver_Favourites extends Turba_Driver
             case '=':
                 return (string) $contact[$val['field']] == (string) $val['test'];
             case 'LIKE':
-                return empty($val['test']) ||
-                    stristr($contact[$val['field']], $val['test']) !== false;
+                return empty($val['test'])
+                    || stristr($contact[$val['field']], $val['test']) !== false;
         }
         return false;
     }
@@ -180,9 +180,9 @@ class Turba_Driver_Favourites extends Turba_Driver
         try {
             $addresses = $registry->call('contacts/favouriteRecipients', [$this->_params['limit']]);
         } catch (Horde_Exception $e) {
-            if ($e->getCode() == Horde_Registry::AUTH_FAILURE ||
-                $e->getCode() == Horde_Registry::NOT_ACTIVE ||
-                $e->getCode() == Horde_Registry::PERMISSION_DENIED) {
+            if ($e->getCode() == Horde_Registry::AUTH_FAILURE
+                || $e->getCode() == Horde_Registry::NOT_ACTIVE
+                || $e->getCode() == Horde_Registry::PERMISSION_DENIED) {
                 return [];
             }
             throw new Turba_Exception($e);

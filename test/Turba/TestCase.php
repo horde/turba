@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Basic Turba test case.
  *
@@ -28,6 +29,7 @@ require __DIR__ . '/Stub/Hooks.php';
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
+ * @coversNothing
  */
 class Turba_TestCase extends PHPUnit_Framework_TestCase
 {
@@ -39,25 +41,25 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
     protected static function createBasicTurbaSetup(Horde_Test_Setup $setup)
     {
         $setup->setup(
-            array(
-                '_PARAMS' => array(
+            [
+                '_PARAMS' => [
                     'user' => 'test@example.com',
-                    'app' => 'turba'
-                ),
+                    'app' => 'turba',
+                ],
                 'Horde_Cache' => 'Cache',
                 'Horde_Group' => 'Group',
                 'Horde_History' => 'History',
                 'Horde_Perms' => 'Perms',
                 'Horde_Prefs' => 'Prefs',
                 'Horde_Registry' => 'Registry',
-            )
+            ]
         );
         $setup->makeGlobal(
-            array(
+            [
                 'prefs' => 'Horde_Prefs',
                 'registry' => 'Horde_Registry',
                 'injector' => 'Horde_Injector',
-            )
+            ]
         );
         $GLOBALS['session'] = new Horde_Session();
         $GLOBALS['conf']['prefs']['driver'] = 'Null';
@@ -78,17 +80,17 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
     protected static function createSqlPdoSqlite(Horde_Test_Setup $setup)
     {
         $setup->setup(
-            array(
-                'Horde_Db_Adapter' => array(
+            [
+                'Horde_Db_Adapter' => [
                     'factory' => 'Db',
-                    'params' => array(
-                        'migrations' => array(
+                    'params' => [
+                        'migrations' => [
                             'migrationsPath' => __DIR__ . '/../../migration',
-                            'schemaTableName' => 'turba_test_schema'
-                        )
-                    )
-                ),
-            )
+                            'schemaTableName' => 'turba_test_schema',
+                        ],
+                    ],
+                ],
+            ]
         );
     }
 
@@ -101,9 +103,9 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             )
         );
         $setup->setup(
-            array(
+            [
                 'Turba_Shares' => 'Share',
-            )
+            ]
         );
         $GLOBALS['cfgSources']['test']['type'] = 'Sql';
         $GLOBALS['cfgSources']['test']['title'] = 'SQL';
@@ -113,18 +115,18 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
     protected static function createKolabShares(Horde_Test_Setup $setup)
     {
         $setup->setup(
-            array(
-                'Horde_Kolab_Storage' => array(
+            [
+                'Horde_Kolab_Storage' => [
                     'factory' => 'KolabStorage',
-                    'params' => array(
+                    'params' => [
                         'imapuser' => 'test',
-                    )
-                ),
-                'Turba_Shares' => array(
+                    ],
+                ],
+                'Turba_Shares' => [
                     'factory' => 'Share',
                     'method' => 'Kolab',
-                ),
-            )
+                ],
+            ]
         );
         $setup->getInjector()->setInstance(
             'Horde_Core_Factory_Share',
@@ -154,7 +156,7 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
     protected static function createKolabDriverWithShares($setup)
     {
         self::createKolabShares($setup);
-        list($share, $other_share) = self::_createDefaultShares();
+        [$share, $other_share] = self::_createDefaultShares();
 
         $GLOBALS['cfgSources'][$share->getName()]['type'] = 'Kolab';
         $GLOBALS['cfgSources'][$share->getName()]['title'] = $share->get('name');
@@ -166,7 +168,7 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
     protected static function createSqlDriverWithShares($setup)
     {
         self::createSqlShares($setup);
-        list($share, $other_share) = self::_createDefaultShares();
+        [$share, $other_share] = self::_createDefaultShares();
 
         $GLOBALS['cfgSources'][$share->getName()]['type'] = 'Sql';
         $GLOBALS['cfgSources'][$share->getName()]['title'] = $share->get('name');
@@ -179,19 +181,23 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
     protected static function _createDefaultShares()
     {
         $share = self::_createShare(
-            'Address book of Tester', 'test@example.com'
+            'Address book of Tester',
+            'test@example.com'
         );
         $other_share = self::_createShare(
-            'Other address book of Tester', 'test@example.com'
+            'Other address book of Tester',
+            'test@example.com'
         );
-        return array($share, $other_share);
+        return [$share, $other_share];
     }
 
     private static function _createShare($name, $owner)
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         $share = $turba_shares->newShare(
-            $owner, strval(new Horde_Support_Randomid()), $name
+            $owner,
+            strval(new Horde_Support_Randomid()),
+            $name
         );
         $turba_shares->addShare($share);
         return $share;
@@ -199,32 +205,32 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
 
     private static function _getKolabMap()
     {
-        return array(
+        return [
             '__key' => 'uid',
             '__uid' => 'uid',
             '__type' => '__type',
             '__members' => '__members',
             /* Personal */
-            'name' => array(
-                'fields' => array('firstname', 'middlenames', 'lastname'),
+            'name' => [
+                'fields' => ['firstname', 'middlenames', 'lastname'],
                 'format' => '%s %s %s',
-                'parse' => array(
-                    array(
-                        'fields' => array(
-                            'firstname', 'middlenames', 'lastname'
-                        ),
-                        'format' => '%s %s %s'
-                    ),
-                    array(
-                        'fields' => array('lastname', 'firstname'),
-                        'format' => '%s, %s'
-                    ),
-                    array(
-                        'fields' => array('firstname', 'lastname'),
-                        'format' => '%s %s'
-                    ),
-                )
-            ),
+                'parse' => [
+                    [
+                        'fields' => [
+                            'firstname', 'middlenames', 'lastname',
+                        ],
+                        'format' => '%s %s %s',
+                    ],
+                    [
+                        'fields' => ['lastname', 'firstname'],
+                        'format' => '%s, %s',
+                    ],
+                    [
+                        'fields' => ['firstname', 'lastname'],
+                        'format' => '%s %s',
+                    ],
+                ],
+            ],
             'firstname'         => 'given-name',
             'lastname'          => 'last-name',
             'middlenames'       => 'middle-names',
@@ -275,12 +281,12 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             /* Invisible */
             'email'             => 'email',
             'pgpPublicKey'      => 'pgp-publickey',
-        );
+        ];
     }
 
     private static function _getSqlMap()
     {
-        return array(
+        return [
             '__key' => 'object_id',
             '__owner' => 'owner_id',
             '__type' => 'object_type',
@@ -291,16 +297,16 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             'middlenames' => 'object_middlenames',
             'namePrefix' => 'object_nameprefix',
             'nameSuffix' => 'object_namesuffix',
-            'name' => array('fields' => array('namePrefix', 'firstname',
-                                              'middlenames', 'lastname',
-                                              'nameSuffix'),
-                            'format' => '%s %s %s %s %s',
-                            'parse' => array(
-                                array('fields' => array('firstname', 'middlenames',
-                                                        'lastname'),
-                                      'format' => '%s %s %s'),
-                                array('fields' => array('firstname', 'lastname'),
-                                      'format' => '%s %s'))),
+            'name' => ['fields' => ['namePrefix', 'firstname',
+                'middlenames', 'lastname',
+                'nameSuffix'],
+                'format' => '%s %s %s %s %s',
+                'parse' => [
+                    ['fields' => ['firstname', 'middlenames',
+                        'lastname'],
+                        'format' => '%s %s %s'],
+                    ['fields' => ['firstname', 'lastname'],
+                        'format' => '%s %s']]],
             // This is a shorter version of a "name" composite field which only
             // consists of the first name and last name.
             // 'name' => array('fields' => array('firstname', 'lastname'),
@@ -317,20 +323,20 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             'homeProvince' => 'object_homeprovince',
             'homePostalCode' => 'object_homepostalcode',
             'homeCountry' => 'object_homecountry',
-            'homeAddress' => array('fields' => array('homeStreet', 'homeCity',
-                                                     'homeProvince',
-                                                     'homePostalCode'),
-                                   'format' => "%s \n %s, %s  %s"),
+            'homeAddress' => ['fields' => ['homeStreet', 'homeCity',
+                'homeProvince',
+                'homePostalCode'],
+                'format' => "%s \n %s, %s  %s"],
             'workStreet' => 'object_workstreet',
             'workPOBox' => 'object_workpob',
             'workCity' => 'object_workcity',
             'workProvince' => 'object_workprovince',
             'workPostalCode' => 'object_workpostalcode',
             'workCountry' => 'object_workcountry',
-            'workAddress' => array('fields' => array('workStreet', 'workCity',
-                                                     'workProvince',
-                                                     'workPostalCode'),
-                                   'format' => "%s \n %s, %s  %s"),
+            'workAddress' => ['fields' => ['workStreet', 'workCity',
+                'workProvince',
+                'workPostalCode'],
+                'format' => "%s \n %s, %s  %s"],
             'department' => 'object_department',
             'timezone' => 'object_tz',
             'email' => 'object_email',
@@ -353,7 +359,7 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             'smimePublicKey' => 'object_smimepublickey',
             'imaddress' => 'object_imaddress',
             'imaddress2' => 'object_imaddress2',
-            'imaddress3' => 'object_imaddress3'
-        );
+            'imaddress3' => 'object_imaddress3',
+        ];
     }
 }

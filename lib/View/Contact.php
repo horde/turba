@@ -33,8 +33,8 @@ class Turba_View_Contact
     {
         global $browser, $conf, $registry;
 
-        if (!$this->contact ||
-            !$this->contact->hasPermission(Horde_Perms::READ)) {
+        if (!$this->contact
+            || !$this->contact->hasPermission(Horde_Perms::READ)) {
             echo '<h3>' . _("The requested contact was not found.") . '</h3>';
             return;
         }

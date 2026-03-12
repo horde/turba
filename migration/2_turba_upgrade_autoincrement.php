@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Adds autoincrement flags
  *
@@ -31,7 +32,7 @@ class TurbaUpgradeAutoIncrement extends Horde_Db_Migration_Base
      */
     public function down()
     {
-        $this->changeColumn('turba_shares', 'share_id', 'integer', array('autoincrement' => false));
+        $this->changeColumn('turba_shares', 'share_id', 'integer', ['autoincrement' => false]);
     }
 
 }

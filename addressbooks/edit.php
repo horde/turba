@@ -25,10 +25,10 @@ try {
     $notification->push($e);
     Horde::url('', true)->redirect();
 }
-$owner = $addressbook->get('owner') == $GLOBALS['registry']->getAuth() ||
-    (is_null($addressbook->get('owner')) && $GLOBALS['registry']->isAdmin());
-if (!$owner &&
-    !$addressbook->hasPermission($GLOBALS['registry']->getAuth(), Horde_Perms::READ)) {
+$owner = $addressbook->get('owner') == $GLOBALS['registry']->getAuth()
+    || (is_null($addressbook->get('owner')) && $GLOBALS['registry']->isAdmin());
+if (!$owner
+    && !$addressbook->hasPermission($GLOBALS['registry']->getAuth(), Horde_Perms::READ)) {
     $notification->push(_("You are not allowed to see this addressbook."), 'horde.error');
     Horde::url('', true)->redirect();
 }
