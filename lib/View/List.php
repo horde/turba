@@ -85,21 +85,14 @@ class Turba_View_List implements Countable
      *
      * @var array
      */
-    public $variables = [];
-
-    /**
-     * A dummy form object.
-     *
-     * @var Horde_Form
-     */
-    public $form = null;
+    protected array $variables = [];
 
     /**
      * Which columns to render
      *
      * @var array
      */
-    public $columns;
+    protected $columns;
 
     /**
      * Constructs a new Turba_View_List object.
@@ -124,11 +117,22 @@ class Turba_View_List implements Countable
                 'Sort' => true,
             ];
         }
-        $this->columns = $columns;
         $this->list = $list;
         $this->setControls($controls);
         $this->renderer = Horde_Core_Ui_VarRenderer::factory(['turba', 'html']);
         $this->vars = new Horde_Variables();
+
+        $this->columns = $columns ?? [];
+        foreach ($this->columns as $column) {
+            $type = $GLOBALS['attributes'][$column]['type'];
+            if ($type == 'email') {
+                $type = 'html';
+                $params = [];
+            } else {
+                $params = $GLOBALS['attributes'][$column]['params'] ?? [];
+            }
+            $this->variables[] = Horde_Form::createVariable('', $column, $type, $params);
+        }
     }
 
     /**
@@ -174,9 +178,12 @@ class Turba_View_List implements Countable
         $driver = $GLOBALS['injector']
             ->getInstance('Turba_Factory_Driver')
             ->create(Turba::$source);
+
+        // used by actions.inc
         $hasDelete = $driver->hasPermission(Horde_Perms::DELETE);
         $hasEdit = $driver->hasPermission(Horde_Perms::EDIT);
-        $hasExport = ($GLOBALS['conf']['menu']['import_export'] && !empty($GLOBALS['cfgSources'][Turba::$source]['export']));
+        $hasExport = $GLOBALS['conf']['menu']['import_export'] && !empty($GLOBALS['cfgSources'][Turba::$source]['export']);
+
         $vars = Horde_Variables::getDefaultVariables();
 
         [$addToList, $addToListSources] = $this->getAddSources();
@@ -192,8 +199,11 @@ class Turba_View_List implements Countable
                 $min = $page * $perpage;
             }
             $max = $min + $perpage;
-            $start = ($page * $perpage) + 1;
+
+            // used by numPager.inc
+            $start = $page * $perpage + 1;
             $end = min($numitem, $start + $perpage - 1);
+
             $listHtml = $this->getPage($numDisplayed, $min, $max, $vars->get('page'));
             $crit = [];
             if ($session->get('turba', 'search_mode') == 'advanced') {

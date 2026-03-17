@@ -58,58 +58,39 @@ if ($ob->hasValue('__key')) {
   <td<?php if ($this->showSort && $this->isSortColumn(0)) echo ' class="linedRowSelectedCol"' ?>><?php
 echo $cell;
 
+// TODO: The comment is wrong/irrelevant
 // We purposefully do this before the </td> so that if we end up including a
 // script file (say, for the IMP compose window), it's in a legal spot.
 //
 // Build the columns to display.
-$shown_columns = array();
-for ($c = 1; $c <= count($this->columns); $c++) {
-    $type = $GLOBALS['attributes'][$this->columns[$c - 1]]['type'];
-    $params = isset($GLOBALS['attributes'][$this->columns[$c - 1]]['params'])
-        ? $GLOBALS['attributes'][$this->columns[$c - 1]]['params']
-        : array();
-    if (!isset($this->variables[$this->columns[$c - 1]])) {
+$shown_columns = [];
+$c = 0;
+foreach ($this->columns as $column) {
+    $type = $GLOBALS['attributes'][$column]['type'];
+    if ($ob->hasValue($column)) {
+        $value = $ob->getValue($column);
         if ($type == 'email') {
-            $this->variables[$this->columns[$c - 1]] =
-                new Horde_Form_Variable(
-                    humanName: '',
-                    varName: $this->columns[$c - 1],
-                    type: Horde_Form_Type::create(type: 'html'),
-                    required: false
-                );
-        } else {
-            $this->variables[$this->columns[$c - 1]] =
-                new Horde_Form_Variable(
-                    humanName: '',
-                    varName: $this->columns[$c - 1],
-                    type: Horde_Form_Type::create(type: $type, params: $params),
-                    required: false
-                );
+            $value = Turba::formatEmailAddresses($value, $ob->getValue('name'));
         }
-    }
-    if ($ob->hasValue($this->columns[$c - 1])) {
-        $value = $ob->getValue($this->columns[$c - 1]);
-        if ($type == 'email') {
-            $value = Turba::formatEmailAddresses($value,
-                                                 $ob->getValue('name'));
-        }
-        $this->vars->set($this->columns[$c - 1], $value);
-        $shown_columns[$c] = $this->renderer->render(
-            $this->form,
-            $this->variables[$this->columns[$c - 1]],
-            $this->vars);
+        $this->vars->set($column, $value);
+        $value = $this->renderer->render(null, $this->variables[$c], $this->vars);
     } else {
-        $shown_columns[$c] = '&nbsp;';
+        $value = '&nbsp;';
     }
+    $shown_columns[] = $value;
+    ++$c;
 }
 
 echo '</td>';
-foreach ($shown_columns as $column => $value) {
+// start index with 1 as this is what isSortColumns() expects
+$c = 1;
+foreach ($shown_columns as $value) {
     echo '<td';
-    if ($this->showSort && $this->isSortColumn($column)) {
+    if ($this->showSort && $this->isSortColumn($c)) {
         echo ' class="linedRowSelectedCol"';
     }
     echo '>' . $value . '</td>';
+    ++$c;
 }
 ?>
 </tr>
