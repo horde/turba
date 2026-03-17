@@ -26,10 +26,10 @@
             "role": "lead"
         }
     ],
-    "time": "2026-03-11",
+    "time": "2026-03-17",
     "repositories": [],
     "require": {
-        "horde/horde-installer-plugin": "^3 || ^2 || dev-FRAMEWORK_6_0",
+        "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
         "php": "^7.4 || ^8",
         "horde/content": "^3 || dev-FRAMEWORK_6_0",
         "horde/horde": "^6 || dev-FRAMEWORK_6_0",
@@ -82,15 +82,12 @@
         "horde/openxchange": "^2 || dev-FRAMEWORK_6_0"
     },
     "autoload": {
-        "psr-0": {
-            "Turba": "lib/"
-        },
-        "psr-4": {
-            "Horde\\Turba\\": "src/"
-        },
         "classmap": [
             "lib/"
-        ]
+        ],
+        "psr-4": {
+            "Horde\\Turba\\": "/src"
+        }
     },
     "autoload-dev": {
         "psr-4": {

@@ -1,4 +1,27 @@
 ---
+5.0.0-beta1:
+  api: 5.0.0-beta1
+  state:
+    release: beta
+    api: beta
+  date: 2026-03-17
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: |-
+    chore(autoloader): Properly setup autoloading for lib/ by classmap
+    refactor(routes): migrate to builder pattern and remove smartmobile
+    fix: necessary alpha phase BC break in forms library.
+    Update horde dependencies to include dev-FRAMEWORK_6_0
+    Merge pull request #24 from horde/feat/smartmobile-responsive
+    fix: Double encoding of URL
+    chore(merge): resolve conflicts with FRAMEWORK_6_0
+    feat: Turn smartmobile into a jquery-less responsive mode
+    fix(test): replace deprecated curly brace string access
+    Fixes and improvements in search() method (continued)  * Move $rfc822 out of loops  * Optimize filtering of non-group objects
+    Fixes and improvements in search() method  * Simplify the code  * Remove superfluous code  * Do not mutate $opts['returnFields']
+    Revert "fix: Add conditional to hook class template to prevent double declaration issues"
+    Refactor data retrieval logic for image objects
 5.0.0-alpha12:
   api: 5.0.0-alpha12
   state:

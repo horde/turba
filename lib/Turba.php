@@ -44,6 +44,31 @@ class Turba
     protected static $_cache = [];
 
     /**
+     * Ensure Turba injector bindings are registered.
+     *
+     * This is a defensive guard against race conditions where Turba_Shares
+     * or other Turba-specific factories are accessed before the application's
+     * _bootstrap() method has been called.
+     *
+     * @return void
+     */
+    protected static function ensureInjectorBindings(): void
+    {
+        if (!$GLOBALS['injector']->getBinder('Turba_Shares')) {
+            $factories = [
+                'Turba_Shares' => 'Turba_Factory_Shares',
+                'Turba_Tagger' => 'Turba_Factory_Tagger',
+            ];
+
+            foreach ($factories as $key => $val) {
+                if (!$GLOBALS['injector']->getBinder($key)) {
+                    $GLOBALS['injector']->bindFactory($key, $val, 'create');
+                }
+            }
+        }
+    }
+
+    /**
      * Returns the source entries from config/backends.php that have been
      * configured as available sources in the main Turba configuration.
      *
@@ -713,6 +738,9 @@ class Turba
             return [];
         }
 
+        // Defensive guard: ensure Turba_Shares factory is bound
+        self::ensureInjectorBindings();
+
         try {
             return $GLOBALS['injector']->getInstance('Turba_Shares')->listShares(
                 $GLOBALS['registry']->getAuth(),
@@ -745,6 +773,9 @@ class Turba
             /* Sensible default for empty display names */
             $name = sprintf(_("Address book of %s"), $GLOBALS['injector']->getInstance('Horde_Core_Factory_Identity')->create()->getName());
         }
+
+        // Defensive guard: ensure Turba_Shares factory is bound
+        self::ensureInjectorBindings();
 
         /* Generate the new share. */
         try {
