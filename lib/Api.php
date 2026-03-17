@@ -25,7 +25,7 @@ class Turba_Api extends Horde_Registry_Api
      */
     protected $_links = [
         'show' => '%application%/contact.php?source=|source|&key=|key|&uid=|uid|',
-        'smartmobile_browse' => '%application%/smartmobile.php#browse',
+        'smartmobile_browse' => '%application%/responsive',
     ];
 
     /**

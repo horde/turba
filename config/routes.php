@@ -4,43 +4,38 @@ namespace Horde\Turba;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-// Responsive UI Routes
-$mapper->connect(
-    'ResponsiveContacts',
-    '/responsive',
-    [
-        'controller' => Responsive\ResponsiveController::class,
-        'HordeAuthType' => 'authenticate',
-        'stack' => [],
-    ]
-);
+// Responsive UI Routes - PSR-style builder pattern
 
-$mapper->connect(
-    'ResponsiveContact',
-    '/responsive/contact/:source/:key',
-    [
-        'controller' => Responsive\ResponsiveController::class,
-        'HordeAuthType' => 'authenticate',
-        'stack' => [],
-    ]
-);
+// Contacts List - Primary route with legacy smartmobile secondary
+$mapper->buildRoute(uri: '/responsive', name: 'ResponsiveContacts')
+    ->withController(Responsive\ResponsiveController::class)
+    ->withDefaults(['HordeAuthType' => 'authenticate'])
+    ->noMiddleware()
+    ->withSecondaryRoute('/smartmobile')
+    ->withSecondaryRoute('/smartmobile.php')
+    ->add();
 
-$mapper->connect(
-    'ResponsiveExport',
-    '/responsive/export/:source/:key',
-    [
-        'controller' => Responsive\ResponsiveController::class,
-        'HordeAuthType' => 'authenticate',
-        'stack' => [],
-    ]
-);
+// Contact Detail View
+$mapper->buildRoute(uri: '/responsive/contact/:source/:key', name: 'ResponsiveContact')
+    ->withController(Responsive\ResponsiveController::class)
+    ->withDefaults(['HordeAuthType' => 'authenticate'])
+    ->requires('source', '[a-zA-Z0-9\-_]+')
+    ->requires('key', '[^/]+')
+    ->noMiddleware()
+    ->add();
 
-$mapper->connect(
-    'ResponsiveAdd',
-    '/responsive/add',
-    [
-        'controller' => Responsive\ResponsiveController::class,
-        'HordeAuthType' => 'authenticate',
-        'stack' => [],
-    ]
-);
+// Contact Export
+$mapper->buildRoute(uri: '/responsive/export/:source/:key', name: 'ResponsiveExport')
+    ->withController(Responsive\ResponsiveController::class)
+    ->withDefaults(['HordeAuthType' => 'authenticate'])
+    ->requires('source', '[a-zA-Z0-9\-_]+')
+    ->requires('key', '[^/]+')
+    ->noMiddleware()
+    ->add();
+
+// Add New Contact
+$mapper->buildRoute(uri: '/responsive/add', name: 'ResponsiveAdd')
+    ->withController(Responsive\ResponsiveController::class)
+    ->withDefaults(['HordeAuthType' => 'authenticate'])
+    ->noMiddleware()
+    ->add();
