@@ -12,6 +12,9 @@
  * @author  Jan Schneider <jan@horde.org>
  * @package Turba
  */
+
+use Horde\Util\Variables;
+
 class Turba_View_Duplicates
 {
     /**
@@ -79,7 +82,7 @@ class Turba_View_Duplicates
             && isset($this->_duplicates[$this->_type])
             && isset($this->_duplicates[$this->_type][$this->_duplicate]);
         if ($hasDuplicate) {
-            $vars = new Horde_Variables();
+            $vars = new Variables();
             $view->type = $GLOBALS['attributes'][$this->_type]['label'];
             $view->value = $this->_duplicate;
             echo $view->render('header');

@@ -6,6 +6,10 @@
  * @author  Chuck Hagenbuch <chuck@horde.org>
  * @package Turba
  */
+
+use Horde\Util\Variables;
+use Horde\Util\Util;
+
 class Turba_View_Contact
 {
     /**
@@ -39,9 +43,9 @@ class Turba_View_Contact
             return;
         }
 
-        $vars = new Horde_Variables();
+        $vars = new Variables();
         $form = new Turba_Form_Contact($vars, $this->contact);
-        $form->setOpenSection(Horde_Util::getFormData('section', 0));
+        $form->setOpenSection(Util::getFormData('section', 0));
 
         /* Get the contact's history. */
         $history = $this->contact->getHistory();

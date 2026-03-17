@@ -8,6 +8,9 @@
  * @author  Jon Parise <jon@csh.rit.edu>
  * @package Turba
  */
+
+use Horde\Util\HordeString;
+
 /**
  * Skips objects whose name does not start with the specified letter
  */
@@ -18,7 +21,7 @@ class Turba_View_List_AlphaFilter
 
     public function __construct($alpha)
     {
-        $this->_alpha = Horde_String::lower($alpha);
+        $this->_alpha = HordeString::lower($alpha);
         $this->_format = $GLOBALS['prefs']->getValue('name_sort');
     }
 
@@ -26,7 +29,7 @@ class Turba_View_List_AlphaFilter
     {
         $name = Turba::formatName($ob, $this->_format);
         if ($this->_alpha != '*'
-            && Horde_String::lower(substr($name, 0, 1)) != $this->_alpha) {
+            && HordeString::lower(substr($name, 0, 1)) != $this->_alpha) {
             return true;
         }
 

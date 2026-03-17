@@ -6,6 +6,9 @@
  * @author  Chuck Hagenbuch <chuck@horde.org>
  * @package Turba
  */
+
+use Horde\Util\Util;
+
 class Turba_View_DeleteContact
 {
     /**
@@ -49,8 +52,8 @@ class Turba_View_DeleteContact
         echo '<div id="DeleteContact"' . ($active ? '' : ' style="display:none"') . '>';
         ?>
         <form action="<?php echo Horde::url('delete.php') ?>" method="post">
-        <?php echo Horde_Util::formInput() ?>
-        <input type="hidden" name="url" value="<?php echo htmlspecialchars((string) Horde_Util::getFormData('url')) ?>" />
+        <?php echo Util::formInput() ?>
+        <input type="hidden" name="url" value="<?php echo htmlspecialchars((string) Util::getFormData('url')) ?>" />
         <input type="hidden" name="source" value="<?php echo htmlspecialchars($this->contact->driver->getName()) ?>" />
         <input type="hidden" name="key" value="<?php echo htmlspecialchars($this->contact->getValue('__key')) ?>" />
         <div class="headerbox" style="padding: 8px">
