@@ -53,7 +53,7 @@ class Turba_Application extends Horde_Registry_Application
     /**
      */
     public $features = [
-        'smartmobileView' => true,
+        'smartmobileView' => true,  // Redirect to responsive UI
         'modseq' => true,
     ];
 
@@ -187,7 +187,7 @@ class Turba_Application extends Horde_Registry_Application
 
         switch ($registry->getView()) {
             case $registry::VIEW_SMARTMOBILE:
-                return strval(Horde::url('smartmobile.php')->setRaw(true));
+                return strval(Horde::url('responsive')->setRaw(true));
                 break;
 
             default:
