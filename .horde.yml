@@ -98,4 +98,9 @@ dependencies:
       horde/kolab_storage: ^3
       horde/ldap: ^3
       horde/openxchange: ^2
+autoload:
+  classmap:
+    - lib/
+  psr-4:
+    Horde\Turba\: /src
 vendor: horde

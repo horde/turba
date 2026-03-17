@@ -87,7 +87,10 @@
         },
         "psr-4": {
             "Horde\\Turba\\": "src/"
-        }
+        },
+        "classmap": [
+            "lib/"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
