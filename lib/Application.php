@@ -795,11 +795,11 @@ class Turba_Application extends Horde_Registry_Application
                                 } elseif ($field == '__uid') {
                                     $row['uid'] = !empty($attribute) ? $attribute : '';
                                 } elseif ($attributes[$field]['type'] == 'date') {
-                                    $row[$field] = strftime('%Y-%m-%d', $attribute);
+                                    $row[$field] = date('Y-m-d', $attribute);
                                 } elseif ($attributes[$field]['type'] == 'time') {
-                                    $row[$field] = strftime('%R', $attribute);
+                                    $row[$field] = date('H:i', $attribute);
                                 } elseif ($attributes[$field]['type'] == 'datetime') {
-                                    $row[$field] = strftime('%Y-%m-%d %R', $attribute);
+                                    $row[$field] = date('Y-m-d H:i', $attribute);
                                 } else {
                                     $row[$field] = Horde_String::convertCharset($attribute, 'UTF-8', $params['charset']);
                                 }

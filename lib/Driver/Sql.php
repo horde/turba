@@ -193,7 +193,7 @@ class Turba_Driver_Sql extends Turba_Driver
                 } elseif (isset($dateFields[$field]) && !empty($val)) {
                     $d = new Horde_Date($val);
                     $entry[$field] = $this->_convertFromDriver(
-                        $d->strftime($GLOBALS['attributes'][array_search($field, $this->map)]['params']['format_in'])
+                        $d->format($GLOBALS['attributes'][array_search($field, $this->map)]['params']['format_in'])
                     );
                 } else {
                     $entry[$field] = $this->_convertFromDriver($val);
@@ -464,7 +464,7 @@ class Turba_Driver_Sql extends Turba_Driver
                 $values[] = new Horde_Db_Value_Binary($value);
             } elseif (!empty($value) && isset($date_fields[$field])) {
                 $d = new Horde_Date($value);
-                $values[] = $d->strftime('%Y-%m-%d');
+                $values[] = $d->format('Y-m-d');
             } else {
                 $values[] = $this->_convertToDriver($value);
             }

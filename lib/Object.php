@@ -1,6 +1,6 @@
 <?php
 
-use function PHP81_BC\strftime;
+use Horde\Date\Format as DateFormat;
 
 /**
  * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
@@ -402,7 +402,7 @@ class Turba_Object
                         $by = _("by me");
                     }
                     $history[$entry['action'] == 'add' ? 'created' : 'modified']
-                        = strftime($GLOBALS['prefs']->getValue('date_format'), $entry['ts'])
+                        = DateFormat::formatDate($entry['ts'], $GLOBALS['prefs']->getValue('date_format'))
                         . ' '
                         . date($GLOBALS['prefs']->getValue('twentyFour') ? 'G:i' : 'g:i a', $entry['ts'])
                         . ' '
