@@ -13,6 +13,8 @@
  */
 
 use Horde\Backup;
+use Horde\Date\Format;
+use Horde\Date\Formatter\IcuFormatter;
 use Sabre\CalDAV;
 use Sabre\CardDAV;
 
@@ -87,7 +89,7 @@ class Turba_Application extends Horde_Registry_Application
      */
     protected function _init()
     {
-        global $conf, $injector, $registry, $session;
+        global $conf, $injector, $registry, $session, $prefs;
 
         if ($conf['tags']['enabled']) {
             /* For now, autoloading the Content_* classes depend on there being
@@ -105,6 +107,13 @@ class Turba_Application extends Horde_Registry_Application
 
         // Turba source and attribute configuration.
         $attributes = $registry->loadConfigFile('attributes.php', 'attributes', 'turba')->config['attributes'];
+
+        // Normalize date field params for formatter support
+        // Pass locale and date_format from prefs if available
+        $locale = isset($prefs) ? $prefs->getValue('language') : null;
+        $dateFormat = isset($prefs) ? $prefs->getValue('date_format') : null;
+        $attributes = $this->_normalizeDateAttributes($attributes, $locale, $dateFormat);
+
         $cfgSources = Turba::availableSources();
 
         /* UGLY UGLY UGLY - we should NOT be using this as a global
@@ -1205,5 +1214,153 @@ class Turba_Application extends Horde_Registry_Application
             );
         }
         return $modified;
+    }
+
+    /**
+     * Normalize date field attributes to support formatters
+     *
+     * Enhances monthdayyear and datetime field params with formatter, locale,
+     * and timezone support. Handles both default attributes and user-supplied
+     * attributes.local.php.
+     *
+     * @param array $attributes  Attributes configuration array
+     * @param string|null $locale  User's preferred locale (null = auto-detect from system)
+     * @param string|null $userDateFormat  User's date_format preference (null = use default)
+     *
+     * @return array  Normalized attributes array
+     */
+    protected function _normalizeDateAttributes(array $attributes, ?string $locale, ?string $userDateFormat = null): array
+    {
+        // Detect locale if not provided
+        if (empty($locale)) {
+            $locale = setlocale(LC_CTYPE, 0);
+            if ($locale === 'C' || $locale === 'POSIX' || empty($locale)) {
+                $locale = 'en_US';
+            } else {
+                // Normalize locale (remove encoding, modifiers)
+                $locale = preg_replace('/\\..*$/', '', $locale);
+                $locale = preg_replace('/@.*$/', '', $locale);
+                $locale = str_replace('-', '_', $locale);
+            }
+        }
+
+        // Create formatter instance (reused for all fields)
+        $formatter = new IcuFormatter();
+
+        foreach ($attributes as $field => &$config) {
+            // Only process monthdayyear and datetime types
+            if (!isset($config['type']) ||
+                !in_array($config['type'], ['monthdayyear', 'datetime'])) {
+                continue;
+            }
+
+            $params = $config['params'] ?? [];
+
+            // Convert format_in if it's strftime
+            if (isset($params['format_in']) && str_contains($params['format_in'], '%')) {
+                $params['format_in'] = $this->_convertStrftimeFormat($params['format_in']);
+            }
+
+            // Convert format_out if it's strftime
+            if (isset($params['format_out']) && str_contains($params['format_out'], '%')) {
+                $params['format_out'] = $this->_convertStrftimeFormat($params['format_out']);
+            }
+
+            // Ensure format_in and format_out have defaults
+            if (empty($params['format_in'])) {
+                $params['format_in'] = 'yyyy-MM-dd';
+            }
+            // Apply format_out: User preference > Config > Default
+            // Note: Config should NOT specify format_out (see attributes.php docblock)
+            // but we handle it for backward compatibility
+
+            if ($userDateFormat) {
+                // User preference takes precedence (even if config has format_out)
+                $convertedFormat = str_contains($userDateFormat, '%')
+                    ? $this->_convertStrftimeFormat($userDateFormat)
+                    : $userDateFormat;
+                $params['format_out'] = $convertedFormat;
+            } elseif (empty($params['format_out'])) {
+                // No preference and no config value - use default
+                $params['format_out'] = 'MMM d, yyyy';
+            } else {
+                // No preference but config has format_out - use it
+                // Convert from strftime if needed
+                if (str_contains($params['format_out'], '%')) {
+                    $params['format_out'] = $this->_convertStrftimeFormat($params['format_out']);
+                }
+            }
+
+            // Add formatter support (positional indices for Form layer init())
+            // monthdayyear: init($start_year, $end_year, $picker, $format_in, $format_out, $formatter, $locale, $timezone)
+            // datetime: init($start_year, $end_year, $picker, $format_in, $format_out, $show_seconds, $formatter, $locale, $timezone)
+
+            $start_year = $params['start_year'] ?? $params[0] ?? date('Y');
+            $end_year = $params['end_year'] ?? $params[1] ?? 1900;
+            $picker = $params['picker'] ?? $params[2] ?? true;
+            $format_in = $params['format_in'] ?? $params[3] ?? 'yyyy-MM-dd';
+            $format_out = $params['format_out'] ?? $params[4] ?? 'MMM d, yyyy';
+
+            if ($config['type'] === 'monthdayyear') {
+                $config['params'] = [
+                    0 => $start_year,
+                    1 => $end_year,
+                    2 => $picker,
+                    3 => $format_in,
+                    4 => $format_out,
+                    5 => $formatter,
+                    6 => $locale,
+                    7 => null,  // timezone
+                    // Named keys for Driver layer compatibility
+                    'start_year' => $start_year,
+                    'end_year' => $end_year,
+                    'picker' => $picker,
+                    'format_in' => $format_in,
+                    'format_out' => $format_out,
+                ];
+            } elseif ($config['type'] === 'datetime') {
+                $show_seconds = $params['show_seconds'] ?? $params[5] ?? false;
+                $config['params'] = [
+                    0 => $start_year,
+                    1 => $end_year,
+                    2 => $picker,
+                    3 => $format_in,
+                    4 => $format_out,
+                    5 => $show_seconds,
+                    6 => $formatter,
+                    7 => $locale,
+                    8 => null,  // timezone
+                    // Named keys for Driver layer compatibility
+                    'start_year' => $start_year,
+                    'end_year' => $end_year,
+                    'picker' => $picker,
+                    'format_in' => $format_in,
+                    'format_out' => $format_out,
+                    'show_seconds' => $show_seconds,
+                ];
+            }
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Convert strftime format to ICU format
+     *
+     * @param string $format  Strftime format string
+     *
+     * @return string  ICU format string
+     */
+    protected function _convertStrftimeFormat(string $format): string
+    {
+        $converted = Format::strftimeToIcu($format);
+
+        // strftimeToIcu can return array for locale-specific formats
+        // In that case, use a sensible default
+        if (is_array($converted)) {
+            return 'MMM d, yyyy';
+        }
+
+        return $converted;
     }
 }

@@ -41,6 +41,17 @@
  * params - Any other parameters that need to be passed to the
  *          field. For a documentation of available field
  *          parameters see: http://wiki.horde.org/Doc/Dev/FormTypes.
+ *
+ * IMPORTANT CHANGE IN HORDE 6 / TURBA 5:
+ * ---------------------------------------
+ * Date field formatting (monthdayyear, datetime) is now controlled by user
+ * preferences, NOT by 'format_out' parameter in this config file.
+ *
+ * Do NOT specify 'format_out' for date fields - it will be automatically
+ * applied from the user's date_format preference at runtime.
+ *
+ * See the detailed docblock before $attributes['birthday'] for complete
+ * documentation on date field configuration.
  * </pre>
  */
 
@@ -105,17 +116,52 @@ $attributes['yomilastname'] = array(
     'required' => false,
     'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
 );
+
+/**
+ * DATE FIELD FORMAT CONFIGURATION
+ *
+ * IMPORTANT: Do NOT specify 'format_out' parameter for date fields
+ * (monthdayyear, datetime) in this configuration file.
+ *
+ * The user preference for date display formatting is now handled in application code.
+ *
+ * Why this changed:
+ * - Config files should not hook into framework runtime internals but be mostly declarative.
+ *
+ * Migration from old config:
+ *   OLD (Horde 5 / Turba 4): 'format_out' => $GLOBALS['prefs']->getValue('date_format')
+ *   NEW (Horde 6 / Turba 5): Omit 'format_out' - automatically applied
+ *
+ * Supported parameters for date fields:
+ *   - start_year: Newest year available in picker (default: current year)
+ *   - end_year: Oldest year available in picker dropdown (default: 1900)
+ *   - picker: Show date picker widget (default: true)
+ *   - format_in: Format for storage/API (default: 'yyyy-MM-dd')
+ *   - format_out: DO NOT USE - automatically set from user preference
+ *
+ * Example correct configuration:
+ *   'params' => array(
+ *       'start_year' => date('Y'),
+ *       'end_year' => 1900,
+ *       'picker' => true,
+ *       'format_in' => 'yyyy-MM-dd'
+ *       // Note: format_out intentionally omitted
+ *   )
+ *
+ * @see Turba_Application::_normalizeDateAttributes() for implementation
+ * @since Turba 5.0.0 (Horde 6.0.0)
+ */
 $attributes['birthday'] = array(
     'label' => _("Birthday"),
     'type' => 'monthdayyear',
     'required' => false,
-    'params' => array('start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => '%Y-%m-%d', 'format_out' => $GLOBALS['prefs']->getValue('date_format')),
+    'params' => array('start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => 'yyyy-MM-dd'),
     'time_object_label' => _("Birthdays"),
 );
 $attributes['anniversary'] = array(
     'label' => _("Anniversary"),
     'type' => 'monthdayyear',
-    'params' => array('start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => '%Y-%m-%d', 'format_out' => $GLOBALS['prefs']->getValue('date_format')),
+    'params' => array('start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => 'yyyy-MM-dd'),
     'required' => false,
     'time_object_label' => _("Anniversaries"),
 );
@@ -480,6 +526,9 @@ $attributes['freebusyUrl'] = array(
     'required' => false,
     'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
 );
+/**
+ * TODO: Find a way to move globals access out of this use case, too
+ */
 if (!empty($GLOBALS['conf']['gnupg']['path'])) {
     $attributes['pgpPublicKey'] = array(
         'label' => _("PGP Public Key"),

@@ -1,5 +1,7 @@
 <?php
 
+use Horde\Date\Format as DateFormat;
+
 /**
  * Turba directory driver implementation for the Horde_Db database abstraction
  * layer.
@@ -192,8 +194,9 @@ class Turba_Driver_Sql extends Turba_Driver
                     $entry[$field] = $columns[$field]->binaryToString($val);
                 } elseif (isset($dateFields[$field]) && !empty($val)) {
                     $d = new Horde_Date($val);
+                    $format = $GLOBALS['attributes'][array_search($field, $this->map)]['params']['format_in'];
                     $entry[$field] = $this->_convertFromDriver(
-                        $d->format($GLOBALS['attributes'][array_search($field, $this->map)]['params']['format_in'])
+                        DateFormat::formatDate($d->timestamp(), $format)
                     );
                 } else {
                     $entry[$field] = $this->_convertFromDriver($val);
