@@ -95,7 +95,7 @@ class Turba_Form_EditContact extends Turba_Form_ContactBase
             throw $e;
         }
 
-        if (isset($info['vfs'])) {
+        if (isset($info['vfs']) && !empty($info['vfs']['tmp_name'])) {
             try {
                 $this->_contact->addFile($info['vfs']);
                 $notification->push(sprintf(_("\"%s\" updated."), $this->_contact->getValue('name')), 'horde.success');
