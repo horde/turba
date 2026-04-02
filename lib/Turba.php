@@ -12,6 +12,8 @@
  * @package   Turba
  */
 
+use Horde\Util\Variables;
+
 /**
  * Turba Base Class.
  *
@@ -160,7 +162,7 @@ class Turba
      * @param string $source         Source.
      */
     public static function setPreferredSortOrder(
-        Horde_Variables $vars,
+        Variables|\Horde_Variables $vars,
         $source
     ) {
         if (!strlen((string) $sortby = $vars->get('sortby'))) {

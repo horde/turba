@@ -15,6 +15,7 @@
 use Horde\Backup;
 use Horde\Date\Format;
 use Horde\Date\Formatter\IcuFormatter;
+use Horde\Util\Variables;
 use Sabre\CalDAV;
 use Sabre\CardDAV;
 
@@ -706,7 +707,7 @@ class Turba_Application extends Horde_Registry_Application
      * @throws Turba_Exception
      * @throws Horde_Exception_NotFound
      */
-    public function download(Horde_Variables $vars)
+    public function download(Variables|\Horde_Variables $vars)
     {
         global $attributes, $cfgSources, $injector;
 
