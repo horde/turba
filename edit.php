@@ -92,7 +92,13 @@ $title = sprintf($contact->isGroup() ? _("Edit Contact List \"%s\"") : _("Edit \
 Horde::startBuffer();
 $notification->notify(['listeners' => 'status']);
 $form->setTitle($title);
-$form->renderActive($form->getRenderer(), $vars, Horde::url('edit.php'), 'post');
+$form->renderActive(
+    renderer: $form->getRenderer(),
+    vars: $vars,
+    action: Horde::url('edit.php'),
+    method: 'post',
+    enctype: 'multipart/form-data'
+);
 $formHtml = Horde::endBuffer();
 
 $page_output->header([

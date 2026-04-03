@@ -50,7 +50,13 @@ class Turba_View_EditContact
 
         echo '<div id="EditContact"' . ($active ? '' : ' style="display:none"') . '>';
         $form = new Turba_Form_EditContact($vars, $this->contact);
-        $form->renderActive($form->getRenderer(), $vars, Horde::url('edit.php'), 'post');
+        $form->renderActive(
+            renderer: $form->getRenderer(),
+            vars: $vars,
+            action: Horde::url('edit.php'),
+            method: 'post',
+            enctype: 'multipart/form-data'
+        );
         echo '</div>';
 
         if ($active && $browser->hasFeature('dom')) {
