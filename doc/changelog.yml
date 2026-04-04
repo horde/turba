@@ -1,4 +1,18 @@
 ---
+5.0.0-beta4:
+  api: 5.0.0-beta4
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-04
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: |-
+    fix: Explicit multipart/form-data attribute when having forms with image upload
+    fix: Accept both types of "variables"
+    chore(hordeyml): Remove kolab related dependencies
+    feat(kolab)!: Remove Kolab backend
 5.0.0-beta3:
   api: 5.0.0-beta3
   state:

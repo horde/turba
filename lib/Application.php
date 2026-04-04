@@ -62,7 +62,7 @@ class Turba_Application extends Horde_Registry_Application
 
     /**
      */
-    public $version = '5.0.0-beta3';
+    public $version = '5.0.0-beta4';
 
     /**
      */
