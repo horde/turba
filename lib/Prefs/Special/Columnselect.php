@@ -23,7 +23,7 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
      */
     public function display(Horde_Core_Prefs_Ui $ui)
     {
-        global $attributes, $cfgSources, $injector, $page_output, $prefs;
+        global $attributes, $cfgSources, $page_output, $prefs;
 
         $page_output->addScriptFile('scriptaculous/effects.js', 'horde');
         $page_output->addScriptFile('scriptaculous/dragdrop.js', 'horde');
@@ -31,10 +31,9 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
 
         $sources = Turba::getColumns();
 
-        $t = $injector->createInstance('Horde_Template');
-        $t->setOption('gettext', true);
+        $view = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/prefs']);
 
-        $t->set('columns', htmlspecialchars($prefs->getValue('columns')));
+        $view->columns = htmlspecialchars($prefs->getValue('columns'));
 
         $col_list = $cols = [];
         foreach ($cfgSources as $source => $info) {
@@ -96,11 +95,11 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
         }
 
         if (!empty($col_list)) {
-            $t->set('col_list', $col_list);
-            $t->set('cols', $cols);
+            $view->col_list = $col_list;
+            $view->cols = $cols;
         }
 
-        return $t->fetch(TURBA_TEMPLATES . '/prefs/column.html');
+        return $view->render('column');
     }
 
     /**
