@@ -170,6 +170,9 @@ class Turba_Application extends Horde_Registry_Application
         $cfgSources = Turba::availableSources();
 
         $perms = [
+            'admin' => [
+                'title' => _("Administration"),
+            ],
             'sources' => [
                 'title' => _("Sources"),
             ],
