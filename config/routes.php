@@ -4,6 +4,14 @@ namespace Horde\Turba;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+// Admin Routes — must come before catch-all or wildcard routes
+
+$mapper->buildRoute(uri: '/admin/schematest', name: 'AdminSchemaTest')
+    ->withController(Controller\AdminSchemaTestController::class)
+    ->withDefaults(['HordeAuthType' => 'authenticate'])
+    ->noMiddleware()
+    ->add();
+
 // Responsive UI Routes - PSR-style builder pattern
 
 // Contacts List - Primary route with legacy smartmobile secondary
