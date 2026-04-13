@@ -814,7 +814,7 @@ class Turba_Application extends Horde_Registry_Application
                                 } elseif ($attributes[$field]['type'] == 'datetime') {
                                     $row[$field] = date('Y-m-d H:i', $attribute);
                                 } else {
-                                    $row[$field] = Horde_String::convertCharset($attribute, 'UTF-8', $params['charset']);
+                                    $row[$field] = Horde_String::convertCharset($attribute ?? '', 'UTF-8', $params['charset']);
                                 }
                             }
                             $data[] = $row;
