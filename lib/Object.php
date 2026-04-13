@@ -620,9 +620,9 @@ class Turba_Object
             . Horde::url('deletefile.php')
             . '" style="display:inline" method="post">'
             . Horde_Util::formInput()
-            . '<input type="hidden" name="file" value="' . htmlspecialchars($file['name']) . '" />'
+            . '<input type="hidden" name="file" value="' . htmlspecialchars($file['name'] ?? '') . '" />'
             . '<input type="hidden" name="source" value="' . htmlspecialchars($this->driver->getName()) . '" />'
-            . '<input type="hidden" name="key" value="' . htmlspecialchars($this->getValue('__key')) . '" />'
+            . '<input type="hidden" name="key" value="' . htmlspecialchars($this->getValue('__key') ?? '') . '" />'
             . '<input type="image" class="img" src="' . Horde_Themes::img('delete.png') . '" />'
             . '</form>';
 
