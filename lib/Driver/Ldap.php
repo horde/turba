@@ -14,6 +14,9 @@
  * @license  http://www.horde.org/licenses/apache ASL
  * @package  Turba
  */
+
+use Horde\Util\HordeString;
+
 class Turba_Driver_Ldap extends Turba_Driver
 {
     /**
@@ -393,7 +396,14 @@ class Turba_Driver_Ldap extends Turba_Driver
             $filter = (string) Horde_Ldap_Filter::build(['objectclass' => $this->_params['objectclass']], 'or');
         }
         $oldres = @ldap_read($this->_ds, Horde_String::convertCharset($object_id, 'UTF-8', $this->_params['charset']), $filter, array_merge(array_keys($attributes), ['objectclass']));
-        $info = ldap_get_attributes($this->_ds, ldap_first_entry($this->_ds, $oldres));
+        // ldap_first_entry() returns false when the result set is empty or
+        // on error.  Guard against passing false to ldap_get_attributes()
+        // which would trigger a TypeError in PHP 8.0+.
+        $first = $oldres ? ldap_first_entry($this->_ds, $oldres) : false;
+        if ($first === false) {
+            throw new Turba_Exception(sprintf(_("Read failed: (%s) %s"), ldap_errno($this->_ds), ldap_error($this->_ds)));
+        }
+        $info = ldap_get_attributes($this->_ds, $first);
 
         if ($this->_params['version'] == 3
             && Horde_String::lower(str_replace([',', '"'], ['\\2C', ''], $this->_makeKey($attributes)))
@@ -447,10 +457,17 @@ class Turba_Driver_Ldap extends Turba_Driver
         $this->_encodeAttributes($attributes);
         $attributes = array_filter($attributes, [$this, '_emptyAttributeFilter']);
 
-        /* Modify objectclasses only if they really changed. */
-        $oldClasses = array_map(['Horde_String', 'lower'], $info['objectclass']);
-        array_shift($oldClasses);
-        $attributes['objectclass'] = array_unique(array_map('strtolower', array_merge($info['objectclass'], $this->_params['objectclass'])));
+        /* Modify objectclasses only if they really changed.
+         * Guard with isset() because ldap_get_attributes() may not
+         * return an 'objectclass' key for every entry. The first
+         * element of the LDAP array is the count, so shift it off. */
+        $oldClasses = isset($info['objectclass'])
+            ? array_map([HordeString::class, 'lower'], $info['objectclass'])
+            : [];
+        if ($oldClasses) {
+            array_shift($oldClasses);
+        }
+        $attributes['objectclass'] = array_unique(array_map('strtolower', array_merge($info['objectclass'] ?? [], $this->_params['objectclass'])));
         unset($attributes['objectclass']['count']);
         $attributes['objectclass'] = array_values($attributes['objectclass']);
 
@@ -592,7 +609,7 @@ class Turba_Driver_Ldap extends Turba_Driver
             foreach ($fields as $field) {
                 $field_l = Horde_String::lower($field);
                 if ($field == 'dn') {
-                    $result[$field] = Horde_String::convertCharset($entry[$field_l], $this->_params['charset'], 'UTF-8');
+                    $result[$field] = HordeString::convertCharset($entry[$field_l] ?? '', $this->_params['charset'], 'UTF-8');
                 } else {
                     $result[$field] = '';
                     if (!empty($entry[$field_l])) {
