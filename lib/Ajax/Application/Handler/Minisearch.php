@@ -56,8 +56,8 @@ class Turba_Ajax_Application_Handler_Minisearch extends Horde_Core_Ajax_Applicat
                                     }
                                 }
                                 $link = empty($v)
-                                    ? htmlspecialchars($ob->getValue('name'))
-                                    : htmlspecialchars($ob->getValue('name') . ' <' . $v . '>');
+                                    ? htmlspecialchars($ob->getValue('name') ?? '')
+                                    : htmlspecialchars(($ob->getValue('name') ?? '') . ' <' . $v . '>');
 
                                 $results[] = '<li class="linedRow">'
                                     . Horde::link(Horde::url($ob->url()), _("View Contact"), '', '_parent')

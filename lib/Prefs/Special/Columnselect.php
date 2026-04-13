@@ -33,7 +33,7 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
 
         $view = new Horde_View(['templatePath' => TURBA_TEMPLATES . '/prefs']);
 
-        $view->columns = htmlspecialchars($prefs->getValue('columns'));
+        $view->columns = htmlspecialchars($prefs->getValue('columns') ?? '');
 
         $col_list = $cols = [];
         foreach ($cfgSources as $source => $info) {
