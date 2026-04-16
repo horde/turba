@@ -1237,7 +1237,7 @@ class Turba_Application extends Horde_Registry_Application
     {
         // Detect locale if not provided
         if (empty($locale)) {
-            $locale = setlocale(LC_CTYPE, 0);
+            $locale = setlocale(LC_CTYPE, '0');
             if ($locale === 'C' || $locale === 'POSIX' || empty($locale)) {
                 $locale = 'en_US';
             } else {
