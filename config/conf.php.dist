@@ -14,77 +14,63 @@
  * Integers should be given literally (without quotes).
  * Boolean values may be true or false (never quotes).
  *
- * Generated from conf.xml on 2026-04-04
+ * Generated from conf.xml on 2026-04-13
  */
-
 // ----------------------------------------------------------------------
 // Menu Settings
 // ----------------------------------------------------------------------
-
-// Should we display an Import/Export   link in Turba's menu?
+// Should we display an Import/Export link in Turba's menu?
 $conf['menu']['import_export'] = true;
-
 
 // ----------------------------------------------------------------------
 // Clients
 // ----------------------------------------------------------------------
-
+// Name of client addressbook (optional)
+// $conf['client']['addressbook'] = '';
 
 // ----------------------------------------------------------------------
 // Exchange GAL
 // ----------------------------------------------------------------------
-
+// If using a synchronization solution that supports Exchange-style Global Address List (GAL) searches enter the name of... (optional)
+// $conf['gal']['addressbook'] = '';
 
 // ----------------------------------------------------------------------
 // Shares
 // ----------------------------------------------------------------------
-
-// Name of source for creating new   shares.<br /> Note that leaving this blank will prevent users from   being able to create new address books.
+// Name of source for creating new shares. Note that leaving this blank will prevent users from being able to create new...
 $conf['shares']['source'] = 'localsql';
-
 
 // ----------------------------------------------------------------------
 // Comments
 // ----------------------------------------------------------------------
-
-// Can users comment on   contacts?
+// Can users comment on contacts?
 $conf['comments']['allow'] = true;
-
 
 // ----------------------------------------------------------------------
 // Virtual File Storage
 // ----------------------------------------------------------------------
-
+// VFS storage: 'horde' uses the global Horde VFS config
+// Other options: 'None', 'File', 'Nosql', 'Sql', 'Ssh2'
+// $conf['documents']['type'] = 'File';
+// $conf['documents']['params']['vfsroot'] = '/tmp';
+$conf['documents']['type'] = 'horde';
 
 // ----------------------------------------------------------------------
 // Tag Settings
 // ----------------------------------------------------------------------
-
 // Enable tagging?
 $conf['tags']['enabled'] = true;
-
 
 // ----------------------------------------------------------------------
 // Photo settings
 // ----------------------------------------------------------------------
-
 // Height
 $conf['photos']['height'] = 250;
-
 // Width
 $conf['photos']['width'] = 250;
-
 
 // ----------------------------------------------------------------------
 // Alpha Pager Settings
 // ----------------------------------------------------------------------
-
-
-$conf['shares']['source'] = 'localsql';
-$conf['comments']['allow'] = true;
-$conf['documents']['type'] = 'horde';
-$conf['tags']['enabled'] = true;
-$conf['photos']['height'] = 250;
-$conf['photos']['width'] = 250;
-$conf['pager']['special'] = array();
-/* CONFIG END. DO NOT CHANGE ANYTHING IN OR BEFORE THIS LINE. */
+// An list containing any special characters that should be appended to the alphapager such as a '#'. Enter a comma deli... (optional)
+// $conf['pager']['special'] = array();
