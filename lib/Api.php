@@ -1343,7 +1343,7 @@ class Turba_Api extends Horde_Registry_Api
                                     continue;
                                 }
 
-                                $seen_key = trim(Horde_String::lower($ob->getValue('name'))) . trim(Horde_String::lower(is_array($value) ? $value['load']['file'] : $value));
+                                $seen_key = trim(Horde_String::lower($ob->getValue('name') ?? '')) . trim(Horde_String::lower(is_array($value) ? $value['load']['file'] : $value));
 
                                 if (isset($attributes[$key])
                                     && ($attributes[$key]['type'] == 'email')
