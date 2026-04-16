@@ -12,6 +12,8 @@
  * @package   Turba
  */
 
+use Horde\Injector\Attribute\Factory;
+
 /**
  * Interface to the Horde_Content tagger.
  *
@@ -22,6 +24,7 @@
  * @license   http://www.horde.org/licenses/apache ASL
  * @package   Turba
  */
+#[Factory(factory: Turba_Factory_Tagger::class, method: 'create')]
 class Turba_Tagger extends Horde_Core_Tagger
 {
     /**
