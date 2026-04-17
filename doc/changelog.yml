@@ -1,4 +1,27 @@
 ---
+5.0.0-beta5:
+  api: 5.0.0-beta5
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-17
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: |-
+    fix: setlocale with a non-string is fatal in php 8.5
+    feat: Add #[Factory] attribute to Turba_Tagger
+    docs: create/update conf.php.dist
+    fix: guard Horde_String::lower() and trim() against null getValue() for PHP 8.1+
+    refactor(Turba_View_List): pre-initialize column variables via createVariable(), eliminating per-row overhead
+    fix: guard convertCharset() against null getValue() for PHP 8.1+
+    fix: guard htmlspecialchars() against null for PHP 8.1+
+    fix(ldap): guard against null/false from LDAP functions for PHP 8.0+
+    feat: Add administrative test page for backend schema
+    Merge pull request #32 from horde/feat/replace-horde-template
+    feat: Replace Horde_Template with Horde_View
+    fix: More defensive code when trying to drop tables
+    docs: Clarify where to put local overrides
 5.0.0-beta4:
   api: 5.0.0-beta4
   state:
