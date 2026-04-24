@@ -452,6 +452,7 @@ class Turba_Driver_Sql extends Turba_Driver
                 array_combine($fields, $values)
             );
         } catch (Horde_Db_Exception $e) {
+            Horde::log($e, 'ERR');
             throw new Turba_Exception(_("Server error when adding data."));
         }
     }
