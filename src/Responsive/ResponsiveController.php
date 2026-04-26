@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Horde\Turba\Responsive;
 
 use Horde\Core\Assets\ResponsiveAssets;
+use Horde\Core\Config\RegistryState;
 use Horde\Core\View\ResponsiveTemplateView;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -71,7 +72,7 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $browse_source_count;
 
-        $responsiveAssets = new ResponsiveAssets($registry);
+        $responsiveAssets = new ResponsiveAssets(new RegistryState($registry->applications));
 
         // Load contacts from all browseable sources
         $contactList = [];
@@ -127,10 +128,10 @@ class ResponsiveController implements RequestHandlerInterface
             'topbar' => $topbar,
             'contactList' => $contactList,
             'hasContacts' => !empty($contactList),
-            'cssUrls' => $responsiveAssets->getCssUrls(),
+            'cssUrls' => $responsiveAssets->getCssUrls('turba'),
             'jsUrls' => array_merge(
-                $responsiveAssets->getJsUrls(['responsive-topbar.js'], 'horde'),
-                $responsiveAssets->getJsUrls(['responsive.js'])
+                $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
+                $responsiveAssets->getJsUrls('turba', ['responsive.js'])
             ),
             'groupIconUrl' => $registry->get('themesuri', 'turba') . '/default/graphics/group.png',
         ];
@@ -159,7 +160,7 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $notification, $cfgSources, $attributes;
 
-        $responsiveAssets = new ResponsiveAssets($registry);
+        $responsiveAssets = new ResponsiveAssets(new RegistryState($registry->applications));
 
         // Validate source
         if (!isset($cfgSources[$source])) {
@@ -193,8 +194,8 @@ class ResponsiveController implements RequestHandlerInterface
             'topbar' => $topbar,
             'contact' => $contactData,
             'backUrl' => \Horde::url('responsive', true),
-            'cssUrls' => $responsiveAssets->getCssUrls(),
-            'jsUrls' => $responsiveAssets->getJsUrls(['responsive-topbar.js'], 'horde'),
+            'cssUrls' => $responsiveAssets->getCssUrls('turba'),
+            'jsUrls' => $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
         ];
 
         // Render template
@@ -457,7 +458,7 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $notification, $browse_source_count;
 
-        $responsiveAssets = new ResponsiveAssets($registry);
+        $responsiveAssets = new ResponsiveAssets(new RegistryState($registry->applications));
 
         // Get writable address books
         $writableSources = [];
@@ -534,8 +535,8 @@ class ResponsiveController implements RequestHandlerInterface
             'writableSources' => $writableSources,
             'hasWritableSources' => !empty($writableSources),
             'backUrl' => \Horde::url('responsive', true),
-            'cssUrls' => $responsiveAssets->getCssUrls(),
-            'jsUrls' => $responsiveAssets->getJsUrls(['responsive-topbar.js'], 'horde'),
+            'cssUrls' => $responsiveAssets->getCssUrls('turba'),
+            'jsUrls' => $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
         ];
 
         // Render template
