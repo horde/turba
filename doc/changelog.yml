@@ -1,4 +1,17 @@
 ---
+5.0.0-beta6:
+  api: 5.0.0-beta6
+  state:
+    release: beta
+    api: beta
+  date: 2026-04-27
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: |-
+    fix: urlencode parameter level
+    refactor(registry): Evolve to a format more independent of legacy stack
+    Log error when adding data to the database
 5.0.0-beta5:
   api: 5.0.0-beta5
   state:
