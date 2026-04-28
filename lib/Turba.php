@@ -158,7 +158,7 @@ class Turba
     /**
      * Saves the sort order to the preferences backend.
      *
-     * @param Horde_Variables $vars  Variables object.
+     * @param Horde_Variables|Variables $vars  Variables object.
      * @param string $source         Source.
      */
     public static function setPreferredSortOrder(
