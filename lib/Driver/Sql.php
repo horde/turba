@@ -449,7 +449,9 @@ class Turba_Driver_Sql extends Turba_Driver
         try {
             $this->_db->insertBlob(
                 $this->_params['table'],
-                array_combine($fields, $values)
+                array_combine($fields, $values),
+                $this->map['__key'] ?? null,
+                $attributes[$this->map['__key']] ?? null
             );
         } catch (Horde_Db_Exception $e) {
             Horde::log($e, 'ERR');
