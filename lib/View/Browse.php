@@ -221,13 +221,14 @@ class Turba_View_Browse
                                 || isset($targetDriver->map[$info_key]['attribute'])) {
                                 $objectValue = $object->getValue($info_key);
 
-                                // Get 'data' value if object type is image, the
-                                // direct value in other case.
+                                // Normalize image values from getValue() to raw
+                                // binary data before passing to add().
+                                $isImageAttribute = isset($GLOBALS['attributes'][$info_key])
+                                    && isset($GLOBALS['attributes'][$info_key]['type'])
+                                    && $GLOBALS['attributes'][$info_key]['type'] == 'image';
+
                                 $objAttributes[$info_key]
-                                    = isset($targetDriver->map[$info_key])
-                                        && is_array($targetDriver->map[$info_key])
-                                        && isset($targetDriver->map[$info_key]['type'])
-                                        && $targetDriver->map[$info_key]['type'] == 'image'
+                                    = $isImageAttribute
                                         && is_array($objectValue)
                                         && isset($objectValue['load']['data'])
                                         ? $objectValue['load']['data']
