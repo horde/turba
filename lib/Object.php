@@ -260,6 +260,12 @@ class Turba_Object
         // is better than dropping them.
         foreach ($this->_attributeFields as $type => $values) {
             foreach ($values as $value) {
+                if ($type === 'email'
+                    && (!is_string($value)
+                        || $value === ''
+                        || preg_match('/^,*$/', trim($value)))) {
+                    continue;
+                }
                 foreach (array_keys($this->driver->map) as $attribute) {
                     if (isset($attributes[$attribute])
                         && $attributes[$attribute]['type'] == $type
