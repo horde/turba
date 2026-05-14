@@ -2800,20 +2800,33 @@ class Turba_Driver implements Countable
                     break;
 
                 case 'email':
-                    $message->email1address = $value;
+                    if (!self::_isPlaceholderEmail($value)) {
+                        $message->email1address = $value;
+                    }
                     break;
 
                 case 'homeEmail':
-                    $message->email2address = $value;
+                    if (!self::_isPlaceholderEmail($value)) {
+                        $message->email2address = $value;
+                    }
                     break;
 
                 case 'workEmail':
-                    $message->email3address = $value;
+                    if (!self::_isPlaceholderEmail($value)) {
+                        $message->email3address = $value;
+                    }
                     break;
 
                 case 'emails':
+                    if (self::_isPlaceholderEmail($value)) {
+                        break;
+                    }
                     $address = 1;
                     foreach (explode(',', $value) as $email) {
+                        $email = trim($email);
+                        if (self::_isPlaceholderEmail($email)) {
+                            continue;
+                        }
                         while ($address <= 3
                                && $message->{'email' . $address . 'address'}) {
                             $address++;
@@ -2892,6 +2905,29 @@ class Turba_Driver implements Countable
     }
 
     /**
+     * Detect placeholder ActiveSync email values that should not be stored or
+     * exported.
+     *
+     * @param mixed $value  The email value to check.
+     *
+     * @return boolean  True if the value is empty or comma-only.
+     */
+    protected static function _isPlaceholderEmail($value)
+    {
+        if ($value === null) {
+            return true;
+        }
+
+        if (!is_string($value)) {
+            return false;
+        }
+
+        $value = trim($value);
+
+        return $value === '' || preg_match('/^,+$/', $value);
+    }
+
+    /**
      * Convert an ActiveSync contact message into a hash suitable for
      * importing via self::add().
      *
@@ -2940,21 +2976,29 @@ class Turba_Driver implements Countable
         }
 
         /* Email addresses */
-        $hash['emails'] = [];
+        $emailParts = [];
         if (!$message->isGhosted('email1address')) {
             $e = Horde_Icalendar_Vcard::getBareEmail($message->email1address);
-            $hash['emails'][] = $hash['email'] = $e ? $e : '';
-
+            $hash['email'] = $e ?: '';
+            if ($e) {
+                $emailParts[] = $e;
+            }
         }
         if (!$message->isGhosted('email2address')) {
             $e = Horde_Icalendar_Vcard::getBareEmail($message->email2address);
-            $hash['emails'][] = $hash['homeEmail'] = $e ? $e : '';
+            $hash['homeEmail'] = $e ?: '';
+            if ($e) {
+                $emailParts[] = $e;
+            }
         }
         if (!$message->isGhosted('email3address')) {
             $e = Horde_Icalendar_Vcard::getBareEmail($message->email3address);
-            $hash['emails'][] = $hash['workEmail'] = $e ? $e : '';
+            $hash['workEmail'] = $e ?: '';
+            if ($e) {
+                $emailParts[] = $e;
+            }
         }
-        $hash['emails'] = implode(',', $hash['emails']);
+        $hash['emails'] = $emailParts ? implode(',', $emailParts) : '';
 
         /* Categories */
         if (!$message->isGhosted('categories') && empty($message->categories)) {
