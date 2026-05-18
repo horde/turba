@@ -46,7 +46,7 @@ license:
   uri: http://www.horde.org/licenses/apache
 dependencies:
   required:
-    php: ^7.4 || ^8
+    php: ^8.1
     composer:
       horde/content: ^3
       horde/horde: ^6
@@ -98,5 +98,8 @@ autoload:
   classmap:
     - lib/
   psr-4:
-    Horde\Turba\: /src
+    Horde\Turba\: src/
 vendor: horde
+keywords:
+  - contacts
+  - addressbook
