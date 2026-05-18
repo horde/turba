@@ -67,6 +67,15 @@ div.editGroupMembers span.iconImg {
     background-image: url("graphics/search.png");
 }
 
+/* Contact photo field only (class set in Turba_Ui_VarRenderer_Html).
+ * Horde default theme limits all .horde-form td img to 16px (for inline icons). */
+.horde-form img.turba-contact-photo {
+    max-width: 250px;
+    max-height: 250px;
+    width: auto;
+    height: auto;
+}
+
 /* Tables. */
 table#addressbook-list {
     width: 99%;
