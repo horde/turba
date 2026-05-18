@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Turba view.php.
  *
- * Copyright 2004-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2004-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -14,10 +16,10 @@
 require_once __DIR__ . '/lib/Application.php';
 Horde_Registry::appInit('turba');
 
-$source = Horde_Util::getFormData('source');
-$key = Horde_Util::getFormData('key');
-$filename = Horde_Util::getFormData('file');
-$type = Horde_Util::getFormData('type');
+$source = Util::getFormData('source');
+$key = Util::getFormData('key');
+$filename = Util::getFormData('file');
+$type = Util::getFormData('type');
 
 /* Get the object. */
 if (!isset($cfgSources[$source])) {

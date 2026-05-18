@@ -3,7 +3,7 @@
 /**
  * Turba directory driver implementation for PHP's LDAP extension.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you did
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -16,6 +16,7 @@
  */
 
 use Horde\Util\HordeString;
+use Horde\Util\Util;
 
 class Turba_Driver_Ldap extends Turba_Driver
 {
@@ -43,7 +44,7 @@ class Turba_Driver_Ldap extends Turba_Driver
      */
     public function __construct($name = '', array $params = [])
     {
-        if (!Horde_Util::extensionExists('ldap')) {
+        if (!Util::extensionExists('ldap')) {
             throw new Turba_Exception(_("LDAP support is required but the LDAP module is not available or not loaded."));
         }
 

@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Merges one contact into another.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -14,12 +16,12 @@
 require_once __DIR__ . '/lib/Application.php';
 Horde_Registry::appInit('turba');
 
-$source = Horde_Util::getFormData('source');
-$key = Horde_Util::getFormData('key');
-$mergeInto = Horde_Util::getFormData('merge_into');
+$source = Util::getFormData('source');
+$key = Util::getFormData('key');
+$mergeInto = Util::getFormData('merge_into');
 $driver = $injector->getInstance('Turba_Factory_Driver')->create($source);
 
-if ($url = Horde::verifySignedUrl(Horde_Util::getFormData('url'))) {
+if ($url = Horde::verifySignedUrl(Util::getFormData('url'))) {
     $url = new Horde_Url($url, true);
     $url = $url->unique();
 } else {

@@ -21,6 +21,7 @@ use Turba;
 use Turba_Driver;
 use Turba_Exception;
 use Turba_Object;
+use Horde;
 
 /**
  * Admin diagnostic tool for inspecting address book backends.
@@ -53,7 +54,7 @@ class AdminSchemaTestController implements RequestHandlerInterface
                 'horde.error'
             );
             return $this->redirect(
-                (string) \Horde::url('', true)
+                (string) Horde::url('', true)
             );
         }
 

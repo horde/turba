@@ -3,7 +3,7 @@
 /**
  * Turba data.php.
  *
- * Copyright 2001-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2001-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -299,8 +299,8 @@ if (is_array($next_step)) {
                 /* Check for, and validate, any email fields */
                 foreach (array_keys($row) as $field) {
                     if ($attributes[$field]['type'] == 'email') {
-                        $allow_multi = is_array($attributes[$field]['params']) &&
-                            !empty($attributes[$field]['params']['allow_multi']);
+                        $allow_multi = is_array($attributes[$field]['params'])
+                            && !empty($attributes[$field]['params']['allow_multi']);
 
                         $rfc822 = $injector->getInstance('Horde_Mail_Rfc822');
                         try {
@@ -384,8 +384,8 @@ if ($next_step == Horde_Data::IMPORT_FILE) {
     $source_options = [];
     foreach (Turba::getAddressBooks() as $key => $entry) {
         if (!empty($entry['export'])) {
-            $source_options[] = '<option value="' . htmlspecialchars($key) . '">' .
-                htmlspecialchars($entry['title']) . "</option>\n";
+            $source_options[] = '<option value="' . htmlspecialchars($key) . '">'
+                . htmlspecialchars($entry['title']) . "</option>\n";
             $unique_source = $key;
         }
     }
@@ -396,8 +396,8 @@ if ($next_step == Horde_Data::IMPORT_FILE) {
     $hasWriteable = false;
     foreach (Turba::getAddressBooks(Horde_Perms::EDIT) as $key => $entry) {
         $selected = ($key == $default_source) ? ' selected="selected"' : '';
-        $dest_options[] = '<option value="' . htmlspecialchars($key) . '" ' . $selected . '>' .
-            htmlspecialchars($entry['title']) . "</option>\n";
+        $dest_options[] = '<option value="' . htmlspecialchars($key) . '" ' . $selected . '>'
+            . htmlspecialchars($entry['title']) . "</option>\n";
         $unique_dest = $key;
         $hasWriteable = true;
     }
@@ -412,8 +412,8 @@ if ($next_step == Horde_Data::IMPORT_FILE) {
     if (!empty($bad_charset)) {
         $charsets = $registry->nlsconfig->encodings_sort;
         foreach ($registry->nlsconfig->charsets as $charset) {
-            if (!isset($charsets[$charset]) &&
-                !in_array($charset, $bad_charset)) {
+            if (!isset($charsets[$charset])
+                && !in_array($charset, $bad_charset)) {
                 $charsets[$charset] = $charset;
             }
         }

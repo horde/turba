@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Turba vcard.php.
  *
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -14,7 +16,7 @@
 require_once __DIR__ . '/lib/Application.php';
 Horde_Registry::appInit('turba');
 
-$source = Horde_Util::getFormData('source');
+$source = Util::getFormData('source');
 if (!isset($cfgSources[$source])) {
     $notification->push(_("The contact you requested does not exist."), 'horde.error');
     Horde::url($prefs->getValue('initial_page'), true)->redirect();
@@ -24,7 +26,7 @@ $driver = $injector->getInstance('Turba_Factory_Driver')->create($source);
 
 /* Set the contact from the key requested. */
 try {
-    $object = $driver->getObject(Horde_Util::getFormData('key'));
+    $object = $driver->getObject(Util::getFormData('key'));
 } catch (Horde_Exception $e) {
     $notification->push($e);
     Horde::url($prefs->getValue('initial_page'), true)->redirect();

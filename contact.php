@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Turba contact.php.
  *
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -57,7 +59,7 @@ if ($vars->get('action') == 'mark_own') {
 }
 
 // Get view.
-$viewName = Horde_Util::getFormData('view', 'Contact');
+$viewName = Util::getFormData('view', 'Contact');
 switch ($viewName) {
     case 'Contact':
         $view = new Turba_View_Contact($contact);
@@ -108,8 +110,8 @@ if ($contact->hasPermission(Horde_Perms::DELETE)) {
 }
 
 $owner = explode(';', $prefs->getValue('own_contact'));
-if (count($owner) == 2 &&
-    $owner[0] == $source && $owner[1] == $contact->getValue('__key')) {
+if (count($owner) == 2
+    && $owner[0] == $source && $owner[1] == $contact->getValue('__key')) {
     $own_icon = ' ' . Horde_Themes_Image::tag('user.png', [
         'alt' =>  _("Your own contact"),
         'attr' => ['title' => _("Your own contact")],

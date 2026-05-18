@@ -1,5 +1,7 @@
 <?php
 
+use Horde\Util\Util;
+
 require_once __DIR__ . '/KolabTestBase.php';
 
 /**
@@ -116,7 +118,7 @@ class Turba_ToDo_KolabTest extends Turba_KolabTestBase
         $share = &$list->getByShare('INBOX/Contacts', 'contact');
         $data = &$share->getData();
 
-        $atc1 = Horde_Util::getTempFile();
+        $atc1 = Util::getTempFile();
         $fh = fopen($atc1, 'w');
         fwrite($fh, 'test');
         fclose($fh);
@@ -135,7 +137,7 @@ class Turba_ToDo_KolabTest extends Turba_KolabTestBase
         $attachment = $data->getAttachment($object['_attachments']['test.txt']['key']);
         $this->assertEquals("test\n", $attachment);
 
-        $atc1 = Horde_Util::getTempFile();
+        $atc1 = Util::getTempFile();
         $fh = fopen($atc1, 'w');
         fwrite($fh, 'hhhh');
         fclose($fh);
@@ -154,7 +156,7 @@ class Turba_ToDo_KolabTest extends Turba_KolabTestBase
         $attachment = $data->getAttachment($object['_attachments']['test[1].txt']['key']);
         $this->assertEquals("hhhh\n", $attachment);
 
-        $atc1 = Horde_Util::getTempFile();
+        $atc1 = Util::getTempFile();
         $fh = fopen($atc1, 'w');
         fwrite($fh, 'dummy');
         fclose($fh);

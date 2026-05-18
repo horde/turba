@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you did
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -162,7 +162,7 @@ class Turba
      * @param string $source         Source.
      */
     public static function setPreferredSortOrder(
-        Variables|\Horde_Variables $vars,
+        Variables|Horde_Variables $vars,
         $source
     ) {
         if (!strlen((string) $sortby = $vars->get('sortby'))) {

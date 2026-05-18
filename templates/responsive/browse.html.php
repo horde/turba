@@ -16,7 +16,7 @@
     <main class="container turba-container">
         <div class="page-header">
             <h1><?php echo _("Contacts") ?></h1>
-            <a href="<?php echo htmlspecialchars(\Horde::url('responsive/add', true)) ?>" class="add-contact-btn">
+            <a href="<?php echo htmlspecialchars(Horde::url('responsive/add', true)) ?>" class="add-contact-btn">
                 <span class="add-contact-icon">+</span>
                 <?php echo _("Add Contact") ?>
             </a>
@@ -65,7 +65,7 @@
                                         <li class="contact-item"
                                             data-name="<?php echo htmlspecialchars(strtolower($contact['name'])) ?>"
                                             data-email="<?php echo htmlspecialchars(strtolower($contact['email'])) ?>">
-                                            <a href="<?php echo htmlspecialchars(\Horde::url('responsive/contact/' . $sourceKey . '/' . $contact['key'], true)) ?>"
+                                            <a href="<?php echo htmlspecialchars(Horde::url('responsive/contact/' . $sourceKey . '/' . $contact['key'], true)) ?>"
                                                class="contact-link">
                                                 <span class="contact-icon">
                                                     <?php if ($contact['isGroup']): ?>

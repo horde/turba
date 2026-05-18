@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is where you specify the sources of contacts available to users
  * at your installation. It contains a large number of EXAMPLES. Please
@@ -227,12 +228,12 @@
  * Be sure to create a turba_objects table in your Horde database from the
  * schema in turba/scripts/db/turba.sql if you use this source.
  */
-$cfgSources['localsql'] = array(
+$cfgSources['localsql'] = [
     // ENABLED by default
     'disabled' => false,
     'title' => _("Shared Address Books"),
     'type' => 'sql',
-    'params' => array(
+    'params' => [
         // The default connection details are pulled from the Horde-wide SQL
         // connection configuration.
         // To use another DB connection, you must provide configuration
@@ -249,9 +250,9 @@ $cfgSources['localsql'] = array(
         //    'splitread' => false,
         //    'phptype' => 'mysql'
         //),
-        'table' => 'turba_objects'
-    ),
-    'map' => array(
+        'table' => 'turba_objects',
+    ],
+    'map' => [
         '__key' => 'object_id',
         '__owner' => 'owner_id',
         '__type' => 'object_type',
@@ -262,16 +263,16 @@ $cfgSources['localsql'] = array(
         'middlenames' => 'object_middlenames',
         'namePrefix' => 'object_nameprefix',
         'nameSuffix' => 'object_namesuffix',
-        'name' => array('fields' => array('namePrefix', 'firstname',
-                                          'middlenames', 'lastname',
-                                          'nameSuffix'),
-                        'format' => '%s %s %s %s %s',
-                        'parse' => array(
-                            array('fields' => array('firstname', 'middlenames',
-                                                    'lastname'),
-                                  'format' => '%s %s %s'),
-                            array('fields' => array('firstname', 'lastname'),
-                                  'format' => '%s %s'))),
+        'name' => ['fields' => ['namePrefix', 'firstname',
+            'middlenames', 'lastname',
+            'nameSuffix'],
+            'format' => '%s %s %s %s %s',
+            'parse' => [
+                ['fields' => ['firstname', 'middlenames',
+                    'lastname'],
+                    'format' => '%s %s %s'],
+                ['fields' => ['firstname', 'lastname'],
+                    'format' => '%s %s']]],
         // This is a shorter version of a "name" composite field which only
         // consists of the first name and last name.
         // 'name' => array('fields' => array('firstname', 'lastname'),
@@ -291,51 +292,51 @@ $cfgSources['localsql'] = array(
         'homeProvince' => 'object_homeprovince',
         'homePostalCode' => 'object_homepostalcode',
         'homeCountry' => 'object_homecountry',
-        'homeAddress' => array('fields' => array('homeStreet', 'homeCity',
-                                                 'homeProvince',
-                                                 'homePostalCode'),
-                               'format' => "%s\n%s, %s  %s",
-                               'parse' => array(
-                                    array('fields' => array('homeStreet',
-                                                            'homeCity',
-                                                            'homeProvince',
-                                                            'homePostalCode'),
-                                          'format' => "%[^\n]\n %[^\w,], %s %s"
-                                ))),
+        'homeAddress' => ['fields' => ['homeStreet', 'homeCity',
+            'homeProvince',
+            'homePostalCode'],
+            'format' => "%s\n%s, %s  %s",
+            'parse' => [
+                ['fields' => ['homeStreet',
+                    'homeCity',
+                    'homeProvince',
+                    'homePostalCode'],
+                    'format' => "%[^\n]\n %[^\w,], %s %s",
+                ]]],
         'workStreet' => 'object_workstreet',
         'workPOBox' => 'object_workpob',
         'workCity' => 'object_workcity',
         'workProvince' => 'object_workprovince',
         'workPostalCode' => 'object_workpostalcode',
         'workCountry' => 'object_workcountry',
-        'workAddress' => array('fields' => array('workStreet', 'workCity',
-                                                 'workProvince',
-                                                 'workPostalCode'),
-                               'format' => "%s\n%s, %s  %s",
-                               'parse' => array(
-                                    array('fields' => array('workStreet',
-                                                            'workCity',
-                                                            'workProvince',
-                                                            'workPostalCode'),
-                                          'format' => "%[^\n]\n %[^\w,], %s %s"
-                                ))),
+        'workAddress' => ['fields' => ['workStreet', 'workCity',
+            'workProvince',
+            'workPostalCode'],
+            'format' => "%s\n%s, %s  %s",
+            'parse' => [
+                ['fields' => ['workStreet',
+                    'workCity',
+                    'workProvince',
+                    'workPostalCode'],
+                    'format' => "%[^\n]\n %[^\w,], %s %s",
+                ]]],
         'otherStreet' => 'object_otherstreet',
         'otherPOBox' => 'object_otherpob',
         'otherCity' => 'object_othercity',
         'otherProvince' => 'object_otherprovince',
         'otherPostalCode' => 'object_otherpostalcode',
         'otherCountry' => 'object_othercountry',
-        'otherAddress' => array('fields' => array('otherStreet', 'otherCity',
-                                                  'otherProvince',
-                                                  'otherPostalCode'),
-                                'format' => "%s\n%s, %s  %s",
-                                'parse' => array(
-                                    array('fields' => array('otherStreet',
-                                                            'otherCity',
-                                                            'otherProvince',
-                                                            'otherPostalCode'),
-                                          'format' => "%[^\n]\n %[^\w,], %s %s"
-                                ))),
+        'otherAddress' => ['fields' => ['otherStreet', 'otherCity',
+            'otherProvince',
+            'otherPostalCode'],
+            'format' => "%s\n%s, %s  %s",
+            'parse' => [
+                ['fields' => ['otherStreet',
+                    'otherCity',
+                    'otherProvince',
+                    'otherPostalCode'],
+                    'format' => "%[^\n]\n %[^\w,], %s %s",
+                ]]],
         'department' => 'object_department',
         'manager' => 'object_manager',
         'assistant' => 'object_assistant',
@@ -367,48 +368,48 @@ $cfgSources['localsql'] = array(
         'smimePublicKey' => 'object_smimepublickey',
         'imaddress' => 'object_imaddress',
         'imaddress2' => 'object_imaddress2',
-        'imaddress3' => 'object_imaddress3'
-    ),
-    'tabs' => array(
-        _("Personal") => array('firstname', 'lastname', 'middlenames',
-                               'namePrefix', 'nameSuffix', 'name', 'alias',
-                               'birthday', 'spouse', 'anniversary',
-                               'yomifirstname', 'yomilastname', 'photo'),
-        _("Location") => array('homeStreet', 'homePOBox', 'homeCity',
-                               'homeProvince', 'homePostalCode', 'homeCountry',
-                               'homeAddress', 'workStreet', 'workPOBox',
-                               'workCity', 'workProvince', 'workPostalCode',
-                               'workCountry', 'workAddress', 'otherStreet',
-                               'otherPOBox', 'otherCity', 'otherProvince',
-                               'otherPostalCode', 'otherCountry',
-                               'otherAddress','timezone'),
-        _("Communications") => array('email', 'homeEmail', 'workEmail',
-                                     'homePhone', 'homePhone2',
-                                     'workPhone', 'workPhone2', 'carPhone',
-                                     'radioPhone', 'companyPhone',
-                                     'assistPhone', 'homeFax',
-                                     'cellPhone', 'fax', 'pager', 'imaddress',
-                                     'imaddress2', 'imaddress3'),
-        _("Organization") => array('title', 'role', 'company', 'department', 'logo', 'assistant', 'manager'),
-        _("Other") => array('notes', 'website', 'freebusyUrl',
-                            'pgpPublicKey', 'smimePublicKey'),
-    ),
-    'search' => array(
+        'imaddress3' => 'object_imaddress3',
+    ],
+    'tabs' => [
+        _("Personal") => ['firstname', 'lastname', 'middlenames',
+            'namePrefix', 'nameSuffix', 'name', 'alias',
+            'birthday', 'spouse', 'anniversary',
+            'yomifirstname', 'yomilastname', 'photo'],
+        _("Location") => ['homeStreet', 'homePOBox', 'homeCity',
+            'homeProvince', 'homePostalCode', 'homeCountry',
+            'homeAddress', 'workStreet', 'workPOBox',
+            'workCity', 'workProvince', 'workPostalCode',
+            'workCountry', 'workAddress', 'otherStreet',
+            'otherPOBox', 'otherCity', 'otherProvince',
+            'otherPostalCode', 'otherCountry',
+            'otherAddress','timezone'],
+        _("Communications") => ['email', 'homeEmail', 'workEmail',
+            'homePhone', 'homePhone2',
+            'workPhone', 'workPhone2', 'carPhone',
+            'radioPhone', 'companyPhone',
+            'assistPhone', 'homeFax',
+            'cellPhone', 'fax', 'pager', 'imaddress',
+            'imaddress2', 'imaddress3'],
+        _("Organization") => ['title', 'role', 'company', 'department', 'logo', 'assistant', 'manager'],
+        _("Other") => ['notes', 'website', 'freebusyUrl',
+            'pgpPublicKey', 'smimePublicKey'],
+    ],
+    'search' => [
         'name',
-        'email'
-    ),
-    'strict' => array(
+        'email',
+    ],
+    'strict' => [
         'object_id',
         'owner_id',
         'object_type',
-        'object_uid'
-    ),
+        'object_uid',
+    ],
     'export' => true,
     'browse' => true,
     'use_shares' => true,
     'list_name_field' => 'lastname',
     'alternative_name' => 'company',
-);
+];
 
 /**
  * A local address book in an LDAP directory. This implements a public
@@ -420,12 +421,12 @@ $cfgSources['localsql'] = array(
  * To store freebusy information in the LDAP directory, you'll need to include
  * rfc2739.schema from Horde in your LDAP configuration.
  */
-$cfgSources['localldap'] = array(
+$cfgSources['localldap'] = [
     // Disabled by default
     'disabled' => true,
     'title' => _("Shared Directory"),
     'type' => 'ldap',
-    'params' => array(
+    'params' => [
         'server' => 'ldap.example.com',
         'port' => 389,
         'tls' => false,
@@ -437,14 +438,14 @@ $cfgSources['localldap'] = array(
         'sizelimit' => 200,
         // For Active Directory:
         // 'sizelimit' => 0,
-        'dn' => array('cn'),
-        'objectclass' => array('person',
-                               'organizationalPerson',
-                               'inetOrgPerson'),
-                               // The filter is "or" (any of the listed classes is a match)
-                               // Add 'turbaContact' to this array if using
-                               // 'turbaType' attribute below, and 'calEntry'
-                               // if using 'freebusyUrl'.
+        'dn' => ['cn'],
+        'objectclass' => ['person',
+            'organizationalPerson',
+            'inetOrgPerson'],
+        // The filter is "or" (any of the listed classes is a match)
+        // Add 'turbaContact' to this array if using
+        // 'turbaType' attribute below, and 'calEntry'
+        // if using 'freebusyUrl'.
         // For Active Directory:
         // 'objectclass' => array('organizationalPerson',
         //                        'user',
@@ -470,8 +471,8 @@ $cfgSources['localldap'] = array(
         // 'deref' => LDAP_DEREF_ALWAYS,
         // 'filter' => '&(SAMAccountName=*)(mail=*)',
         // 'referrals' => 0,
-    ),
-    'map' => array(
+    ],
+    'map' => [
         '__key' => 'dn',
 
         // Remove this mapping if using Active Directory server:
@@ -498,21 +499,21 @@ $cfgSources['localldap'] = array(
         // 'cellPhone' => 'mobile',
         // 'department' => 'department',
         // 'company' => 'company',
-    ),
-    'search' => array(
+    ],
+    'search' => [
         'name',
         'email',
         'homePhone',
         'workPhone',
         'cellPhone',
-        'homeAddress'
-    ),
-    'strict' => array(
-        'dn', 'uid'
-    ),
-    'approximate' => array(
+        'homeAddress',
+    ],
+    'strict' => [
+        'dn', 'uid',
+    ],
+    'approximate' => [
         'cn',
-    ),
+    ],
     // For Active Directory servers:
     // 'approximate' => array(
     //     'displayname',
@@ -520,7 +521,7 @@ $cfgSources['localldap'] = array(
     // ),
     'export' => true,
     'browse' => true,
-);
+];
 
 /**
  * A personal LDAP address book. This assumes that the login is
@@ -538,30 +539,30 @@ $cfgSources['localldap'] = array(
 /* First we need to get the uid. */
 $_ldap_uid = $GLOBALS['registry']->getAuth('bare');
 $_ldap_basedn = 'dc=example,dc=com';
-$cfgSources['personal_ldap'] = array(
+$cfgSources['personal_ldap'] = [
     // Disabled by default
     'disabled' => true,
     'title' => _("My Address Book"),
     'type' => 'ldap',
-    'params' => array(
+    'params' => [
         'server' => 'localhost',
         'tls' => false,
         'root' => 'ou=' . $_ldap_uid . ',ou=personal_addressbook,' . $_ldap_basedn,
         'bind_dn' => 'uid=' . $_ldap_uid . ',ou=People,' . $_ldap_basedn,
         'bind_password' => $GLOBALS['registry']->getAuthCredential('password'),
-        'dn' => array('uid'),
-        'objectclass' => array('person',
-                               // 'turbaContact',
-                               'inetOrgPerson',
-                               // 'calEntry',
-                               'organizationalPerson'),
-                               // The filter is "or" (any of the listed classes is a match)
+        'dn' => ['uid'],
+        'objectclass' => ['person',
+            // 'turbaContact',
+            'inetOrgPerson',
+            // 'calEntry',
+            'organizationalPerson'],
+        // The filter is "or" (any of the listed classes is a match)
 
         'scope' => 'one',
         'charset' => 'utf-8',
-        'version' => 3
-    ),
-    'map' => array(
+        'version' => 3,
+    ],
+    'map' => [
         '__key' => 'dn',
         '__uid' => 'uid',
 
@@ -597,8 +598,8 @@ $cfgSources['personal_ldap'] = array(
 
         // From rfc2739.schema:
         // 'freebusyUrl' => 'calFBURL',
-    ),
-    'search' => array(
+    ],
+    'search' => [
         'name',
         'email',
         'businessCategory',
@@ -606,17 +607,17 @@ $cfgSources['personal_ldap'] = array(
         'homePhone',
         'workPhone',
         'cellPhone',
-        'homeAddress'
-    ),
-    'strict' => array(
-        'dn', 'uid'
-    ),
-    'approximate' => array(
+        'homeAddress',
+    ],
+    'strict' => [
+        'dn', 'uid',
+    ],
+    'approximate' => [
         'cn',
-    ),
+    ],
     'export' => true,
     'browse' => true,
-);
+];
 
 /**
  * A preferences-based address book. This will always be private. You can add
@@ -628,37 +629,37 @@ $cfgSources['personal_ldap'] = array(
  * that it is not searchable, though - searches will simply return the whole
  * address book.
  */
-$cfgSources['prefs'] = array(
+$cfgSources['prefs'] = [
     // Disabled by default
     'disabled' => true,
     'title' => _("Private Address Book"),
     'type' => 'prefs',
-    'params' => array(
+    'params' => [
         'name' => 'prefs',
-        'charset' => 'UTF-8'
-    ),
-    'map' => array(
+        'charset' => 'UTF-8',
+    ],
+    'map' => [
         '__key' => 'id',
         '__type' => '_type',
         '__members' => '_members',
         '__uid' => 'uid',
         'name' => 'name',
         'email' => 'mail',
-        'alias' => 'alias'
-    ),
-    'search' => array(
+        'alias' => 'alias',
+    ],
+    'search' => [
         'name',
         'email',
-        'alias'
-    ),
-    'strict' => array(
+        'alias',
+    ],
+    'strict' => [
         'id',
         '_type',
-        'uid'
-    ),
+        'uid',
+    ],
     'export' => true,
     'browse' => true,
-);
+];
 
 /**
  * An address book based on message recipients. This will always be private and
@@ -667,27 +668,27 @@ $cfgSources['prefs'] = array(
  * mail client that collects the most regular message recipients, like IMP
  * 4.2.
  */
-$cfgSources['favourites'] = array(
+$cfgSources['favourites'] = [
     // ENABLED by default
     'disabled' => false,
     'title' => _("Favorite Recipients"),
     'type' => 'favourites',
-    'params' => array(
-        'limit' => 10
-    ),
-    'map' => array(
+    'params' => [
+        'limit' => 10,
+    ],
+    'map' => [
         '__key' => 'email',
         'name' => 'email',
-        'email' => 'email'
-    ),
-    'search' => array(
-        'email'
-    ),
-    'strict' => array(
-    ),
+        'email' => 'email',
+    ],
+    'search' => [
+        'email',
+    ],
+    'strict' => [
+    ],
     'export' => true,
     'browse' => true,
-);
+];
 
 /**
  * This source creates an address book for each group the current user is a
@@ -778,23 +779,21 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
         $_imsp_auth_user = $GLOBALS['registry']->getAuth('bare');
         $_imsp_auth_pass = $GLOBALS['registry']->getAuthCredential('password');
     }
-    $cfgSources['imsp'] = array(
+    $cfgSources['imsp'] = [
         // ENABLED by default
         'disabled' => false,
         'title' => _("IMSP"),
         'type' => 'imsp',
-        'params' => array(
+        'params' => [
             'server'  => $GLOBALS['conf']['imsp']['server'],
             'port'    => $GLOBALS['conf']['imsp']['port'],
             'auth_method' => $GLOBALS['conf']['imsp']['auth_method'],
             // socket, command, and auth_mechanism are for imtest driver.
-            'socket'  => isset($GLOBALS['conf']['imsp']['socket']) ?
-                         $GLOBALS['conf']['imsp']['socket'] . $_imsp_auth_user . '.sck' :
-                         '',
-            'command' => isset($GLOBALS['conf']['imsp']['command']) ?
-                         $GLOBALS['conf']['imsp']['command'] : '' ,
-            'auth_mechanism' => isset($GLOBALS['conf']['imsp']['auth_mechanism']) ?
-                                $GLOBALS['conf']['imsp']['auth_mechanism'] : '',
+            'socket'  => isset($GLOBALS['conf']['imsp']['socket'])
+                         ? $GLOBALS['conf']['imsp']['socket'] . $_imsp_auth_user . '.sck'
+                         : '',
+            'command' => $GLOBALS['conf']['imsp']['command'] ?? '',
+            'auth_mechanism' => $GLOBALS['conf']['imsp']['auth_mechanism'] ?? '',
             'username' => $_imsp_auth_user,
             'password' => $_imsp_auth_pass,
             'name' => $_imsp_auth_user,
@@ -803,8 +802,8 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
             'contact_ownership' => false,
             // Dynamically generated acl rights for current user.
             'my_rights' => '',
-            ),
-        'map' => array(
+        ],
+        'map' => [
             '__key' => 'name',
             '__type' => '__type',
             '__members' => '__members',
@@ -819,20 +818,20 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
             'fax' => 'fax',
             'homePhone' => 'phone-home',
             'cellPhone' => 'cellphone',
-            'freebusyUrl' => 'freebusyUrl'
-            ),
-        'search' => array(
+            'freebusyUrl' => 'freebusyUrl',
+        ],
+        'search' => [
             'name',
             'email',
             'alias',
             'company',
-            'homePhone'
-            ),
-        'strict' => array('__uid'),
+            'homePhone',
+        ],
+        'strict' => ['__uid'],
         'export' => true,
         'browse' => true,
         'use_shares' => false,
-        );
+    ];
 
     /**
      * Get any other address books this user might be privy to.
@@ -841,8 +840,8 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
      * book above. Any entries defined explicitly in cfgSources[]
      * will override any entries gathered dynamically below.
      */
-     if (empty($cfgSources['imsp']['use_shares']) && !empty($cfgSources['imsp']['enabled'])) {
-         try {
+    if (empty($cfgSources['imsp']['use_shares']) && !empty($cfgSources['imsp']['enabled'])) {
+        try {
             $result = Horde_Core_Imsp_Utils::getAllBooks($cfgSources['imsp']);
             $resultCount = count($result);
             for ($i = 0; $i < $resultCount; ++$i) {
@@ -850,8 +849,8 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
                 // but set the acls from the server regardless.
                 $dup = false;
                 foreach ($cfgSources as $key => $thisSource) {
-                    if (($thisSource['type'] == 'imsp') &&
-                        ($thisSource['params']['name'] == $result[$i]['params']['name'])) {
+                    if (($thisSource['type'] == 'imsp')
+                        && ($thisSource['params']['name'] == $result[$i]['params']['name'])) {
 
                         $dup = true;
                         $acl = $result[$i]['params']['my_rights'];
@@ -866,6 +865,6 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
         } catch (Horde_Imsp_Exception $e) {
             $GLOBALS['notification']->push($e->getMessage());
         }
-     }
+    }
 }
 /* End IMSP sources. */

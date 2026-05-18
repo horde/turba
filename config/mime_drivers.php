@@ -1,4 +1,5 @@
 <?php
+
 /**
  * MIME Viewer configuration for Turba.
  *

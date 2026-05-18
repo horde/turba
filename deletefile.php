@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Turba deletefile.php.
  *
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -14,7 +16,7 @@
 require_once __DIR__ . '/lib/Application.php';
 Horde_Registry::appInit('turba');
 
-$source = Horde_Util::getPost('source');
+$source = Util::getPost('source');
 if ($source === null || !isset($cfgSources[$source])) {
     $notification->push(_("Not found"), 'horde.error');
     Horde::url($prefs->getValue('initial_page'), true)->redirect();
@@ -23,7 +25,7 @@ if ($source === null || !isset($cfgSources[$source])) {
 $driver = $injector->getInstance('Turba_Factory_Driver')->create($source);
 
 try {
-    $contact = $driver->getObject(Horde_Util::getPost('key'));
+    $contact = $driver->getObject(Util::getPost('key'));
 } catch (Horde_Exception $e) {
     $notification->push($e);
     Horde::url($prefs->getValue('initial_page'), true)->redirect();
@@ -34,7 +36,7 @@ if (!$contact->isEditable()) {
     Horde::url($prefs->getValue('initial_page'), true)->redirect();
 }
 
-$file = Horde_Util::getPost('file');
+$file = Util::getPost('file');
 
 try {
     $contact->deleteFile($file);

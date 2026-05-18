@@ -30,7 +30,7 @@
             </div>
         <?php else: ?>
             <div class="contact-form-container">
-                <form method="post" action="<?php echo htmlspecialchars(\Horde::url('responsive/add', true)) ?>" class="contact-form">
+                <form method="post" action="<?php echo htmlspecialchars(Horde::url('responsive/add', true)) ?>" class="contact-form">
                     <div class="form-group">
                         <label for="source" class="form-label">
                             <?php echo _("Address Book") ?> <span class="required">*</span>

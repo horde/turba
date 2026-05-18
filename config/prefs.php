@@ -1,4 +1,5 @@
 <?php
+
 /**
  * See horde/config/prefs.php for documentation on the structure of this file.
  *
@@ -9,66 +10,66 @@
  * use var/config/turba/prefs-servername.php.
  */
 
-$prefGroups['addressbooks'] = array(
+$prefGroups['addressbooks'] = [
     'column' => _("Address Books"),
     'label' => _("Address Books"),
     'desc' => _("Choose which address books to use."),
-    'members' => array('default_dir'),
-);
+    'members' => ['default_dir'],
+];
 
-$prefGroups['sync'] = array(
+$prefGroups['sync'] = [
     'column' => _("Address Books"),
     'label' => _("Synchronization Preferences"),
     'desc' => _("Choose which address books to use for synchronization with external devices."),
-    'members' => array('sync_books', 'activesync_no_multiplex'),
-);
+    'members' => ['sync_books', 'activesync_no_multiplex'],
+];
 
-$prefGroups['columns'] = array(
+$prefGroups['columns'] = [
     'column' => _("Display Preferences"),
     'label' => _("Column Preferences"),
     'desc' => _("Select which fields to display in the address lists."),
-    'members' => array('columnselect'),
-);
+    'members' => ['columnselect'],
+];
 
-$prefGroups['display'] = array(
+$prefGroups['display'] = [
     'column' => _("Display Preferences"),
     'label' => _("Display"),
     'desc' => _("Select view to display by default and paging preferences."),
-    'members' => array('initial_page', 'maxpage', 'perpage'),
-);
+    'members' => ['initial_page', 'maxpage', 'perpage'],
+];
 
-$prefGroups['format'] = array(
+$prefGroups['format'] = [
     'column' => _("Display Preferences"),
     'label' => _("Name Format"),
     'desc' => _("Select which format to display names."),
-    'members' => array('name_format', 'name_sort'),
-);
+    'members' => ['name_format', 'name_sort'],
+];
 
 // Address books use for synchronization
-$_prefs['sync_books'] = array(
+$_prefs['sync_books'] = [
     'value' => 'a:0:{}',
     'type' => 'multienum',
-    'enum' => array(),
+    'enum' => [],
     'desc' => _("Select the address books that should be used for synchronization with external devices:"),
-    'on_init' => function($ui) {
-        $enum = array();
+    'on_init' => function ($ui) {
+        $enum = [];
         $sync_books = @unserialize($GLOBALS['prefs']->getValue('sync_books'));
         if (empty($sync_books)) {
             $default_book = Turba::getDefaultAddressbook();
             $sync_list = !empty($default_book)
-                ? array($default_book)
-                : array();
+                ? [$default_book]
+                : [];
             $GLOBALS['prefs']->setValue('sync_books', serialize($sync_list));
         }
         foreach (Turba::getAddressBooks(Horde_Perms::DELETE) as $key => $val) {
-            if (!empty($val['map']['__uid']) &&
-                !empty($val['browse'])) {
+            if (!empty($val['map']['__uid'])
+                && !empty($val['browse'])) {
                 $enum[$key] = $val['title'];
             }
         }
         $ui->prefs['sync_books']['enum'] = $enum;
     },
-    'on_change' => function() {
+    'on_change' => function () {
         if ($GLOBALS['conf']['activesync']['enabled']) {
             try {
                 $sm = $GLOBALS['injector']->getInstance('Horde_ActiveSyncState');
@@ -76,14 +77,14 @@ $_prefs['sync_books'] = array(
                 $devices = $sm->listDevices($GLOBALS['registry']->getAuth());
                 foreach ($devices as $device) {
                     $device_ob = $sm->loadDeviceInfo($device['device_id'], $device['device_user']);
-                    if (!$GLOBALS['prefs']->getValue('activesync_no_multiplex') ||
-                        ($device_ob->multiplex & Horde_ActiveSync_Device::MULTIPLEX_CONTACTS)) {
+                    if (!$GLOBALS['prefs']->getValue('activesync_no_multiplex')
+                        || ($device_ob->multiplex & Horde_ActiveSync_Device::MULTIPLEX_CONTACTS)) {
                         $map = $sm->getFolderUidToBackendIdMap();
-                        $sm->removeState(array(
+                        $sm->removeState([
                             'devId' => $device['device_id'],
                             'id' => (!empty($map[Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID]) ? $map[Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID] : Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID),
-                            'user' => $GLOBALS['registry']->getAuth()
-                        ));
+                            'user' => $GLOBALS['registry']->getAuth(),
+                        ]);
                     }
                 }
                 $GLOBALS['notification']->push(_("All state removed for your ActiveSync devices. They will resynchronize next time they connect to the server."));
@@ -91,116 +92,116 @@ $_prefs['sync_books'] = array(
                 $GLOBALS['notification']->push(_("There was an error communicating with the ActiveSync server: %s"), $e->getMessage(), 'horde.error');
             }
         }
-    }
-);
+    },
+];
 
 // @todo We default to using multiplex since that is the current behavior
 // For Turba 5 we should default to separate.
-$_prefs['activesync_no_multiplex'] = array(
+$_prefs['activesync_no_multiplex'] = [
     'type' => 'checkbox',
     'desc' => _("Support separate address books?"),
-    'value' => 0
-);
+    'value' => 0,
+];
 
 // Columns selection widget
-$_prefs['columnselect'] = array(
+$_prefs['columnselect'] = [
     'type' => 'special',
-    'handler' => 'Turba_Prefs_Special_Columnselect'
-);
+    'handler' => 'Turba_Prefs_Special_Columnselect',
+];
 
 // Columns to be displayed in Browse and Search results, with entries
 // for the columns displayed for each address book.  Separate address
 // book stanzas with \n and columns with \t. The "name" column is
 // currently always displayed first and so cannot be modified here.
 // Double quotes MUST be used as in the example.
-$_prefs['columns'] = array(
-    'value' => "localsql\temail"
-);
+$_prefs['columns'] = [
+    'value' => "localsql\temail",
+];
 
 // user preferred sorting column
 // serialized array of hashes containing 'field' and 'ascending' keys
-$_prefs['sortorder'] = array(
-    'value' => 'a:1:{i:0;a:2:{s:5:"field";s:8:"lastname";s:9:"ascending";b:1;}}'
-);
+$_prefs['sortorder'] = [
+    'value' => 'a:1:{i:0;a:2:{s:5:"field";s:8:"lastname";s:9:"ascending";b:1;}}',
+];
 
 // number of maximum pages and items per page
-$_prefs['maxpage'] = array(
+$_prefs['maxpage'] = [
     'value' => 10,
     'type' => 'number',
     'desc' => _("Maximum number of pages"),
-);
+];
 
-$_prefs['perpage'] = array(
+$_prefs['perpage'] = [
     'value' => 20,
     'type' => 'number',
     'desc' => _("Number of items per page"),
-);
+];
 
 // the page to display.  Either 'browse.php' or 'search.php'
-$_prefs['initial_page'] = array(
+$_prefs['initial_page'] = [
     'value' => 'search.php',
     'type' => 'enum',
     'desc' => _("View to display by default:"),
-    'enum' => array(
+    'enum' => [
         'browse.php' => _("Address Book Listing"),
-        'search.php' => _("Search")
-    )
-);
+        'search.php' => _("Search"),
+    ],
+];
 
 // the format to display names.  Either 'last_first' or 'first_last'
-$_prefs['name_format'] = array(
+$_prefs['name_format'] = [
     'value' => 'none',
     'type' => 'enum',
     'desc' => _("Select the format used to <em>display</em> names:"),
-    'enum' => array(
+    'enum' => [
         'last_first' => _("\"Lastname, Firstname\" (ie. Doe, John)"),
         'first_last' => _("\"Firstname Lastname\"  (ie. John Doe)"),
-        'none' => _("no formatting")
-    )
-);
+        'none' => _("no formatting"),
+    ],
+];
 
 // the format to sort names.  Either 'last_first' or 'first_last'
-$_prefs['name_sort'] = array(
+$_prefs['name_sort'] = [
     'value' => 'none',
     'type' => 'enum',
     'desc' => _("Select the format used to <em>sort</em> names:"),
-    'enum' => array(
+    'enum' => [
         'last_first' => _("\"Lastname, Firstname\" (ie. Doe, John)"),
         'first_last' => _("\"Firstname Lastname\"  (ie. John Doe)"),
-        'none' => _("no formatting")
-    )
-);
+        'none' => _("no formatting"),
+    ],
+];
 
 // Default directory
-$_prefs['default_dir'] = array(
+$_prefs['default_dir'] = [
     'value' => '',
     // 'value' => 'localsql',
     'type' => 'enum',
-    'enum' => array(),
+    'enum' => [],
     'desc' => _("This will be the default address book when adding or importing contacts."),
-    'on_init' => function($ui) {
-        $enum = array();
+    'on_init' => function ($ui) {
+        $enum = [];
         foreach (Turba::getAddressBooks(Horde_Perms::EDIT) as $key => $info) {
             $enum[$key] = $info['title'];
         }
         $ui->prefs['default_dir']['enum'] = $enum;
     },
-    'on_change' => function() {
+    'on_change' => function () {
         $source = $GLOBALS['prefs']->getValue('default_dir');
         $GLOBALS['injector']
             ->getInstance('Turba_Factory_Driver')
             ->create($source)
             ->setDefaultShare($source);
     },
-);
+];
 
 // preference for holding any preferences-based addressbooks.
-$_prefs['prefbooks'] = array(
-    'value' => ''
-);
+$_prefs['prefbooks'] = [
+    'value' => '',
+];
 
 // Personal contact.
-$_prefs['own_contact'] = array(
+$_prefs['own_contact'] = [
     // The format is 'source_name;contact_id'.
-    'value' => ''
-);
+    'value' => '',
+];

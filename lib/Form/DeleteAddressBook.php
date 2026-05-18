@@ -1,5 +1,7 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Horde_Form for deleting address books.
  *
@@ -74,7 +76,7 @@ class Turba_Form_DeleteAddressBook extends Horde_Form
             throw new Turba_Exception($e);
         }
 
-        if ($GLOBALS['session']->get('turba', 'source') == Horde_Util::getFormData('deleteshare')) {
+        if ($GLOBALS['session']->get('turba', 'source') == Util::getFormData('deleteshare')) {
             $GLOBALS['session']->remove('turba', 'source');
         }
     }

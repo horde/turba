@@ -80,7 +80,7 @@
                                                             echo '📍 ';
                                                             break;
                                                     }
-                                                    ?>
+                                                ?>
                                                     <?php echo htmlspecialchars($field['value']) ?>
                                                 </a>
                                             <?php else: ?>

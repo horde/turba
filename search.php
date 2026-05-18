@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * Turba search.php.
  *
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -76,7 +78,7 @@ try {
 if ($driver) {
     $map = $driver->getCriteria();
     $do_search = false;
-    $submitted = Horde_Util::getFormData('search');
+    $submitted = Util::getFormData('search');
     $browsable = !empty($cfgSources[$source]['browse']) && !empty($submitted);
     switch ($search_mode) {
         case 'advanced':

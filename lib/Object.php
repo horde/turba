@@ -1,9 +1,10 @@
 <?php
 
 use Horde\Date\Format as DateFormat;
+use Horde\Util\Util;
 
 /**
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you did
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -342,7 +343,7 @@ class Turba_Object
         $native = $this->getValue('__nativemodified');
         if ($native) {
             // Normalize before storing
-            $dt = new \Horde_Date($native);
+            $dt = new Horde_Date($native);
             $ts = $dt->timestamp();
             $this->setValue('__modified', $ts);
             return $ts;
@@ -625,7 +626,7 @@ class Turba_Object
         $delform = '<form action="'
             . Horde::url('deletefile.php')
             . '" style="display:inline" method="post">'
-            . Horde_Util::formInput()
+            . Util::formInput()
             . '<input type="hidden" name="file" value="' . htmlspecialchars($file['name'] ?? '') . '" />'
             . '<input type="hidden" name="source" value="' . htmlspecialchars($this->driver->getName()) . '" />'
             . '<input type="hidden" name="key" value="' . htmlspecialchars($this->getValue('__key') ?? '') . '" />'

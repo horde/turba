@@ -1,9 +1,11 @@
 <?php
 
+use Horde\Util\Util;
+
 /**
  * This class provides the Turba configuration for the test script.
  *
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -66,13 +68,13 @@ class Turba_Test extends Horde_Test
         $ret = '<h1>LDAP Support Test</h1>';
 
         $params = [
-            'server' => Horde_Util::getPost('server'),
-            'port' => Horde_Util::getPost('port', 389),
-            'basedn' => Horde_Util::getPost('basedn'),
-            'user' => Horde_Util::getPost('user'),
-            'passwd' => Horde_Util::getPost('passwd'),
-            'filter' => Horde_Util::getPost('filter'),
-            'proto' => Horde_Util::getPost('proto'),
+            'server' => Util::getPost('server'),
+            'port' => Util::getPost('port', 389),
+            'basedn' => Util::getPost('basedn'),
+            'user' => Util::getPost('user'),
+            'passwd' => Util::getPost('passwd'),
+            'filter' => Util::getPost('filter'),
+            'proto' => Util::getPost('proto'),
         ];
 
         if (!empty($params['server'])

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Turba Attributes File.
  *
@@ -57,66 +58,66 @@
  */
 
 /* Personal stuff. */
-$attributes['name'] = array(
+$attributes['name'] = [
     'label' => _("Name"),
     'type' => 'text',
     'required' => true,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['firstname'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['firstname'] = [
     'label' => _("First Name"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['lastname'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['lastname'] = [
     'label' => _("Last Name"),
     'type' => 'text',
     'required' => true,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['middlenames'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['middlenames'] = [
     'label' => _("Middle Names"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['namePrefix'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['namePrefix'] = [
     'label' => _("Name Prefixes"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 32, 'maxlength' => 32)
-);
-$attributes['nameSuffix'] = array(
+    'params' => ['regex' => '', 'size' => 32, 'maxlength' => 32],
+];
+$attributes['nameSuffix'] = [
     'label' => _("Name Suffixes"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 32, 'maxlength' => 32)
-);
-$attributes['alias'] = array(
+    'params' => ['regex' => '', 'size' => 32, 'maxlength' => 32],
+];
+$attributes['alias'] = [
     'label' => _("Alias"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 32)
-);
-$attributes['nickname'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 32],
+];
+$attributes['nickname'] = [
     'label' => _("Nickname"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 32, 'maxlength' => 32)
-);
-$attributes['yomifirstname'] = array(
+    'params' => ['regex' => '', 'size' => 32, 'maxlength' => 32],
+];
+$attributes['yomifirstname'] = [
     'label' => _("Phonetic First Name"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['yomilastname'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['yomilastname'] = [
     'label' => _("Phonetic Last Name"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
 
 /**
  * DATE FIELD FORMAT CONFIGURATION
@@ -152,625 +153,625 @@ $attributes['yomilastname'] = array(
  * @see Turba_Application::_normalizeDateAttributes() for implementation
  * @since Turba 5.0.0 (Horde 6.0.0)
  */
-$attributes['birthday'] = array(
+$attributes['birthday'] = [
     'label' => _("Birthday"),
     'type' => 'monthdayyear',
     'required' => false,
-    'params' => array('start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => 'yyyy-MM-dd'),
+    'params' => ['start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => 'yyyy-MM-dd'],
     'time_object_label' => _("Birthdays"),
-);
-$attributes['anniversary'] = array(
+];
+$attributes['anniversary'] = [
     'label' => _("Anniversary"),
     'type' => 'monthdayyear',
-    'params' => array('start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => 'yyyy-MM-dd'),
+    'params' => ['start_year' => date('Y'), 'end_year' => 1900, 'picker' => true, 'format_in' => 'yyyy-MM-dd'],
     'required' => false,
     'time_object_label' => _("Anniversaries"),
-);
-$attributes['spouse'] = array(
+];
+$attributes['spouse'] = [
     'label' => _("Spouse"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['children'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['children'] = [
     'label' => _("Children"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['photo'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['photo'] = [
     'label' => _("Photo"),
     'type' => 'image',
     'required' => false,
-    'params' => array('show_upload' => true, 'show_keeporig' => true, 'max_filesize'  => null),
-);
-$attributes['photo_orig'] = array(
+    'params' => ['show_upload' => true, 'show_keeporig' => true, 'max_filesize'  => null],
+];
+$attributes['photo_orig'] = [
     'label' => _("Original Photo"),
     'type' => 'image',
     'required' => false,
-    'params' => array('show_upload' => false, 'show_keeporig' => true, 'max_filesize'  => null),
-);
-$attributes['phototype'] = array(
+    'params' => ['show_upload' => false, 'show_keeporig' => true, 'max_filesize'  => null],
+];
+$attributes['phototype'] = [
     'label' => _("Photo MIME Type"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
 
 /* Locations, addresses. */
-$attributes['homeAddress'] = array(
+$attributes['homeAddress'] = [
     'label' => _("Home Address"),
     'type' => 'address',
     'required' => false,
-    'params' => array('rows' => 3, 'cols' => 40)
-);
-$attributes['homeStreet'] = array(
+    'params' => ['rows' => 3, 'cols' => 40],
+];
+$attributes['homeStreet'] = [
     'label' => _("Home Street Address"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['homePOBox'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['homePOBox'] = [
     'label' => _("Home Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['homeCity'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['homeCity'] = [
     'label' => _("Home City"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['homeProvince'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['homeProvince'] = [
     'label' => _("Home State/Province"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['homePostalCode'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['homePostalCode'] = [
     'label' => _("Home Postal Code"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['homeCountry'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['homeCountry'] = [
     'label' => _("Home Country"),
     'type' => 'country',
     'required' => false,
-    'params' => array('prompt' => true)
-);
-$attributes['homeCountryFree'] = array(
+    'params' => ['prompt' => true],
+];
+$attributes['homeCountryFree'] = [
     'label' => _("Home Country"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workAddress'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workAddress'] = [
     'label' => _("Work Address"),
     'type' => 'address',
     'required' => false,
-    'params' => array('rows' => 3, 'cols' => 40)
-);
-$attributes['workStreet'] = array(
+    'params' => ['rows' => 3, 'cols' => 40],
+];
+$attributes['workStreet'] = [
     'label' => _("Work Street Address"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workPOBox'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workPOBox'] = [
     'label' => _("Work Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['workCity'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['workCity'] = [
     'label' => _("Work City"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workProvince'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workProvince'] = [
     'label' => _("Work State/Province"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workPostalCode'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workPostalCode'] = [
     'label' => _("Work Postal Code"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['workCountry'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['workCountry'] = [
     'label' => _("Work Country"),
     'type' => 'country',
     'required' => false,
-    'params' => array('prompt' => true)
-);
-$attributes['workCountryFree'] = array(
+    'params' => ['prompt' => true],
+];
+$attributes['workCountryFree'] = [
     'label' => _("Work Country"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['companyAddress'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['companyAddress'] = [
     'label' => _("Company Address"),
     'type' => 'address',
     'required' => false,
-    'params' => array('rows' => 3, 'cols' => 40)
-);
-$attributes['otherAddress'] = array(
+    'params' => ['rows' => 3, 'cols' => 40],
+];
+$attributes['otherAddress'] = [
     'label' => _("Other Address"),
     'type' => 'address',
     'required' => false,
-    'params' => array('rows' => 3, 'cols' => 40)
-);
-$attributes['otherStreet'] = array(
+    'params' => ['rows' => 3, 'cols' => 40],
+];
+$attributes['otherStreet'] = [
     'label' => _("Other Street Address"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['otherCity'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['otherCity'] = [
     'label' => _("Other City"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['otherProvince'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['otherProvince'] = [
     'label' => _("Other State/Province"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['otherPostalCode'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['otherPostalCode'] = [
     'label' => _("Other Postal Code"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['otherCountry'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['otherCountry'] = [
     'label' => _("Other Country"),
     'type' => 'country',
     'required' => false,
-    'params' => array('prompt' => true)
-);
-$attributes['otherCountryFree'] = array(
+    'params' => ['prompt' => true],
+];
+$attributes['otherCountryFree'] = [
     'label' => _("Other Country"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['otherPOBox'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['otherPOBox'] = [
     'label' => _("Other Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['timezone'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['timezone'] = [
     'label' => _("Time Zone"),
     'type' => 'enum',
-    'params' => array('values' => Horde_Nls::getTimezones(), 'prompt' => true),
-    'required' => false
-);
+    'params' => ['values' => Horde_Nls::getTimezones(), 'prompt' => true],
+    'required' => false,
+];
 
 /* Communication. */
-$attributes['email'] = array(
+$attributes['email'] = [
     'label' => _("Email"),
     'type' => 'email',
     'required' => false,
-    'params' => array('allow_multi' => false, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null)
-);
-$attributes['emails'] = array(
+    'params' => ['allow_multi' => false, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null],
+];
+$attributes['emails'] = [
     'label' => _("Emails"),
     'type' => 'email',
     'required' => false,
-    'params' => array('allow_multi' => true, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null)
-);
-$attributes['homePhone'] = array(
+    'params' => ['allow_multi' => true, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null],
+];
+$attributes['homePhone'] = [
     'label' => _("Home Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['homePhone2'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['homePhone2'] = [
     'label' => _("Home Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['workPhone'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['workPhone'] = [
     'label' => _("Work Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['workPhone2'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['workPhone2'] = [
     'label' => _("Work Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['assistPhone'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['assistPhone'] = [
     'label' => _("Assistant Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['companyPhone'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['companyPhone'] = [
     'label' => _("Company Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['cellPhone'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['cellPhone'] = [
     'label' => _("Mobile Phone"),
     'type' => 'cellphone',
-    'required' => false
-);
-$attributes['carPhone'] = array(
+    'required' => false,
+];
+$attributes['carPhone'] = [
     'label' => _("Car Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['radioPhone'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['radioPhone'] = [
     'label' => _("Radio Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['fax'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['fax'] = [
     'label' => _("Fax"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['homeFax'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['homeFax'] = [
     'label' => _("Home Fax"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['pager'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['pager'] = [
     'label' => _("Pager"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['imaddress'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['imaddress'] = [
     'label' => _("Instant Messenger"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['imaddress2'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['imaddress2'] = [
     'label' => _("Instant Messenger"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['imaddress3'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['imaddress3'] = [
     'label' => _("Instant Messenger"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
 
 /* Job, company, organization. */
-$attributes['title'] = array(
+$attributes['title'] = [
     'label' => _("Job Title"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['role'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['role'] = [
     'label' => _("Occupation"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['businessCategory'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['businessCategory'] = [
     'label' => _("Business Category"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['company'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['company'] = [
     'label' => _("Company"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['department'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['department'] = [
     'label' => _("Department"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['office'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['office'] = [
     'label' => _("Office"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['logo'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['logo'] = [
     'label' => _("Logo"),
     'type' => 'image',
     'required' => false,
-    'params' => array('show_upload' => true, 'show_keeporig' => true, 'max_filesize'  => null),
-);
-$attributes['logotype'] = array(
+    'params' => ['show_upload' => true, 'show_keeporig' => true, 'max_filesize'  => null],
+];
+$attributes['logotype'] = [
     'label' => _("Logo MIME Type"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
 
 /* Other */
-$attributes['notes'] = array(
+$attributes['notes'] = [
     'label' => _("Notes"),
     'type' => 'longtext',
     'required' => false,
-    'params' => array('rows' => 3, 'cols' => 40)
-);
-$attributes['website'] = array(
+    'params' => ['rows' => 3, 'cols' => 40],
+];
+$attributes['website'] = [
     'label' => _("Website URL"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['freebusyUrl'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['freebusyUrl'] = [
     'label' => _("Freebusy URL"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
 /**
  * TODO: Find a way to move globals access out of this use case, too
  */
 if (!empty($GLOBALS['conf']['gnupg']['path'])) {
-    $attributes['pgpPublicKey'] = array(
+    $attributes['pgpPublicKey'] = [
         'label' => _("PGP Public Key"),
         'type' => 'pgp',
         'required' => false,
-        'params' => array('gpg' => $GLOBALS['conf']['gnupg']['path'], 'temp_dir' => Horde::getTempDir(), 'rows' => 3, 'cols' => 40)
-    );
+        'params' => ['gpg' => $GLOBALS['conf']['gnupg']['path'], 'temp_dir' => Horde::getTempDir(), 'rows' => 3, 'cols' => 40],
+    ];
 } else {
-    $attributes['pgpPublicKey'] = array(
+    $attributes['pgpPublicKey'] = [
         'label' => _("PGP Public Key"),
         'type' => 'longtext',
         'required' => false,
-        'params' => array('rows' => 3, 'cols' => 40)
-    );
+        'params' => ['rows' => 3, 'cols' => 40],
+    ];
 }
-$attributes['smimePublicKey'] = array(
+$attributes['smimePublicKey'] = [
     'label' => _("S/MIME Public Certificate"),
     'type' => 'smime',
     'required' => false,
-    'params' => array('temp_dir' => Horde::getTempDir(), 'rows' => 3, 'cols' => 40)
-);
-$attributes['category'] = array(
+    'params' => ['temp_dir' => Horde::getTempDir(), 'rows' => 3, 'cols' => 40],
+];
+$attributes['category'] = [
     'label' => _("Category"),
     'type' => 'category',
-    'params' => array(),
-    'required' => false
-);
+    'params' => [],
+    'required' => false,
+];
 
 /* Additional attributes supported by Kolab */
-$attributes['kolabHomeServer'] = array(
+$attributes['kolabHomeServer'] = [
     'label' => _("Kolab Home Server"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['initials'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['initials'] = [
     'label' => _("Initials"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['manager'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['manager'] = [
     'label' => _("Manager"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['assistant'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['assistant'] = [
     'label' => _("Assistant"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['gender'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['gender'] = [
     'label' => _("Gender"),
     'type' => 'enum',
     'required' => false,
-    'params' => array('values' => array('male' => _("male"), 'female' => _("female")), 'prompt' => true),
-);
-$attributes['language'] = array(
+    'params' => ['values' => ['male' => _("male"), 'female' => _("female")], 'prompt' => true],
+];
+$attributes['language'] = [
     'label' => _("Language"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['latitude'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['latitude'] = [
     'label' => _("Latitude"),
     'type' => 'number',
     'required' => false,
-);
-$attributes['longitude'] = array(
+];
+$attributes['longitude'] = [
     'label' => _("Longitude"),
     'type' => 'number',
     'required' => false,
-);
+];
 
 /* Additional attributes supported by some SyncML clients */
-$attributes['workEmail'] = array(
+$attributes['workEmail'] = [
     'label' => _("Work Email"),
     'type' => 'email',
     'required' => false,
-    'params' => array('allow_multi' => false, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null)
-);
-$attributes['homeEmail'] = array(
+    'params' => ['allow_multi' => false, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null],
+];
+$attributes['homeEmail'] = [
     'label' => _("Home Email"),
     'type' => 'email',
     'required' => false,
-    'params' => array('allow_multi' => false, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null)
-);
-$attributes['phone'] = array(
+    'params' => ['allow_multi' => false, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null],
+];
+$attributes['phone'] = [
     'label' => _("Common Phone"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['workFax'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['workFax'] = [
     'label' => _("Work Fax"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['workCellPhone'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['workCellPhone'] = [
     'label' => _("Work Mobile Phone"),
     'type' => 'cellphone',
-    'required' => false
-);
-$attributes['homeCellPhone'] = array(
+    'required' => false,
+];
+$attributes['homeCellPhone'] = [
     'label' => _("Home Mobile Phone"),
     'type' => 'cellphone',
-    'required' => false
-);
-$attributes['videoCall'] = array(
+    'required' => false,
+];
+$attributes['videoCall'] = [
     'label' => _("Common Video Call"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['workVideoCall'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['workVideoCall'] = [
     'label' => _("Work Video Call"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['homeVideoCall'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['homeVideoCall'] = [
     'label' => _("Home Video Call"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['voip'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['voip'] = [
     'label' => _("VoIP"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['sip'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['sip'] = [
     'label' => _("SIP"),
     'type' => 'email',
     'required' => false,
-    'params' => array('allow_multi' => true, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null)
-);
-$attributes['ptt'] = array(
+    'params' => ['allow_multi' => true, 'strip_domain' => false, 'link_compose' => true, 'link_name' => null, 'delimiters' => ',', 'size' => null],
+];
+$attributes['ptt'] = [
     'label' => _("PTT"),
     'type' => 'phone',
     'required' => false,
-    'params' => array('size' => 15)
-);
-$attributes['commonExtended'] = array(
+    'params' => ['size' => 15],
+];
+$attributes['commonExtended'] = [
     'label' => _("Common Address Extended"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['commonStreet'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['commonStreet'] = [
     'label' => _("Common Street"),
     'type' => 'address',
     'required' => false,
-    'params' => array('rows' => 3, 'cols' => 40)
-);
-$attributes['commonPOBox'] = array(
+    'params' => ['rows' => 3, 'cols' => 40],
+];
+$attributes['commonPOBox'] = [
     'label' => _("Common Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['commonCity'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['commonCity'] = [
     'label' => _("Common City"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['commonProvince'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['commonProvince'] = [
     'label' => _("Common State/Province"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['commonPostalCode'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['commonPostalCode'] = [
     'label' => _("Common Postal Code"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 10, 'maxlength' => 10)
-);
-$attributes['commonCountry'] = array(
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+];
+$attributes['commonCountry'] = [
     'label' => _("Common Country"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['commonCountryFree'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['commonCountryFree'] = [
     'label' => _("Common Country"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workWebsite'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workWebsite'] = [
     'label' => _("Work Website URL"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workExtended'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workExtended'] = [
     'label' => _("Work Address Extended"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['workLatitude'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['workLatitude'] = [
     'label' => _("Work Latitude"),
     'type' => 'number',
     'required' => false,
-);
-$attributes['workLongitude'] = array(
+];
+$attributes['workLongitude'] = [
     'label' => _("Work Longitude"),
     'type' => 'number',
     'required' => false,
-);
-$attributes['homeWebsite'] = array(
+];
+$attributes['homeWebsite'] = [
     'label' => _("Home Website URL"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['homeExtended'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['homeExtended'] = [
     'label' => _("Home Address Extended"),
     'type' => 'text',
     'required' => false,
-    'params' => array('regex' => '', 'size' => 40, 'maxlength' => 255)
-);
-$attributes['homeLatitude'] = array(
+    'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
+];
+$attributes['homeLatitude'] = [
     'label' => _("Home Latitude"),
     'type' => 'number',
     'required' => false,
-);
-$attributes['homeLongitude'] = array(
+];
+$attributes['homeLongitude'] = [
     'label' => _("Home Longitude"),
     'type' => 'number',
     'required' => false,
-);
-$attributes['__tags'] = array(
+];
+$attributes['__tags'] = [
     'label' => _("Tags"),
     'type' => 'Turba:TurbaTags',
     'required' => false,
-);
+];

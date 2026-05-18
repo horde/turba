@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2010-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2010-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you did
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -18,6 +18,7 @@ use Horde\Date\Formatter\IcuFormatter;
 use Horde\Util\Variables;
 use Sabre\CalDAV;
 use Sabre\CardDAV;
+use Horde\Util\Util;
 
 /**
  * Turba application API.
@@ -139,7 +140,7 @@ class Turba_Application extends Horde_Registry_Application
             if (!(Turba::$source = $session->get('turba', 'source'))) {
                 Turba::$source = Turba::getDefaultAddressbook();
             }
-            Turba::$source = Horde_Util::getFormData('source', Turba::$source);
+            Turba::$source = Util::getFormData('source', Turba::$source);
         }
 
         $GLOBALS['browse_source_count'] = 0;
@@ -214,10 +215,10 @@ class Turba_Application extends Horde_Registry_Application
     public function menu($menu)
     {
         if ($GLOBALS['browse_source_count']) {
-            $menu->add(Horde::url('browse.php'), _("_Browse"), 'turba-browse', null, null, null, (($GLOBALS['prefs']->getValue('initial_page') == 'browse.php' && basename($_SERVER['PHP_SELF']) == 'index.php' && basename(dirname($_SERVER['PHP_SELF'])) != 'addressbooks') || (basename($_SERVER['PHP_SELF']) == 'browse.php' && Horde_Util::getFormData('key') != '**search')) ? 'current' : '__noselection');
+            $menu->add(Horde::url('browse.php'), _("_Browse"), 'turba-browse', null, null, null, (($GLOBALS['prefs']->getValue('initial_page') == 'browse.php' && basename($_SERVER['PHP_SELF']) == 'index.php' && basename(dirname($_SERVER['PHP_SELF'])) != 'addressbooks') || (basename($_SERVER['PHP_SELF']) == 'browse.php' && Util::getFormData('key') != '**search')) ? 'current' : '__noselection');
         }
 
-        $menu->add(Horde::url('search.php'), _("_Search"), 'turba-search', null, null, null, (($GLOBALS['prefs']->getValue('initial_page') == 'search.php' && basename($_SERVER['PHP_SELF']) == 'index.php' && strpos($_SERVER['PHP_SELF'], 'addressbooks/index.php') === false) || (basename($_SERVER['PHP_SELF']) == 'browse.php' && Horde_Util::getFormData('key') == '**search')) ? 'current' : null);
+        $menu->add(Horde::url('search.php'), _("_Search"), 'turba-search', null, null, null, (($GLOBALS['prefs']->getValue('initial_page') == 'search.php' && basename($_SERVER['PHP_SELF']) == 'index.php' && strpos($_SERVER['PHP_SELF'], 'addressbooks/index.php') === false) || (basename($_SERVER['PHP_SELF']) == 'browse.php' && Util::getFormData('key') == '**search')) ? 'current' : null);
 
         /* Import/Export */
         if ($GLOBALS['conf']['menu']['import_export']) {
@@ -710,7 +711,7 @@ class Turba_Application extends Horde_Registry_Application
      * @throws Turba_Exception
      * @throws Horde_Exception_NotFound
      */
-    public function download(Variables|\Horde_Variables $vars)
+    public function download(Variables|Horde_Variables $vars)
     {
         global $attributes, $cfgSources, $injector;
 
@@ -1253,8 +1254,8 @@ class Turba_Application extends Horde_Registry_Application
 
         foreach ($attributes as $field => &$config) {
             // Only process monthdayyear and datetime types
-            if (!isset($config['type']) ||
-                !in_array($config['type'], ['monthdayyear', 'datetime'])) {
+            if (!isset($config['type'])
+                || !in_array($config['type'], ['monthdayyear', 'datetime'])) {
                 continue;
             }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2000-2017 Horde LLC (http://www.horde.org/)
+ * Copyright 2000-2026 Horde LLC (http://www.horde.org/)
  *
  * See the enclosed file LICENSE for license information (ASL).  If you did
  * did not receive this file, see http://www.horde.org/licenses/apache.
@@ -2369,8 +2369,8 @@ class Turba_Driver implements Countable
                         }
                         if (!empty($address[Horde_Icalendar_Vcard::ADR_COUNTRY])) {
                             /* Countries */
-                            if (class_exists(\Horde_Nls_Loader::class)) {
-                                $countries = \Horde_Nls_Loader::loadCountries();
+                            if (class_exists(Horde_Nls_Loader::class)) {
+                                $countries = Horde_Nls_Loader::loadCountries();
                             } else {
                                 include 'Horde/Nls/Countries.php';
                             }
@@ -3034,8 +3034,8 @@ class Turba_Driver implements Countable
         }
 
         /* Countries */
-        if (class_exists(\Horde_Nls_Loader::class)) {
-            $countries = \Horde_Nls_Loader::loadCountries();
+        if (class_exists(Horde_Nls_Loader::class)) {
+            $countries = Horde_Nls_Loader::loadCountries();
         } else {
             include 'Horde/Nls/Countries.php';
         }
