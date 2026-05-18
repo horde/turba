@@ -12,6 +12,12 @@ use Horde_Date;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Exception;
+use Horde;
+use Horde_Exception;
+use Horde_Perms;
+use Turba;
+use Turba_Exception;
 
 /**
  * Responsive Contacts Controller
@@ -79,24 +85,26 @@ class ResponsiveController implements RequestHandlerInterface
         // Load contacts from all browseable sources
         $contactList = [];
         if ($browse_source_count) {
-            foreach (\Turba::getAddressBooks() as $key => $val) {
+            foreach (Turba::getAddressBooks() as $key => $val) {
                 if (!empty($val['browse'])) {
                     try {
                         $driver = $injector->getInstance('Turba_Factory_Driver')->create($key);
-                    } catch (\Turba_Exception $e) {
+                    } catch (Turba_Exception $e) {
                         continue;
                     }
 
                     try {
                         $contacts = $driver->search([], null, 'AND', ['__key', 'name', 'email', 'cellPhone', 'workPhone', 'homePhone']);
                         $contacts->reset();
-                    } catch (\Turba_Exception $e) {
+                    } catch (Turba_Exception $e) {
                         continue;
                     }
 
                     $sourceContacts = [];
                     while ($contact = $contacts->next()) {
-                        $name = \Turba::formatName($contact);
+                        $name = $contact->hasValue('name') || !isset($contact->driver->alternativeName)
+                            ? Turba::formatName($contact)
+                            : $contact->getValue($contact->driver->alternativeName);
 
                         // Determine primary phone for call action
                         $cellPhone = $contact->getValue('cellPhone');
@@ -174,13 +182,13 @@ class ResponsiveController implements RequestHandlerInterface
         try {
             $driver = $injector->getInstance('Turba_Factory_Driver')->create($source);
             $contact = $driver->getObject($key);
-        } catch (\Horde_Exception $e) {
+        } catch (Horde_Exception $e) {
             $notification->push(_("Addressbook entry could not be loaded."), 'horde.error');
             return $this->redirectToBrowse();
         }
 
         // Check permissions
-        if (!$contact->hasPermission(\Horde_Perms::READ)) {
+        if (!$contact->hasPermission(Horde_Perms::READ)) {
             $notification->push(_("You do not have permission to view this contact."), 'horde.error');
             return $this->redirectToBrowse();
         }
@@ -195,7 +203,7 @@ class ResponsiveController implements RequestHandlerInterface
         $viewData = [
             'topbar' => $topbar,
             'contact' => $contactData,
-            'backUrl' => \Horde::url('responsive', true),
+            'backUrl' => Horde::url('responsive', true),
             'cssUrls' => $responsiveAssets->getCssUrls('turba'),
             'jsUrls' => $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
         ];
@@ -223,8 +231,12 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $attributes, $registry;
 
+        $name = $contact->hasValue('name') || !isset($contact->driver->alternativeName)
+            ? Turba::formatName($contact)
+            : $contact->getValue($contact->driver->alternativeName);
+
         $data = [
-            'name' => \Turba::formatName($contact),
+            'name' => strlen($name) ? $name : ('[' . _("No Name") . ']'),
             'source' => $source,
             'key' => $contact->getValue('__key'),
             'isGroup' => $contact->isGroup(),
@@ -255,7 +267,7 @@ class ResponsiveController implements RequestHandlerInterface
 
             foreach ($fields as $fieldName) {
                 $value = $contact->getValue($fieldName);
-                if (!strlen((string)$value)) {
+                if (!strlen((string) $value)) {
                     continue;
                 }
 
@@ -281,7 +293,7 @@ class ResponsiveController implements RequestHandlerInterface
                                     $attributes[$fieldName]['params']['format_out'],
                                     $locale
                                 );
-                            } catch (\Exception $e) {
+                            } catch (Exception $e) {
                             }
                         }
                         break;
@@ -294,7 +306,7 @@ class ResponsiveController implements RequestHandlerInterface
                             $field['link'] = (string) $registry->call('mail/compose', [
                                 ['to' => $value],
                             ]);
-                        } catch (\Horde_Exception $e) {
+                        } catch (Horde_Exception $e) {
                             // Fallback to mailto
                             $field['link'] = 'mailto:' . urlencode($value);
                         }
@@ -340,7 +352,7 @@ class ResponsiveController implements RequestHandlerInterface
                         'url' => $composeUrl,
                         'type' => 'email',
                     ];
-                } catch (\Horde_Exception $e) {
+                } catch (Horde_Exception $e) {
                     $data['quickActions'][] = [
                         'icon' => '✉️',
                         'label' => _("Email"),
@@ -393,7 +405,7 @@ class ResponsiveController implements RequestHandlerInterface
             $data['quickActions'][] = [
                 'icon' => '💾',
                 'label' => _("Export"),
-                'url' => (string) \Horde::url('responsive/export/' . $source . '/' . $contact->getValue('__key'), true),
+                'url' => (string) Horde::url('responsive/export/' . $source . '/' . $contact->getValue('__key'), true),
                 'type' => 'export',
             ];
         }
@@ -405,13 +417,15 @@ class ResponsiveController implements RequestHandlerInterface
                 $members->reset();
 
                 while ($member = $members->next()) {
-                    $memberName = \Turba::formatName($member);
+                    $memberName = $member->hasValue('name') || !isset($member->driver->alternativeName)
+                        ? Turba::formatName($member)
+                        : $member->getValue($member->driver->alternativeName);
                     $data['groupMembers'][] = [
                         'name' => strlen($memberName) ? $memberName : '[' . _("No Name") . ']',
-                        'url' => \Horde::url('responsive/contact/' . $member->getSource() . '/' . $member->getValue('__key'), true),
+                        'url' => Horde::url('responsive/contact/' . $member->getSource() . '/' . $member->getValue('__key'), true),
                     ];
                 }
-            } catch (\Turba_Exception $e) {
+            } catch (Turba_Exception $e) {
                 // Ignore member loading errors
             }
         }
@@ -442,20 +456,20 @@ class ResponsiveController implements RequestHandlerInterface
         try {
             $driver = $injector->getInstance('Turba_Factory_Driver')->create($source);
             $contact = $driver->getObject($key);
-        } catch (\Horde_Exception $e) {
+        } catch (Horde_Exception $e) {
             $notification->push(_("Contact could not be loaded."), 'horde.error');
             return $this->redirectToBrowse();
         }
 
         // Check permissions
-        if (!$contact->hasPermission(\Horde_Perms::READ)) {
+        if (!$contact->hasPermission(Horde_Perms::READ)) {
             $notification->push(_("You do not have permission to view this contact."), 'horde.error');
             return $this->redirectToBrowse();
         }
 
         // Generate vCard
         $vcard = $driver->tovCard($contact, '3.0', null, true);
-        $filename = preg_replace('/[^\w\s\-]/', '', \Turba::formatName($contact)) . '.vcf';
+        $filename = preg_replace('/[^\w\s\-]/', '', Turba::formatName($contact)) . '.vcf';
         $filename = $filename ?: 'contact.vcf';
 
         $streamFactory = $injector->getInstance('Psr\\Http\\Message\\StreamFactoryInterface');
@@ -483,14 +497,14 @@ class ResponsiveController implements RequestHandlerInterface
         // Get writable address books
         $writableSources = [];
         if ($browse_source_count) {
-            foreach (\Turba::getAddressBooks() as $key => $val) {
+            foreach (Turba::getAddressBooks() as $key => $val) {
                 if (!empty($val['browse']) && $val['type'] !== 'vcard') {
                     try {
                         $driver = $injector->getInstance('Turba_Factory_Driver')->create($key);
-                        if ($driver->hasPermission(\Horde_Perms::EDIT)) {
+                        if ($driver->hasPermission(Horde_Perms::EDIT)) {
                             $writableSources[$key] = $val['title'];
                         }
-                    } catch (\Turba_Exception $e) {
+                    } catch (Turba_Exception $e) {
                         continue;
                     }
                 }
@@ -534,8 +548,8 @@ class ResponsiveController implements RequestHandlerInterface
                     // Redirect to the new contact
                     $responseFactory = $injector->getInstance('Psr\\Http\\Message\\ResponseFactoryInterface');
                     return $responseFactory->createResponse(302)
-                        ->withHeader('Location', (string) \Horde::url('responsive/contact/' . $source . '/' . $result, true));
-                } catch (\Turba_Exception $e) {
+                        ->withHeader('Location', (string) Horde::url('responsive/contact/' . $source . '/' . $result, true));
+                } catch (Turba_Exception $e) {
                     $errors[] = sprintf(_("Failed to add contact: %s"), $e->getMessage());
                 }
             }
@@ -554,7 +568,7 @@ class ResponsiveController implements RequestHandlerInterface
             'topbar' => $topbar,
             'writableSources' => $writableSources,
             'hasWritableSources' => !empty($writableSources),
-            'backUrl' => \Horde::url('responsive', true),
+            'backUrl' => Horde::url('responsive', true),
             'cssUrls' => $responsiveAssets->getCssUrls('turba'),
             'jsUrls' => $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
         ];
@@ -581,7 +595,7 @@ class ResponsiveController implements RequestHandlerInterface
 
         $responseFactory = $injector->getInstance('Psr\Http\Message\ResponseFactoryInterface');
         return $responseFactory->createResponse(302)
-            ->withHeader('Location', (string) \Horde::url('responsive', true));
+            ->withHeader('Location', (string) Horde::url('responsive', true));
     }
 
     /**
@@ -614,13 +628,13 @@ class ResponsiveController implements RequestHandlerInterface
             }
 
             // Skip if user doesn't have permission
-            if (!$registry->hasPermission($app, \Horde_Perms::SHOW)) {
+            if (!$registry->hasPermission($app, Horde_Perms::SHOW)) {
                 continue;
             }
 
             $appData = [
                 'name' => strlen($params['name'] ?? '') ? _($params['name']) : '',
-                'url' => (string) \Horde::url($registry->getInitialPage($app), true, ['app' => $app]),
+                'url' => (string) Horde::url($registry->getInitialPage($app), true, ['app' => $app]),
                 'icon' => $params['icon'] ?? $registry->get('icon', $app),
                 'app' => $app, // Add app identifier for CSS class
             ];
