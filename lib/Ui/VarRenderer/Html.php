@@ -21,6 +21,37 @@
 class Turba_Ui_VarRenderer_Html extends Horde_Core_Ui_VarRenderer_Html
 {
     /**
+     * Whether a form variable is the main contact photo field.
+     */
+    protected function _isTurbaContactPhotoField($var): bool
+    {
+        return $var->getVarName() === 'object[photo]';
+    }
+
+    protected function _renderVarDisplay_image($form, &$var, &$vars)
+    {
+        $html = parent::_renderVarDisplay_image($form, $var, $vars);
+        if ($html !== '' && $this->_isTurbaContactPhotoField($var)) {
+            $html = str_replace('<img ', '<img class="turba-contact-photo" ', $html);
+        }
+        return $html;
+    }
+
+    protected function _renderVarInput_image($form, &$var, &$vars)
+    {
+        $html = parent::_renderVarInput_image($form, $var, $vars);
+        if ($html !== '' && $this->_isTurbaContactPhotoField($var)) {
+            $html = preg_replace(
+                '#(<br /><img) (src="[^"]*images/view\.php[^"]*")#',
+                '$1 class="turba-contact-photo" $2',
+                $html,
+                1
+            );
+        }
+        return $html;
+    }
+
+    /**
      * Render tag field.
      */
     protected function _renderVarInput_TurbaTags($form, $var, $vars)
