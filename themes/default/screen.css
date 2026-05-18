@@ -107,6 +107,10 @@ table#addressbook-list th.sortdown {
 .turba-browse-icon {
     text-align: center;
 }
+.turba-browse-icon img {
+    width: 16px;
+    height: 16px;
+}
 
 /* Duplicates */
 .turba-duplicate {
