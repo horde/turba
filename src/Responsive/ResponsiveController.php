@@ -7,6 +7,8 @@ namespace Horde\Turba\Responsive;
 use Horde\Core\Assets\ResponsiveAssets;
 use Horde\Core\Config\RegistryState;
 use Horde\Core\View\ResponsiveTemplateView;
+use Horde\Date\Formatter\IcuFormatter;
+use Horde_Date;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -264,8 +266,26 @@ class ResponsiveController implements RequestHandlerInterface
                     'type' => 'text',
                 ];
 
-                // Add action links for specific field types
+                // Add action links and formatting for specific field types
                 switch ($fieldName) {
+                    case 'birthday':
+                    case 'anniversary':
+                        $field['type'] = 'date';
+                        if (isset($attributes[$fieldName]['params']['format_out'])) {
+                            $formatter = new IcuFormatter();
+                            $locale = $GLOBALS['language'] ?? 'en_US';
+                            try {
+                                $date = new Horde_Date($value);
+                                $field['value'] = $formatter->format(
+                                    $date->toDateTime(),
+                                    $attributes[$fieldName]['params']['format_out'],
+                                    $locale
+                                );
+                            } catch (\Exception $e) {
+                            }
+                        }
+                        break;
+
                     case 'email':
                     case 'emails':
                         $field['type'] = 'email';
