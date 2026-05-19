@@ -1,4 +1,5 @@
 <?php
+use Horde\Injector\Injector;
 
 /**
  * Horde_Injector based factory for the Turba share driver.
@@ -15,7 +16,7 @@ class Turba_Factory_Shares extends Horde_Core_Factory_Injector
      * @return Horde_Core_Share_Driver
      * @throws Horde_Exception
      */
-    public function create(Horde_Injector $injector)
+    public function create(Horde_Injector|Injector $injector)
     {
         return $injector->getInstance('Horde_Core_Factory_Share')->create();
     }

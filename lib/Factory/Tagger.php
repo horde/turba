@@ -1,4 +1,5 @@
 <?php
+use Horde\Injector\Injector;
 
 /**
  * Copyright 2014-2026 Horde LLC (http://www.horde.org/)
@@ -29,7 +30,7 @@ class Turba_Factory_Tagger extends Horde_Core_Factory_Injector
      * @return Horde_Core_Tagger  Tagger instance.
      * @throws Horde_Exception
      */
-    public function create(Horde_Injector $injector)
+    public function create(Horde_Injector|Injector $injector)
     {
         return empty($GLOBALS['conf']['tags']['enabled'])
             ? new Horde_Core_Tagger_Null()
