@@ -270,6 +270,32 @@
     [mjr] Add ability to add special characters to the alpha pager.
     [jan] Return ETags with browse() API method.
     [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+5.0.0-RC1:
+  api: 5.0.0-RC1
+  state:
+    release: RC
+    api: RC
+  date: 2026-05-19
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: |-
+    refactor(injector): Widen type hints from Horde_Injector to Horde_Injector|Injector
+    chore: bump minimum php version
+    style: php-cs-fixer
+    feat: Reuse existing fallback name logic in responsive UI
+    feat: Use IntlDateFormatter in responsive UI
+    Merge pull request #48 from horde/fix/contact_photo_rendering
+    fix(css): Add turba icon img
+    Add contact photo class to image rendering methods
+    Add contact photo styles to screen.css
+    Refactor email handling to avoid placeholder values
+    Add validation for email attribute values
+    refactor: Explicitly declare the default stack as a prestep to removing fallback logic
+    Merge pull request #42 from horde/fix/moving_contacts_between_adressbooks
+    Fix syntax error in insertBlob parameters
+    Normalize image values in Browse.php
+    refactor: Accept Horde\Util\Variables in most places which accept Horde_Variables
 4.2.29:
   api: 4.0.0
   state:
