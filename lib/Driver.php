@@ -2110,7 +2110,7 @@ class Turba_Driver implements Countable
                 Horde_Icalendar_Vcard::ADR_REGION   => $hash['commonProvince'] ?? '',
                 Horde_Icalendar_Vcard::ADR_POSTCODE => $hash['commonPostalCode'] ?? '',
                 Horde_Icalendar_Vcard::ADR_COUNTRY  => isset($hash['commonCountry'])
-                    ? Horde_Nls::getCountryISO($hash['commonCountry']) : '',
+                    ? (new Horde\Nls\Nls())->countries()->get($hash['commonCountry']) : '',
             ];
 
             $val = implode(';', $a);
@@ -2157,7 +2157,7 @@ class Turba_Driver implements Countable
                 Horde_Icalendar_Vcard::ADR_REGION   => $hash['homeProvince'] ?? '',
                 Horde_Icalendar_Vcard::ADR_POSTCODE => $hash['homePostalCode'] ?? '',
                 Horde_Icalendar_Vcard::ADR_COUNTRY  => isset($hash['homeCountry'])
-                    ? Horde_Nls::getCountryISO($hash['homeCountry']) : '',
+                    ? (new Horde\Nls\Nls())->countries()->get($hash['homeCountry']) : '',
             ];
 
             $val = implode(';', $a);
@@ -2204,7 +2204,7 @@ class Turba_Driver implements Countable
                 Horde_Icalendar_Vcard::ADR_REGION   => $hash['workProvince'] ?? '',
                 Horde_Icalendar_Vcard::ADR_POSTCODE => $hash['workPostalCode'] ?? '',
                 Horde_Icalendar_Vcard::ADR_COUNTRY  => isset($hash['workCountry'])
-                    ? Horde_Nls::getCountryISO($hash['workCountry']) : '',
+                    ? (new Horde\Nls\Nls())->countries()->get($hash['workCountry']) : '',
             ];
 
             $val = implode(';', $a);
@@ -2369,11 +2369,7 @@ class Turba_Driver implements Countable
                         }
                         if (!empty($address[Horde_Icalendar_Vcard::ADR_COUNTRY])) {
                             /* Countries */
-                            if (class_exists(Horde_Nls_Loader::class)) {
-                                $countries = Horde_Nls_Loader::loadCountries();
-                            } else {
-                                include 'Horde/Nls/Countries.php';
-                            }
+                            $countries = (new Horde\Nls\Nls())->countries()->all();
                             $country = array_search($address[Horde_Icalendar_Vcard::ADR_COUNTRY], $countries);
                             if ($country === false) {
                                 $country = $address[Horde_Icalendar_Vcard::ADR_COUNTRY];
@@ -2393,7 +2389,7 @@ class Turba_Driver implements Countable
                         break;
                     }
                     $timezones = explode(';', $item['value']);
-                    $available_timezones = Horde_Nls::getTimezones();
+                    $available_timezones = (new Horde\Nls\Nls())->getTimezones();
                     foreach ($timezones as $timezone) {
                         $timezone = trim($timezone);
                         if (isset($available_timezones[$timezone])) {
@@ -2779,7 +2775,7 @@ class Turba_Driver implements Countable
                     $message->homecountry = !empty($hash['homeCountryFree'])
                         ? $hash['homeCountryFree']
                         : (!empty($hash['homeCountry'])
-                            ? Horde_Nls::getCountryISO($hash['homeCountry'])
+                            ? (new Horde\Nls\Nls())->countries()->get($hash['homeCountry'])
                             : null);
                     break;
 
@@ -2787,7 +2783,7 @@ class Turba_Driver implements Countable
                     $message->othercountry = !empty($hash['otherCountryFree'])
                         ? $hash['otherCountryFree']
                         : (!empty($hash['otherCountry'])
-                            ? Horde_Nls::getCountryISO($hash['otherCountry'])
+                            ? (new Horde\Nls\Nls())->countries()->get($hash['otherCountry'])
                             : null);
                     break;
 
@@ -2795,7 +2791,7 @@ class Turba_Driver implements Countable
                     $message->businesscountry = !empty($hash['workCountryFree'])
                         ? $hash['workCountryFree']
                         : (!empty($hash['workCountry'])
-                            ? Horde_Nls::getCountryISO($hash['workCountry'])
+                            ? (new Horde\Nls\Nls())->countries()->get($hash['workCountry'])
                             : null);
                     break;
 
@@ -3034,11 +3030,7 @@ class Turba_Driver implements Countable
         }
 
         /* Countries */
-        if (class_exists(Horde_Nls_Loader::class)) {
-            $countries = Horde_Nls_Loader::loadCountries();
-        } else {
-            include 'Horde/Nls/Countries.php';
-        }
+        $countries = (new Horde\Nls\Nls())->countries()->all();
         if (!empty($message->homecountry)) {
             if (!empty($this->map['homeCountryFree'])) {
                 $hash['homeCountryFree'] = $message->homecountry;
