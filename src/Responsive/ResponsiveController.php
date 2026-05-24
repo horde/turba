@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Horde\Turba\Responsive;
 
-use Horde\Core\Assets\ResponsiveAssets;
-use Horde\Core\Config\RegistryConfigLoader;
+use Horde\Core\PageOutput\PageContent;
+use Horde\Core\PageOutput\ResponsiveChromeRenderer;
 use Horde\Core\View\ResponsiveTemplateView;
 use Horde\Date\Formatter\IcuFormatter;
 use Horde_Date;
@@ -80,8 +80,6 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $browse_source_count;
 
-        $responsiveAssets = new ResponsiveAssets($injector->getInstance(RegistryConfigLoader::class)->load());
-
         // Load contacts from all browseable sources
         $contactList = [];
         if ($browse_source_count) {
@@ -130,31 +128,21 @@ class ResponsiveController implements RequestHandlerInterface
             }
         }
 
-        // Build topbar
-        $topbar = $this->renderTopbar();
+        // Build topbar (handled by chrome renderer)
 
         // Prepare view data
         $viewData = [
-            'topbar' => $topbar,
             'contactList' => $contactList,
             'hasContacts' => !empty($contactList),
-            'cssUrls' => $responsiveAssets->getCssUrls('turba'),
-            'jsUrls' => array_merge(
-                $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
-                $responsiveAssets->getJsUrls('turba', ['responsive.js'])
-            ),
             'groupIconUrl' => $registry->get('themesuri', 'turba') . '/default/graphics/group.png',
         ];
 
-        // Render template
+        // Render body template
         $templatePath = TURBA_TEMPLATES . '/responsive/browse.html.php';
         $view = new ResponsiveTemplateView($templatePath, $viewData);
+        $bodyHtml = $view->render();
 
-        $streamFactory = $injector->getInstance('Psr\Http\Message\StreamFactoryInterface');
-        $responseFactory = $injector->getInstance('Psr\Http\Message\ResponseFactoryInterface');
-
-        return $responseFactory->createResponse(200)
-            ->withBody($streamFactory->createStream($view->render()));
+        return $this->renderWithChrome($request, _("Contacts"), $bodyHtml);
     }
 
     /**
@@ -169,8 +157,6 @@ class ResponsiveController implements RequestHandlerInterface
     private function viewContact(ServerRequestInterface $request, string $source, string $key): ResponseInterface
     {
         global $registry, $injector, $notification, $cfgSources, $attributes;
-
-        $responsiveAssets = new ResponsiveAssets($injector->getInstance(RegistryConfigLoader::class)->load());
 
         // Validate source
         if (!isset($cfgSources[$source])) {
@@ -196,27 +182,18 @@ class ResponsiveController implements RequestHandlerInterface
         // Build contact data structure
         $contactData = $this->buildContactData($contact, $source);
 
-        // Build topbar
-        $topbar = $this->renderTopbar();
-
         // Prepare view data
         $viewData = [
-            'topbar' => $topbar,
             'contact' => $contactData,
             'backUrl' => Horde::url('responsive', true),
-            'cssUrls' => $responsiveAssets->getCssUrls('turba'),
-            'jsUrls' => $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
         ];
 
-        // Render template
+        // Render body template
         $templatePath = TURBA_TEMPLATES . '/responsive/contact.html.php';
         $view = new ResponsiveTemplateView($templatePath, $viewData);
+        $bodyHtml = $view->render();
 
-        $streamFactory = $injector->getInstance('Psr\Http\Message\StreamFactoryInterface');
-        $responseFactory = $injector->getInstance('Psr\Http\Message\ResponseFactoryInterface');
-
-        return $responseFactory->createResponse(200)
-            ->withBody($streamFactory->createStream($view->render()));
+        return $this->renderWithChrome($request, _("Contact"), $bodyHtml);
     }
 
     /**
@@ -492,8 +469,6 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $notification, $browse_source_count;
 
-        $responsiveAssets = new ResponsiveAssets($injector->getInstance(RegistryConfigLoader::class)->load());
-
         // Get writable address books
         $writableSources = [];
         if ($browse_source_count) {
@@ -560,34 +535,23 @@ class ResponsiveController implements RequestHandlerInterface
             }
         }
 
-        // Build topbar
-        $topbar = $this->renderTopbar();
-
         // Prepare view data
         $viewData = [
-            'topbar' => $topbar,
             'writableSources' => $writableSources,
             'hasWritableSources' => !empty($writableSources),
             'backUrl' => Horde::url('responsive', true),
-            'cssUrls' => $responsiveAssets->getCssUrls('turba'),
-            'jsUrls' => $responsiveAssets->getJsUrls('horde', ['responsive-topbar.js']),
         ];
 
-        // Render template
+        // Render body template
         $templatePath = TURBA_TEMPLATES . '/responsive/add.html.php';
         $view = new ResponsiveTemplateView($templatePath, $viewData);
+        $bodyHtml = $view->render();
 
-        $streamFactory = $injector->getInstance('Psr\\Http\\Message\\StreamFactoryInterface');
-        $responseFactory = $injector->getInstance('Psr\\Http\\Message\\ResponseFactoryInterface');
-
-        return $responseFactory->createResponse(200)
-            ->withBody($streamFactory->createStream($view->render()));
+        return $this->renderWithChrome($request, _("Add Contact"), $bodyHtml);
     }
 
     /**
      * Redirect to browse page
-     *
-     * @return ResponseInterface The response
      */
     private function redirectToBrowse(): ResponseInterface
     {
@@ -599,67 +563,29 @@ class ResponsiveController implements RequestHandlerInterface
     }
 
     /**
-     * Render the responsive topbar
-     *
-     * @return string HTML topbar
+     * Wrap body HTML in ResponsiveChromeRenderer output
      */
-    private function renderTopbar(): string
-    {
-        global $registry;
+    private function renderWithChrome(
+        ServerRequestInterface $request,
+        string $title,
+        string $bodyHtml,
+    ): ResponseInterface {
+        global $injector;
 
-        // Get all active apps
-        $allApps = $registry->listApps(['active', 'admin', 'noadmin', 'topbar'], true, null);
+        $chromeRenderer = $injector->get(ResponsiveChromeRenderer::class);
+        $pageContent = new PageContent(
+            title: $title . ' - Horde',
+            bodyHtml: $bodyHtml,
+            app: 'turba',
+        );
 
-        // Separate apps into top-level and submenu items
-        $topLevelApps = [];
-        $allAppsList = [];
+        $pageHtml = $chromeRenderer->renderPage($pageContent, $request);
 
-        foreach ($allApps as $app => $params) {
-            // Skip horde itself
-            if ($app === 'horde') {
-                continue;
-            }
+        $streamFactory = $injector->getInstance('Psr\Http\Message\StreamFactoryInterface');
+        $responseFactory = $injector->getInstance('Psr\Http\Message\ResponseFactoryInterface');
 
-            // Skip topbar-only items (they're app-specific widgets)
-            // IMPORTANT: Must check this BEFORE hasPermission()
-            // because topbar items like 'kronolith-menu' don't have APIs
-            if ($params['status'] === 'topbar') {
-                continue;
-            }
-
-            // Skip if user doesn't have permission
-            if (!$registry->hasPermission($app, Horde_Perms::SHOW)) {
-                continue;
-            }
-
-            $appData = [
-                'name' => strlen($params['name'] ?? '') ? _($params['name']) : '',
-                'url' => (string) Horde::url($registry->getInitialPage($app), true, ['app' => $app]),
-                'icon' => $params['icon'] ?? $registry->get('icon', $app),
-                'app' => $app, // Add app identifier for CSS class
-            ];
-
-            // Add to all apps list (for hamburger menu)
-            $allAppsList[] = $appData;
-
-            // Top-level apps (no menu_parent) go to topbar
-            if (empty($params['menu_parent'])) {
-                $topLevelApps[] = $appData;
-            }
-        }
-
-        $topbarData = [
-            'appName' => _("Contacts"),
-            'portalUrl' => (string) $registry->getServiceLink('portal')->setRaw(true),
-            'logoutUrl' => (string) $registry->getServiceLink('logout')->setRaw(true),
-            'userName' => $registry->getAuth(),
-            'topLevelApps' => $topLevelApps,
-            'allApps' => $allAppsList,
-        ];
-
-        $templatePath = HORDE_TEMPLATES . '/responsive/topbar.html.php';
-        $view = new ResponsiveTemplateView($templatePath, $topbarData);
-
-        return $view->render();
+        return $responseFactory->createResponse(200)
+            ->withHeader('Content-Type', 'text/html; charset=UTF-8')
+            ->withBody($streamFactory->createStream($pageHtml));
     }
 }

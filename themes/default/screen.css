@@ -192,3 +192,678 @@ table#addressbook-list th.sortdown {
         display: none !important;
     }
 }
+
+/* ============================================================================
+   Responsive View (scoped under .horde-responsive)
+   ============================================================================ */
+
+/* App Icon */
+.horde-responsive .topbar-menu-app-turba::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background-image: url('graphics/turba.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    vertical-align: middle;
+}
+
+/* Layout */
+.horde-responsive .turba-container {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-2xl);
+}
+
+/* Page Header */
+.horde-responsive .page-header h1 {
+    margin: 0 0 var(--space-lg) 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.horde-responsive .add-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-lg);
+    background-color: var(--horde-primary);
+    color: white;
+    text-decoration: none;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-fast);
+    margin-bottom: var(--space-md);
+}
+
+.horde-responsive .add-contact-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.horde-responsive .add-contact-btn:active {
+    transform: translateY(0);
+}
+
+.horde-responsive .add-contact-icon {
+    font-size: var(--font-size-xl);
+    line-height: 1;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Back link */
+.horde-responsive .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+    padding: var(--space-xs) var(--space-sm);
+    color: var(--horde-primary);
+    text-decoration: none;
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+    transition: background-color var(--transition-fast);
+}
+
+.horde-responsive .back-link:hover {
+    background-color: var(--bg-hover);
+}
+
+.horde-responsive .back-arrow {
+    font-size: var(--font-size-xl);
+    line-height: 1;
+    font-weight: var(--font-weight-bold);
+}
+
+/* Search Widget */
+.horde-responsive .search-widget {
+    margin-bottom: var(--space-lg);
+}
+
+.horde-responsive .search-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.horde-responsive .search-input {
+    width: 100%;
+    padding: var(--space-md);
+    padding-right: 2.5rem;
+    font-size: var(--font-size-base);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.horde-responsive .search-input:focus {
+    outline: 2px solid var(--horde-primary);
+    outline-offset: 2px;
+    border-color: var(--horde-primary);
+}
+
+.horde-responsive .btn-clear {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0.25rem 0.5rem;
+    transition: color var(--transition-fast);
+}
+
+.horde-responsive .btn-clear:hover {
+    color: var(--text-primary);
+}
+
+/* Contact Sources & Lists */
+.horde-responsive #contact-sources {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.horde-responsive .contact-source {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.horde-responsive .source-collapsible {
+    border: none;
+}
+
+.horde-responsive .source-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    background-color: var(--bg-accent);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+}
+
+.horde-responsive .source-header::-webkit-details-marker {
+    display: none;
+}
+
+.horde-responsive .source-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.horde-responsive .source-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--horde-primary);
+    color: white;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+}
+
+.horde-responsive .contact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.horde-responsive .source-empty-message {
+    padding: var(--space-xl) var(--space-lg);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    font-style: italic;
+}
+
+.horde-responsive .source-empty-message p {
+    margin: 0;
+}
+
+.horde-responsive .contact-item {
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+}
+
+.horde-responsive .contact-item:last-child {
+    border-bottom: none;
+}
+
+.horde-responsive .contact-link {
+    display: flex;
+    align-items: center;
+    padding: var(--space-md);
+    padding-right: 3.5rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+    gap: var(--space-md);
+}
+
+.horde-responsive .contact-link:hover {
+    background-color: var(--bg-hover);
+}
+
+.horde-responsive .contact-link:active {
+    background-color: var(--bg-accent);
+}
+
+.horde-responsive .contact-call-btn {
+    position: absolute;
+    right: 2.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background-color: var(--horde-primary);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all var(--transition-fast);
+    z-index: 1;
+}
+
+.horde-responsive .contact-call-btn:hover {
+    background-color: #2563eb;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.horde-responsive .contact-call-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+.horde-responsive .contact-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    background-color: var(--bg-accent);
+    border-radius: var(--radius-full);
+}
+
+.horde-responsive .contact-group-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.horde-responsive .contact-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    min-width: 0;
+}
+
+.horde-responsive .contact-name {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.horde-responsive .contact-email {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.horde-responsive .contact-chevron {
+    flex-shrink: 0;
+    font-size: var(--font-size-lg);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-bold);
+}
+
+.horde-responsive .contact-item[hidden],
+.horde-responsive .contact-source[hidden] {
+    display: none;
+}
+
+/* Contact Detail Page */
+.horde-responsive .contact-detail {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-xl);
+}
+
+.horde-responsive .contact-photo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--space-lg);
+}
+
+.horde-responsive .contact-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--border-light);
+}
+
+.horde-responsive .contact-name-header {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-lg) 0;
+    text-align: center;
+}
+
+.horde-responsive .contact-group-badge {
+    display: inline-block;
+    margin-left: var(--space-sm);
+    padding: 0.25rem 0.75rem;
+    background-color: var(--bg-accent);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    border-radius: var(--radius-full);
+    vertical-align: middle;
+}
+
+/* Quick actions */
+.horde-responsive .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+    padding: 0 var(--space-sm);
+}
+
+.horde-responsive .quick-action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md);
+    background-color: var(--bg-accent);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: all var(--transition-fast);
+}
+
+.horde-responsive .quick-action-btn:hover {
+    background-color: var(--bg-hover);
+    border-color: var(--horde-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.horde-responsive .quick-action-btn:active {
+    transform: translateY(0);
+}
+
+.horde-responsive .quick-action-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.horde-responsive .quick-action-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+}
+
+.horde-responsive .quick-action-email {
+    border-left: 3px solid #3b82f6;
+}
+
+.horde-responsive .quick-action-phone {
+    border-left: 3px solid #10b981;
+}
+
+.horde-responsive .quick-action-sms {
+    border-left: 3px solid #8b5cf6;
+}
+
+.horde-responsive .quick-action-map {
+    border-left: 3px solid #f59e0b;
+}
+
+.horde-responsive .quick-action-export {
+    border-left: 3px solid #6b7280;
+}
+
+/* Contact sections */
+.horde-responsive .contact-section {
+    margin-bottom: var(--space-lg);
+}
+
+.horde-responsive .contact-section:last-child {
+    margin-bottom: 0;
+}
+
+.horde-responsive .section-collapsible {
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.horde-responsive .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md);
+    background-color: var(--bg-accent);
+    cursor: pointer;
+    user-select: none;
+    list-style: none;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.horde-responsive .section-header::-webkit-details-marker {
+    display: none;
+}
+
+.horde-responsive .member-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    padding: 0.125rem 0.5rem;
+    background-color: var(--horde-primary);
+    color: white;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+}
+
+.horde-responsive .section-content {
+    padding: var(--space-md);
+}
+
+/* Contact fields */
+.horde-responsive .contact-field {
+    margin-bottom: var(--space-md);
+}
+
+.horde-responsive .contact-field:last-child {
+    margin-bottom: 0;
+}
+
+.horde-responsive .field-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.horde-responsive .field-value {
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+    word-wrap: break-word;
+}
+
+.horde-responsive .field-link {
+    color: var(--horde-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.horde-responsive .field-link:hover {
+    text-decoration: underline;
+}
+
+/* Member list */
+.horde-responsive .member-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.horde-responsive .member-item {
+    border-bottom: 1px solid var(--border-light);
+}
+
+.horde-responsive .member-item:last-child {
+    border-bottom: none;
+}
+
+.horde-responsive .member-link {
+    display: flex;
+    align-items: center;
+    padding: var(--space-sm);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background-color var(--transition-fast);
+    gap: var(--space-sm);
+}
+
+.horde-responsive .member-link:hover {
+    background-color: var(--bg-hover);
+}
+
+.horde-responsive .member-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background-color: var(--bg-accent);
+    border-radius: var(--radius-full);
+}
+
+.horde-responsive .member-name {
+    flex: 1;
+    font-size: var(--font-size-base);
+    color: var(--text-primary);
+}
+
+.horde-responsive .member-chevron {
+    flex-shrink: 0;
+    font-size: var(--font-size-lg);
+    color: var(--text-tertiary);
+    font-weight: var(--font-weight-bold);
+}
+
+/* Empty States */
+.horde-responsive .empty-state,
+.horde-responsive .empty-state-filtered {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-md);
+    color: var(--text-secondary);
+}
+
+.horde-responsive .empty-state-icon {
+    font-size: 64px;
+    margin-bottom: var(--space-lg);
+    opacity: 0.5;
+}
+
+.horde-responsive .empty-state h2 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    margin: 0 0 var(--space-sm) 0;
+}
+
+.horde-responsive .empty-state p,
+.horde-responsive .empty-state-filtered p {
+    font-size: var(--font-size-base);
+    margin: 0;
+    line-height: var(--line-height-relaxed);
+}
+
+.horde-responsive .empty-state-filtered {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 2px dashed var(--border-medium);
+}
+
+/* Contact Form */
+.horde-responsive .contact-form-container {
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-xl);
+}
+
+.horde-responsive .contact-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.horde-responsive .form-group {
+    margin-bottom: var(--space-lg);
+}
+
+.horde-responsive .form-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.horde-responsive .form-label .required {
+    color: #dc2626;
+}
+
+.horde-responsive .form-control {
+    width: 100%;
+    padding: var(--space-md);
+    font-size: var(--font-size-base);
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-input);
+    color: var(--text-primary);
+    transition: border-color var(--transition-fast);
+}
+
+.horde-responsive .form-control:focus {
+    outline: 2px solid var(--horde-primary);
+    outline-offset: 2px;
+    border-color: var(--horde-primary);
+}
+
+.horde-responsive .form-actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+/* Responsive Adjustments */
+@media (min-width: 768px) {
+    .horde-responsive .contact-detail {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .horde-responsive .contact-photo {
+        width: 150px;
+        height: 150px;
+    }
+
+    .horde-responsive .search-widget {
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .horde-responsive .quick-actions {
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .horde-responsive .contact-link {
+        padding: var(--space-lg);
+    }
+
+    .horde-responsive .turba-container {
+        max-width: 1200px;
+    }
+}
