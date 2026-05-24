@@ -2295,6 +2295,71 @@ class Turba_Api extends Horde_Registry_Api
     }
 
     /**
+     * Remove an address book from the sync_books preference.
+     *
+     * @param string $id  The addressbook id.
+     *
+     * @return boolean  True if the preference was updated.
+     * @since 4.2.0
+     */
+    public function removeSyncBook($id)
+    {
+        global $prefs;
+
+        $sync = @unserialize($prefs->getValue('sync_books'));
+        if (empty($sync) || !in_array($id, $sync, true)) {
+            return false;
+        }
+
+        $sync = array_values(array_diff($sync, [$id]));
+        $prefs->setValue('sync_books', serialize($sync));
+        $this->resetActiveSyncContactsState(true);
+
+        return true;
+    }
+
+    /**
+     * Reset ActiveSync state for all contact folders on the user's devices.
+     *
+     * @param boolean $notify  Push a notification on success or failure?
+     *
+     * @since 4.2.0
+     */
+    public function resetActiveSyncContactsState($notify = false)
+    {
+        global $conf, $injector, $notification, $prefs;
+
+        if (empty($conf['activesync']['enabled'])) {
+            return;
+        }
+
+        try {
+            $sm = $injector->getInstance('Horde_ActiveSyncState');
+            $sm->setLogger($injector->getInstance('Horde_Log_Logger'));
+            $devices = $sm->listDevices($GLOBALS['registry']->getAuth());
+            foreach ($devices as $device) {
+                $device_ob = $sm->loadDeviceInfo($device['device_id'], $device['device_user']);
+                if (!$prefs->getValue('activesync_no_multiplex')
+                    || ($device_ob->multiplex & Horde_ActiveSync_Device::MULTIPLEX_CONTACTS)) {
+                    $map = $sm->getFolderUidToBackendIdMap();
+                    $sm->removeState([
+                        'devId' => $device['device_id'],
+                        'id' => (!empty($map[Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID]) ? $map[Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID] : Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID),
+                        'user' => $GLOBALS['registry']->getAuth(),
+                    ]);
+                }
+            }
+            if ($notify) {
+                $notification->push(_("All state removed for your ActiveSync devices. They will resynchronize next time they connect to the server."));
+            }
+        } catch (Horde_ActiveSync_Exception $e) {
+            if ($notify) {
+                $notification->push(_("There was an error communicating with the ActiveSync server: %s"), $e->getMessage(), 'horde.error');
+            }
+        }
+    }
+
+    /**
      * Delete the specified addressbook.
      *
      * @param string $id  The addressbook id.
@@ -2302,6 +2367,8 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function deleteAddressbook($id)
     {
+        $this->removeSyncBook($id);
+
         $share = $GLOBALS['injector']
             ->getInstance('Turba_Factory_Driver')
             ->create($id);
@@ -2352,8 +2419,10 @@ class Turba_Api extends Horde_Registry_Api
      */
     protected function _getSources($sources, $synchronize = false, $end = false)
     {
+        $fromPrefs = empty($sources);
+
         /* Get default address book from user preferences. */
-        if (empty($sources)) {
+        if ($fromPrefs) {
             $sources = @unserialize($GLOBALS['prefs']->getValue('sync_books'));
         } elseif (!is_array($sources)) {
             $sources = [$sources];
@@ -2361,15 +2430,39 @@ class Turba_Api extends Horde_Registry_Api
 
         if (empty($sources)) {
             $sources = [Turba::getDefaultAddressbook()];
-            if (empty($sources)) {
+            if (empty($sources[0])) {
                 throw new Turba_Exception(_("No address book specified"));
             }
         }
 
+        $valid = [];
         foreach ($sources as $val) {
             if (!strlen($val) || !isset($GLOBALS['cfgSources'][$val])) {
-                throw new Turba_Exception(sprintf(_("Invalid address book: %s"), $val));
+                if (!$fromPrefs) {
+                    throw new Turba_Exception(sprintf(_("Invalid address book: %s"), $val));
+                }
+                continue;
             }
+            $valid[] = $val;
+        }
+
+        if (empty($valid)) {
+            if ($fromPrefs) {
+                $default = Turba::getDefaultAddressbook();
+                if (empty($default)) {
+                    throw new Turba_Exception(_("No address book specified"));
+                }
+                $valid = [$default];
+            } else {
+                throw new Turba_Exception(sprintf(_("Invalid address book: %s"), $sources[0]));
+            }
+        }
+
+        if ($fromPrefs && $valid != $sources) {
+            $GLOBALS['prefs']->setValue('sync_books', serialize(array_values($valid)));
+        }
+
+        foreach ($valid as $val) {
             if ($synchronize) {
                 $GLOBALS['injector']
                     ->getInstance('Turba_Factory_Driver')
@@ -2378,7 +2471,7 @@ class Turba_Api extends Horde_Registry_Api
             }
         }
 
-        return $sources;
+        return $valid;
     }
 
     /**
