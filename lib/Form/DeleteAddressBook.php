@@ -66,6 +66,9 @@ class Turba_Form_DeleteAddressBook extends Horde_Form
             }
         }
 
+        $shareName = $this->_addressbook->getName();
+        $GLOBALS['registry']->contacts->removeSyncBook($shareName);
+
         // Address book successfully deleted from backend, remove the share.
         try {
             $GLOBALS['injector']
