@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Horde\Turba\Responsive;
 
 use Horde\Core\Assets\ResponsiveAssets;
-use Horde\Core\Config\RegistryState;
+use Horde\Core\Config\RegistryConfigLoader;
 use Horde\Core\View\ResponsiveTemplateView;
 use Horde\Date\Formatter\IcuFormatter;
 use Horde_Date;
@@ -80,7 +80,7 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $browse_source_count;
 
-        $responsiveAssets = new ResponsiveAssets(new RegistryState($registry->applications));
+        $responsiveAssets = new ResponsiveAssets($injector->getInstance(RegistryConfigLoader::class)->load());
 
         // Load contacts from all browseable sources
         $contactList = [];
@@ -170,7 +170,7 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $notification, $cfgSources, $attributes;
 
-        $responsiveAssets = new ResponsiveAssets(new RegistryState($registry->applications));
+        $responsiveAssets = new ResponsiveAssets($injector->getInstance(RegistryConfigLoader::class)->load());
 
         // Validate source
         if (!isset($cfgSources[$source])) {
@@ -492,7 +492,7 @@ class ResponsiveController implements RequestHandlerInterface
     {
         global $registry, $injector, $notification, $browse_source_count;
 
-        $responsiveAssets = new ResponsiveAssets(new RegistryState($registry->applications));
+        $responsiveAssets = new ResponsiveAssets($injector->getInstance(RegistryConfigLoader::class)->load());
 
         // Get writable address books
         $writableSources = [];
