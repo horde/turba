@@ -70,28 +70,7 @@ $_prefs['sync_books'] = [
         $ui->prefs['sync_books']['enum'] = $enum;
     },
     'on_change' => function () {
-        if ($GLOBALS['conf']['activesync']['enabled']) {
-            try {
-                $sm = $GLOBALS['injector']->getInstance('Horde_ActiveSyncState');
-                $sm->setLogger($GLOBALS['injector']->getInstance('Horde_Log_Logger'));
-                $devices = $sm->listDevices($GLOBALS['registry']->getAuth());
-                foreach ($devices as $device) {
-                    $device_ob = $sm->loadDeviceInfo($device['device_id'], $device['device_user']);
-                    if (!$GLOBALS['prefs']->getValue('activesync_no_multiplex')
-                        || ($device_ob->multiplex & Horde_ActiveSync_Device::MULTIPLEX_CONTACTS)) {
-                        $map = $sm->getFolderUidToBackendIdMap();
-                        $sm->removeState([
-                            'devId' => $device['device_id'],
-                            'id' => (!empty($map[Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID]) ? $map[Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID] : Horde_Core_ActiveSync_Driver::CONTACTS_FOLDER_UID),
-                            'user' => $GLOBALS['registry']->getAuth(),
-                        ]);
-                    }
-                }
-                $GLOBALS['notification']->push(_("All state removed for your ActiveSync devices. They will resynchronize next time they connect to the server."));
-            } catch (Horde_ActiveSync_Exception $e) {
-                $GLOBALS['notification']->push(_("There was an error communicating with the ActiveSync server: %s"), $e->getMessage(), 'horde.error');
-            }
-        }
+        $GLOBALS['injector']->getInstance('Turba_Api')->resetActiveSyncContactsState(true);
     },
 ];
 
