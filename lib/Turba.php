@@ -688,6 +688,7 @@ class Turba
                     'horde.message'
                 );
                 try {
+                    $registry->contacts->removeSyncBook($name);
                     $injector->getInstance('Turba_Shares')->removeShare($shares[$name]);
                 } catch (Horde_Share_Exception $e) {
                     Horde::log($e, 'ERR');
