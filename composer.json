@@ -30,7 +30,7 @@
         "contacts",
         "addressbook"
     ],
-    "time": "2026-05-21",
+    "time": "2026-05-25",
     "repositories": [],
     "require": {
         "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",

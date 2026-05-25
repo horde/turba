@@ -270,6 +270,25 @@
     [mjr] Add ability to add special characters to the alpha pager.
     [jan] Return ETags with browse() API method.
     [jan] Support multi-value RDNs in LDAP DN attributes (horde@iotti.biz, Request #11889).
+5.0.0-RC3:
+  api: 5.0.0-RC3
+  state:
+    release: RC
+    api: RC
+  date: 2026-05-25
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: |-
+    Remove ActiveSync state management code
+    Remove sync book from contacts registry
+    Update DeleteAddressBook.php
+    Refactor address book sync and validation methods
+    docs: add Lucide Icons license notice
+    feat(icons): replace 20x20 icon with 48x48 lucide book-user
+    refactor(responsive): use ResponsiveChromeRenderer, strip template scaffolding
+    refactor(routes): resolve RegistryState via RegistryConfigLoader
+    chore: Update workflow dependency
 5.0.0-RC2:
   api: 5.0.0-RC2
   state:
