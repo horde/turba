@@ -3352,7 +3352,7 @@ class Turba_Driver implements Countable
      */
     public function checkDefaultShare(Horde_Share_Object $share, array $srcconfig)
     {
-        $params = @unserialize($share->get('params'));
+        $params = @unserialize($share->get('params'), ['allowed_classes' => false]);
         if (!isset($params['default'])) {
             $params['default'] = ($params['name'] == $GLOBALS['registry']->getAuth());
             $share->set('params', serialize($params));
