@@ -152,7 +152,7 @@ class Turba
      */
     public static function getPreferredSortOrder()
     {
-        return @unserialize($GLOBALS['prefs']->getValue('sortorder'));
+        return @unserialize($GLOBALS['prefs']->getValue('sortorder'), ['allowed_classes' => false]);
     }
 
     /**
@@ -581,7 +581,7 @@ class Turba
 
             $personal |= ($share->get('owner') == $auth_user);
 
-            $params = @unserialize($share->get('params'));
+            $params = @unserialize($share->get('params'), ['allowed_classes' => false]);
             if (empty($params['source']) && !empty($all_shares)) {
                 $params['source'] = $all_shares;
             }
@@ -711,7 +711,7 @@ class Turba
         // Require a fresh config file.
         $cfgSources = self::availableSources();
 
-        $params = @unserialize($share->get('params'));
+        $params = @unserialize($share->get('params'), ['allowed_classes' => false]);
         $newConfig = $cfgSources[$params['source']];
         $newConfig['params']['config'] = $cfgSources[$params['source']];
         $newConfig['params']['config']['params']['share'] = $share;

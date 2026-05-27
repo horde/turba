@@ -181,7 +181,7 @@ class Turba_Driver_Share extends Turba_Driver
      */
     protected function _getContactOwner()
     {
-        $params = @unserialize($this->_share->get('params'));
+        $params = @unserialize($this->_share->get('params'), ['allowed_classes' => false]);
         if (!empty($params['name'])) {
             return $params['name'];
         }

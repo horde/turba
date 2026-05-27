@@ -150,7 +150,7 @@ class Turba_Api extends Horde_Registry_Api
             $driver = $injector->getInstance('Turba_Factory_Driver');
 
             foreach (Turba::listShares(true) as $uid => $share) {
-                $params = @unserialize($share->get('params'));
+                $params = @unserialize($share->get('params'), ['allowed_classes' => false]);
                 if (!empty($params['source'])) {
                     try {
                         if ($driver->create($uid)->checkDefaultShare($share, $cfgSources[$params['source']])) {
@@ -2053,7 +2053,7 @@ class Turba_Api extends Horde_Registry_Api
                     $contact_shares = $this->listShares(Horde_Perms::SHOW);
                 }
                 foreach ($contact_shares as $id => $share) {
-                    $params = @unserialize($share->get('params'));
+                    $params = @unserialize($share->get('params'), ['allowed_classes' => false]);
                     if ($params['source'] == $key) {
                         $owners[] = $params['name'];
                     }
@@ -2198,7 +2198,7 @@ class Turba_Api extends Horde_Registry_Api
             return [];
         }
         [$source, ] = explode(':', $gid);
-        $members = @unserialize($entry['members']);
+        $members = @unserialize($entry['members'], ['allowed_classes' => false]);
         if (!is_array($members)) {
             return [];
         }
@@ -2213,7 +2213,7 @@ class Turba_Api extends Horde_Registry_Api
             if (strpos($member, ':') !== false) {
                 [$newSource, $uid] = explode(':', $member);
                 if (!empty($contact_shares[$newSource])) {
-                    $params = @unserialize($contact_shares[$newSource]->get('params'));
+                    $params = @unserialize($contact_shares[$newSource]->get('params'), ['allowed_classes' => false]);
                     $newSource = $params['source'];
                     $member = $uid;
                     $db[$newSource] = empty($sources[$newSource]['params']['sql'])
@@ -2286,7 +2286,7 @@ class Turba_Api extends Horde_Registry_Api
         $shareName = $share->getName();
 
         if (!empty($params['synchronize'])) {
-            $sync = @unserialize($prefs->getValue('sync_books'));
+            $sync = @unserialize($prefs->getValue('sync_books'), ['allowed_classes' => false]);
             $sync[] = $shareName;
             $prefs->setValue('sync_books', serialize($sync));
         }
@@ -2306,7 +2306,7 @@ class Turba_Api extends Horde_Registry_Api
     {
         global $prefs;
 
-        $sync = @unserialize($prefs->getValue('sync_books'));
+        $sync = @unserialize($prefs->getValue('sync_books'), ['allowed_classes' => false]);
         if (empty($sync) || !in_array($id, $sync, true)) {
             return false;
         }
@@ -2423,7 +2423,7 @@ class Turba_Api extends Horde_Registry_Api
 
         /* Get default address book from user preferences. */
         if ($fromPrefs) {
-            $sources = @unserialize($GLOBALS['prefs']->getValue('sync_books'));
+            $sources = @unserialize($GLOBALS['prefs']->getValue('sync_books'), ['allowed_classes' => false]);
         } elseif (!is_array($sources)) {
             $sources = [$sources];
         }

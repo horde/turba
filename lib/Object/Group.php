@@ -95,7 +95,7 @@ class Turba_Object_Group extends Turba_Object
         }
 
         // Explode members.
-        $members = @unserialize($this->attributes['__members']);
+        $members = @unserialize($this->attributes['__members'], ['allowed_classes' => false]);
         if (!is_array($members)) {
             $members = [];
         }
@@ -118,7 +118,7 @@ class Turba_Object_Group extends Turba_Object
      */
     public function removeMember($contactId, $sourceId = null)
     {
-        $members = @unserialize($this->attributes['__members']);
+        $members = @unserialize($this->attributes['__members'], ['allowed_classes' => false]);
 
         if (is_null($sourceId) || $sourceId == $this->getSource()) {
             $i = array_search($contactId, $members);
@@ -142,7 +142,7 @@ class Turba_Object_Group extends Turba_Object
      */
     public function count()
     {
-        $children = @unserialize($this->attributes['__members']);
+        $children = @unserialize($this->attributes['__members'], ['allowed_classes' => false]);
         if (!is_array($children)) {
             return 0;
         } else {
