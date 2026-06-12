@@ -131,7 +131,7 @@ class Turba
             return $defaultAddressbook;
         }
         /* In case of shares select first user owned address book as default */
-        if (!empty($_SESSION['turba']['has_share'])) {
+        if (!empty($GLOBALS['session']->get('turba', 'has_share'))) {
             try {
                 $owned_shares = self::listShares(true);
                 if (count($owned_shares)) {
