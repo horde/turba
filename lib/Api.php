@@ -1246,7 +1246,14 @@ class Turba_Api extends Horde_Registry_Api
         if (!count($opts['sources'])) {
             $opts['sources'] = [Turba::getDefaultAddressbook()];
             if (!empty($opts['fields']) && empty($opts['fields'][$opts['sources'][0]])) {
-                $opts['fields'][$opts['sources'][0]] = $opts['fields'];
+                $firstKey = array_key_first($opts['fields']);
+                if ($firstKey !== null
+                    && is_string($firstKey)
+                    && is_array($opts['fields'][$firstKey])) {
+                    $opts['fields'][$opts['sources'][0]] = $opts['fields'][$firstKey];
+                } else {
+                    $opts['fields'][$opts['sources'][0]] = $opts['fields'];
+                }
             }
         }
 
@@ -1294,6 +1301,9 @@ class Turba_Api extends Horde_Registry_Api
                 if ($checkName) {
                     if (isset($opts['fields'][$source])) {
                         foreach ($opts['fields'][$source] as $field) {
+                            if (!is_string($field)) {
+                                continue;
+                            }
                             $criteria[$field] = $trimname;
                         }
                     }
