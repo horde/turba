@@ -1246,7 +1246,24 @@ class Turba_Api extends Horde_Registry_Api
         if (!count($opts['sources'])) {
             $opts['sources'] = [Turba::getDefaultAddressbook()];
             if (!empty($opts['fields']) && empty($opts['fields'][$opts['sources'][0]])) {
-                $opts['fields'][$opts['sources'][0]] = $opts['fields'];
+                // Callers may pass 'fields' in two shapes:
+                //   - flat field list: ['firstname', 'lastname']
+                //   - keyed per source: ['someSource' => ['firstname', ...]]
+                // When the original sources have all been filtered out we
+                // need to attach a sensible field list to the fallback
+                // default source. For the keyed shape, copy the first
+                // source's field list rather than the whole keyed map
+                // (assigning the whole map here would nest arrays under
+                // $opts['fields'][$default] and crash the criteria loop
+                // below on PHP 8).
+                $firstKey = array_key_first($opts['fields']);
+                if ($firstKey !== null
+                    && is_string($firstKey)
+                    && is_array($opts['fields'][$firstKey])) {
+                    $opts['fields'][$opts['sources'][0]] = $opts['fields'][$firstKey];
+                } else {
+                    $opts['fields'][$opts['sources'][0]] = $opts['fields'];
+                }
             }
         }
 
@@ -1294,6 +1311,14 @@ class Turba_Api extends Horde_Registry_Api
                 if ($checkName) {
                     if (isset($opts['fields'][$source])) {
                         foreach ($opts['fields'][$source] as $field) {
+                            // Defense in depth: even if the shape detection
+                            // above falls through to the legacy assignment,
+                            // a per-source list could still contain a stray
+                            // nested entry from a malformed caller. Skipping
+                            // non-string entries keeps $criteria flat.
+                            if (!is_string($field)) {
+                                continue;
+                            }
                             $criteria[$field] = $trimname;
                         }
                     }
