@@ -32,10 +32,10 @@ authors:
     active: false
     role: lead
 version:
-  release: 5.0.0-RC4
+  release: 5.0.0
   api: 5.0.0alpha1
 state:
-  release: RC
+  release: stable
   api: alpha
 license:
   identifier: Apache-1.1
