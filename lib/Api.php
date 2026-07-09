@@ -883,6 +883,8 @@ class Turba_Api extends Horde_Registry_Api
      *
      * @return mixed  The requested data.
      * @throws Turba_Exception
+     * @throws Horde_Exception_NotFound  If no contact with the given UID
+     *                                   exists in the requested source(s).
      */
     public function export($uid, $contentType, $sources = null, $fields = null, array $options = [])
     {
@@ -947,7 +949,12 @@ class Turba_Api extends Horde_Registry_Api
             }
         }
 
-        throw new Turba_Exception(sprintf(_("Object %s not found."), $uid));
+        /* Throw Horde_Exception_NotFound (not a generic Turba_Exception) so
+         * consumers like the ActiveSync exporter can distinguish a
+         * permanently missing contact (e.g. moved to another address book)
+         * from a temporary backend failure and drop it from the pending
+         * change list instead of retrying forever. */
+        throw new Horde_Exception_NotFound(sprintf(_("Object %s not found."), $uid));
     }
 
     /**
@@ -1086,6 +1093,8 @@ class Turba_Api extends Horde_Registry_Api
      *
      * @return boolean  Success or failure.
      * @throws Turba_Exception
+     * @throws Horde_Exception_NotFound  If no contact with the given UID
+     *                                   exists in the requested source(s).
      */
     public function replace($uid, $content, $contentType, $sources = null)
     {
@@ -1159,7 +1168,9 @@ class Turba_Api extends Horde_Registry_Api
             return $object->store();
         }
 
-        throw new Turba_Exception(sprintf(_("Object %s not found."), $uid));
+        /* See export(): NotFound lets ActiveSync distinguish a missing
+         * contact from a temporary backend error. */
+        throw new Horde_Exception_NotFound(sprintf(_("Object %s not found."), $uid));
     }
 
     /**
