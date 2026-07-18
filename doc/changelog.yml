@@ -1,4 +1,14 @@
 ---
+5.0.1:
+  api: 5.0.1
+  state:
+    release: stable
+    api: stable
+  date: 2026-07-18
+  license:
+    identifier: Apache-1.1
+    uri: https://spdx.org/licenses/Apache-1.1.html
+  notes: "Merge pull request #63 from horde/fix/api-export-replace-notfound\nfix(turba): throw Horde_Exception_NotFound for missing contacts in API"
 5.0.0:
   api: 5.0.0
   state:
