@@ -121,6 +121,18 @@ table#addressbook-list th.sortdown {
     height: 16px;
 }
 
+/* Map/Google-Maps icons emitted by the Horde_Core address var
+ * renderer (Horde_Core_Ui_VarRenderer_Html::_renderVarDisplay_address).
+ * The default theme's map.png ships at 48x48; without a size
+ * constraint it dwarfs the surrounding 16x16 iconImg sprites in
+ * list-view rows and inline form displays. Reported in turba#64.
+ * The class is set by horde/Core; sized here so themes can tune. */
+img.horde-map-icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+}
+
 /* Duplicates */
 .turba-duplicate {
     overflow: auto;
