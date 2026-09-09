@@ -156,6 +156,46 @@ class Turba_Unit_Import_ContactImporterTest extends TestCase
         $this->assertFalse($job['done']);
     }
 
+    public function testSkipDuplicateUidInSameAddressBook()
+    {
+        $this->driver->contacts[] = [
+            'name' => 'Alice Example',
+            'email' => 'alice@example.com',
+            '__uid' => 'uid-alice',
+            '__key' => 'existing',
+        ];
+        $job = $this->importer->prepare([
+            ['name' => 'Alice Example', 'email' => 'other@example.com', '__uid' => 'uid-alice'],
+        ]);
+        $job = $this->importer->processChunk($job, 10);
+        $this->assertTrue($job['done']);
+        $this->assertSame(1, $job['skipped']);
+        $this->assertSame(0, $job['imported']);
+    }
+
+    public function testCopyWhenUidExistsForOwnerInAnotherBook()
+    {
+        $this->driver->reservedUids[] = 'uid-alice';
+        $job = $this->importer->prepare([
+            ['name' => 'Alice Example', 'email' => 'alice@example.com', '__uid' => 'uid-alice'],
+        ]);
+        $job = $this->importer->processChunk($job, 10);
+        $this->assertTrue($job['done']);
+        $this->assertSame(1, $job['imported']);
+        $this->assertNotSame('uid-alice', $this->driver->added[0]['__uid']);
+    }
+
+    public function testEmptyUidGetsNewIdentifier()
+    {
+        $job = $this->importer->prepare([
+            ['name' => 'Alice Example', 'email' => 'alice@example.com', '__uid' => ''],
+        ]);
+        $job = $this->importer->processChunk($job, 10);
+        $this->assertTrue($job['done']);
+        $this->assertSame(1, $job['imported']);
+        $this->assertNotSame('', $this->driver->added[0]['__uid']);
+    }
+
     public function testIsNonEmptyAttribute()
     {
         $this->assertTrue(ContactImporter::isNonEmptyAttribute('Alice'));

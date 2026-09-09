@@ -173,7 +173,17 @@ class ContactImporter
      */
     private function importContact(array $row): string
     {
+        if (isset($row['__uid']) && $row['__uid'] === '') {
+            unset($row['__uid']);
+        }
+
         try {
+            if (!empty($row['__uid'])) {
+                $byUid = $this->driver->search(['__uid' => $row['__uid']]);
+                if (count($byUid)) {
+                    return 'skipped';
+                }
+            }
             $result = $this->driver->search(
                 array_filter($row, [self::class, 'isNonEmptyAttribute'])
             );
@@ -206,9 +216,22 @@ class ContactImporter
         try {
             $this->driver->add($row);
         } catch (Turba_Exception $e) {
-            $this->logger->err($e);
-            $this->lastError = $e->getMessage();
-            return 'error';
+            if (empty($row['__uid'])) {
+                $this->logger->err($e);
+                $this->lastError = $e->getMessage();
+                return 'error';
+            }
+            // Same owner, another address book already has this UID
+            // (turba_objects_owner_uid_unique). Import as a copy.
+            $this->logger->warn($e);
+            unset($row['__uid']);
+            try {
+                $this->driver->add($row);
+            } catch (Turba_Exception $e2) {
+                $this->logger->err($e2);
+                $this->lastError = $e2->getMessage();
+                return 'error';
+            }
         }
 
         return 'imported';
