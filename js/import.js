@@ -55,62 +55,24 @@ var TurbaImport = {
 
     nextChunk: function()
     {
-        var conf = window.HordeCore && HordeCore.conf;
-        var body, sid;
-        if (!conf || !conf.URI_AJAX) {
+        var self = this;
+        if (!window.HordeCore || !HordeCore.doAction) {
             this.onAjaxFailure();
             return;
         }
-
-        body = new URLSearchParams();
-        if (conf.TOKEN) {
-            body.set('token', conf.TOKEN);
-        }
-        if (conf.SID) {
-            sid = String(conf.SID).split('=');
-            if (sid.length === 2) {
-                body.set(sid[0], sid[1]);
+        HordeCore.doAction('importContacts', {}, {
+            callback: this.onChunk.bind(this),
+            ajaxopts: {
+                onFailure: function(t, o) {
+                    HordeCore.onFailure(t, o);
+                    self.onAjaxFailure();
+                },
+                onException: function(r, e) {
+                    HordeCore.onException(r, e);
+                    self.onAjaxFailure();
+                }
             }
-        }
-
-        fetch(conf.URI_AJAX + 'importContacts', {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: body.toString()
-        }).then(this.onFetch.bind(this)).catch(this.onAjaxFailure.bind(this));
-    },
-
-    onFetch: function(resp)
-    {
-        var fresh = resp.headers.get('X-Csrf-Token');
-        if (fresh && window.HordeCore && HordeCore.conf) {
-            HordeCore.conf.TOKEN = fresh;
-        }
-        if (!resp.ok) {
-            throw new Error('http');
-        }
-        return resp.json().then(this.onPayload.bind(this));
-    },
-
-    onPayload: function(payload)
-    {
-        if (payload && payload.reload) {
-            if (payload.reload === true) {
-                window.location.reload();
-            } else {
-                window.location.assign(payload.reload);
-            }
-            return;
-        }
-        if (!payload || !payload.response) {
-            this.onAjaxFailure();
-            return;
-        }
-        this.onChunk(payload.response);
+        });
     },
 
     onAjaxFailure: function()
