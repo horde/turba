@@ -18,6 +18,7 @@ class Turba_Stub_ImportDriver extends Turba_Driver
 {
     public array $contacts = [];
     public array $added = [];
+    public array $reservedUids = [];
     public bool $failNextAdd = false;
 
     public function __construct()
@@ -71,6 +72,11 @@ class Turba_Stub_ImportDriver extends Turba_Driver
         if ($this->failNextAdd) {
             $this->failNextAdd = false;
             throw new Turba_Exception('add failed');
+        }
+
+        $uid = $attributes['__uid'] ?? null;
+        if (is_string($uid) && $uid !== '' && in_array($uid, $this->reservedUids, true)) {
+            throw new Turba_Exception(_("Server error when adding data."));
         }
 
         if (!isset($attributes['__uid'])) {
