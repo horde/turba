@@ -13,7 +13,9 @@
 
 require_once __DIR__ . '/lib/Application.php';
 
+use Horde\Turba\Import\ColumnMapper;
 use Horde\Turba\Import\ContactImporter;
+use Horde\Turba\Import\ImportWizard;
 $app_ob = Horde_Registry::appInit('turba');
 
 if (!$conf['menu']['import_export']) {
@@ -168,21 +170,10 @@ switch ($vars->actionID) {
 
     case Horde_Data::IMPORT_MAPPED:
     case Horde_Data::IMPORT_DATETIME:
-        foreach ($cfgSources[$data->storage->get('target')]['map'] as $field => $null) {
-            if (substr($field, 0, 2) != '__' && !is_array($null)) {
-                switch ($attributes[$field]['type']) {
-                    case 'monthyear':
-                    case 'monthdayyear':
-                        $time_fields[$field] = 'date';
-                        break;
-
-                    case 'time':
-                        $time_fields[$field] = 'time';
-                        break;
-                }
-            }
-        }
-        $param['time_fields'] = $time_fields;
+        $param['time_fields'] = ColumnMapper::timeFields(
+            $cfgSources[$data->storage->get('target')]['map'],
+            $attributes
+        );
         break;
 }
 
@@ -190,6 +181,7 @@ if (!$error && $data) {
     try {
         try {
             $next_step = $data->nextStep($vars->actionID, $param);
+            $next_step = turba_auto_advance_import($data, $vars, $param, $cfgSources, $attributes, $next_step);
 
             /* Raise warnings if some exist. */
             if (method_exists($data, 'warnings')) {
@@ -210,6 +202,7 @@ if (!$error && $data) {
             $param['charset'] = 'windows-1252';
             try {
                 $next_step = $data->nextStep($vars->actionID, $param);
+                $next_step = turba_auto_advance_import($data, $vars, $param, $cfgSources, $attributes, $next_step);
             } catch (Horde_Data_Exception_Charset $e) {
                 $bad_charset = ['UTF-8', 'windows-1252'];
                 throw $e;
@@ -357,3 +350,28 @@ foreach ($templates[$next_step] as $template) {
 }
 
 $page_output->footer();
+
+/**
+ * Skip delimiter / mapping / ISO-date wizard pages for Turba-exported files.
+ *
+ * @param mixed $nextStep
+ *
+ * @return mixed
+ */
+function turba_auto_advance_import($data, $vars, array &$param, array $cfgSources, array $attributes, $nextStep)
+{
+    $sourceMap = [];
+    $target = $data->storage->get('target');
+    if ($target && isset($cfgSources[$target]['map'])) {
+        $sourceMap = $cfgSources[$target]['map'];
+    }
+
+    return (new ImportWizard())->autoAdvance(
+        $data,
+        $vars,
+        $param,
+        $sourceMap,
+        $attributes,
+        $nextStep
+    );
+}
