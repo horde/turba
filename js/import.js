@@ -24,6 +24,8 @@ var TurbaImport = {
         }, this);
 
         if ($('turba-import-progress-bar')) {
+            document.observe('HordeCore:ajaxFailure', this.onAjaxFailure.bind(this));
+            document.observe('HordeCore:ajaxException', this.onAjaxFailure.bind(this));
             this.runProgress();
         }
     },
@@ -50,9 +52,31 @@ var TurbaImport = {
 
     nextChunk: function()
     {
+        if (!window.HordeCore || !HordeCore.doAction) {
+            this.onAjaxFailure();
+            return;
+        }
         HordeCore.doAction('importContacts', {}, {
             callback: this.onChunk.bind(this)
         });
+    },
+
+    onAjaxFailure: function()
+    {
+        if (!this.running) {
+            return;
+        }
+        this.finish();
+        var msg = (window.HordeCore && HordeCore.text && HordeCore.text.ajax_error)
+            ? HordeCore.text.ajax_error
+            : 'Error when communicating with the server.';
+        var err = $('turba-import-progress-error');
+        if (err) {
+            err.update(msg.escapeHTML()).show();
+        }
+        if ($('turba-import-progress-done')) {
+            $('turba-import-progress-done').show();
+        }
     },
 
     onChunk: function(r)
