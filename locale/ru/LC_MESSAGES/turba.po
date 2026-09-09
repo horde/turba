@@ -1023,3 +1023,40 @@ msgstr "Экспорт адресной книги"
 #: templates/data/import.inc:15 templates/data/export.inc:15
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "Импорт завершён."
+
+msgid "Importing Contacts"
+msgstr "Импорт контактов"
+
+msgid "No import is in progress."
+msgstr "Импорт не выполняется."
+
+msgid "Preparing import — please wait."
+msgstr "Подготовка импорта — подождите."
+
+msgid "Return to Import/Export"
+msgstr "Вернуться к Импорту/Экспорту"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Импорт контактов: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Импортирован %d контакт."
+msgstr[1] "Импортировано %d контакта."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d контакт уже существовал и был пропущен."
+msgstr[1] "%d контакта уже существовали и были пропущены."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Импортирован %d список контактов."
+msgstr[1] "Импортировано %d списка контактов."

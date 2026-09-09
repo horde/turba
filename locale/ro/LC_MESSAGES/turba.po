@@ -401,3 +401,40 @@ msgstr "mutare dreapta"
 
 msgid "remove column"
 msgstr "stergere coloana"
+
+msgid "Import complete."
+msgstr "Import finalizat."
+
+msgid "Importing Contacts"
+msgstr "Se importă contactele"
+
+msgid "No import is in progress."
+msgstr "Nu există niciun import în curs."
+
+msgid "Preparing import — please wait."
+msgstr "Se pregătește importul — așteptați."
+
+msgid "Return to Import/Export"
+msgstr "Înapoi la Import/Export"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Se importă contactele: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "S-a importat %d contact."
+msgstr[1] "S-au importat %d contacte."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d contact exista deja și a fost omis."
+msgstr[1] "%d contacte existau deja și au fost omise."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "S-a importat %d listă de contacte."
+msgstr[1] "S-au importat %d liste de contacte."

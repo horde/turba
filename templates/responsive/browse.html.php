@@ -1,10 +1,17 @@
 <main class="container turba-container">
     <div class="page-header">
         <h1><?php echo _("Contacts") ?></h1>
-        <a href="<?php echo htmlspecialchars(Horde::url('responsive/add', true)) ?>" class="add-contact-btn">
-            <span class="add-contact-icon">+</span>
-            <?php echo _("Add Contact") ?>
-        </a>
+        <div class="page-header-actions">
+            <?php if (!empty($this->importUrl)): ?>
+                <a href="<?php echo htmlspecialchars($this->importUrl) ?>" class="import-export-btn">
+                    <?php echo _("Import/Export Address Books") ?>
+                </a>
+            <?php endif; ?>
+            <a href="<?php echo htmlspecialchars(Horde::url('responsive/add', true)) ?>" class="add-contact-btn">
+                <span class="add-contact-icon">+</span>
+                <?php echo _("Add Contact") ?>
+            </a>
+        </div>
     </div>
 
     <?php if (!$this->hasContacts): ?>

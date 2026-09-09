@@ -408,3 +408,40 @@ msgstr "flytt høgre"
 
 msgid "remove column"
 msgstr "fjern kolonne"
+
+msgid "Import complete."
+msgstr "Importen er ferdig."
+
+msgid "Importing Contacts"
+msgstr "Importerer kontaktar"
+
+msgid "No import is in progress."
+msgstr "Ingen import pågår."
+
+msgid "Preparing import — please wait."
+msgstr "Førebur import — vent."
+
+msgid "Return to Import/Export"
+msgstr "Tilbake til Import/Eksport"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Importerer kontaktar: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d kontakt importert."
+msgstr[1] "%d kontaktar importerte."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d kontakt fanst allereie og vart hoppa over."
+msgstr[1] "%d kontaktar fanst allereie og vart hoppa over."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d kontaktliste importert."
+msgstr[1] "%d kontaktlister importerte."

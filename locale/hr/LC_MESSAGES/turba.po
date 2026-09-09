@@ -1869,3 +1869,43 @@ msgstr "Posjetnica (vCard)"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "Posjetnica (vCard 3.0)"
+
+msgid "Import complete."
+msgstr "Uvoz je završen."
+
+msgid "Importing Contacts"
+msgstr "Uvoz kontakata"
+
+msgid "No import is in progress."
+msgstr "Nijedan uvoz nije u tijeku."
+
+msgid "Preparing import — please wait."
+msgstr "Priprema uvoza — pričekajte."
+
+msgid "Return to Import/Export"
+msgstr "Natrag na Uvoz/Izvoz"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Uvoz kontakata: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Uvezen je %d kontakt."
+msgstr[1] "Uvezena su %d kontakta."
+msgstr[2] "Uvezeno je %d kontakata."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d kontakt već postoji i preskočen je."
+msgstr[1] "Preskočena su %d kontakta jer već postoje."
+msgstr[2] "Preskočeno je %d kontakata jer već postoje."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Uvezen je %d popis kontakata."
+msgstr[1] "Uvezena su %d popisa kontakata."
+msgstr[2] "Uvezeno je %d popisa kontakata."

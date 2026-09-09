@@ -1931,3 +1931,40 @@ msgstr "vCard"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "vCard (3.0)"
+
+msgid "Import complete."
+msgstr "가져오기가 완료되었습니다."
+
+msgid "Importing Contacts"
+msgstr "연락처 가져오는 중"
+
+msgid "No import is in progress."
+msgstr "진행 중인 가져오기가 없습니다."
+
+msgid "Preparing import — please wait."
+msgstr "가져오기를 준비하는 중입니다. 잠시 기다려 주십시오."
+
+msgid "Return to Import/Export"
+msgstr "가져오기/내보내기로 돌아가기"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "연락처 가져오는 중: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "연락처 %d개를 가져왔습니다."
+msgstr[1] "연락처 %d개를 가져왔습니다."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "이미 있는 연락처 %d개를 건너뛰었습니다."
+msgstr[1] "이미 있는 연락처 %d개를 건너뛰었습니다."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "연락처 목록 %d개를 가져왔습니다."
+msgstr[1] "연락처 목록 %d개를 가져왔습니다."

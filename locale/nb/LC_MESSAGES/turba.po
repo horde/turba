@@ -539,3 +539,40 @@ msgstr "Velg formatet du vil eksportere til:"
 
 msgid "Import Address Book, Step %d"
 msgstr "Importer adressebok, steg %d"
+
+msgid "Import complete."
+msgstr "Importen er ferdig."
+
+msgid "Importing Contacts"
+msgstr "Importerer kontakter"
+
+msgid "No import is in progress."
+msgstr "Ingen import pågår."
+
+msgid "Preparing import — please wait."
+msgstr "Forbereder import — vennligst vent."
+
+msgid "Return to Import/Export"
+msgstr "Tilbake til Import/Eksport"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Importerer kontakter: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d kontakt importert."
+msgstr[1] "%d kontakter importert."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d kontakt fantes allerede og ble hoppet over."
+msgstr[1] "%d kontakter fantes allerede og ble hoppet over."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d kontaktliste importert."
+msgstr[1] "%d kontaktlister importert."

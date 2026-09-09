@@ -1351,3 +1351,40 @@ msgstr "a una llibreta d'adreces diferent"
 #: templates/data/import.inc:15 templates/data/export.inc:15
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "Importació completa."
+
+msgid "Importing Contacts"
+msgstr "S'estan important contactes"
+
+msgid "No import is in progress."
+msgstr "No hi ha cap importació en curs."
+
+msgid "Preparing import — please wait."
+msgstr "S'està preparant la importació — espereu."
+
+msgid "Return to Import/Export"
+msgstr "Torna a Importar/Exportar"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "S'estan important contactes: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "S'ha importat %d contacte."
+msgstr[1] "S'han importat %d contactes."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d contacte ja existia i s'ha omès."
+msgstr[1] "%d contactes ja existien i s'han omès."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "S'ha importat %d llista de contactes."
+msgstr[1] "S'han importat %d llistes de contactes."

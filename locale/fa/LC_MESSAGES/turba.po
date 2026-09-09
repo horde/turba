@@ -1233,3 +1233,40 @@ msgstr "شاخهٔ پیش فرض برای کتابچهٔ آدرس شخصی، ف�
 
 msgid "Searching Options"
 msgstr "گزینه‌های جستجو"
+
+msgid "Import complete."
+msgstr "واردات کامل شد."
+
+msgid "Importing Contacts"
+msgstr "در حال وارد کردن مخاطبین"
+
+msgid "No import is in progress."
+msgstr "هیچ وارداتی در حال انجام نیست."
+
+msgid "Preparing import — please wait."
+msgstr "در حال آماده‌سازی واردات — لطفاً صبر کنید."
+
+msgid "Return to Import/Export"
+msgstr "بازگشت به درون‌ریزی/برون‌ریزی"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "در حال وارد کردن مخاطبین: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d مخاطب وارد شد."
+msgstr[1] "%d مخاطب وارد شدند."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d مخاطب از قبل وجود داشت و رد شد."
+msgstr[1] "%d مخاطب از قبل وجود داشتند و رد شدند."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d فهرست مخاطب وارد شد."
+msgstr[1] "%d فهرست مخاطب وارد شدند."

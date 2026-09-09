@@ -627,3 +627,40 @@ msgstr "Tengiliðalisti"
 #: templates/browse/actions.inc:14
 msgid "to Selected Address Book"
 msgstr "í valinni netfangabók"
+
+msgid "Import complete."
+msgstr "Innflutningi lokið."
+
+msgid "Importing Contacts"
+msgstr "Flytur inn tengiliði"
+
+msgid "No import is in progress."
+msgstr "Enginn innflutningur er í gangi."
+
+msgid "Preparing import — please wait."
+msgstr "Undirbýr innflutning — vinsamlegast bíðið."
+
+msgid "Return to Import/Export"
+msgstr "Aftur í inn-/útflutning"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Flytur inn tengiliði: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d tengiliður fluttur inn."
+msgstr[1] "%d tengiliðir fluttir inn."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d tengiliður var þegar til og honum var sleppt."
+msgstr[1] "%d tengiliðir voru þegar til og þeim var sleppt."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d tengiliðalisti fluttur inn."
+msgstr[1] "%d tengiliðalistar fluttir inn."

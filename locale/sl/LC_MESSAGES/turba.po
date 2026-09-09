@@ -1530,3 +1530,43 @@ msgstr "v drugi imenik"
 #: templates/data/import.inc:15 templates/data/export.inc:15
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "Uvoz je končan."
+
+msgid "Importing Contacts"
+msgstr "Uvažanje stikov"
+
+msgid "No import is in progress."
+msgstr "Trenutno ne poteka noben uvoz."
+
+msgid "Preparing import — please wait."
+msgstr "Priprava uvoza — prosimo, počakajte."
+
+msgid "Return to Import/Export"
+msgstr "Nazaj na Uvoz/Izvoz"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Uvažanje stikov: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Uvožen je %d stik."
+msgstr[1] "Uvožena sta %d stika."
+msgstr[2] "Uvoženih je %d stikov."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d stik že obstaja in je bil preskočen."
+msgstr[1] "%d stika že obstajata in sta bila preskočena."
+msgstr[2] "%d stikov že obstaja in je bilo preskočenih."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Uvožen je %d seznam stikov."
+msgstr[1] "Uvožena sta %d seznama stikov."
+msgstr[2] "Uvoženih je %d seznamov stikov."

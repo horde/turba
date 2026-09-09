@@ -236,6 +236,13 @@ img.horde-map-icon {
     color: var(--text-primary);
 }
 
+.horde-responsive .page-header-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
 .horde-responsive .add-contact-btn {
     display: inline-flex;
     align-items: center;
@@ -248,7 +255,20 @@ img.horde-map-icon {
     font-weight: var(--font-weight-medium);
     border-radius: var(--radius-md);
     transition: all var(--transition-fast);
-    margin-bottom: var(--space-md);
+    margin-bottom: 0;
+}
+
+.horde-responsive .import-export-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-sm) var(--space-lg);
+    background-color: transparent;
+    color: var(--horde-primary);
+    text-decoration: none;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    border: 1px solid var(--horde-primary);
+    border-radius: var(--radius-md);
 }
 
 .horde-responsive .add-contact-btn:hover {
@@ -877,5 +897,31 @@ img.horde-map-icon {
 
     .horde-responsive .turba-container {
         max-width: 1200px;
+    }
+}
+
+/* Chunked import progress (data.php — classic and narrow viewports). */
+.turba-import-wait {
+    padding: 1.5em 1.25em;
+    text-align: center;
+    font-size: 1.05em;
+}
+.turba-import-progress progress {
+    display: block;
+    width: 100%;
+    max-width: 36em;
+    height: 1.25em;
+    margin: 0.5em 0 1em;
+}
+.turba-import-progress-summary {
+    font-weight: bold;
+}
+.turba-import-progress-error {
+    color: #a00;
+    font-weight: bold;
+}
+@media (max-width: 40em) {
+    .turba-import-progress progress {
+        max-width: 100%;
     }
 }

@@ -732,3 +732,40 @@ msgstr "حذف عمود"
 #: templates/data/import.inc:21 templates/data/export.inc:21
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "اكتمل الاستيراد."
+
+msgid "Importing Contacts"
+msgstr "جارٍ استيراد جهات الاتصال"
+
+msgid "No import is in progress."
+msgstr "لا توجد عملية استيراد قيد التقدم."
+
+msgid "Preparing import — please wait."
+msgstr "جارٍ تحضير الاستيراد — يرجى الانتظار."
+
+msgid "Return to Import/Export"
+msgstr "العودة إلى الاستيراد/التصدير"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "جارٍ استيراد جهات الاتصال: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "تم استيراد جهة اتصال واحدة (%d)."
+msgstr[1] "تم استيراد %d جهات اتصال."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "جهة اتصال واحدة (%d) موجودة مسبقاً وتم تخطيها."
+msgstr[1] "تم تخطي %d جهات اتصال لأنها موجودة مسبقاً."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "تم استيراد قائمة جهات اتصال واحدة (%d)."
+msgstr[1] "تم استيراد %d قوائم جهات اتصال."

@@ -1991,3 +1991,40 @@ msgstr "vCard"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "vCard (3.0)"
+
+msgid "Import complete."
+msgstr "Import abgeschlossen."
+
+msgid "Importing Contacts"
+msgstr "Kontakte werden importiert"
+
+msgid "No import is in progress."
+msgstr "Es läuft derzeit kein Import."
+
+msgid "Preparing import — please wait."
+msgstr "Import wird vorbereitet — bitte warten."
+
+msgid "Return to Import/Export"
+msgstr "Zurück zu Import/Export"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Kontakte werden importiert: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d Kontakt importiert."
+msgstr[1] "%d Kontakte importiert."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d Kontakt war bereits vorhanden und wurde übersprungen."
+msgstr[1] "%d Kontakte waren bereits vorhanden und wurden übersprungen."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d Kontaktliste importiert."
+msgstr[1] "%d Kontaktlisten importiert."

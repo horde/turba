@@ -1967,3 +1967,43 @@ msgstr "vCard"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "vCard (3.0)"
+
+msgid "Import complete."
+msgstr "Import dokončený."
+
+msgid "Importing Contacts"
+msgstr "Import kontaktov"
+
+msgid "No import is in progress."
+msgstr "Nebeží žiadny import."
+
+msgid "Preparing import — please wait."
+msgstr "Pripravuje sa import — čakajte prosím."
+
+msgid "Return to Import/Export"
+msgstr "Späť na Import/Export"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Import kontaktov: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Importovaný %d kontakt."
+msgstr[1] "Importované %d kontakty."
+msgstr[2] "Importovaných %d kontaktov."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d kontakt už existoval a bol preskočený."
+msgstr[1] "%d kontakty už existovali a boli preskočené."
+msgstr[2] "%d kontaktov už existovalo a bolo preskočených."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Importovaný %d zoznam kontaktov."
+msgstr[1] "Importované %d zoznamy kontaktov."
+msgstr[2] "Importovaných %d zoznamov kontaktov."

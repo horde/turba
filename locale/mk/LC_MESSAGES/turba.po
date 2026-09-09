@@ -332,3 +332,40 @@ msgstr "Ваши информации"
 
 msgid "[Edit]"
 msgstr "Уреди"
+
+msgid "Import complete."
+msgstr "Увозот е завршен."
+
+msgid "Importing Contacts"
+msgstr "Увоз на контакти"
+
+msgid "No import is in progress."
+msgstr "Нема увоз во тек."
+
+msgid "Preparing import — please wait."
+msgstr "Се подготвува увоз — почекајте."
+
+msgid "Return to Import/Export"
+msgstr "Назад кон Увоз/Извоз"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Увоз на контакти: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Увезен е %d контакт."
+msgstr[1] "Увезени се %d контакти."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d контакт веќе постоеше и беше прескокнат."
+msgstr[1] "%d контакти веќе постоеја и беа прескокнати."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Увезена е %d листа на контакти."
+msgstr[1] "Увезени се %d листи на контакти."

@@ -1884,3 +1884,40 @@ msgstr "unha axenda de enderezos distinta"
 #: templates/data/import.inc:15 templates/data/export.inc:15
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "Importación completada."
+
+msgid "Importing Contacts"
+msgstr "Importando contactos"
+
+msgid "No import is in progress."
+msgstr "Non hai ningunha importación en curso."
+
+msgid "Preparing import — please wait."
+msgstr "Preparando a importación — agarde."
+
+msgid "Return to Import/Export"
+msgstr "Volver a Importar/Exportar"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Importando contactos: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Importouse %d contacto."
+msgstr[1] "Importáronse %d contactos."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "Xa existía %d contacto e omitiuse."
+msgstr[1] "Xa existían %d contactos e omitíronse."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Importouse %d lista de contactos."
+msgstr[1] "Importáronse %d listas de contactos."

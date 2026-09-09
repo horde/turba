@@ -1880,3 +1880,40 @@ msgstr "vCard"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "vCard (3.0)"
+
+msgid "Import complete."
+msgstr "Inportazioa amaitu da."
+
+msgid "Importing Contacts"
+msgstr "Kontaktuak inportatzen"
+
+msgid "No import is in progress."
+msgstr "Ez dago inportaziorik abian."
+
+msgid "Preparing import — please wait."
+msgstr "Inportazioa prestatzen — itxaron mesedez."
+
+msgid "Return to Import/Export"
+msgstr "Itzuli Inportatu/Esportatura"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Kontaktuak inportatzen: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Kontaktu %d inportatu da."
+msgstr[1] "%d kontaktu inportatu dira."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "Kontaktu %d lehendik zegoen eta saltatu egin da."
+msgstr[1] "%d kontaktu lehendik zeuden eta saltatu egin dira."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Kontaktu zerrenda %d inportatu da."
+msgstr[1] "%d kontaktu zerrenda inportatu dira."

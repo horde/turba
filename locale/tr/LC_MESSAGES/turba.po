@@ -1868,3 +1868,37 @@ msgstr "vCard"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "vCard (3.0)"
+
+msgid "Import complete."
+msgstr "İçe aktarma tamamlandı."
+
+msgid "Importing Contacts"
+msgstr "Kişiler içe aktarılıyor"
+
+msgid "No import is in progress."
+msgstr "Devam eden bir içe aktarma yok."
+
+msgid "Preparing import — please wait."
+msgstr "İçe aktarma hazırlanıyor — lütfen bekleyin."
+
+msgid "Return to Import/Export"
+msgstr "İçe/Dışa Aktar'a dön"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Kişiler içe aktarılıyor: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d kişi içe aktarıldı."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d kişi zaten vardı ve atlandı."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d kişi listesi içe aktarıldı."
