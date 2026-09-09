@@ -61,9 +61,55 @@ msgstr ""
 msgid "%s added."
 msgstr ""
 
-#: data.php:350
+#: data.php:350 lib/Ajax/Application/Handler/Import.php
 #, php-format
 msgid "%s file successfully imported."
+msgstr ""
+
+#: lib/Ajax/Application/Handler/Import.php
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] ""
+msgstr[1] ""
+
+#: lib/Ajax/Application/Handler/Import.php
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] ""
+msgstr[1] ""
+
+#: lib/Ajax/Application/Handler/Import.php
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/data/import_progress.inc
+msgid "Import complete."
+msgstr ""
+
+#: templates/data/import_progress.inc
+msgid "Importing Contacts"
+msgstr ""
+
+#: data.php:291 lib/Ajax/Application/Handler/Import.php templates/data/import_progress.inc
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr ""
+
+#: lib/Ajax/Application/Handler/Import.php
+msgid "No import is in progress."
+msgstr ""
+
+#: data.php:291
+msgid "Preparing import — please wait."
+msgstr ""
+
+#: templates/data/import_progress.inc
+msgid "Return to Import/Export"
 msgstr ""
 
 #: lib/Api.php:1630

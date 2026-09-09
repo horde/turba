@@ -2038,3 +2038,40 @@ msgstr "vCard (3.0)"
 #~ msgstr ""
 #~ "Vous n'êtes pas connecté à Facbook. Créer une connexion Facebookdans les "
 #~ "\"options globales\"."
+
+msgid "Import complete."
+msgstr "Import terminé."
+
+msgid "Importing Contacts"
+msgstr "Import des contacts"
+
+msgid "No import is in progress."
+msgstr "Aucune importation n'est en cours."
+
+msgid "Preparing import — please wait."
+msgstr "Préparation de l'import — veuillez patienter."
+
+msgid "Return to Import/Export"
+msgstr "Retour à Import/Export"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Import des contacts : %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d contact importé."
+msgstr[1] "%d contacts importés."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d contact existait déjà et a été ignoré."
+msgstr[1] "%d contacts existaient déjà et ont été ignorés."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d liste de contacts importée."
+msgstr[1] "%d listes de contacts importées."

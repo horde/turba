@@ -21,3 +21,16 @@ require_once __DIR__ . '/TestCase.php';
 /** Load stub definitions */
 require_once __DIR__ . '/Stub/Tagger.php';
 require_once __DIR__ . '/Stub/Types.php';
+require_once __DIR__ . '/Stub/ImportDriver.php';
+
+spl_autoload_register(function ($class) {
+    $prefix = 'Horde\\Turba\\';
+    if (strpos($class, $prefix) !== 0) {
+        return;
+    }
+    $rel = str_replace('\\', '/', substr($class, strlen($prefix)));
+    $file = __DIR__ . '/../../src/' . $rel . '.php';
+    if (file_exists($file)) {
+        require $file;
+    }
+});

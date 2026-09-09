@@ -503,3 +503,40 @@ msgstr "премахни колона"
 
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "Импортирането приключи."
+
+msgid "Importing Contacts"
+msgstr "Импортиране на контакти"
+
+msgid "No import is in progress."
+msgstr "Няма импортиране в ход."
+
+msgid "Preparing import — please wait."
+msgstr "Подготовка на импортирането — моля, изчакайте."
+
+msgid "Return to Import/Export"
+msgstr "Назад към Импорт/Експорт"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Импортиране на контакти: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Импортиран е %d контакт."
+msgstr[1] "Импортирани са %d контакта."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d контакт вече съществуваше и беше пропуснат."
+msgstr[1] "%d контакта вече съществуваха и бяха пропуснати."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Импортиран е %d списък с контакти."
+msgstr[1] "Импортирани са %d списъка с контакти."

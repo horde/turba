@@ -135,6 +135,9 @@ class ResponsiveController implements RequestHandlerInterface
             'contactList' => $contactList,
             'hasContacts' => !empty($contactList),
             'groupIconUrl' => $registry->get('themesuri', 'turba') . '/default/graphics/group.png',
+            'importUrl' => !empty($GLOBALS['conf']['menu']['import_export'])
+                ? (string) Horde::url('data.php', true)
+                : null,
         ];
 
         // Render body template

@@ -1726,3 +1726,37 @@ msgstr "到其他的通訊錄"
 #: templates/data/export.inc:15 templates/data/import.inc:15
 msgid "vCard"
 msgstr "vCard"
+
+msgid "Import complete."
+msgstr "匯入完成。"
+
+msgid "Importing Contacts"
+msgstr "正在匯入聯絡人"
+
+msgid "No import is in progress."
+msgstr "目前沒有進行中的匯入。"
+
+msgid "Preparing import — please wait."
+msgstr "正在準備匯入 — 請稍候。"
+
+msgid "Return to Import/Export"
+msgstr "返回匯入/匯出"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "正在匯入聯絡人：%d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "已匯入 %d 個聯絡人。"
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d 個聯絡人已存在，已略過。"
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "已匯入 %d 個聯絡人清單。"

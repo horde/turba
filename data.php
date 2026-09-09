@@ -11,29 +11,9 @@
  * @author Jan Schneider <jan@horde.org>
  */
 
-/**
- * Remove empty attributes from attributes array.
- *
- * @param mixed $val  Value from attributes array.
- *
- * @return boolean  Boolean used by array_filter.
- */
-function _emptyAttributeFilter($var)
-{
-    if (!is_array($var)) {
-        return ($var != '');
-    }
-
-    foreach ($var as $v) {
-        if ($v == '') {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 require_once __DIR__ . '/lib/Application.php';
+
+use Horde\Turba\Import\ContactImporter;
 $app_ob = Horde_Registry::appInit('turba');
 
 if (!$conf['menu']['import_export']) {
@@ -67,6 +47,7 @@ $templates = [
     Horde_Data::IMPORT_TSV => [$registry->get('templates', 'horde') . '/data/tsvinfo.inc'],
     Horde_Data::IMPORT_MAPPED => [$registry->get('templates', 'horde') . '/data/csvmap.inc'],
     Horde_Data::IMPORT_DATETIME => [$registry->get('templates', 'horde') . '/data/datemap.inc'],
+    ContactImporter::STEP_PROGRESS => [TURBA_TEMPLATES . '/data/import_progress.inc'],
 ];
 
 /* Initial values. */
@@ -253,6 +234,7 @@ if (is_array($next_step)) {
 
     if (!count($next_step)) {
         $notification->push(sprintf(_("The %s file didn't contain any contacts."), $file_types[$data->storage->get('format')]), 'horde.error');
+        $next_step = $data->cleanup();
     } elseif ($driver) {
         /* Purge old address book if requested. */
         if ($data->storage->get('purge')) {
@@ -264,95 +246,25 @@ if (is_array($next_step)) {
             }
         }
 
-        $error = false;
-        $imported = 0;
-        $contact_groups = [];
-        foreach ($next_step as $row) {
-            if ($row instanceof Horde_Icalendar_Vcard) {
-                $row = $driver->toHash($row);
-            } else {
-                // Check for contact groups, and defer processing until all
-                // other contacts are added.
-                if (!empty($row['__members'])) {
-                    $contact_groups[] = $row;
-                    continue;
-                }
-            }
-
-            /* Don't search for empty attributes. */
-            try {
-                $result = $driver->search(array_filter($row, '_emptyAttributeFilter'));
-            } catch (Turba_Exception $e) {
-                $notification->push($e, 'horde.error');
-                $error = true;
-                break;
-            }
-
-            if (count($result)) {
-                $result->reset();
-                $object = $result->next();
-                $notification->push(sprintf(
-                    _("\"%s\" already exists and was not imported."),
-                    $object->getValue('name')
-                ), 'horde.message');
-            } else {
-                /* Check for, and validate, any email fields */
-                foreach (array_keys($row) as $field) {
-                    if ($attributes[$field]['type'] == 'email') {
-                        $allow_multi = is_array($attributes[$field]['params'])
-                            && !empty($attributes[$field]['params']['allow_multi']);
-
-                        $rfc822 = $injector->getInstance('Horde_Mail_Rfc822');
-                        try {
-                            $row[$field] = strval($rfc822->parseAddressList($row[$field], [
-                                'limit' => $allow_multi ? 0 : 1,
-                            ]));
-                        } catch (Horde_Mail_Exception $e) {
-                            $row[$field] = '';
-                        }
-                    }
-                }
-                $row['__owner'] = $driver->getContactOwner();
-
-                try {
-                    $driver->add($row);
-                    $imported++;
-                } catch (Turba_Exception $e) {
-                    $notification->push(sprintf(_("There was an error importing the data: %s"), $e->getMessage()), 'horde.error');
-                    $error = true;
-                    break;
-                }
-            }
-        }
-
-        // Now attempt to create Turba group objects.
-        foreach ($contact_groups as $group) {
-            $attributes = $group;
-            unset($attributes['__members']);
-            $group_obj = new Turba_Object_Group($driver, $attributes);
-            foreach (explode(',', $group['__members']) as $uid) {
-                $results = $driver->search(['__uid' => $uid]);
-                if (count($results->objects)) {
-                    $object = array_pop($results->objects);
-                    $group_obj->addMember($object->getValue('__key'), $object->getSource());
-                }
-            }
-            // We don't actually use the group object to save to storage since
-            // it's not an existing group. We use it so it's responsible for
-            // properly formatting the __members data, which we pull out and
-            // place in the attributes array.
-            $attributes['__members'] = $group_obj->getValue('__members');
-            $attributes['__type'] = 'group';
-            $driver->add($attributes);
-        }
-        if (!$error && $imported) {
-            $notification->push(sprintf(
-                _("%s file successfully imported."),
-                $file_types[$data->storage->get('format')]
-            ), 'horde.success');
-        }
+        $importer = new ContactImporter(
+            $driver,
+            $injector->getInstance('Horde_Log_Logger'),
+            $injector->getInstance('Horde_Mail_Rfc822'),
+            $attributes
+        );
+        $job = $importer->prepare($next_step);
+        $data->storage->set(ContactImporter::STORAGE_KEY, $job);
+        $data->storage->set('data');
+        $next_step = ContactImporter::STEP_PROGRESS;
+    } else {
+        $next_step = $data->cleanup();
     }
-    $next_step = $data->cleanup();
+}
+
+$import_total = 0;
+if ($next_step === ContactImporter::STEP_PROGRESS) {
+    $job = $data->storage->get(ContactImporter::STORAGE_KEY);
+    $import_total = count($job['contacts'] ?? []) + count($job['groups'] ?? []);
 }
 
 switch ($next_step) {
@@ -372,8 +284,21 @@ switch ($next_step) {
         break;
 }
 
+$page_output->addScriptFile('scriptaculous/effects.js', 'horde');
+$page_output->addScriptFile('redbox.js', 'horde');
+$page_output->addScriptFile('import.js');
+$page_output->addInlineJsVars([
+    'TurbaImport.text' => [
+        'preparing' => _("Preparing import — please wait."),
+    ],
+]);
+if ($next_step === ContactImporter::STEP_PROGRESS) {
+    $page_output->ajax = true;
+}
+
 $page_output->header([
     'title' => _("Import/Export Address Books"),
+    'view' => Horde_Registry::VIEW_BASIC,
 ]);
 $notification->notify(['listeners' => 'status']);
 

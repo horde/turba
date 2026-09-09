@@ -1983,3 +1983,40 @@ msgstr "vCard (3.0)"
 
 msgid "description"
 msgstr "περιγραφή"
+
+msgid "Import complete."
+msgstr "Η εισαγωγή ολοκληρώθηκε."
+
+msgid "Importing Contacts"
+msgstr "Εισαγωγή επαφών"
+
+msgid "No import is in progress."
+msgstr "Δεν υπάρχει εισαγωγή σε εξέλιξη."
+
+msgid "Preparing import — please wait."
+msgstr "Προετοιμασία εισαγωγής — παρακαλώ περιμένετε."
+
+msgid "Return to Import/Export"
+msgstr "Επιστροφή στην Εισαγωγή/Εξαγωγή"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Εισαγωγή επαφών: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "Εισήχθη %d επαφή."
+msgstr[1] "%d επαφές εισήχθησαν."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d επαφή υπήρχε ήδη και παραλείφθηκε."
+msgstr[1] "%d επαφές υπήρχαν ήδη και παραλείφθηκαν."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "Εισήχθη %d λίστα επαφών."
+msgstr[1] "%d λίστες επαφών εισήχθησαν."

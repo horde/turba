@@ -1964,3 +1964,40 @@ msgstr "vCard"
 #: templates/data/export.inc:16
 msgid "vCard (3.0)"
 msgstr "vCard (3.0)"
+
+msgid "Import complete."
+msgstr "Import kész."
+
+msgid "Importing Contacts"
+msgstr "Névjegyek importálása"
+
+msgid "No import is in progress."
+msgstr "Nincs folyamatban importálás."
+
+msgid "Preparing import — please wait."
+msgstr "Import előkészítése — kérem várjon."
+
+msgid "Return to Import/Export"
+msgstr "Vissza az Import/Exporthoz"
+
+#, php-format
+msgid "Importing contacts: %d / %d (%d%%)"
+msgstr "Névjegyek importálása: %d / %d (%d%%)"
+
+#, php-format
+msgid "Imported %d contact."
+msgid_plural "Imported %d contacts."
+msgstr[0] "%d névjegy importálva."
+msgstr[1] "%d névjegy importálva."
+
+#, php-format
+msgid "%d contact already existed and was skipped."
+msgid_plural "%d contacts already existed and were skipped."
+msgstr[0] "%d névjegy már létezett, ezért kihagytuk."
+msgstr[1] "%d névjegy már létezett, ezért kihagytuk."
+
+#, php-format
+msgid "Imported %d contact list."
+msgid_plural "Imported %d contact lists."
+msgstr[0] "%d névjegylista importálva."
+msgstr[1] "%d névjegylista importálva."
