@@ -13,6 +13,9 @@
  * @license  http://www.horde.org/licenses/apache ASL
  * @package  Turba
  */
+
+use Horde\Turba\Ajax\ImportHandler;
+
 class Turba_Ajax_Application extends Horde_Core_Ajax_Application
 {
     /**
@@ -28,7 +31,7 @@ class Turba_Ajax_Application extends Horde_Core_Ajax_Application
         }
 
         $this->addHandler('Turba_Ajax_Application_Handler_Minisearch');
-        $this->addHandler('Turba_Ajax_Application_Handler_Import');
+        $this->addHandler(ImportHandler::class);
     }
 
 }
