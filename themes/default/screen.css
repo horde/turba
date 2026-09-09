@@ -901,10 +901,21 @@ img.horde-map-icon {
 }
 
 /* Chunked import progress (data.php — classic and narrow viewports). */
+.turba-import-wait-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.45);
+}
 .turba-import-wait {
     padding: 1.5em 1.25em;
     text-align: center;
     font-size: 1.05em;
+    background: #fff;
+    color: #000;
 }
 .turba-import-progress progress {
     display: block;

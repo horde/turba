@@ -277,8 +277,6 @@ switch ($next_step) {
         break;
 }
 
-$page_output->addScriptFile('scriptaculous/effects.js', 'horde');
-$page_output->addScriptFile('redbox.js', 'horde');
 $page_output->addScriptFile('import.js');
 $page_output->addInlineJsVars([
     'TurbaImport.text' => [

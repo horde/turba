@@ -17,28 +17,31 @@ var TurbaImport = {
 
     onDomLoad: function()
     {
-        $$('form').each(function(form) {
-            if (form.down('input[name=import_step]')) {
-                form.observe('submit', this.onSubmit.bindAsEventListener(this));
+        var forms = document.querySelectorAll('form');
+        var i, form;
+        for (i = 0; i < forms.length; i++) {
+            form = forms[i];
+            if (form.querySelector('input[name="import_step"]')) {
+                form.addEventListener('submit', this.onSubmit.bind(this));
             }
-        }, this);
+        }
 
-        if ($('turba-import-progress-bar')) {
-            document.observe('HordeCore:ajaxFailure', this.onAjaxFailure.bind(this));
-            document.observe('HordeCore:ajaxException', this.onAjaxFailure.bind(this));
+        if (document.getElementById('turba-import-progress-bar')) {
             this.runProgress();
         }
     },
 
     onSubmit: function()
     {
-        if (window.RedBox) {
-            RedBox.showHtml(
-                '<div class="turba-import-wait">' +
-                    this.text.preparing.escapeHTML() +
-                    '</div>'
-            );
-        }
+        var overlay = document.createElement('div');
+        overlay.id = 'turba-import-wait-overlay';
+        overlay.className = 'turba-import-wait-overlay';
+        overlay.setAttribute('role', 'status');
+        var box = document.createElement('div');
+        box.className = 'turba-import-wait';
+        box.textContent = this.text.preparing || '';
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
     },
 
     runProgress: function()
@@ -52,61 +55,128 @@ var TurbaImport = {
 
     nextChunk: function()
     {
-        if (!window.HordeCore || !HordeCore.doAction) {
+        var conf = window.HordeCore && HordeCore.conf;
+        var body, sid;
+        if (!conf || !conf.URI_AJAX) {
             this.onAjaxFailure();
             return;
         }
-        HordeCore.doAction('importContacts', {}, {
-            callback: this.onChunk.bind(this)
-        });
+
+        body = new URLSearchParams();
+        if (conf.TOKEN) {
+            body.set('token', conf.TOKEN);
+        }
+        if (conf.SID) {
+            sid = String(conf.SID).split('=');
+            if (sid.length === 2) {
+                body.set(sid[0], sid[1]);
+            }
+        }
+
+        fetch(conf.URI_AJAX + 'importContacts', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: body.toString()
+        }).then(this.onFetch.bind(this)).catch(this.onAjaxFailure.bind(this));
+    },
+
+    onFetch: function(resp)
+    {
+        var fresh = resp.headers.get('X-Csrf-Token');
+        if (fresh && window.HordeCore && HordeCore.conf) {
+            HordeCore.conf.TOKEN = fresh;
+        }
+        if (!resp.ok) {
+            throw new Error('http');
+        }
+        return resp.json().then(this.onPayload.bind(this));
+    },
+
+    onPayload: function(payload)
+    {
+        if (payload && payload.reload) {
+            if (payload.reload === true) {
+                window.location.reload();
+            } else {
+                window.location.assign(payload.reload);
+            }
+            return;
+        }
+        if (!payload || !payload.response) {
+            this.onAjaxFailure();
+            return;
+        }
+        this.onChunk(payload.response);
     },
 
     onAjaxFailure: function()
     {
+        var msg, err, done;
         if (!this.running) {
             return;
         }
         this.finish();
-        var msg = (window.HordeCore && HordeCore.text && HordeCore.text.ajax_error)
+        msg = (window.HordeCore && HordeCore.text && HordeCore.text.ajax_error)
             ? HordeCore.text.ajax_error
             : 'Error when communicating with the server.';
-        var err = $('turba-import-progress-error');
+        err = document.getElementById('turba-import-progress-error');
         if (err) {
-            err.update(msg.escapeHTML()).show();
+            err.textContent = msg;
+            err.style.display = '';
         }
-        if ($('turba-import-progress-done')) {
-            $('turba-import-progress-done').show();
+        done = document.getElementById('turba-import-progress-done');
+        if (done) {
+            done.style.display = '';
         }
     },
 
     onChunk: function(r)
     {
-        var bar = $('turba-import-progress-bar'),
-            text = $('turba-import-progress-text');
+        var bar = document.getElementById('turba-import-progress-bar'),
+            text = document.getElementById('turba-import-progress-text'),
+            err, summary, done;
 
         if (text && r.progress_text) {
-            text.update(r.progress_text.escapeHTML());
+            text.textContent = r.progress_text;
         }
         if (bar) {
-            bar.writeAttribute('value', r.processed || 0);
+            bar.value = r.processed || 0;
             if (r.total) {
-                bar.writeAttribute('max', r.total);
+                bar.max = r.total;
             }
         }
 
         if (r.error) {
             this.finish();
-            $('turba-import-progress-error').update(r.progress_text.escapeHTML()).show();
-            $('turba-import-progress-done').show();
+            err = document.getElementById('turba-import-progress-error');
+            if (err) {
+                err.textContent = r.progress_text || r.error;
+                err.style.display = '';
+            }
+            done = document.getElementById('turba-import-progress-done');
+            if (done) {
+                done.style.display = '';
+            }
             return;
         }
 
         if (r.done) {
             this.finish();
             if (r.summary) {
-                $('turba-import-progress-summary').update(r.summary.escapeHTML()).show();
+                summary = document.getElementById('turba-import-progress-summary');
+                if (summary) {
+                    summary.textContent = r.summary;
+                    summary.style.display = '';
+                }
             }
-            $('turba-import-progress-done').show();
+            done = document.getElementById('turba-import-progress-done');
+            if (done) {
+                done.style.display = '';
+            }
             return;
         }
 
@@ -121,4 +191,6 @@ var TurbaImport = {
 
 };
 
-document.observe('dom:loaded', TurbaImport.onDomLoad.bind(TurbaImport));
+document.addEventListener('DOMContentLoaded', function() {
+    TurbaImport.onDomLoad();
+});

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Copyright 2026 The Horde Project (http://www.horde.org/)
  *
@@ -13,12 +15,21 @@
  * @package Turba
  */
 
+namespace Horde\Turba\Ajax;
+
 use Horde\Turba\Import\ContactImporter;
+use Horde_Core_Ajax_Application_Handler;
+use Horde_Core_Data_Storage;
+use Horde_Exception;
+use Horde_Log_Logger;
+use Horde_Mail_Rfc822;
+use stdClass;
+use Turba_Factory_Driver;
 
 /**
  * AJAX actions for chunked address-book import.
  */
-class Turba_Ajax_Application_Handler_Import extends Horde_Core_Ajax_Application_Handler
+class ImportHandler extends Horde_Core_Ajax_Application_Handler
 {
     /**
      * Import the next slice of the in-progress address-book import.
@@ -62,19 +73,20 @@ class Turba_Ajax_Application_Handler_Import extends Horde_Core_Ajax_Application_
             'ldif'     => _("LDIF Address Book"),
         ];
 
+        $logger = $injector->getInstance(Horde_Log_Logger::class);
         try {
-            $driver = $injector->getInstance('Turba_Factory_Driver')->create($target);
+            $driver = $injector->getInstance(Turba_Factory_Driver::class)->create($target);
             $importer = new ContactImporter(
                 $driver,
-                $injector->getInstance('Horde_Log_Logger'),
-                $injector->getInstance('Horde_Mail_Rfc822'),
+                $logger,
+                $injector->getInstance(Horde_Mail_Rfc822::class),
                 $attributes
             );
             $job = $importer->processChunk($job);
             $storage->set(ContactImporter::STORAGE_KEY, $job);
             $progress = $importer->progress($job);
         } catch (Horde_Exception $e) {
-            $injector->getInstance('Horde_Log_Logger')->err($e);
+            $logger->err($e);
             $returnOb->error = $e->getMessage();
             $returnOb->progress_text = sprintf(_("There was an error importing the data: %s"), $e->getMessage());
             $storage->clear();
@@ -99,7 +111,7 @@ class Turba_Ajax_Application_Handler_Import extends Horde_Core_Ajax_Application_
         }
 
         if ($progress['done']) {
-            $returnOb->summary = $this->_summary($progress);
+            $returnOb->summary = $this->summary($progress);
             if ($progress['imported'] || $progress['groups_imported']) {
                 $label = $file_types[$format] ?? $format;
                 $notification->push(sprintf(_("%s file successfully imported."), $label), 'horde.success');
@@ -113,7 +125,7 @@ class Turba_Ajax_Application_Handler_Import extends Horde_Core_Ajax_Application_
     /**
      * @param array{imported: int, skipped: int, groups_imported: int} $progress
      */
-    private function _summary(array $progress): string
+    private function summary(array $progress): string
     {
         $parts = [];
         if ($progress['imported']) {
@@ -139,5 +151,4 @@ class Turba_Ajax_Application_Handler_Import extends Horde_Core_Ajax_Application_
         }
         return implode(' ', $parts);
     }
-
 }
