@@ -1,5 +1,6 @@
 <?php
 
+use Horde\Turba\TurbaConfig;
 use Horde\Util\Util;
 
 /**
@@ -184,7 +185,8 @@ class Turba_View_List implements Countable
         // used by actions.inc
         $hasDelete = $driver->hasPermission(Horde_Perms::DELETE);
         $hasEdit = $driver->hasPermission(Horde_Perms::EDIT);
-        $hasExport = $GLOBALS['conf']['menu']['import_export'] && !empty($GLOBALS['cfgSources'][Turba::$source]['export']);
+        $turbaConfig = $GLOBALS['injector']->get(TurbaConfig::class);
+        $hasExport = $turbaConfig->get('menu.import_export') && !empty($GLOBALS['cfgSources'][Turba::$source]['export']);
 
         $vars = Horde_Variables::getDefaultVariables();
 
@@ -234,7 +236,7 @@ class Turba_View_List implements Countable
             if (count($this) > $prefs->getValue('perpage')) {
                 $page = $vars->get('page', 'A');
                 $pattern = ['A-Z', 'a-z', '*'];
-                foreach ($GLOBALS['conf']['pager']['special'] as $chr) {
+                foreach ($turbaConfig->get('pager.special') as $chr) {
                     $pattern[] = preg_quote($chr, '/');
                 }
                 if (!preg_match('/^[' . implode('', $pattern) . ']$/', $page)) {

@@ -1,6 +1,7 @@
 <?php
 
 use Horde\Injector\Injector;
+use Horde\Turba\TurbaConfig;
 
 /**
  * Copyright 2014-2026 Horde LLC (http://www.horde.org/)
@@ -33,7 +34,7 @@ class Turba_Factory_Tagger extends Horde_Core_Factory_Injector
      */
     public function create(Horde_Injector|Injector $injector)
     {
-        return empty($GLOBALS['conf']['tags']['enabled'])
+        return empty($injector->get(TurbaConfig::class)->get('tags.enabled'))
             ? new Horde_Core_Tagger_Null()
             : new Turba_Tagger();
     }

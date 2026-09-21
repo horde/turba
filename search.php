@@ -91,7 +91,8 @@ if ($driver) {
                     }
                 }
             }
-            if ($conf['tags']['enabled']) {
+            $config = $injector->get(\Horde\Turba\TurbaConfig::class);
+            if ($config->get('tags.enabled')) {
                 $criteria['tags'] = $vars->tags;
             }
             if (count($criteria) || $browsable) {

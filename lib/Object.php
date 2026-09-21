@@ -1,6 +1,7 @@
 <?php
 
 use Horde\Date\Format as DateFormat;
+use Horde\Turba\TurbaConfig;
 use Horde\Util\Util;
 
 /**
@@ -133,7 +134,8 @@ class Turba_Object
      */
     public function getValue($attribute)
     {
-        global $attributes, $injector, $conf;
+        global $attributes, $injector;
+        $config = $injector->get(TurbaConfig::class);
 
         if (isset($this->attributes[$attribute])
             && ($hooks = $injector->getInstance('Horde_Core_Hooks'))
@@ -159,7 +161,7 @@ class Turba_Object
             // then populate the $attribute data using default resizing config.
             if (empty($this->attributes[$attribute])) {
                 if (!empty($this->attributes[$attribute . '_orig'])
-                    && (!empty($conf['photos']['height']) || !empty($conf['photos']['width']))) {
+                    && (!empty($config->get('photos.height')) || !empty($config->get('photos.width')))) {
                     // Do resizing
                     $img = $injector->getInstance('Horde_Core_Factory_Image')->create(
                         [
@@ -167,7 +169,7 @@ class Turba_Object
                             'type' => 'jpeg',
                         ]
                     );
-                    $img->resize($conf['photos']['width'], $conf['photos']['height']);
+                    $img->resize($config->get('photos.width'), $config->get('photos.height'));
                     $this->setValue($attribute, $img->raw(true));
                     $this->store();
                 }

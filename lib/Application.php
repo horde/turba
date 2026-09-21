@@ -91,9 +91,10 @@ class Turba_Application extends Horde_Registry_Application
      */
     protected function _init()
     {
-        global $conf, $injector, $registry, $session, $prefs;
+        global $injector, $registry, $session, $prefs;
+        $config = $injector->get(\Horde\Turba\TurbaConfig::class);
 
-        if ($conf['tags']['enabled']) {
+        if ($config->get('tags.enabled')) {
             /* For now, autoloading the Content_* classes depend on there being
              * a registry entry for the 'content' application that contains at
              * least the fileroot entry. */
@@ -221,7 +222,7 @@ class Turba_Application extends Horde_Registry_Application
         $menu->add(Horde::url('search.php'), _("_Search"), 'turba-search', null, null, null, (($GLOBALS['prefs']->getValue('initial_page') == 'search.php' && basename($_SERVER['PHP_SELF']) == 'index.php' && strpos($_SERVER['PHP_SELF'], 'addressbooks/index.php') === false) || (basename($_SERVER['PHP_SELF']) == 'browse.php' && Util::getFormData('key') == '**search')) ? 'current' : null);
 
         /* Import/Export */
-        if ($GLOBALS['conf']['menu']['import_export']) {
+        if ($GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('menu.import_export')) {
             $menu->add(Horde::url('data.php'), _("_Import/Export"), 'horde-data');
         }
     }
@@ -233,7 +234,8 @@ class Turba_Application extends Horde_Registry_Application
      */
     public function sidebar($sidebar)
     {
-        global $conf, $cfgSources;
+        global $cfgSources;
+        $config = $GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class);
 
         if (count($GLOBALS['addSources'])) {
             $sidebar->addNewButton(_("_New Contact"), Horde::url('add.php'));
@@ -252,7 +254,7 @@ class Turba_Application extends Horde_Registry_Application
         ];
         if ($GLOBALS['registry']->getAuth()
             && $GLOBALS['session']->get('turba', 'has_share')
-            && !empty($conf['shares']['source'])) {
+            && !empty($config->get('shares.source'))) {
             $create = true;
             $sidebar->containers['my']['header']['add'] = [
                 'url' => Horde::url('addressbooks/create.php'),

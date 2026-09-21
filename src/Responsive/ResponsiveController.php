@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Horde\Turba\Responsive;
 
 use Horde\Core\PageOutput\PageContent;
+use Horde\Turba\TurbaConfig;
 use Horde\Core\PageOutput\ResponsiveChromeRenderer;
 use Horde\Core\View\ResponsiveTemplateView;
 use Horde\Date\Formatter\IcuFormatter;
@@ -135,7 +136,7 @@ class ResponsiveController implements RequestHandlerInterface
             'contactList' => $contactList,
             'hasContacts' => !empty($contactList),
             'groupIconUrl' => $registry->get('themesuri', 'turba') . '/default/graphics/group.png',
-            'importUrl' => !empty($GLOBALS['conf']['menu']['import_export'])
+            'importUrl' => !empty($injector->get(TurbaConfig::class)->get('menu.import_export'))
                 ? (string) Horde::url('data.php', true)
                 : null,
         ];

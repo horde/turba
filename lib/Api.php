@@ -46,7 +46,8 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function commentCallback($id)
     {
-        if (!$GLOBALS['conf']['comments']['allow']) {
+        $config = $GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class);
+        if (!$config->get('comments.allow')) {
             return false;
         }
 
@@ -68,7 +69,7 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function hasComments()
     {
-        return !empty($GLOBALS['conf']['comments']['allow']);
+        return !empty($GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('comments.allow'));
     }
 
     /**
@@ -173,9 +174,8 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function getGalUid()
     {
-        return empty($GLOBALS['conf']['gal']['addressbook'])
-            ? false
-            : $GLOBALS['conf']['gal']['addressbook'];
+        $galAddressbook = $GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('gal.addressbook');
+        return empty($galAddressbook) ? false : $galAddressbook;
     }
 
     /**
@@ -1683,9 +1683,8 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function getClientSource()
     {
-        return empty($GLOBALS['conf']['client']['addressbook'])
-            ? false
-            : $GLOBALS['conf']['client']['addressbook'];
+        $clientAddressbook = $GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('client.addressbook');
+        return empty($clientAddressbook) ? false : $clientAddressbook;
     }
 
     /**
@@ -1695,7 +1694,7 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function clientFields()
     {
-        return $this->fields($GLOBALS['conf']['client']['addressbook']);
+        return $this->fields($GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('client.addressbook'));
     }
 
     /**
@@ -1708,7 +1707,7 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function getClient($objectId = '')
     {
-        return $this->getContact($GLOBALS['conf']['client']['addressbook'], $objectId);
+        return $this->getContact($GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('client.addressbook'), $objectId);
     }
 
     /**
@@ -1721,7 +1720,7 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function getClients($objectIds = [])
     {
-        return $this->getContacts($GLOBALS['conf']['client']['addressbook'], $objectIds);
+        return $this->getContacts($GLOBALS['injector']->get(\Horde\Turba\TurbaConfig::class)->get('client.addressbook'), $objectIds);
     }
 
     /**
@@ -2307,15 +2306,17 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function addAddressbook($name, array $params = [])
     {
-        global $conf, $injector, $prefs;
+        global $injector, $prefs;
+        $config = $injector->get(\Horde\Turba\TurbaConfig::class);
+        $sharesSource = $config->get('shares.source');
 
         $cfgSources = Turba::availableSources();
         $driver = $injector->getInstance('Turba_Factory_Driver')
-            ->createFromConfig($cfgSources[$conf['shares']['source']]);
+            ->createFromConfig($cfgSources[$sharesSource]);
         $share = $driver->createShare(
             strval(new Horde_Support_Randomid()),
             [
-                'params' => ['source' => $conf['shares']['source']],
+                'params' => ['source' => $sharesSource],
                 'name' => $name,
             ]
         );
@@ -2363,9 +2364,10 @@ class Turba_Api extends Horde_Registry_Api
      */
     public function resetActiveSyncContactsState($notify = false)
     {
-        global $conf, $injector, $notification, $prefs;
+        global $injector, $notification, $prefs;
+        $config = $injector->get(\Horde\Turba\TurbaConfig::class);
 
-        if (empty($conf['activesync']['enabled'])) {
+        if (empty($config->get('activesync.enabled'))) {
             return;
         }
 

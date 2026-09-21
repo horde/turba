@@ -18,7 +18,8 @@ use Horde\Turba\Import\ContactImporter;
 use Horde\Turba\Import\ImportWizard;
 $app_ob = Horde_Registry::appInit('turba');
 
-if (!$conf['menu']['import_export']) {
+$config = $injector->get(\Horde\Turba\TurbaConfig::class);
+if (!$config->get('menu.import_export')) {
     require TURBA_BASE . '/index.php';
     exit;
 }

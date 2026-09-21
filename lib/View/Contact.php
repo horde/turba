@@ -7,6 +7,7 @@
  * @package Turba
  */
 
+use Horde\Turba\TurbaConfig;
 use Horde\Util\Variables;
 use Horde\Util\Util;
 
@@ -35,7 +36,7 @@ class Turba_View_Contact
 
     public function html($active = true)
     {
-        global $browser, $conf, $registry;
+        global $browser, $registry;
 
         if (!$this->contact
             || !$this->contact->hasPermission(Horde_Perms::READ)) {
@@ -65,7 +66,7 @@ class Turba_View_Contact
         $form->renderInactive($form->getRenderer(), $vars);
 
         /* Comments. */
-        if (!empty($conf['comments']['allow']) && $registry->hasMethod('forums/doComments')) {
+        if (!empty($GLOBALS['injector']->get(TurbaConfig::class)->get('comments.allow')) && $registry->hasMethod('forums/doComments')) {
             try {
                 $comments = $registry->call('forums/doComments', ['turba', $this->contact->driver->getName() . '.' . $this->contact->getValue('__key'), 'commentCallback']);
             } catch (Horde_Exception $e) {
