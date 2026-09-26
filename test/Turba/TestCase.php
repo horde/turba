@@ -14,6 +14,7 @@
  */
 
 require __DIR__ . '/Stub/Hooks.php';
+require_once __DIR__ . '/ConfigBinding.php';
 
 /**
  * Basic Turba test case.
@@ -33,6 +34,8 @@ require __DIR__ . '/Stub/Hooks.php';
  */
 class Turba_TestCase extends PHPUnit_Framework_TestCase
 {
+    use Turba_Test_ConfigBinding;
+
     protected function getInjector()
     {
         return new Horde_Injector(new Horde_Injector_TopLevel());
@@ -62,7 +65,11 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             ]
         );
         $GLOBALS['session'] = new Horde_Session();
-        $GLOBALS['conf']['prefs']['driver'] = 'Null';
+        self::bindConfig($GLOBALS['injector'], [
+            'horde' => [
+                'prefs' => ['driver' => 'Null'],
+            ],
+        ]);
         putenv('HORDE_UNIT_TEST=1');
     }
 
@@ -72,8 +79,7 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
             $GLOBALS['session'],
             $GLOBALS['prefs'],
             $GLOBALS['injector'],
-            $GLOBALS['registry'],
-            $GLOBALS['conf']
+            $GLOBALS['registry']
         );
     }
 

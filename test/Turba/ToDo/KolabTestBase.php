@@ -107,9 +107,16 @@ class Turba_KolabTestBase extends Turba_TestCase
      */
     public function prepareFixedConfiguration()
     {
-        $GLOBALS['conf'] = &$GLOBALS['registry']->_confCache['horde'];
-        $GLOBALS['conf']['kolab']['server']['driver'] = 'test';
-        $GLOBALS['conf']['documents']['type'] = 'horde';
+        self::bindConfig($GLOBALS['injector'], [
+            'horde' => [
+                'kolab' => [
+                    'server' => ['driver' => 'test'],
+                ],
+            ],
+            'turba' => [
+                'documents' => ['type' => 'horde'],
+            ],
+        ]);
     }
 
     /**

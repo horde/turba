@@ -7,7 +7,7 @@ if ($currentPage == '*') {
 } else {
     echo $viewurl->copy()->add('page', '*')->link() . _("All") . '</a>&nbsp;';
 }
-foreach ($GLOBALS['conf']['pager']['special'] as $a) {
+foreach ($turbaConfig->get('pager.special', []) as $a) {
     if ($currentPage == $a) {
         echo '<strong>(' . $a . ')</strong>&nbsp;';
     } else {

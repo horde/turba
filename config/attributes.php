@@ -528,15 +528,14 @@ $attributes['freebusyUrl'] = [
     'required' => false,
     'params' => ['regex' => '', 'size' => 40, 'maxlength' => 255],
 ];
-/**
- * TODO: Find a way to move globals access out of this use case, too
- */
-if (!empty($GLOBALS['conf']['gnupg']['path'])) {
+$hordeConfig = $GLOBALS['injector']->get(\Horde\Core\Config\ConfigLoader::class)->load('horde');
+$gpgPath = $hordeConfig->get('gnupg.path');
+if (!empty($gpgPath)) {
     $attributes['pgpPublicKey'] = [
         'label' => _("PGP Public Key"),
         'type' => 'pgp',
         'required' => false,
-        'params' => ['gpg' => $GLOBALS['conf']['gnupg']['path'], 'temp_dir' => Horde::getTempDir(), 'rows' => 3, 'cols' => 40],
+        'params' => ['gpg' => $gpgPath, 'temp_dir' => Horde::getTempDir(), 'rows' => 3, 'cols' => 40],
     ];
 } else {
     $attributes['pgpPublicKey'] = [
