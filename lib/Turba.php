@@ -12,7 +12,7 @@
  * @package   Turba
  */
 
-use Horde\Turba\TurbaConfig;
+use Horde\Core\Config\ConfigLoader;
 use Horde\Util\Variables;
 
 /**
@@ -542,7 +542,7 @@ class Turba
     public static function getConfigFromShares(array $sources, $owner = false, $options = [])
     {
         global $notification, $registry, $injector, $prefs;
-        $config = $injector->get(TurbaConfig::class);
+        $hordeConfig = $injector->get(ConfigLoader::class)->load('horde');
 
         if (empty($options['shares'])) {
             try {
@@ -630,7 +630,7 @@ class Turba
                 $newSources = array_merge($newSources, $sortedSources[$source]);
             }
 
-            if (!empty($config->get('share.auto_create'))
+            if (!empty($hordeConfig->get('share.auto_create'))
                 && $auth_user
                 && !$personal) {
                 // User's default share is missing.
