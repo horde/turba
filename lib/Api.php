@@ -2365,9 +2365,9 @@ class Turba_Api extends Horde_Registry_Api
     public function resetActiveSyncContactsState($notify = false)
     {
         global $injector, $notification, $prefs;
-        $config = $injector->get(\Horde\Turba\TurbaConfig::class);
+        $hordeConfig = $injector->get(\Horde\Core\Config\ConfigLoader::class)->load('horde');
 
-        if (empty($config->get('activesync.enabled'))) {
+        if (empty($hordeConfig->get('activesync.enabled'))) {
             return;
         }
 

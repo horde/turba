@@ -28,7 +28,7 @@ class Turba_Form_EditAddressBook extends Horde_Form
     public function __construct($vars, Horde_Share_Object $addressbook)
     {
         global $injector, $registry;
-        $config = $injector->get(\Horde\Turba\TurbaConfig::class);
+        $hordeConfig = $injector->get(\Horde\Core\Config\ConfigLoader::class)->load('horde');
 
         $this->_addressbook = $addressbook;
 
@@ -62,7 +62,7 @@ class Turba_Form_EditAddressBook extends Horde_Form
 
         /* Subscription URLs. */
         $url = $registry->get('webroot', 'horde');
-        if ($config->get('urls.pretty') === 'rewrite') {
+        if ($hordeConfig->get('urls.pretty') === 'rewrite') {
             $webdavUrl = $url . '/rpc/turba/';
             $carddavUrl = $url . '/rpc/addressbooks/';
             $accountUrl = $url . '/rpc/';
@@ -137,7 +137,7 @@ class Turba_Form_EditAddressBook extends Horde_Form
         );
 
         /* Permissions link. */
-        if (empty($config->get('share.no_sharing')) && $owner) {
+        if (empty($hordeConfig->get('share.no_sharing')) && $owner) {
             $url = Horde::url($registry->get('webroot', 'horde')
                               . '/services/shares/edit.php')
                 ->add(['app' => 'turba', 'share' => $addressbook->getName()]);

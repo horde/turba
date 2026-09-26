@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/../ConfigBinding.php';
+
 /**
  * Base class for Turba test cases
  *
@@ -10,6 +12,8 @@
  */
 class Turba_TestBase extends PHPUnit_Framework_TestCase
 {
+    use Turba_Test_ConfigBinding;
+
     public $_driver;
     public $_driverConfig = [
         'title' => "My Address Book",

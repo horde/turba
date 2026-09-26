@@ -771,7 +771,8 @@ $cfgSources['favourites'] = [
  */
 // Check that IMSP is configured in Horde but fall through if there is no
 // configuration at all.
-if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
+$hordeConfig = $GLOBALS['injector']->get(\Horde\Core\Config\ConfigLoader::class)->load('horde');
+if (!empty($hordeConfig->get('imsp.enabled'))) {
     // First, get the user name to login to IMSP server with.
     $_imsp_auth_user = $GLOBALS['prefs']->getValue('imsp_auth_user');
     $_imsp_auth_pass = $GLOBALS['prefs']->getValue('imsp_auth_pass');
@@ -785,15 +786,15 @@ if (!empty($GLOBALS['conf']['imsp']['enabled'])) {
         'title' => _("IMSP"),
         'type' => 'imsp',
         'params' => [
-            'server'  => $GLOBALS['conf']['imsp']['server'],
-            'port'    => $GLOBALS['conf']['imsp']['port'],
-            'auth_method' => $GLOBALS['conf']['imsp']['auth_method'],
+            'server'  => $hordeConfig->get('imsp.server'),
+            'port'    => $hordeConfig->get('imsp.port'),
+            'auth_method' => $hordeConfig->get('imsp.auth_method'),
             // socket, command, and auth_mechanism are for imtest driver.
-            'socket'  => isset($GLOBALS['conf']['imsp']['socket'])
-                         ? $GLOBALS['conf']['imsp']['socket'] . $_imsp_auth_user . '.sck'
+            'socket'  => $hordeConfig->has('imsp.socket')
+                         ? $hordeConfig->get('imsp.socket') . $_imsp_auth_user . '.sck'
                          : '',
-            'command' => $GLOBALS['conf']['imsp']['command'] ?? '',
-            'auth_mechanism' => $GLOBALS['conf']['imsp']['auth_mechanism'] ?? '',
+            'command' => $hordeConfig->get('imsp.command', ''),
+            'auth_mechanism' => $hordeConfig->get('imsp.auth_mechanism', ''),
             'username' => $_imsp_auth_user,
             'password' => $_imsp_auth_pass,
             'name' => $_imsp_auth_user,

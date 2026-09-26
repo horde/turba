@@ -22,13 +22,18 @@ class Turba_Todo_BrowsePageTest extends Turba_TestBase
     {
         $vars = new Horde_Variables();
         $notification = $GLOBALS['notification'];
-        $turbaConf = [];
-        $turbaConf['menu']['import_export'] = true;
-        $turbaConf['menu']['apps'] = [];
-        $turbaConf['client']['addressbook'] = '_test_sql';
-        $turbaConf['shares']['source'] = 'foo';
-        $turbaConf['comments']['allow'] = true;
-        $turbaConf['documents']['type'] = 'horde';
+        self::bindConfig($GLOBALS['injector'], [
+            'turba' => [
+                'menu' => [
+                    'import_export' => true,
+                    'apps' => [],
+                ],
+                'client' => ['addressbook' => '_test_sql'],
+                'shares' => ['source' => 'foo'],
+                'comments' => ['allow' => true],
+                'documents' => ['type' => 'horde'],
+            ],
+        ]);
         include TURBA_BASE . '/config/attributes.php';
 
         $cfgSources = ['_test_sql' => $this->getDriverConfig()];
@@ -43,7 +48,6 @@ class Turba_Todo_BrowsePageTest extends Turba_TestBase
             'cfgSources' => $cfgSources,
             'attributes' => $attributes,
             'turba_shares' => false,
-            'conf' => $turbaConf,
             'source' => '_test_sql',
             'browser' => $GLOBALS['browser']];
 

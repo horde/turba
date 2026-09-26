@@ -84,7 +84,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     public function testCreateDefaultShare()
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
-        $GLOBALS['conf']['share']['auto_create'] = true;
+        $this->bindHordeConfig(['share' => ['auto_create' => true]]);
         Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $this->assertEquals(
             1,
@@ -95,7 +95,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     public function testDefaultShareName()
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
-        $GLOBALS['conf']['share']['auto_create'] = true;
+        $this->bindHordeConfig(['share' => ['auto_create' => true]]);
         Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $shares = $turba_shares->listShares('test@example.com');
         $default = array_pop($shares);
@@ -109,7 +109,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     public function testNoAutoCreate()
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
-        $GLOBALS['conf']['share']['auto_create'] = false;
+        $this->bindHordeConfig(['share' => ['auto_create' => false]]);
         Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $this->assertEquals(
             0,
@@ -120,7 +120,7 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
     public function testDefaultShareDeletePermission()
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
-        $GLOBALS['conf']['share']['auto_create'] = true;
+        $this->bindHordeConfig(['share' => ['auto_create' => true]]);
         Turba::getConfigFromShares(['test' => ['use_shares' => true]]);
         $shares = $turba_shares->listShares('test@example.com');
         $default = array_pop($shares);
@@ -131,6 +131,14 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
                 Horde_Perms::DELETE
             )
         );
+    }
+
+    /**
+     * @param array<string, mixed> $overlay Values merged over the Horde config.
+     */
+    private function bindHordeConfig(array $overlay): void
+    {
+        self::bindConfig($GLOBALS['injector'], ['horde' => $overlay]);
     }
 
 }
