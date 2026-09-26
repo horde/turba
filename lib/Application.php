@@ -16,6 +16,7 @@ use Horde\Backup;
 use Horde\Date\Format;
 use Horde\Date\Formatter\IcuFormatter;
 use Horde\Util\Variables;
+use Psr\Log\LoggerInterface;
 use Sabre\CalDAV;
 use Sabre\CardDAV;
 use Horde\Util\Util;
@@ -1106,6 +1107,39 @@ class Turba_Application extends Horde_Registry_Application
      * @return string|null
      */
     public function davPutObject($collection, string $object, string $data): ?string
+    {
+        try {
+            return $this->storeCardDavObject($collection, $object, $data);
+        } catch (Throwable $e) {
+            // Sabre answers the client itself, so this failure never reaches
+            // the RPC logger. TypeError is included because a bad vCard type
+            // list is an Error, not a Horde_Exception.
+            try {
+                $GLOBALS['injector']->getInstance(LoggerInterface::class)->error(
+                    sprintf(
+                        'CardDAV contact save failed for "%s" in "%s": %s',
+                        $object,
+                        (string) $collection,
+                        $e->getMessage()
+                    ),
+                    ['exception' => $e]
+                );
+            } catch (Throwable) {
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Store one CardDAV contact.
+     *
+     * @param string|mixed $collection  The external collection id.
+     * @param string       $object      The object id in CardDAV.
+     * @param string       $data        The vCard data to put.
+     *
+     * @return null
+     */
+    private function storeCardDavObject($collection, string $object, string $data): ?string
     {
         $dav = $GLOBALS['injector']
             ->getInstance('Horde_Dav_Storage');
