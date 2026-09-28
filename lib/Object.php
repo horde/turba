@@ -263,22 +263,85 @@ class Turba_Object
         // is better than dropping them.
         foreach ($this->_attributeFields as $type => $values) {
             foreach ($values as $value) {
-                if ($type === 'email'
-                    && (!is_string($value)
-                        || $value === ''
-                        || preg_match('/^,*$/', trim($value)))) {
-                    continue;
-                }
-                foreach (array_keys($this->driver->map) as $attribute) {
-                    if (isset($attributes[$attribute])
-                        && $attributes[$attribute]['type'] == $type
-                        && empty($this->attributes[$attribute])) {
-                        $this->setValue($attribute, $value);
-                        break;
+                foreach ($this->_valuesForEmptyFields($type, $value, $attributes) as $candidate) {
+                    foreach (array_keys($this->driver->map) as $attribute) {
+                        if (isset($attributes[$attribute])
+                            && $attributes[$attribute]['type'] == $type
+                            && empty($this->attributes[$attribute])) {
+                            $this->setValue($attribute, $candidate);
+                            break;
+                        }
                     }
                 }
             }
         }
+    }
+
+    /**
+     * Values from an unmapped attribute that should fill an empty field.
+     *
+     * The "emails" attribute is a comma-separated list and is not mapped in
+     * the default SQL address book. CardDAV import always builds that list.
+     * Copying it whole into the first empty email field duplicates home and
+     * work addresses, or stores several addresses in one field.
+     *
+     * @param string $type        Attribute type.
+     * @param mixed  $value       Unmapped attribute value.
+     * @param array  $attributes  Attribute definitions.
+     *
+     * @return array<int, mixed>
+     */
+    private function _valuesForEmptyFields($type, $value, $attributes)
+    {
+        if ($type !== 'email') {
+            return [$value];
+        }
+        if (!is_string($value)
+            || $value === ''
+            || preg_match('/^,*$/', trim($value))) {
+            return [];
+        }
+
+        $candidates = [];
+        foreach (preg_split('/\s*,\s*/', $value) as $part) {
+            $part = trim($part);
+            if ($part === '' || preg_match('/^,+$/', $part)) {
+                continue;
+            }
+            if ($this->_emailAlreadyStored($part, $attributes)) {
+                continue;
+            }
+            $candidates[] = $part;
+        }
+
+        return $candidates;
+    }
+
+    /**
+     * Whether a bare address is already stored in a mapped email field.
+     *
+     * @param string $candidate   Bare email address.
+     * @param array  $attributes  Attribute definitions.
+     *
+     * @return boolean
+     */
+    private function _emailAlreadyStored($candidate, $attributes)
+    {
+        foreach (array_keys($this->driver->map) as $attribute) {
+            if (!isset($attributes[$attribute])
+                || $attributes[$attribute]['type'] !== 'email'
+                || empty($this->attributes[$attribute])
+                || !is_string($this->attributes[$attribute])) {
+                continue;
+            }
+            foreach (preg_split('/\s*,\s*/', $this->attributes[$attribute]) as $existing) {
+                if (strcasecmp(trim($existing), $candidate) === 0) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

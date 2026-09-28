@@ -16,6 +16,7 @@ use Horde\Backup;
 use Horde\Date\Format;
 use Horde\Date\Formatter\IcuFormatter;
 use Horde\Util\Variables;
+use Psr\Log\LoggerInterface;
 use Sabre\CalDAV;
 use Sabre\CardDAV;
 use Horde\Util\Util;
@@ -1107,8 +1108,43 @@ class Turba_Application extends Horde_Registry_Application
      */
     public function davPutObject($collection, string $object, string $data): ?string
     {
+        try {
+            return $this->storeCardDavObject($collection, $object, $data);
+            // TODO: Find more narrow exception(s) to catch.
+        } catch (Throwable $e) {
+            // Sabre answers the client itself, so this failure never reaches
+            // the RPC logger. TypeError is included because a bad vCard type
+            // list is an Error, not a Horde_Exception.
+            try {
+                $GLOBALS['injector']->get(LoggerInterface::class)->error(
+                    sprintf(
+                        'CardDAV contact save failed for "%s" in "%s": %s',
+                        $object,
+                        (string) $collection,
+                        $e->getMessage()
+                    ),
+                    ['exception' => $e]
+                );
+            } catch (Throwable) {
+                // TODO: Find appropriate way of communicating logger failure after contact save failure.
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Store one CardDAV contact.
+     *
+     * @param string|mixed $collection  The external collection id.
+     * @param string       $object      The object id in CardDAV.
+     * @param string       $data        The vCard data to put.
+     *
+     * @return null
+     */
+    private function storeCardDavObject($collection, string $object, string $data): ?string
+    {
         $dav = $GLOBALS['injector']
-            ->getInstance('Horde_Dav_Storage');
+            ->get('Horde_Dav_Storage');
 
         $internal = $dav->getInternalCollectionId($collection, 'contacts') ?: $collection;
         $driver = $GLOBALS['injector']

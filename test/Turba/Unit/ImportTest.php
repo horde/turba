@@ -220,13 +220,6 @@ Deutschland',
                 'homeCity' => 'Ort',
                 'homePostalCode' => '12345',
                 'homeCountry' => 'Deutschland',
-                'commonAddress' => 'Straße
-Ort 12345
-Deutschland',
-                'commonStreet' => 'Straße',
-                'commonCity' => 'Ort',
-                'commonPostalCode' => '12345',
-                'commonCountry' => 'Deutschland',
                 'homePhone' => '07071-996715',
                 'workAddress' => 'Work-Straße
 Work-Ort 72070
@@ -577,11 +570,6 @@ London W1 1AA',
                 'homeStreet' => '111 One Street',
                 'homeCity' => 'London',
                 'homePostalCode' => 'W1 1AA',
-                'commonAddress' => '111 One Street
-London W1 1AA',
-                'commonStreet' => '111 One Street',
-                'commonCity' => 'London',
-                'commonPostalCode' => 'W1 1AA',
                 'birthday' => '2008-10-08',
                 'phototype' => 'JPEG',
             ],

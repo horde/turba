@@ -2242,6 +2242,38 @@ class Turba_Driver implements Countable
     }
 
     /**
+     * Flatten a vCard TYPE parameter into uppercase tokens.
+     *
+     * TYPE may be repeated and comma-separated. The parser then nests
+     * arrays, for example TYPE=INTERNET,HOME;TYPE=WORK,pref.
+     *
+     * @param mixed $type  A TYPE parameter value.
+     *
+     * @return array<int, string>
+     */
+    protected function _vcardTypeTokens($type)
+    {
+        $tokens = [];
+        $pending = is_array($type) ? array_values($type) : [$type];
+        while ($pending) {
+            $item = array_shift($pending);
+            if (is_array($item)) {
+                foreach ($item as $nested) {
+                    $pending[] = $nested;
+                }
+                continue;
+            }
+            if (!is_string($item) || $item === '') {
+                continue;
+            }
+            // TODO: Upgrade to HordeString PSR-4
+            $tokens[] = Horde_String::upper($item);
+        }
+
+        return $tokens;
+    }
+
+    /**
      * Function to convert a Horde_Icalendar_Vcard object into a Turba
      * Object Hash with Turba attributes suitable as a parameter for add().
      *
@@ -2323,20 +2355,21 @@ class Turba_Driver implements Countable
                     }
 
                     $address = $item['values'];
-                    foreach ($item['params']['TYPE'] as $adr) {
-                        switch (Horde_String::upper($adr)) {
-                            case 'HOME':
-                                $prefix = 'home';
-                                break;
-
-                            case 'WORK':
-                                $prefix = 'work';
-                                break;
-
-                            default:
-                                $prefix = 'common';
-                        }
-
+                    // PREF and vendor tokens (Apple sends TYPE=HOME;TYPE=pref)
+                    // are not a second address. An untyped ADR is the only
+                    // one stored as "common".
+                    $adrTypes = $this->_vcardTypeTokens($item['params']['TYPE']);
+                    $prefixes = [];
+                    if (in_array('HOME', $adrTypes, true)) {
+                        $prefixes[] = 'home';
+                    }
+                    if (in_array('WORK', $adrTypes, true)) {
+                        $prefixes[] = 'work';
+                    }
+                    if (!$prefixes) {
+                        $prefixes[] = 'common';
+                    }
+                    foreach ($prefixes as $prefix) {
                         if (isset($hash[$prefix . 'Address'])) {
                             continue;
                         }
@@ -2431,12 +2464,7 @@ class Turba_Driver implements Countable
                               && !isset($hash['pager'])) {
                         $hash['pager'] = $item['value'];
                     } elseif (isset($item['params']['TYPE'])) {
-                        if (!is_array($item['params']['TYPE'])) {
-                            $item['params']['TYPE'] = [$item['params']['TYPE']];
-                        }
-                        foreach ($item['params']['TYPE'] as &$type) {
-                            $type = Horde_String::upper($type);
-                        }
+                        $item['params']['TYPE'] = $this->_vcardTypeTokens($item['params']['TYPE']);
                         // For vCard 3.0.
                         if (in_array('CELL', $item['params']['TYPE'])) {
                             if (in_array('HOME', $item['params']['TYPE'])
@@ -2530,23 +2558,18 @@ class Turba_Driver implements Countable
                         $hash['workEmail'] = $e ? $e : '';
                         $email_set = true;
                     } elseif (isset($item['params']['TYPE'])) {
-                        if (!is_array($item['params']['TYPE'])) {
-                            $item['params']['TYPE'] = [$item['params']['TYPE']];
-                        }
-                        foreach ($item['params']['TYPE'] as &$type) {
-                            $type = Horde_String::upper($type);
-                        }
-                        if (in_array('HOME', $item['params']['TYPE'])
+                        $emailTypes = $this->_vcardTypeTokens($item['params']['TYPE']);
+                        if (in_array('HOME', $emailTypes, true)
                             && !empty($this->map['homeEmail'])
                             && (!isset($hash['homeEmail'])
-                             || in_array('PREF', $item['params']['TYPE']))) {
+                             || in_array('PREF', $emailTypes, true))) {
                             $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
                             $hash['homeEmail'] = $e ? $e : '';
                             $email_set = true;
-                        } elseif (in_array('WORK', $item['params']['TYPE'])
+                        } elseif (in_array('WORK', $emailTypes, true)
                                   && !empty($this->map['workEmail'])
                                   && (!isset($hash['workEmail'])
-                             || in_array('PREF', $item['params']['TYPE']))) {
+                             || in_array('PREF', $emailTypes, true))) {
                             $e = Horde_Icalendar_Vcard::getBareEmail($item['value']);
                             $hash['workEmail'] = $e ? $e : '';
                             $email_set = true;
