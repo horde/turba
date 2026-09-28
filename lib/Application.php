@@ -1110,12 +1110,13 @@ class Turba_Application extends Horde_Registry_Application
     {
         try {
             return $this->storeCardDavObject($collection, $object, $data);
+            // TODO: Find more narrow exception(s) to catch.
         } catch (Throwable $e) {
             // Sabre answers the client itself, so this failure never reaches
             // the RPC logger. TypeError is included because a bad vCard type
             // list is an Error, not a Horde_Exception.
             try {
-                $GLOBALS['injector']->getInstance(LoggerInterface::class)->error(
+                $GLOBALS['injector']->get(LoggerInterface::class)->error(
                     sprintf(
                         'CardDAV contact save failed for "%s" in "%s": %s',
                         $object,
@@ -1125,6 +1126,7 @@ class Turba_Application extends Horde_Registry_Application
                     ['exception' => $e]
                 );
             } catch (Throwable) {
+                // TODO: Find appropriate way of communicating logger failure after contact save failure.
             }
             throw $e;
         }
@@ -1142,7 +1144,7 @@ class Turba_Application extends Horde_Registry_Application
     private function storeCardDavObject($collection, string $object, string $data): ?string
     {
         $dav = $GLOBALS['injector']
-            ->getInstance('Horde_Dav_Storage');
+            ->get('Horde_Dav_Storage');
 
         $internal = $dav->getInternalCollectionId($collection, 'contacts') ?: $collection;
         $driver = $GLOBALS['injector']

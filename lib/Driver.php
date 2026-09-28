@@ -2266,6 +2266,7 @@ class Turba_Driver implements Countable
             if (!is_string($item) || $item === '') {
                 continue;
             }
+            // TODO: Upgrade to HordeString PSR-4
             $tokens[] = Horde_String::upper($item);
         }
 
