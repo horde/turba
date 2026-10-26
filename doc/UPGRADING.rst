@@ -55,6 +55,19 @@ Attribute Changes
     does contain the "photo_orig" data, the "photo" data will automatically be
     populated with a resized version of the data (see Configuration changes).
 
+  - The ``maxlength`` and ``regex`` parameters of ``attributes.php`` are now
+    enforced on every write path (API, ActiveSync, CardDAV, vCard/CSV
+    import), not only in the web edit form. Values that violate them are
+    rejected with ``Turba_Exception_InvalidAttribute`` naming the attribute
+    instead of failing or being truncated in the database.
+
+  - The post office box attributes ("homePOBox", "workPOBox", "otherPOBox",
+    "commonPOBox") now allow up to 255 characters instead of 10. The
+    matching ``turba_objects`` columns are widened by a database migration;
+    run ``horde-db-migrate turba``. If you maintain a local copy of
+    ``attributes.php``, raise the ``maxlength`` parameter of these
+    attributes as well.
+
 
 Configuration Options (conf.php)
 --------------------------------

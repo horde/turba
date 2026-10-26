@@ -15,6 +15,7 @@
 use Horde\Backup;
 use Horde\Date\Format;
 use Horde\Date\Formatter\IcuFormatter;
+use Horde\Turba\AttributeValidator;
 use Horde\Util\Variables;
 use Psr\Log\LoggerInterface;
 use Sabre\CalDAV;
@@ -135,6 +136,10 @@ class Turba_Application extends Horde_Registry_Application
         }
 
         $GLOBALS['attributes'] = $attributes;
+        $injector->setInstance(
+            AttributeValidator::class,
+            new AttributeValidator($attributes)
+        );
         $cfgSources = Turba::permissionsFilter($cfgSources);
 
         // Build the directory sources select widget.
