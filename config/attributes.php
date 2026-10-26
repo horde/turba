@@ -215,7 +215,7 @@ $attributes['homePOBox'] = [
     'label' => _("Home Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 255],
 ];
 $attributes['homeCity'] = [
     'label' => _("Home City"),
@@ -263,7 +263,7 @@ $attributes['workPOBox'] = [
     'label' => _("Work Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 255],
 ];
 $attributes['workCity'] = [
     'label' => _("Work City"),
@@ -347,7 +347,7 @@ $attributes['otherPOBox'] = [
     'label' => _("Other Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 255],
 ];
 $attributes['timezone'] = [
     'label' => _("Time Zone"),
@@ -693,7 +693,7 @@ $attributes['commonPOBox'] = [
     'label' => _("Common Post Office Box"),
     'type' => 'text',
     'required' => false,
-    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 10],
+    'params' => ['regex' => '', 'size' => 10, 'maxlength' => 255],
 ];
 $attributes['commonCity'] = [
     'label' => _("Common City"),

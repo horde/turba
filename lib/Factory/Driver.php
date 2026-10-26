@@ -11,6 +11,8 @@
  * @package  Turba
  */
 
+use Horde\Turba\AttributeValidator;
+
 /**
  * A Horde_Injector:: based Turba_Driver:: factory.
  *
@@ -156,6 +158,15 @@ class Turba_Factory_Driver extends Horde_Core_Factory_Base
             /* Make sure charset exists. */
             if (!isset($srcConfig['params']['charset'])) {
                 $srcConfig['params']['charset'] = 'UTF-8';
+            }
+
+            /* Attribute constraints from attributes.php, enforced on every
+             * write path (see Turba_Driver::_validateAttributes()). Bound by
+             * Turba_Application::_init(); absent only when the application
+             * was not initialized (CLI tooling, tests). */
+            if ($this->_injector->has(AttributeValidator::class)) {
+                $srcConfig['params']['attribute_validator']
+                    = $this->_injector->get(AttributeValidator::class);
             }
 
             $driver = new $class($srcName, $srcConfig['params']);

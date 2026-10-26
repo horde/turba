@@ -12,6 +12,8 @@
  * @package   Turba
  */
 
+use Horde\Turba\AttributeValidator;
+
 /**
  * Provides a common abstracted interface to the various directory search
  * drivers.  It includes functions for searching, adding, removing, and
@@ -184,16 +186,54 @@ class Turba_Driver implements Countable
     ];
 
     /**
+     * Validator for attribute constraints (maxlength, regex) from
+     * attributes.php, applied on add() and save(). Null when the driver
+     * was constructed without one (no validation).
+     *
+     * @var AttributeValidator|null
+     */
+    protected ?AttributeValidator $_attributeValidator = null;
+
+    /**
      * Constructs a new Turba_Driver object.
      *
      * @param string $name   Source name
      * @param array $params  Hash containing additional configuration
-     *                       parameters.
+     *                       parameters. 'attribute_validator'
+     *                       (AttributeValidator) is consumed here and not
+     *                       kept in the driver parameters.
      */
     public function __construct($name = '', array $params = [])
     {
+        if (isset($params['attribute_validator'])) {
+            if ($params['attribute_validator'] instanceof AttributeValidator) {
+                $this->_attributeValidator = $params['attribute_validator'];
+            }
+            unset($params['attribute_validator']);
+        }
         $this->_name = $name;
         $this->_params = $params;
+    }
+
+    /**
+     * Validate attribute values against the constraints configured in
+     * attributes.php before they reach the backend.
+     *
+     * Only attributes stored by this source ($this->fields) are checked;
+     * values for unmapped attributes are dropped by toDriverKeys() anyway.
+     *
+     * @param array $attributes  Attribute values keyed by attribute name.
+     *
+     * @throws Turba_Exception_InvalidAttribute
+     */
+    protected function _validateAttributes(array $attributes): void
+    {
+        if ($this->_attributeValidator === null) {
+            return;
+        }
+        $this->_attributeValidator->validate(
+            array_intersect_key($attributes, $this->fields)
+        );
     }
 
     /**
@@ -1021,6 +1061,7 @@ class Turba_Driver implements Countable
      *
      * @return string  The new __key value on success.
      * @throws Turba_Exception
+     * @throws Turba_Exception_InvalidAttribute
      */
     public function add(array $attributes)
     {
@@ -1044,6 +1085,7 @@ class Turba_Driver implements Countable
         }
         $object->ensureAttributes();
         $attributes = $object->getAttributes();
+        $this->_validateAttributes($attributes);
         $key = $attributes['__key'] = $this->_makeKey(
             $this->toDriverKeys($attributes)
         );
@@ -1236,9 +1278,11 @@ class Turba_Driver implements Countable
      *
      * @return string  The object id, possibly updated.
      * @throws Turba_Exception
+     * @throws Turba_Exception_InvalidAttribute
      */
     public function save(Turba_Object $object)
     {
+        $this->_validateAttributes($object->getAttributes());
         $object_id = $this->_save($object);
 
         if ($uid = $object->getValue('__uid')) {
