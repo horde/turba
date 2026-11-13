@@ -3,7 +3,7 @@
 /**
  * Basic Turba test case.
  *
- * PHP version 5
+ * PHP version 8
  *
  * @category   Horde
  * @package    Turba
@@ -13,8 +13,11 @@
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
 
+
+namespace Horde\Turba\Test\Unit;
+
+define('HORDE_CONFIG_BASE', 'vendor/horde/horde/config');
 require __DIR__ . '/Stub/Hooks.php';
-require_once __DIR__ . '/ConfigBinding.php';
 
 /**
  * Basic Turba test case.
@@ -32,7 +35,19 @@ require_once __DIR__ . '/ConfigBinding.php';
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @coversNothing
  */
-class Turba_TestCase extends PHPUnit_Framework_TestCase
+
+
+use PHPUnit\Framework\TestCase;
+use Horde_Injector;
+use Horde_Injector_TopLevel;
+use \Horde_Test_Setup;
+use Horde_Session;
+use Horde_Secret;
+use Horde_Test_Stub_Factory;
+use Horde_Support_Randomid;
+use Horde_Share_Base;
+
+class TestBase extends TestCase
 {
     use Turba_Test_ConfigBinding;
 
@@ -91,7 +106,7 @@ class Turba_TestCase extends PHPUnit_Framework_TestCase
                     'factory' => 'Db',
                     'params' => [
                         'migrations' => [
-                            'migrationsPath' => __DIR__ . '/../../migration',
+                            'migrationsPath' => __DIR__ . '/../migration',
                             'schemaTableName' => 'turba_test_schema',
                         ],
                     ],

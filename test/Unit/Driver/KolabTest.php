@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Test the core Turba class with the Kolab backend.
+ * Test the Kolab driver.
  *
  * PHP version 5
  *
@@ -13,13 +13,15 @@
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
 
+namespace Horde\Turba\Test\Unit;
+
 /**
  * Prepare the test setup.
  */
 require_once __DIR__ . '/Base.php';
 
 /**
- * Test the core Turba class with the Kolab backend.
+ * Test the Kolab driver.
  *
  * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
  *
@@ -34,25 +36,23 @@ require_once __DIR__ . '/Base.php';
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @coversNothing
  */
-class Turba_Unit_Turba_KolabTest extends Turba_Unit_Turba_Base
+
+use PHPUnit\Framework\Attributes\CoversNothing;
+
+#[CoversNothing]
+#[BackupGlobals(false)]
+class Turba_Unit_Driver_KolabTest extends Turba_Unit_Driver_Base
 {
     protected $backupGlobals = false;
 
-    /**
-     * The default share name expected to be used.
-     *
-     * @var string
-     */
-    protected $default_name = 'Contacts';
-
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
-        self::$setup = new Horde_Test_Setup();
+        return;
         parent::setUpBeforeClass();
-        self::createKolabShares(self::$setup);
+        self::$driver = self::createKolabDriverWithShares(self::$setup);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestIncomplete("No query of type 'Share' registered!");
     }

@@ -16,7 +16,6 @@
 /**
  * Prepare the test setup.
  */
-require_once __DIR__ . '/../../TestCase.php';
 
 /**
  * Test the core Turba class with various backends.
@@ -34,7 +33,16 @@ require_once __DIR__ . '/../../TestCase.php';
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @coversNothing
  */
-class Turba_Unit_Turba_Base extends Turba_TestCase
+
+namespace Horde\Turba\Test\Unit;
+
+use \Turba;
+use Horde_Secret;
+use Horde_Test_Setup;
+use Horde_Perms;
+use Horde_Share_Base;
+
+class Turba_Unit_Turba_Base extends TestBase
 {
     /**
      * The test setup.
@@ -50,28 +58,31 @@ class Turba_Unit_Turba_Base extends Turba_TestCase
      */
     protected $default_name = 'Address book of test@example.com';
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::createBasicTurbaSetup(self::$setup);
         parent::setUpBeforeClass();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::tearDownBasicTurbaSetup();
         self::tearDownShares();
         parent::tearDownAfterClass();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
+        if (!class_exists('Horde_Secret_Cbc', false)) {
+            class_alias('Horde_Secret', 'Horde_Secret_Cbc');
+        }
         $error = self::$setup->getError();
         if (!empty($error)) {
             $this->markTestSkipped($error);
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $turba_shares = $GLOBALS['injector']->getInstance('Turba_Shares');
         foreach ($turba_shares->listShares('test@example.com') as $share) {

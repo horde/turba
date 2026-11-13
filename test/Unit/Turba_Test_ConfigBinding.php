@@ -19,6 +19,8 @@
  * Horde-wide keys are served by ConfigLoader::load('horde'). Turba keys are
  * served by ConfigLoader::load('turba') and by a TurbaConfig instance.
  */
+namespace Horde\Turba\Test\Unit;
+
 trait Turba_Test_ConfigBinding
 {
     /**

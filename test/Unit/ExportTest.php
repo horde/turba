@@ -8,29 +8,40 @@
  * @subpackage UnitTests
  * @coversNothing
  */
-class Turba_Unit_ExportTest extends Turba_TestCase
+
+namespace Horde\Turba\Test\Unit;
+
+use Horde_Test_Setup;
+use Turba_Driver;
+use Turba_Object;
+
+class Turba_Unit_ExportTest extends TestBase
 {
-    public static function setUpBeforeClass()
+    protected $contact;
+    protected $object;
+    protected $driver;
+
+    public static function setUpBeforeClass(): void
     {
         self::createBasicTurbaSetup(new Horde_Test_Setup());
         parent::setUpBeforeClass();
         setlocale(LC_MESSAGES, 'C');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::tearDownBasicTurbaSetup();
         parent::tearDownAfterClass();
         setlocale(LC_MESSAGES, null);
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $GLOBALS['injector']->setInstance(
             'Turba_Tagger',
             $this->getMockBuilder('Turba_Tagger')
                 ->disableOriginalConstructor()
-                ->setMethods(null)
+                ->onlyMethods([])
                 ->getMock()
         );
         $this->contact = [
