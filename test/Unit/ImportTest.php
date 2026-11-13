@@ -8,7 +8,14 @@
  * @subpackage UnitTests
  * @coversNothing
  */
-class Turba_Unit_ImportTest extends Turba_TestCase
+
+namespace Horde\Turba\Test\Unit;
+
+use Horde_Test_Setup;
+use Turba_Driver;
+use Horde_Icalendar;
+
+class Turba_Unit_ImportTest extends TestBase
 {
     protected static $nameMap = [
         'name' => [
@@ -24,14 +31,14 @@ class Turba_Unit_ImportTest extends Turba_TestCase
         'workEmail' => 'object_workemail',
     ];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         self::createBasicTurbaSetup(new Horde_Test_Setup());
         parent::setUpBeforeClass();
         setlocale(LC_MESSAGES, 'C');
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::tearDownBasicTurbaSetup();
         parent::tearDownAfterClass();
@@ -114,6 +121,9 @@ Dänemark',
                 'latitude' => 52.516276,
                 'longitude' => 13.377778,
                 'phone' => '+49 521 999999',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard)
         );
@@ -185,6 +195,10 @@ Dänemark',
                 'timezone' => 'Europe/Berlin',
                 'latitude' => 52.516276,
                 'longitude' => 13.377778,
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
+
             ],
             $this->toHash($vcard)
         );
@@ -240,6 +254,10 @@ Deutschland',
                 'emails' => 'email@domain.tld',
                 'cellPhone' => '0123-123456',
                 '__uid' => 'b33393c4-98a1-4e1a-8f5c-d29459406093',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
+
             ],
             $this->toHash($vcard)
         );
@@ -260,6 +278,9 @@ END:VCARD
                 'firstname' => 'Zgg',
                 'name' => 'Zgg Hzik',
                 'phone' => '+36303770746',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard)
         );
@@ -282,6 +303,9 @@ END:VCARD
                 'firstname' => 'Jan',
                 'middlenames' => 'K.',
                 'namePrefix' => 'Mr.',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard)
         );
@@ -293,6 +317,9 @@ END:VCARD
                 'middlenames' => 'K.',
                 'namePrefix' => 'Mr.',
                 'name' => 'Jan Schneider',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard, self::$nameMap)
         );
@@ -314,6 +341,9 @@ END:VCARD
                 'middlenames' => 'K.',
                 'namePrefix' => 'Mr.',
                 'name' => 'Mr. Jan K. Schneider',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard, self::$nameMap)
         );
@@ -347,6 +377,9 @@ END:VCARD
                 'homePhone' => '5',
                 'workPhone' => '6',
                 'name' => 'A B',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard)
         );
@@ -407,6 +440,9 @@ Foobar, Sachsen 01234',
                 'workWebsite' => '',
                 'birthday' => '',
                 'notes' => '',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard, self::$emailMap)
         );
@@ -470,6 +506,9 @@ USA',
                 'workProvince' => 'St',
                 'workPostalCode' => '12345',
                 'workCountry' => 'USA',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
             ],
             $this->toHash($vcard)
         );
@@ -520,6 +559,10 @@ END:VCARD
                 'homeEmail' => 'home@example.com',
                 'email' => 'pref@example.com',
                 '__uid' => 'nhCnPyv0u7',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
+
             ],
             $this->toHash($vcard, self::$emailMap)
         );
@@ -572,6 +615,10 @@ London W1 1AA',
                 'homePostalCode' => 'W1 1AA',
                 'birthday' => '2008-10-08',
                 'phototype' => 'JPEG',
+                'imaddress'  => null,
+                'imaddress2' => null,
+                'imaddress3' => null,
+
             ],
             $hash
         );

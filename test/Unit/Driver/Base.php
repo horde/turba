@@ -13,10 +13,12 @@
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
 
+namespace Horde\Turba\Test\Unit;
+
 /**
  * Prepare the test setup.
  */
-require_once __DIR__ . '/../../TestCase.php';
+require_once __DIR__ . '/../../TestBase.php';
 
 /**
  * Driver test base.
@@ -34,7 +36,10 @@ require_once __DIR__ . '/../../TestCase.php';
  * @license    http://www.horde.org/licenses/apache Apache-like
  * @coversNothing
  */
-class Turba_Unit_Driver_Base extends Turba_TestCase
+
+
+
+class Turba_Unit_Driver_Base extends TestBase
 {
     /**
      * The test setup.
@@ -53,14 +58,14 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
      */
     private $_added = [];
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
-        self::$setup = new Horde_Test_Setup();
+        self::$setup = new \Horde_Test_Setup();
         self::createBasicTurbaSetup(self::$setup);
         parent::setUpBeforeClass();
     }
 
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         self::$driver = null;
         self::tearDownBasicTurbaSetup();
@@ -68,7 +73,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
         parent::tearDownAfterClass();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $error = self::$setup->getError();
         if (!empty($error)) {
@@ -76,7 +81,7 @@ class Turba_Unit_Driver_Base extends Turba_TestCase
         }
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         foreach ($this->_added as $added) {
