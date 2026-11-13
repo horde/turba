@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Test the core Turba class with a SQL backend.
+ * Test the SQL driver with a sqlite DB.
  *
  * PHP version 5
  *
@@ -13,13 +13,15 @@
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
 
+namespace Horde\Turba\Test\Unit;
+
 /**
  * Prepare the test setup.
  */
 require_once __DIR__ . '/../Base.php';
 
 /**
- * Test the core Turba class with a SQL backend.
+ * Test the SQL driver with a sqlite DB.
  *
  * Copyright 2011-2026 Horde LLC (http://www.horde.org/)
  *
@@ -32,12 +34,25 @@ require_once __DIR__ . '/../Base.php';
  * @author     Gunnar Wrobel <wrobel@pardus.de>
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
+ * @coversNothing
  */
-class Turba_Unit_Turba_Sql_Base extends Turba_Unit_Turba_Base
+
+use PHPUnit\Framework\Attributes\CoversNothing;
+
+#[CoversNothing]
+#[BackupGlobals(false)]
+class Turba_Unit_Driver_Sql_Pdo_SqliteTest extends Turba_Unit_Driver_Sql_Base
 {
-    public static function setUpBeforeClass()
+    protected $backupGlobals = false;
+
+    public static function setUpBeforeClass(): void
     {
+        self::$callback = [__CLASS__, 'getDb'];
         parent::setUpBeforeClass();
-        self::createSqlShares(self::$setup);
+    }
+
+    protected static function getDb()
+    {
+        self::createSqlPdoSqlite(self::$setup);
     }
 }

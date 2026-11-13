@@ -13,6 +13,8 @@
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
 
+namespace Horde\Turba\Test\Unit;
+
 /**
  * Prepare the test setup.
  */
@@ -33,11 +35,16 @@ require_once __DIR__ . '/../Base.php';
  * @link       http://www.horde.org/apps/turba
  * @license    http://www.horde.org/licenses/apache Apache-like
  */
+
+use Horde_ActiveSync_Message_Contact;
+use Horde_ActiveSync_Device;
+use Horde_ActiveSync_State_Sql;
+
 class Turba_Unit_Driver_Sql_Base extends Turba_Unit_Driver_Base
 {
     public static $callback;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
         self::getDb();

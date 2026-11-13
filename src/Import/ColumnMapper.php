@@ -275,7 +275,7 @@ class ColumnMapper
         if ($first === '') {
             return [];
         }
-        $row = str_getcsv($first, $sep, $quote);
+        $row = str_getcsv($first, $sep, $quote, "");
         return is_array($row) ? $row : [];
     }
 

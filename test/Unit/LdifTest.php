@@ -8,11 +8,19 @@
  * @subpackage UnitTests
  * @coversNothing
  */
-class Turba_Unit_LdifTest extends Turba_TestCase
+
+namespace Horde\Turba\Test\Unit;
+
+use Turba_Data_Ldif;
+use PHPUnit\Framework\Attributes\DataProvider;
+use \Horde_Data_Storage_Mock;
+
+class Turba_Unit_LdifTest extends TestBase
 {
     /**
      * @dataProvider exportFiles
      */
+    #[DataProvider('exportFiles')]
     public function testExport($contact, $ldif)
     {
         $data = new Turba_Data_Ldif(new Horde_Data_Storage_Mock());
@@ -22,13 +30,14 @@ class Turba_Unit_LdifTest extends Turba_TestCase
     /**
      * @dataProvider importFiles
      */
+    #[DataProvider('importFiles')]
     public function testImport($contact, $ldif)
     {
         $data = new Turba_Data_Ldif(new Horde_Data_Storage_Mock());
         $this->assertEquals($contact, $data->importFile($ldif, false));
     }
 
-    public function exportFiles()
+    public static function exportFiles()
     {
         return [
             [
@@ -82,7 +91,7 @@ class Turba_Unit_LdifTest extends Turba_TestCase
         ];
     }
 
-    public function importFiles()
+    public static function importFiles()
     {
         $result = [
             [
