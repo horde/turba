@@ -32,7 +32,7 @@ authors:
     active: false
     role: lead
 version:
-  release: 5.0.2
+  release: 5.1.0
   api: 5.0.0alpha1
 state:
   release: stable
@@ -52,7 +52,7 @@ dependencies:
       horde/date: ^3
       horde/dav: ^2
       horde/exception: ^3
-      horde/form: ^3
+      horde/form: ^3.1.3
       horde/group: ^3
       horde/history: ^3
       horde/icalendar: ^3

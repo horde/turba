@@ -30,7 +30,7 @@
         "contacts",
         "addressbook"
     ],
-    "time": "2026-07-22",
+    "time": "2026-11-13",
     "repositories": [],
     "require": {
         "horde/horde-installer-plugin": "dev-FRAMEWORK_6_0 || ^3 || ^2",
@@ -43,7 +43,7 @@
         "horde/date": "^3 || dev-FRAMEWORK_6_0",
         "horde/dav": "^2 || dev-FRAMEWORK_6_0",
         "horde/exception": "^3 || dev-FRAMEWORK_6_0",
-        "horde/form": "^3 || dev-FRAMEWORK_6_0",
+        "horde/form": "^3.1.3 || dev-FRAMEWORK_6_0",
         "horde/group": "^3 || dev-FRAMEWORK_6_0",
         "horde/history": "^3 || dev-FRAMEWORK_6_0",
         "horde/icalendar": "^3 || dev-FRAMEWORK_6_0",
