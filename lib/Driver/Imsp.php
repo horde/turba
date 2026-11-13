@@ -227,7 +227,10 @@ class Turba_Driver_Imsp extends Turba_Driver
                     }
                 }
                 if (!empty($temp['__members'])) {
-                    $tmembers = @unserialize($temp['__members']);
+                    $tmembers = @unserialize(
+                        $temp['__members'],
+                        ['allowed_classes' => false]
+                    );
                 }
 
                 // TODO: Make sure that we are using the correct naming
@@ -280,7 +283,10 @@ class Turba_Driver_Imsp extends Turba_Driver
                 $attributes['__members'] = '';
                 $attributes['email'] = ' ';
             }
-            $temp = unserialize($attributes['__members']);
+            $temp = unserialize(
+                $attributes['__members'],
+                ['allowed_classes' => false]
+            );
             if (is_array($temp)) {
                 $members = array_values($temp);
             } else {
@@ -535,7 +541,7 @@ class Turba_Driver_Imsp extends Turba_Driver
         $results = $cache->get($key, 15);
 
         if ($results) {
-            $names = unserialize($results);
+            $names = unserialize($results, ['allowed_classes' => false]);
         }
 
         if (!$names) {
@@ -706,7 +712,10 @@ class Turba_Driver_Imsp extends Turba_Driver
      */
     public function checkDefaultShare($share, $srcConfig)
     {
-        $params = @unserialize($share->get('params'));
+        $params = @unserialize(
+            $share->get('params'),
+            ['allowed_classes' => false]
+        );
         if (!isset($params['default'])) {
             $params['default'] = ($params['name'] == $srcConfig['params']['username']);
             $share->set('params', serialize($params));
