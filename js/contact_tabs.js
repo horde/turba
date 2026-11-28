@@ -28,7 +28,7 @@ var TurbaTabs = {
 
         if (this.current &&
             typeof window['sections_Turba_View_' + next] !== 'undefined') {
-            window['sections_Turba_View_' + next].toggle(this.current); // eslint-disable-line horde/no-prototype-methods -- native toggle on sections object
+            window['sections_Turba_View_' + next].toggle(this.current); // eslint-disable-line horde/no-prototype-methods -- Horde_Form_Sections.toggle()
         }
 
         return false;

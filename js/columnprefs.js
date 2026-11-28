@@ -21,14 +21,16 @@ var TurbaColumnPrefs = {
 
     updateColumnsPref_1: function(panel)
     {
-        var c, p = panel.id.replace('turba-prefs-cols-panel-', '');
+        const p = panel.id.replace('turba-prefs-cols-panel-', '');
         this.cur_source = p;
-        c = Array.from(panel.querySelectorAll('input[type=checkbox]:checked'))
+        let columns = Array.from(panel.querySelectorAll('input[type=checkbox]:checked'))
             .map(this.updateColumnsPref_2.bind(this)).join("\t");
-        if (c) {
-            p += "\t" + c;
+        if (columns) {
+            columns = p + "\t" + columns;
+        } else {
+            columns = p;
         }
-        return p;
+        return columns;
     },
 
     updateColumnsPref_2: function(checkbox)
@@ -38,8 +40,10 @@ var TurbaColumnPrefs = {
 
     clickHandler: function(e)
     {
-        var elt = e.target;
-        Array.from(document.getElementById('turba-prefs-cols-list').querySelectorAll('.active')).forEach(function(el) {
+        const elt = e.currentTarget;
+
+        e.preventDefault();
+        document.getElementById('turba-prefs-cols-list').querySelectorAll('.active').forEach(function(el) {
             el.classList.remove('active');
         });
         elt.parentElement.classList.add('active');
@@ -51,38 +55,56 @@ var TurbaColumnPrefs = {
 
     handleDragStart: function(e)
     {
-        TurbaColumnPrefs.dragSrcEl = this;
-        this.style.opacity = '0.4';
+        const el = this;
+
+        TurbaColumnPrefs.dragSrcEl = el;
         e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/plain', '');
+        e.dataTransfer.setData('text/plain', el.id);
+        // Snapshot the drag image before fading the source row.
+        setTimeout(function() {
+            if (TurbaColumnPrefs.dragSrcEl === el) {
+                el.style.opacity = '0.4';
+            }
+        }, 0);
     },
 
     handleDragOver: function(e)
     {
+        const src = TurbaColumnPrefs.dragSrcEl;
+
+        if (!src || src.parentNode !== this.parentNode || !e.dataTransfer) {
+            return;
+        }
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
     },
 
     handleDrop: function(e)
     {
-        e.preventDefault();
-        if (TurbaColumnPrefs.dragSrcEl && TurbaColumnPrefs.dragSrcEl !== this) {
-            var list = this.parentNode,
-                children = Array.from(list.children),
-                srcIndex = children.indexOf(TurbaColumnPrefs.dragSrcEl),
-                destIndex = children.indexOf(this);
-            if (srcIndex < destIndex) {
-                list.insertBefore(TurbaColumnPrefs.dragSrcEl, this.nextSibling);
-            } else {
-                list.insertBefore(TurbaColumnPrefs.dragSrcEl, this);
-            }
-            TurbaColumnPrefs.updateColumnsPref();
+        const src = TurbaColumnPrefs.dragSrcEl;
+
+        if (!src || src === this || src.parentNode !== this.parentNode) {
+            return;
         }
+        e.preventDefault();
+
+        const list = this.parentNode;
+        const children = Array.from(list.children);
+        const srcIndex = children.indexOf(src);
+        const destIndex = children.indexOf(this);
+
+        if (srcIndex < destIndex) {
+            list.insertBefore(src, this.nextSibling);
+        } else {
+            list.insertBefore(src, this);
+        }
+        TurbaColumnPrefs.updateColumnsPref();
     },
 
     handleDragEnd: function()
     {
         this.style.opacity = '1';
+        TurbaColumnPrefs.dragSrcEl = null;
     },
 
     initSortable: function(ol)
@@ -98,7 +120,7 @@ var TurbaColumnPrefs = {
 
     onDomLoad: function()
     {
-        var container = document.getElementById('turba-prefs-cols-columns');
+        const container = document.getElementById('turba-prefs-cols-columns');
 
         container.querySelectorAll('ol').forEach(function(ol) {
             this.initSortable(ol);
@@ -110,7 +132,7 @@ var TurbaColumnPrefs = {
             }
         }.bind(this));
 
-        Array.from(document.getElementById('turba-prefs-cols-list').querySelectorAll('a')).forEach(function(a) {
+        document.getElementById('turba-prefs-cols-list').querySelectorAll('a').forEach(function(a) {
             a.addEventListener('click', this.clickHandler.bind(this));
         }, this);
     }
