@@ -18,36 +18,42 @@ var TurbaSearch = {
 
     updateCriteria: function()
     {
-        var source_elt = $('turbaSearchSource');
+        var source_elt = document.getElementById('turbaSearchSource');
 
         if (!source_elt || !source_elt.options) {
             return;
         }
 
-        $('turbaSearchCriteria').update();
-        $H(this.criteria[$F(source_elt)]).each(function(criterion) {
-            $('turbaSearchCriteria').insert(new Element('option', { value: criterion.key }).insert(criterion.value.escapeHTML()));
+        var criteriaSelect = document.getElementById('turbaSearchCriteria');
+        criteriaSelect.innerHTML = '';
+        Object.entries(this.criteria[source_elt.value] || {}).forEach(function(entry) {
+            var opt = document.createElement('option');
+            opt.value = entry[0];
+            opt.textContent = entry[1];
+            criteriaSelect.appendChild(opt);
         });
 
-        if ($('vbook-form')) {
-            if (this.shareSources[$F(source_elt)] === true) {
-                $('vbook-form').show();
-            } else {
-                $('vbook-form').hide();
-            }
+        var vbookForm = document.getElementById('vbook-form');
+        if (vbookForm) {
+            vbookForm.style.display =
+                (this.shareSources[source_elt.value] === true) ? '' : 'none';
         }
     },
 
     onDomLoad: function()
     {
+        var form = document.getElementById('horde-content')
+            .querySelector('form[name="directory_search"]');
+
         if (this.advanced) {
-            $('advancedtoggle').show()
-                .observe('click', function() {
-                    $('advancedtoggle').remove();
-                    $('horde-content').down('FORM[name=directory_search]').show();
-                });
+            var toggle = document.getElementById('advancedtoggle');
+            toggle.style.display = '';
+            toggle.addEventListener('click', function() {
+                toggle.remove();
+                form.style.display = '';
+            });
         } else {
-            $('horde-content').down('FORM[name=directory_search]').show();
+            form.style.display = '';
         }
 
         this.updateCriteria();
@@ -55,4 +61,4 @@ var TurbaSearch = {
 
 };
 
-document.observe('dom:loaded', TurbaSearch.onDomLoad.bind(TurbaSearch));
+document.addEventListener('DOMContentLoaded', TurbaSearch.onDomLoad.bind(TurbaSearch));

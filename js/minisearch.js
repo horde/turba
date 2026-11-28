@@ -13,33 +13,39 @@ var TurbaMinisearch = {
 
     miniSearch: function(e)
     {
-        $('turba-minisearch-searching', 'turba-minisearch-close', 'turba-minisearch-results').invoke('show');
+        ['turba-minisearch-searching', 'turba-minisearch-close', 'turba-minisearch-results'].forEach(function(id) {
+            document.getElementById(id).style.display = '';
+        });
         HordeCore.doAction('minisearch', {
-            abooks: Object.toJSON(this.abooks),
-            search: $F('turba-minisearch-search')
+            abooks: JSON.stringify(this.abooks),
+            search: document.getElementById('turba-minisearch-search').value
         }, {
             callback: function(r) {
-                $('turba-minisearch-results').update(r.html);
-                $('turba-minisearch-searching').hide();
+                document.getElementById('turba-minisearch-results').innerHTML = r.html;
+                document.getElementById('turba-minisearch-searching').style.display = 'none';
             },
             uri: this.URI_AJAX
         });
-        e.stop();
+        e.preventDefault();
     },
 
     hideMiniSearch: function(e)
     {
-        $('turba-minisearch-searching', 'turba-minisearch-close').invoke('hide');
-        $('turba-minisearch-results').update().hide();
-        e.stop();
+        ['turba-minisearch-searching', 'turba-minisearch-close'].forEach(function(id) {
+            document.getElementById(id).style.display = 'none';
+        });
+        var results = document.getElementById('turba-minisearch-results');
+        results.innerHTML = '';
+        results.style.display = 'none';
+        e.preventDefault();
     },
 
     onDomLoad: function()
     {
-        $('turba-minisearch').observe('submit', this.miniSearch.bindAsEventListener(this));
-        $('turba-minisearch-close').observe('click', this.hideMiniSearch.bindAsEventListener(this));
+        document.getElementById('turba-minisearch').addEventListener('submit', this.miniSearch.bind(this));
+        document.getElementById('turba-minisearch-close').addEventListener('click', this.hideMiniSearch.bind(this));
     }
 
 };
 
-document.observe('dom:loaded', TurbaMinisearch.onDomLoad.bind(TurbaMinisearch));
+document.addEventListener('DOMContentLoaded', TurbaMinisearch.onDomLoad.bind(TurbaMinisearch));

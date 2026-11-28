@@ -5,33 +5,39 @@ var TurbaTabs = {
     {
         var next, id;
 
-        this.tabs.each(function(item) {
+        this.tabs.forEach(function(item) {
             id = item.id.substring(3);
+            var content = document.getElementById(id);
             if (id == tab) {
-                item.addClassName('horde-active');
-                $(id).show();
+                item.classList.add('horde-active');
+                if (content) {
+                    content.style.display = '';
+                }
                 next = id;
             } else {
-                item.removeClassName('horde-active');
-                if ($(id).visible() &&
-                    !Object.isUndefined(window['sections_Turba_View_' + id])) {
+                item.classList.remove('horde-active');
+                if (content && content.style.display != 'none' &&
+                    typeof window['sections_Turba_View_' + id] !== 'undefined') {
                     this.current = window['sections_Turba_View_' + id]._get();
                 }
-                $(id).hide();
+                if (content) {
+                    content.style.display = 'none';
+                }
             }
         }, this);
 
         if (this.current &&
-            !Object.isUndefined(window['sections_Turba_View_' + next])) {
-            window['sections_Turba_View_' + next].toggle(this.current);
+            typeof window['sections_Turba_View_' + next] !== 'undefined') {
+            window['sections_Turba_View_' + next].toggle(this.current); // eslint-disable-line horde/no-prototype-methods -- Horde_Form_Sections.toggle()
         }
 
         return false;
     },
 
     onDomLoad: function() {
-        this.tabs = $('page').select('.horde-buttonbar')[0].down().select('li');
+        var buttonbar = document.getElementById('page').querySelector('.horde-buttonbar');
+        this.tabs = Array.from(buttonbar.firstElementChild.querySelectorAll('li'));
     }
 };
 
-document.observe('dom:loaded', TurbaTabs.onDomLoad.bind(TurbaTabs));
+document.addEventListener('DOMContentLoaded', TurbaTabs.onDomLoad.bind(TurbaTabs));

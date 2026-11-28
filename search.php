@@ -240,14 +240,14 @@ if ($search_mode != 'duplicate' && $session->get('turba', 'has_share')) {
     $vbookView->shareSources = $shareSources;
     $vbookView->source = $source;
     $vbookView->token = $session->getToken();
-    $page_output->addInlineScript('$(\'vbook_name\').observe(\'keyup\', function() { $(\'save-vbook\').checked = !!$F(\'vbook_name\'); });');
+    $page_output->addInlineScript('document.getElementById(\'vbook_name\').addEventListener(\'keyup\', function() { document.getElementById(\'save-vbook\').checked = !!document.getElementById(\'vbook_name\').value; });');
 }
 
 switch ($search_mode) {
     case 'basic':
         $title = _("Basic Search");
         $page_output->addInlineScript([
-            '$("val").focus()',
+            'document.getElementById("val").focus()',
         ], true);
         $page_output->addInlineJsVars([
             'TurbaSearch.criteria' => $allCriteria,
@@ -269,7 +269,7 @@ switch ($search_mode) {
             ]);
         }
         $page_output->addInlineScript([
-            '$("name").focus()',
+            'document.getElementById("name").focus()',
         ], true);
         break;
 

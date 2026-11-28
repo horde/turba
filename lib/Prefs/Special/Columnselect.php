@@ -25,8 +25,6 @@ class Turba_Prefs_Special_Columnselect implements Horde_Core_Prefs_Ui_Special
     {
         global $attributes, $cfgSources, $page_output, $prefs;
 
-        $page_output->addScriptFile('scriptaculous/effects.js', 'horde');
-        $page_output->addScriptFile('scriptaculous/dragdrop.js', 'horde');
         $page_output->addScriptFile('columnprefs.js');
 
         $sources = Turba::getColumns();
